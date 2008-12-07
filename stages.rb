@@ -10,8 +10,8 @@
 #  end
 
 stage "default" do
-  default_scene "default_scene"
-  title "Limelight"
+  default_scene "main"
+  title "Fresnel"
   location [200, 25]
   size [800, 800]
 end
