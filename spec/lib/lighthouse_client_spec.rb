@@ -27,7 +27,7 @@ describe LighthouseClient do
     options = {:title => "Test title"}
     Lighthouse::Ticket.should_receive(:new).with(:project_id => 2).and_return(ticket)
     ticket.should_receive(:title=).with("Test title")
-    ticket.should_receive(:save!)
+    ticket.should_receive(:save)
     
     @client.add_ticket(options, 2)
   end

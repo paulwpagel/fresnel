@@ -14,6 +14,7 @@ class LighthouseClient
   def authenticate
     Lighthouse.account = "8thlight"
     Lighthouse.token = 'a47514c5dbe30d07302426a4e50709349618c05d'
+    puts "authenticated"
   end
   
   def find_project(project_name)
@@ -28,8 +29,7 @@ class LighthouseClient
   def add_ticket(options, project_id)
     ticket = Lighthouse::Ticket.new(:project_id => project_id)
     ticket.title = options[:title]
-    ticket.save!
-    
+    ticket.save
     return nil
   end
 

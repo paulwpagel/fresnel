@@ -14,7 +14,7 @@ describe Main do
     scene.find("title").text = "some title"
     scene.find("description").text = "some description"
     @lighthouse_client.should_receive(:authenticate)
-    @lighthouse_client.should_receive(:add_ticket).with("some title", anything())
+    @lighthouse_client.should_receive(:add_ticket).with({:title => "some title"}, anything())
   
     scene.add_ticket
   end
