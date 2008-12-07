@@ -7,8 +7,8 @@ module Main
     description = scene.find("description")
     
     client = LighthouseClient.new
-    
-    client.add_ticket(title.text, 14953)
+    client.authenticate
+    client.add_ticket(title.text, 21095)
   end
   
 end
