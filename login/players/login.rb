@@ -1,3 +1,5 @@
+require File.expand_path(File.dirname(__FILE__) + "/../../lib/lighthouse_client")
+
 module Login
   
   def button_pressed(e)
@@ -10,8 +12,7 @@ module Login
     password = scene.find('password')
 
     client = LighthouseClient.new
-    client.attempt_login(account.text, username.text, password.text)
-    
+    client.login_to(account.text, username.text, password.text)
   end
   
 end

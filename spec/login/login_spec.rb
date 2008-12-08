@@ -21,7 +21,7 @@ describe Login do
     scene.find("password").text = "wouldntyaouliketoknow"
     scene.find("account").text = "checking"
     
-    @lighthouse_client.should_receive(:attempt_login).with("checking", "Paul Pagel", "wouldntyaouliketoknow")
+    @lighthouse_client.should_receive(:login_to).with("checking", "Paul Pagel", "wouldntyaouliketoknow")
     
     scene.attempt_login
   end
