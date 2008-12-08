@@ -1,4 +1,4 @@
-$: << File.expand_path(File.dirname(__FILE__) + "/../main/players")
+$: << File.expand_path(File.dirname(__FILE__) + "/../ticket/players")
 $: << File.expand_path(File.dirname(__FILE__) + "/../lib")
 
 require 'rubygems'

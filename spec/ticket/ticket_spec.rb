@@ -1,9 +1,10 @@
 require File.expand_path(File.dirname(__FILE__) + "/../spec_helper")
-require "main"
 require 'limelight/specs/spec_helper'
+require "ticket"
 
-describe Main do
-  uses_scene :main
+
+describe Ticket do
+  uses_scene :ticket
 
   before(:each) do
     @lighthouse_client = mock(LighthouseClient)
@@ -21,8 +22,8 @@ describe Main do
   
 end
 
-describe Main, "View" do
-  uses_scene :main
+describe Ticket, "View" do
+  uses_scene :ticket
   
   it "should have title and description" do
     scene.find("title").should_not be(nil)

@@ -14,6 +14,6 @@ main {
       input :players => "text_box", :id => "description", :width => 200
     }
     
-    button :text => "Add Ticket", :players => "main", :width => 125
+    button :text => "Add Ticket", :players => "ticket", :width => 125
   }
 }

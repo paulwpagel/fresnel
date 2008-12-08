@@ -1,6 +1,6 @@
 require 'lighthouse_client'
 
-module Main
+module Ticket
   
   def button_pressed(e)
     add_ticket

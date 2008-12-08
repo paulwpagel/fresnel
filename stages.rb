@@ -10,7 +10,7 @@
 #  end
 
 stage "default" do
-  default_scene "main"
+  default_scene "ticket"
   title "Fresnel"
   location [200, 25]
   size [800, 800]
