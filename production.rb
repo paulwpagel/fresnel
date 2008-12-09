@@ -7,3 +7,4 @@ name "Fresnel"
 # Create attributes for any model objects or resources that need to accessible to props or players within the production
 
 attribute :credential
+attribute :current_ticket

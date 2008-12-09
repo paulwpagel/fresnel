@@ -60,4 +60,5 @@ describe LighthouseClient do
 
     @client.milestones("one").should == []
   end
+  
 end
