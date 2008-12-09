@@ -12,6 +12,7 @@ describe Ticket do
     @project = mock("project", :tickets => [])
     @lighthouse_client = mock(LighthouseClient, :authenticate => nil, :add_ticket => nil, :milestones => @milestones, :find_project => @project)
     LighthouseClient.stub!(:new).and_return(@lighthouse_client)
+    scene.stub!(:load)
   end
     
   it "should call client" do
