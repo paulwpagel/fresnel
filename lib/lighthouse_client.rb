@@ -5,6 +5,7 @@ require File.expand_path(File.dirname(__FILE__) + "/../vendor/lighthouse-api/lib
 # projects = Lighthouse::Project.find(:all)
 # project = projects[0]
 # x = Lighthouse::Ticket.find(:all, :params => {:project_id => project.id, :q => "state:open"})
+# x = Lighthouse::Ticket.find(:all, :params => {:project_id => project.id, :q => "state:open"})
 
 # project.tickets.each do |ticket|
 #   puts "ticket.class.name: #{ticket.class.name}"

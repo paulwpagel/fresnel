@@ -12,7 +12,8 @@ module Ticket
   end
 
   def view(id)
-    puts "here: #{id}"
+    production.current_ticket = project.tickets.find{|ticket| ticket.id==id}
+    scene.load('view_ticket')
   end
   
   def load_milestones
@@ -21,13 +22,8 @@ module Ticket
   end
   
   def load_tickets
-    client = LighthouseClient.new
-    tickets = client.find_project("fresnel").tickets
-    tickets.each do |ticket|  
-      prop = Limelight::Prop.new(:id => "ticket_#{ticket.id}", :name => "ticket_in_list",
-                                              :text => "#{ticket.title}, State: #{ticket.state}", :players => "ticket",
-                                              :on_mouse_clicked => "view(#{ticket.id})")
-      scene.children[0].add(prop)
+    project.tickets.each do |ticket|  
+      scene.children[0].add(prop_for(ticket))
     end
   end
   
@@ -45,11 +41,22 @@ module Ticket
 
   private
   
+  def project
+    client = LighthouseClient.new
+    return client.find_project("fresnel")
+  end
+  
   def milestone_choices
     client = LighthouseClient.new    
     milestones = client.milestones("fresnel")
     choices = ["None"]
     choices += milestones.collect{ |milestone| milestone.title }
+  end
+  
+  def prop_for(ticket)
+    return Limelight::Prop.new(:id => "ticket_#{ticket.id}", :name => "ticket_in_list",
+                                            :text => "#{ticket.title}, State: #{ticket.state}", :players => "ticket",
+                                            :on_mouse_clicked => "view(#{ticket.id})")
   end
   
 end

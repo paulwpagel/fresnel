@@ -7,3 +7,5 @@ name "Fresnel"
 # Create attributes for any model objects or resources that need to accessible to props or players within the production
 
 #attribute :attribute_name
+attribute :current_ticket
+attribute :lighthouse_client

@@ -48,9 +48,28 @@ describe Ticket do
     milestone_input.choices.should include("None")
   end
   
-  it "should have a view method that takes an id" do
+  it "should have a view method shows a ticket" do
+    scene.should_receive(:load).with("view_ticket")
+    
     scene.view(4)
   end
+  
+  it "should find the ticket with an id on view" do
+    @lighthouse_client.should_receive(:find_project).with(anything()).and_return(@project)
+    
+    scene.view('asdf')
+  end
+  
+  it "should get the ticket with the proper id from the project" do
+    ticket_one = mock("ticket", :id => 123)
+    ticket_two = mock("ticket", :id => 456)
+    @project.stub!(:tickets).and_return([ticket_one, ticket_two])
+    
+    scene.view(456)
+    
+    scene.production.current_ticket.should == ticket_two
+  end
+  
 end
 
 describe Ticket, "load_tickets" do
