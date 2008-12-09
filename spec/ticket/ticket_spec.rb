@@ -2,6 +2,8 @@ require File.expand_path(File.dirname(__FILE__) + "/../spec_helper")
 require 'limelight/specs/spec_helper'
 require "ticket"
 
+$testing = true
+
 describe Ticket do
   uses_scene :ticket
 
@@ -58,11 +60,6 @@ describe Ticket, "Limelight event mappings" do
   
   before(:each) do
     @event = nil
-  end
-
-  it "should call load_milestones on scene opened" do
-    scene.should_receive(:load_milestones)
-    scene.scene_opened(@event)
   end
   
   it "should call add_ticket on " do

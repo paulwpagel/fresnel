@@ -16,16 +16,16 @@ class LighthouseClient
   def login_to(account, user, password)
     Lighthouse.account = account
     Lighthouse.authenticate(user, password)
+
+    begin
+      Lighthouse::Project.find(:all)
+    rescue ActiveResource::UnauthorizedAccess => e
+      return false
+    end
+    return true
   end
-  
-  def authenticate
-    Lighthouse.account = "8thlight"
-    Lighthouse.token = 'a47514c5dbe30d07302426a4e50709349618c05d'
-    puts "authenticated"
-  end
-  
+    
   def find_project(project_name)
-    authenticate
     Lighthouse::Project.find(:all).each do |project|
       return project if project.name == project_name
     end

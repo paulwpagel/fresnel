@@ -13,6 +13,8 @@ module Login
 
     client = LighthouseClient.new
     client.login_to(account.text, username.text, password.text)
+    
+    scene.load('ticket')
   end
   
 end

@@ -5,14 +5,22 @@ describe LighthouseClient do
   
   before(:each) do
     @client = LighthouseClient.new
-    @client.stub!(:authenticate)
   end
-  
-  it "should login the user to the account" do
+
+  it "should not log in the user to the account" do
     Lighthouse.should_receive(:account=).with("AFlight")
     Lighthouse.should_receive(:authenticate).with("paul", "nottelling")
+    Lighthouse::Project.should_receive(:find).with(:all).and_return([])
     
-    @client.login_to("AFlight", "paul", "nottelling")
+    @client.login_to("AFlight", "paul", "nottelling").should be(true)
+  end
+  
+  it "should not log in the user to the account" do
+    Lighthouse.should_receive(:account=).with("AFlight")
+    Lighthouse.should_receive(:authenticate).with("paul", "nottelling")
+    Lighthouse::Project.should_receive(:find).with(:all).and_raise(ActiveResource::UnauthorizedAccess.new(mock('unauthorized', :code => "401 Not Authorized")))
+    
+    @client.login_to("AFlight", "paul", "nottelling").should be(false)
   end
   
   it "should find a project by name" do
