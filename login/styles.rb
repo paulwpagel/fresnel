@@ -8,3 +8,6 @@ login_group {
   height 500
 }
 
+error_message {
+  # color "red"
+}

@@ -1,7 +1,7 @@
 require "lighthouse_client"
 
 module Ticket
-
+  
   def scene_opened(e)
     load_milestones unless $testing
   end  

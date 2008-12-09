@@ -13,10 +13,11 @@ main {
       
     input_group {  
       label :text => "Password:"
-      input :players => "text_box", :id => "password", :width => 200
+      input :players => "password_box", :id => "password", :width => 200
     }
-
     
     button :text => "Login", :players => "login", :width => 125
+
+    error_message :id => "error_message"
   }
 }

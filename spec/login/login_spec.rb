@@ -14,6 +14,7 @@ describe Login do
     scene.find("username").should_not be(nil)
     scene.find("password").should_not be(nil)
     scene.find("account").should_not be(nil)
+    scene.find("error_message").should_not be(nil)
   end
   
   it "should take the name, password, and account name and send it to be authenticated" do
@@ -21,8 +22,27 @@ describe Login do
     scene.find("password").text = "wouldntyaouliketoknow"
     scene.find("account").text = "checking"
     
-    @lighthouse_client.should_receive(:login_to).with("checking", "Paul Pagel", "wouldntyaouliketoknow")
+    @lighthouse_client.should_receive(:login_to).with("checking", "Paul Pagel", "wouldntyaouliketoknow").and_return(true)
+    
+    scene.should_receive(:load).with("ticket")
+    scene.attempt_login
+    
+    scene.production.credential.should_not be(nil)
+    scene.production.credential.account.should == "checking"
+    scene.production.credential.login.should == "Paul Pagel"
+    scene.production.credential.password.should == "wouldntyaouliketoknow"
+    scene.production.credential.logged_in?.should be(true)
+  end
+  
+  it "should error when authentication fails" do
+    @lighthouse_client.should_receive(:login_to).with(anything(), anything(), anything()).and_return(false)
+    
+    scene.should_not_receive(:load).with("ticket")
     
     scene.attempt_login
-  end
+    
+    scene.find("error_message").text.should == "Authentication Failed, please try again"
+    scene.find("password").text.should == ""
+  end  
+  
 end
