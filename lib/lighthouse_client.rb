@@ -1,21 +1,21 @@
 require File.expand_path(File.dirname(__FILE__) + "/../vendor/lighthouse-api/lib/lighthouse")
 
+
+
 # Lighthouse.account = "8thlight"
 # Lighthouse.token = 'a47514c5dbe30d07302426a4e50709349618c05d'
 # projects = Lighthouse::Project.find(:all)
 # project = projects[0]
 # x = Lighthouse::Ticket.find(:all, :params => {:project_id => project.id, :q => "state:open"})
-# x = Lighthouse::Ticket.find(:all, :params => {:project_id => project.id, :q => "state:open"})
-
+# project.tickets[0].assigned_user.attributes.each_pair do |key, value|
+#   puts "#{key}: #{value}"
+# end
 # project.tickets.each do |ticket|
 #   puts "ticket.class.name: #{ticket.class.name}"
 #   puts "ticket.title: #{ticket.title}"
 #   ticket.attributes.each_pair do |key, value|
 #     puts "#{key},#{value}"
 #   end
-# end
-# x[0].attributes.each_pair do |key, value|
-#   puts "#{key},#{value}"
 # end
 
 class LighthouseClient  
