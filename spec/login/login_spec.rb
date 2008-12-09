@@ -6,8 +6,11 @@ describe Login do
   uses_scene :login
   
   before(:each) do
-    @lighthouse_client = mock(LighthouseClient, :authenticate => nil, :add_ticket => nil)
+    @lighthouse_client = mock(LighthouseClient)
     LighthouseClient.stub!(:new).and_return(@lighthouse_client)
+    scene.find("username").text = "Paul Pagel"
+    scene.find("password").text = "wouldntyaouliketoknow"
+    scene.find("account").text = "checking"
   end
 
   it "should have user name and password fields" do
@@ -18,14 +21,12 @@ describe Login do
   end
   
   it "should take the name, password, and account name and send it to be authenticated" do
-    scene.find("username").text = "Paul Pagel"
-    scene.find("password").text = "wouldntyaouliketoknow"
-    scene.find("account").text = "checking"
-    
     @lighthouse_client.should_receive(:login_to).with("checking", "Paul Pagel", "wouldntyaouliketoknow").and_return(true)
     
     scene.should_receive(:load).with("ticket")
-    scene.attempt_login
+    
+    scene.load_inputs
+    scene.log_in
     
     scene.production.credential.should_not be(nil)
     scene.production.credential.account.should == "checking"
@@ -39,10 +40,33 @@ describe Login do
     
     scene.should_not_receive(:load).with("ticket")
     
-    scene.attempt_login
+    scene.load_inputs
+    scene.log_in
     
     scene.find("error_message").text.should == "Authentication Failed, please try again"
     scene.find("password").text.should == ""
   end  
+  
+  it "should error if there is no account name" do
+    scene.find("account").text = ""
+    
+    @lighthouse_client.should_receive(:login_to).with(anything(), anything(), anything()).and_raise(ActiveResource::ResourceNotFound.new(""))
+
+    scene.load_inputs
+    scene.log_in
+    
+    scene.find("error_message").text.should == "Authentication Failed, please try again"
+  end
+  
+  it "should error if there is no username" do
+    scene.find("username").text = ""
+    
+    @lighthouse_client.should_receive(:login_to).with(anything(), anything(), anything()).and_raise(URI::InvalidURIError.new(""))
+
+    scene.load_inputs
+    scene.log_in
+    
+    scene.find("error_message").text.should == "Authentication Failed, please try again"
+  end
   
 end

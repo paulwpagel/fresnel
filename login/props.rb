@@ -1,23 +1,27 @@
 main {
   login_group {
 
+    error_message :id => "error_message"
+    
     input_group {  
       label :text => "Account:"
-      input :players => "text_box", :id => "account", :width => 200
+      input :players => "text_box", :id => "account", :width => 270
     }
 
     input_group {
       label :text => "Username:"
-      input :players => "text_box", :id => "username", :width => 200
+      input :players => "text_box", :id => "username", :width => 270
       }
       
     input_group {  
       label :text => "Password:"
-      input :players => "password_box", :id => "password", :width => 200
+      input :players => "password_box", :id => "password", :width => 270
     }
     
-    button :text => "Login", :players => "login", :width => 125
-
-    error_message :id => "error_message"
+    button_group {
+      button :text => "Login", :players => "login"
+    }
+    
+    
   }
 }

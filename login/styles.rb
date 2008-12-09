@@ -8,6 +8,17 @@ login_group {
   height 500
 }
 
-error_message {
-  # color "red"
+button_group {
+  horizontal_alignment "right"
+  width "100%"
 }
+
+
+error_message {
+  horizontal_alignment "center"  
+  width "100%"
+  height 50
+  font_size 18
+  text_color "red"
+}
+

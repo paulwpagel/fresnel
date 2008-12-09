@@ -12,7 +12,7 @@ module Ticket
   def button_pressed(e)
     add_ticket
   end
-
+  
   def view(id)
     production.current_ticket = project.tickets.find{|ticket| ticket.id==id}
     scene.load('view_ticket')
@@ -41,7 +41,7 @@ module Ticket
     description.text = ""
   end
 
-  private
+  private #######################
   
   def project
     client = LighthouseClient.new
