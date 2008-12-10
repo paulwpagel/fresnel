@@ -13,3 +13,7 @@ label {
   width 200
 }
 
+title_bar {
+  width "100%"
+  background_color "5A9ECF"
+}

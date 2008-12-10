@@ -55,14 +55,14 @@ describe AddTicket, "Props" do
   uses_scene :add_ticket
   
   it "should have title and description" do
-    scene.find("title").should_not be(nil)
-    scene.find("description").should_not be(nil)
-    scene.find("milestones").should_not be(nil)
+    scene.find("title").should_not be_nil
+    scene.find("description").should_not be_nil
+    scene.find("milestones").should_not be_nil
   end
   
   it "should have add ticket button" do
     button = scene.find("add_ticket_button")
-    button.should_not be(nil)
+    button.should_not be_nil
 
     button.players.should  == "add_ticket"
   end

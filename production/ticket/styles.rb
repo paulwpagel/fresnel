@@ -1,8 +1,3 @@
-title_bar {
-  # height 30
-  width "100%"
-  background_color "5A9ECF"
-}
 ticket_in_list {
   padding 10
   rounded_corner_radius "10"
