@@ -1,7 +1,5 @@
 require File.expand_path(File.dirname(__FILE__) + "/../vendor/lighthouse-api/lib/lighthouse")
 
-
-
 # Lighthouse.account = "8thlight"
 # Lighthouse.token = 'a47514c5dbe30d07302426a4e50709349618c05d'
 # projects = Lighthouse::Project.find(:all)

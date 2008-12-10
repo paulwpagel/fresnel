@@ -1,5 +1,5 @@
-require File.expand_path(File.dirname(__FILE__) + "/../../lib/lighthouse_client")
-require File.expand_path(File.dirname(__FILE__) + "/../../lib/credential")
+require "lighthouse_client"
+require "credential"
 
 module Login
   
