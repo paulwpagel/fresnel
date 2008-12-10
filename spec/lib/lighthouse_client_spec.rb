@@ -60,5 +60,26 @@ describe LighthouseClient do
 
     @client.milestones("one").should == []
   end
+  
+  it "should return the milestone title for a given project and ticket" do
+    milestones = [mock("milestone", :id => 123, :title => "Milestone Title")]
+    project = mock(Lighthouse::Project, :name => "project one", :milestones => milestones)
+    Lighthouse::Project.stub!(:find).and_return([project])
     
+    @client.milestone_title("project one", 123).should == "Milestone Title"
+  end
+  
+  it "should work if there are no milestones matching the id given" do
+    project = mock(Lighthouse::Project, :name => "project one", :milestones => [])
+    Lighthouse::Project.stub!(:find).and_return([project])
+    
+    @client.milestone_title("project one", 123).should == ""
+  end
+  
+  it "should work if the project doesn't exist" do
+    Lighthouse::Project.stub!(:find).and_return([])
+    
+    @client.milestone_title("project one", 123).should == ""
+  end
+  
 end
