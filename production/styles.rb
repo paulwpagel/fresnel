@@ -1,7 +1,6 @@
 main {
-  top_padding 10
-	width 900
-	height 700
+	width 800
+	height 800
 	background_color "#34689b"
 	horizontal_alignment "center"
 }
