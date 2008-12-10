@@ -1,5 +1,5 @@
 main {
-  add_ticket {
+  add_ticket_group {
 
     input_group {
       label :text => "Title:"
@@ -16,6 +16,6 @@ main {
       input :players => 'combo_box', :id => 'milestones'
     }
   
-    button :text => "Add Ticket", :players => "ticket", :width => 125
+    button :text => "Add Ticket", :players => "add_ticket", :width => 125, :id => "add_ticket_button"
   }
 }

@@ -59,6 +59,13 @@ describe AddTicket, "Props" do
     scene.find("description").should_not be(nil)
     scene.find("milestones").should_not be(nil)
   end
+  
+  it "should have add ticket button" do
+    button = scene.find("add_ticket_button")
+    button.should_not be(nil)
+
+    button.players.should  == "add_ticket"
+  end
 
 end
 

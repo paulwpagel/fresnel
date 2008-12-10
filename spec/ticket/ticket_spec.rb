@@ -35,7 +35,6 @@ describe Ticket do
     
     scene.production.current_ticket.should == ticket_two
   end
-  
 end
 
 describe Ticket, "load_tickets" do
