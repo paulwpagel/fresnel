@@ -10,7 +10,7 @@ module ViewTicket
   
   def load_current_ticket
     add_prop_to_main(current_ticket.title, "ticket_title")
-    add_prop_to_main(current_ticket.assigned_user_name, "ticket_assigned_user")
+    add_prop_to_main("Assigned User: #{current_ticket.assigned_user_name}", "ticket_assigned_user")
   end
   
   private
@@ -20,8 +20,10 @@ module ViewTicket
   end
   
   def add_prop_to_main(text, name)
-    prop = Limelight::Prop.new(:text => text, :name => name)
-    main.add(prop)
+    prop = Limelight::Prop.new(:text => text, :name => name, :id => name)
+    wrapper = Limelight::Prop.new(:name => "group")
+    wrapper.add(prop)
+    main.add(wrapper)
   end
   
   def main

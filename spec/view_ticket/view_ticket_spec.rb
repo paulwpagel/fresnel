@@ -4,44 +4,24 @@ require "view_ticket"
 
 $testing = true
 
-describe ViewTicket do
+describe ViewTicket, "load_current_ticket" do
   uses_scene :view_ticket
   
   before(:each) do
     scene.production.current_ticket = mock("ticket", :title => 'title', :assigned_user_name => "Roger")
-    @mop = mock("prop")
-    Limelight::Prop.stub!(:new).and_return(@mop)
-    scene.children[0].stub!(:add)
-  end
-  
-  it "should make a prop for the current ticket's title" do
-    Limelight::Prop.should_receive(:new).with(hash_including(:text => "title"))
-    
     scene.load_current_ticket
   end
   
-  it "should give the prop for the title a name" do
-    Limelight::Prop.should_receive(:new).with(hash_including(:name => "ticket_title"))
-    
-    scene.load_current_ticket
+  it "should make a prop on the scene for the current_ticket" do    
+    title = scene.find('ticket_title')
+    title.text.should == "title"
+    title.name.should == "ticket_title"
   end
   
-  it "should add the current_ticket prop to the scene" do    
-    scene.children[0].should_receive(:add).with(@mop).exactly(2).times
-    
-    scene.load_current_ticket
-  end
-  
-  it "should make a prop for the assigned user" do
-    Limelight::Prop.should_receive(:new).with(hash_including(:text => 'Roger'))
-    
-    scene.load_current_ticket
-  end
-  
-  it "should give the prop for the assigned_user a name" do
-    Limelight::Prop.should_receive(:new).with(hash_including(:name => "ticket_assigned_user"))
-    
-    scene.load_current_ticket
+  it "should make a prop on the scene for the assigned_user_name" do
+    title = scene.find('ticket_assigned_user')
+    title.text.should include("Roger")
+    title.name.should == "ticket_assigned_user"
   end
   
 end
