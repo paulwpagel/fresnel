@@ -8,7 +8,7 @@ describe Ticket do
   uses_scene :ticket
 
   before(:each) do
-    @project = mock("project", :tickets => [])
+    @project = mock("project", :open_tickets => [])
     @lighthouse_client = mock(LighthouseClient, :find_project => @project)
     LighthouseClient.stub!(:new).and_return(@lighthouse_client)
     scene.stub!(:load)
@@ -29,7 +29,7 @@ describe Ticket do
   it "should get the ticket with the proper id from the project" do
     ticket_one = mock("ticket", :id => 123)
     ticket_two = mock("ticket", :id => 456)
-    @project.stub!(:tickets).and_return([ticket_one, ticket_two])
+    @project.stub!(:open_tickets).and_return([ticket_one, ticket_two])
     
     scene.view(456)
     
@@ -41,7 +41,7 @@ describe Ticket, "load_tickets" do
   uses_scene :ticket
 
   before(:each) do
-    @project = mock("project", :tickets => [mock("ticket", :title => nil, :id => "123", :state => nil)])
+    @project = mock("project", :open_tickets => [mock("ticket", :title => nil, :id => "123", :state => nil)])
     @prop = mock("prop")
     @lighthouse_client = mock(LighthouseClient, :find_project => @project)
     LighthouseClient.stub!(:new).and_return(@lighthouse_client)

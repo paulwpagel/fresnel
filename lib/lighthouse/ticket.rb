@@ -4,12 +4,16 @@ module Lighthouse
   
   class Ticket
     def assigned_user
-      return Lighthouse::User.find(self.assigned_user_id)
+      begin
+        return Lighthouse::User.find(self.assigned_user_id)
+      rescue
+        return nil
+      end
     end
     
     def assigned_user_name
       user = self.assigned_user
-      return user.name if user
+      return user.name unless user.nil?
       return ''
     end
   end

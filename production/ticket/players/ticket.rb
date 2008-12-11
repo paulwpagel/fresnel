@@ -1,4 +1,5 @@
 require "lighthouse_client"
+require "lighthouse/project"
 
 module Ticket
   
@@ -9,13 +10,13 @@ module Ticket
   end  
     
   def load_tickets
-    project.tickets.each do |ticket|  
+    project.open_tickets.each do |ticket|  
       scene.children[0].add(prop_for(ticket))
     end
   end
 
   def view(id)
-    production.current_ticket = project.tickets.find{|ticket| ticket.id==id}
+    production.current_ticket = project.open_tickets.find{|ticket| ticket.id==id}
     scene.load('view_ticket')
   end
   

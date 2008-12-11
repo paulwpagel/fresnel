@@ -31,7 +31,6 @@ ticket_milestone {
 ticket_state {
   font_size 20
   padding 10
-  horizontal_alignment :right
   rounded_corner_radius "10"
   border_width 4
   border_color "006699"

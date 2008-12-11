@@ -31,3 +31,16 @@ describe Lighthouse::Ticket do
   end
   
 end
+
+describe Lighthouse::Ticket, "with no assigned_user" do
+  before(:each) do
+    @ticket = Lighthouse::Ticket.new
+    @ticket.stub!(:assigned_user_id).and_return(123)
+    response = mock('unauthorized', :code => "500 Internal Server Error")
+    Lighthouse::User.stub!(:find).and_raise(ActiveResource::ServerError.new(response))
+  end
+  
+  it "should return nothing if it cannot find the user" do    
+    @ticket.assigned_user.should == nil
+  end
+end
