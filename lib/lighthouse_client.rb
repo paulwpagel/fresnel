@@ -16,6 +16,11 @@ require File.expand_path(File.dirname(__FILE__) + "/../vendor/lighthouse-api/lib
   # ticket.attributes.each_pair do |key, value|
   #   puts "#{key},#{value}"
   # end
+#   puts "ticket.title: #{ticket.title}"
+#   a = project.milestones.find {|m| m.id == ticket.milestone_id }
+#   a.attributes.each_pair do |key, value|
+#     puts "#{key},#{value}"
+#   end
 # end
 
 class LighthouseClient  
@@ -54,4 +59,10 @@ class LighthouseClient
     return []
   end
 
+  def milestone_title(project_name, milestone_id)
+    milestone = milestones(project_name).find {|m| m.id == milestone_id }
+    return milestone.title if milestone
+    return ""
+  end
+  
 end
