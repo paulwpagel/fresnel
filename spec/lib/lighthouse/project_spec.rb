@@ -18,4 +18,15 @@ describe Lighthouse::Project do
   it "should return the tickets" do
     @project.open_tickets.should == @tickets    
   end
+  
+  it "should find all tickets for a project" do
+    Lighthouse::Ticket.should_receive(:find).with(:all, :params => {:project_id => 12345, :q => "all"})
+    
+    @project.all_tickets
+  end
+  
+  it "should return the tickets" do
+    @project.all_tickets.should == @tickets    
+  end
+  
 end
