@@ -1,7 +1,22 @@
 require "lighthouse_client"
 require "lighthouse/project"
 
+require 'ticket_lister'
+
 module Ticket
+  
+  class << self
+    def stage_hand(name)
+      require name.to_s
+      define_method(name) do
+        eval(name.to_s.camelize).new(self)
+      end
+    end
+  end
+  
+  stage_hand :ticket_master
+  
+  prop_reader :ticket_lister
   
   def scene_opened(e)
   end  
@@ -10,6 +25,7 @@ module Ticket
     production.current_ticket = project.open_tickets.find{|ticket| ticket.id==id}
     scene.load('view_ticket')
   end
+
   
   private #######################
   
