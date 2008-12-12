@@ -21,7 +21,6 @@ module Ticket
     production.current_ticket = project.open_tickets.find{|ticket| ticket.id==id}
     scene.load('view_ticket')
   end
-
   
   private #######################
   
