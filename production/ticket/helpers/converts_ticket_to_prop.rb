@@ -1,0 +1,2 @@
+class ConvertsTicketToProp
+end
