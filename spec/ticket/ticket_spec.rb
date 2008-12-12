@@ -2,8 +2,6 @@ require File.expand_path(File.dirname(__FILE__) + "/../spec_helper")
 require 'limelight/specs/spec_helper'
 require "ticket"
 
-$testing = true
-
 describe Ticket do
   uses_scene :ticket
 
@@ -35,6 +33,25 @@ describe Ticket do
     
     scene.production.current_ticket.should == ticket_two
   end
+  
+  it "should have a drop down to view different tickets" do
+    sort_tickets = scene.find('sort_tickets')
+
+    sort_tickets.players.should == "list_ticket"
+  end
+  
+  it "should have a name" do
+    sort_tickets = scene.find('sort_tickets')
+
+    sort_tickets.name.should == "combo_box"
+  end
+  
+  it "should have different options" do
+    sort_tickets = scene.find('sort_tickets')
+    
+    sort_tickets.choices.should include("Open Tickets")
+    sort_tickets.choices.should include("All Tickets")
+  end
 end
 
 describe Ticket, "load_tickets" do
@@ -47,7 +64,7 @@ describe Ticket, "load_tickets" do
     LighthouseClient.stub!(:new).and_return(@lighthouse_client)
     
     @child = mock("prop", :add => nil)
-    scene.stub!(:children).and_return([@child])
+    scene.stub!(:find_by_name).and_return([@child])
   end
   
   it "should load the tickets from the project" do

@@ -1,3 +1,8 @@
+row {
+  width "100%"
+  padding 15
+}
+
 ticket_in_list {
   padding 10
   rounded_corner_radius "10"

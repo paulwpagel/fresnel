@@ -2,8 +2,6 @@ require File.expand_path(File.dirname(__FILE__) + "/../spec_helper")
 require 'limelight/specs/spec_helper'
 require "view_ticket"
 
-$testing = true
-
 describe ViewTicket, "load_current_ticket" do
   uses_scene :view_ticket
   

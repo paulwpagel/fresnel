@@ -1,7 +1,9 @@
 require "lighthouse_client"
 require "lighthouse/project"
+require File.expand_path(File.dirname(__FILE__) + "/ticket_master")
 
 module Ticket
+  include TicketMaster
   
   def scene_opened(e)
     unless $testing
@@ -10,9 +12,7 @@ module Ticket
   end  
     
   def load_tickets
-    project.open_tickets.each do |ticket|  
-      scene.children[0].add(prop_for(ticket))
-    end
+    show_tickets(project.open_tickets)
   end
 
   def view(id)
@@ -25,12 +25,6 @@ module Ticket
   def project
     client = LighthouseClient.new
     return client.find_project("fresnel")
-  end
-    
-  def prop_for(ticket)
-    return Limelight::Prop.new(:id => "ticket_#{ticket.id}", :name => "ticket_in_list",
-                                            :text => "#{ticket.title}, State: #{ticket.state}", :players => "ticket",
-                                            :on_mouse_clicked => "view(#{ticket.id})")
   end
   
 end

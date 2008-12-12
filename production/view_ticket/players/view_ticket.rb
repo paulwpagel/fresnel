@@ -9,7 +9,7 @@ module ViewTicket
   end
   
   def load_current_ticket
-    # EWM - I want to do it this way, but a bug in limelight with screen refreshing (Ticket #89) is preventing me from doing so
+    # TODO - EWM - I want to do it this way, but a bug in limelight with screen refreshing (Ticket #89) is preventing me from doing so
     # scene.find("ticket_title").text = current_ticket.title
     # scene.find("ticket_state").text = current_ticket.state.capitalize
     # scene.find("ticket_assigned_user").text = "Assigned User: #{current_ticket.assigned_user_name}"
