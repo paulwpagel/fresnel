@@ -14,8 +14,7 @@ module Ticket
     end
   end
   
-  stage_hand :ticket_master
-  
+  stage_hand :ticket_master  
   prop_reader :ticket_lister
   
   def scene_opened(e)
