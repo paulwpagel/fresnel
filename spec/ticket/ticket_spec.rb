@@ -14,4 +14,13 @@ describe Ticket do
     @player_under_test.ticket_master.should == ticket_master
   end
   
+  it "should have a ticket_lister" do
+    scene = mock('scene')
+    @player_under_test.stub!(:scene).and_return(scene)
+    lister = mock('lister')
+    scene.should_receive(:find).with("ticket_lister").and_return(lister)
+    
+    @player_under_test.ticket_lister.should == lister
+  end
+    
 end

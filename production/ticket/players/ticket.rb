@@ -17,9 +17,6 @@ module Ticket
   stage_hand :ticket_master  
   prop_reader :ticket_lister
   
-  def scene_opened(e)
-  end  
-
   def view(id)
     production.current_ticket = project.open_tickets.find{|ticket| ticket.id==id}
     scene.load('view_ticket')
