@@ -39,7 +39,7 @@ describe Ticket, "view_ticket" do
     production = Production.new
     @player_under_test.stub!(:production).and_return(production)
     
-    @project = mock("project", :open_tickets => [])
+    @project = mock("project", :all_tickets => [])
     @lighthouse_client = mock(LighthouseClient, :find_project => @project)
     LighthouseClient.stub!(:new).and_return(@lighthouse_client)
   end
@@ -59,7 +59,7 @@ describe Ticket, "view_ticket" do
   it "should get the ticket with the proper id from the project" do
     ticket_one = mock("ticket", :id => 123)
     ticket_two = mock("ticket", :id => 456)
-    @project.stub!(:open_tickets).and_return([ticket_one, ticket_two])
+    @project.stub!(:all_tickets).and_return([ticket_one, ticket_two])
     
     @player_under_test.view(456)
     

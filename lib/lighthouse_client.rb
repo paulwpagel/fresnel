@@ -11,12 +11,25 @@ require File.expand_path(File.dirname(__FILE__) + "/../vendor/lighthouse-api/lib
 # end
 # project.tickets.each do |ticket|
 #   puts "ticket.class.name: #{ticket.class.name}"
+
+# ticket = Lighthouse::Ticket.new(:project_id => "21095")
+# ticket.title = "TEST ticket"
+# ticket.save
+
+# ticket = Lighthouse::Ticket.find(15, :params => { :project_id => 21095 })
+# tickets.each do |ticket|
 #   puts "ticket.title: #{ticket.title}"
-#   a = project.milestones.find {|m| m.id == ticket.milestone_id }
-#   a.attributes.each_pair do |key, value|
-#     puts "#{key},#{value}"
-#   end
+#   puts ticket.body
 # end
+
+
+# puts "ticket.id: #{ticket.id}"
+# puts "ticket.title: #{ticket.title}"
+# puts ticket.versions
+# ticket.versions.each do |version|
+#   puts version.body
+# end
+
 
 class LighthouseClient  
   
