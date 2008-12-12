@@ -1,4 +1,5 @@
 $: << File.expand_path(File.dirname(__FILE__) + "/../production/ticket/players")
+$: << File.expand_path(File.dirname(__FILE__) + "/../production/ticket/stagehands")
 $: << File.expand_path(File.dirname(__FILE__) + "/../production/view_ticket/players")
 $: << File.expand_path(File.dirname(__FILE__) + "/../production/login/players")
 $: << File.expand_path(File.dirname(__FILE__) + "/../production/add_ticket/players")

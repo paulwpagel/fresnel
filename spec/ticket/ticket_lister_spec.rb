@@ -9,9 +9,8 @@ describe TicketLister, "when being told to show tickets" do
     @prop = mock('prop')
     ConvertsTicketToProp.stub!(:convert).and_return @prop
     
-    @ticket_list_container = mock('container', :add => nil)
-    @scene= mock("scene", :find => @ticket_list_container)
-    @player_under_test.stub!(:scene).and_return @scene
+    @player_under_test.stub!(:add)
+    @player_under_test.stub!(:remove_all)
     
     @tickets = [mock('ticket')]
   end
@@ -34,14 +33,15 @@ describe TicketLister, "when being told to show tickets" do
     call_it
   end
   
-  it "should use the ticket_list container" do
-    @scene.should_receive(:find).with("ticket_list_container").and_return(@ticket_list_container)
+  it "should remove_all tickets before adding new tickets" do
+    @player_under_test.should_receive(:remove_all).ordered
+    @player_under_test.should_receive(:add).ordered
     
     call_it
   end
   
-  it "should add the returned prop to the ticket_list container" do
-    @ticket_list_container.should_receive(:add).with(@prop)
+  it "should add the returned prop to itself" do
+    @player_under_test.should_receive(:add).with(@prop)
     call_it
   end
   
