@@ -1,4 +1,8 @@
 require 'rubygems'
+require 'activesupport'
+require 'activeresource'
+
+
 
 begin
   require 'uri'
@@ -23,8 +27,7 @@ rescue LoadError
   puts
 end
 
-require 'activesupport'
-require 'activeresource'
+
 
 # Ruby lib for working with the Lighthouse API's XML interface.  
 # The first thing you need to set is the account name.  This is the same
@@ -47,11 +50,16 @@ require 'activeresource'
 # This library is a small wrapper around the REST interface.  You should read the docs at
 # http://lighthouseapp.com/api.
 #
+
+
+
 module Lighthouse
   class Error < StandardError; end
   class << self
     attr_accessor :email, :password, :host_format, :domain_format, :protocol, :port
     attr_reader :account, :token
+
+
 
     # Sets the account name, and updates all the resources with the new domain.
     def account=(name)
@@ -204,6 +212,8 @@ module Lighthouse
   #  ticket.tags.delete '@high'
   #  ticket.save
   #
+  
+  
   class Ticket < Base
     attr_writer :tags
     site_format << '/projects/:project_id'
@@ -240,8 +250,10 @@ module Lighthouse
       end.join(" ") if @tags.is_a?(Array)
       @tags = nil ; save_without_tags
     end
-    
+  
     alias_method_chain :save, :tags
+
+
 
     private
       # taken from Lighthouse Tag code
@@ -316,6 +328,7 @@ end
 
 module ActiveResource
   class Connection
+    
     private
       def authorization_header
         (Lighthouse.email || Lighthouse.password ? { 'Authorization' => 'Basic ' + ["#{Lighthouse.email}:#{Lighthouse.password}"].pack('m').delete("\r\n") } : {})
