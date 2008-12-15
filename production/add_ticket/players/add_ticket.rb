@@ -8,6 +8,10 @@ module AddTicket
     end
   end
   
+  def button_pressed(e)
+    add_ticket
+  end
+  
   def load_milestones
     milestone_input = scene.find("milestones")
     milestone_input.choices = milestone_choices
@@ -25,9 +29,7 @@ module AddTicket
     description.text = ""
   end
   
-  def button_pressed(e)
-    add_ticket
-  end
+  
     
   private #############
   
