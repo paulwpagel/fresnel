@@ -8,10 +8,11 @@ describe ViewTicket, "load_current_ticket" do
   before(:each) do
     @client = mock("client", :milestone_title => "Goal One")
     LighthouseClient.stub!(:new).and_return(@client)
-    scene.production.current_ticket = mock("ticket", :title => 'title', :assigned_user_name => "Roger", :state => "open", :milestone_id => 12345)
+    scene.production.current_ticket = mock("ticket", :title => 'title', :assigned_user_name => "Roger", :state => "open",
+                                                     :milestone_id => 12345, :description => "Some Description")
   end
   
-  it "should make a prop on the scene for the current_ticket" do    
+  it "should make a prop on the scene for the current ticket title" do    
     scene.load_current_ticket
 
     prop = scene.find('ticket_title')
@@ -33,6 +34,14 @@ describe ViewTicket, "load_current_ticket" do
     prop = scene.find('ticket_state')
     prop.text.should == "Open"
     prop.name.should == "ticket_state"
+  end
+  
+  it "should make a prop on the scene for the ticket_description" do
+    scene.load_current_ticket
+
+    prop = scene.find('ticket_description')
+    prop.text.should == "Some Description"
+    prop.name.should == "ticket_description"
   end
   
   it "should get the milestone title from the client" do
