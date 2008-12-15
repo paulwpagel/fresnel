@@ -16,6 +16,11 @@ module Lighthouse
       return user.name unless user.nil?
       return ''
     end
+    
+    def description
+      return self.versions[0].body if self.versions[0]
+      return ""
+    end
   end
   
 end

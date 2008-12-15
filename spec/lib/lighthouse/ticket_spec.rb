@@ -44,3 +44,27 @@ describe Lighthouse::Ticket, "with no assigned_user" do
     @ticket.assigned_user.should == nil
   end
 end
+
+describe Lighthouse::Ticket, "description" do
+  before(:each) do
+    @ticket = Lighthouse::Ticket.new
+    @version_one = mock("version", :body => "Some Description")
+    @ticket.stub!(:versions).and_return([@version_one])
+  end
+
+  it "should have get the description from the first version" do
+    @version_one.should_receive(:body)
+    
+    @ticket.description
+  end
+  
+  it "should return the description" do
+    @ticket.description.should == "Some Description"
+  end
+  
+  it "should not crash if there are no versions" do
+    @ticket.stub!(:versions).and_return([])
+    
+    @ticket.description.should == ""
+  end
+end

@@ -85,4 +85,17 @@ describe LighthouseClient do
     @client.milestone_title("project one", 123).should == ""
   end
   
+  it "should get a ticket from a ticket_id through the lighthouse api" do
+    Lighthouse::Ticket.should_receive(:find).with("ticket_id", :params => {:project_id => 21095})
+
+    @client.ticket("ticket_id")
+  end
+  
+  it "should return the found ticket" do
+    ticket = mock("ticket")
+    Lighthouse::Ticket.stub!(:find).and_return(ticket)
+    
+    @client.ticket(1).should == ticket
+  end
+  
 end

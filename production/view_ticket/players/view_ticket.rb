@@ -23,10 +23,14 @@ module ViewTicket
     
     group_three = Limelight::Prop.new(:name => "group")
     group_three.add(make_prop(milestone_title, "ticket_milestone"))
+
+    group_four = Limelight::Prop.new(:name => "group")
+    group_four.add(make_prop(current_ticket.description, "ticket_description"))
     
     main.add(group_one)
     main.add(group_two)
     main.add(group_three)
+    main.add(group_four)
   end
   
   private

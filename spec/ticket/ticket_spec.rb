@@ -39,8 +39,8 @@ describe Ticket, "view_ticket" do
     production = Production.new
     @player_under_test.stub!(:production).and_return(production)
     
-    @project = mock("project", :all_tickets => [])
-    @lighthouse_client = mock(LighthouseClient, :find_project => @project)
+    @ticket = mock("ticket")    
+    @lighthouse_client = mock(LighthouseClient, :ticket => @ticket)
     LighthouseClient.stub!(:new).and_return(@lighthouse_client)
   end
   
@@ -51,19 +51,15 @@ describe Ticket, "view_ticket" do
   end
   
   it "should find the ticket with an id on view" do
-    @lighthouse_client.should_receive(:find_project).with(anything()).and_return(@project)
+    @lighthouse_client.should_receive(:ticket).with(1234)
     
-    @player_under_test.view('asdf')
+    @player_under_test.view(1234)
   end
   
   it "should get the ticket with the proper id from the project" do
-    ticket_one = mock("ticket", :id => 123)
-    ticket_two = mock("ticket", :id => 456)
-    @project.stub!(:all_tickets).and_return([ticket_one, ticket_two])
+    @player_under_test.view("ticket_id")
     
-    @player_under_test.view(456)
-    
-    @player_under_test.production.current_ticket.should == ticket_two
+    @player_under_test.production.current_ticket.should == @ticket
   end
   
 end

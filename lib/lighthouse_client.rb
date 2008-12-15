@@ -5,6 +5,13 @@ Lighthouse.token = 'a47514c5dbe30d07302426a4e50709349618c05d'
 # projects = Lighthouse::Project.find(:all)
 # project = projects[0]
 # x = Lighthouse::Ticket.find(:all, :params => {:project_id => project.id, :q => "state:open"})
+# puts "x[0].id: #{x[0].id}"
+# ticket = Lighthouse::Ticket.find(16, :params => {:project_id => project.id})
+# puts "ticket.versions: #{ticket.versions[0].body}"
+# puts "ticket.title: #{ticket.title}"
+# ticket.attributes.each_pair do |key, value|
+  # puts "#{key}: #{value}"
+# end
 # puts "x.size: #{x.size}"
 # project.tickets[0].assigned_user.attributes.each_pair do |key, value|
 #   puts "#{key}: #{value}"
@@ -83,4 +90,7 @@ class LighthouseClient
     return ""
   end
   
+  def ticket(id)
+    return Lighthouse::Ticket.find(id, :params => {:project_id => 21095})
+  end
 end
