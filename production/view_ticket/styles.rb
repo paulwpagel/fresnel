@@ -46,7 +46,7 @@ ticket_state {
   background_color "5A9ECF"
 }
 
-group {
+row {
   width "100%"
   padding 10
 }

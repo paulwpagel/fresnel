@@ -19,12 +19,13 @@ module ViewTicket
     new_row { |row| row.add(make_prop("Assigned User: #{current_ticket.assigned_user_name}", "ticket_assigned_user")) }
     new_row { |row| row.add(make_prop(milestone_title, "ticket_milestone")) }
     new_row { |row| row.add(make_prop(current_ticket.description, "ticket_description")) }
+    current_ticket.comments.each_with_index { |comment, index| make_row_for_comment(comment, index) }
   end
   
   private ##################
   
   def new_row
-    row = Limelight::Prop.new(:name => "group")
+    row = Limelight::Prop.new(:name => "row")
     yield row
     main.add(row)
   end
@@ -33,8 +34,18 @@ module ViewTicket
     return production.current_ticket
   end
   
+  def make_row_for_comment(comment, index)
+    new_row do |row|
+      row.add(make_prop(comment, "ticket_comment_#{index + 1}"))
+    end
+  end
+  
   def make_prop(text, name)
     return Limelight::Prop.new(:text => text, :name => name, :id => name)
+  end
+   
+  def ticket_comments
+    return scene.find("ticket_comments")
   end
   
   def main

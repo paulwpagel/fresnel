@@ -44,11 +44,11 @@ describe ViewTicket, "load_current_ticket" do
     prop.name.should == "ticket_comment_1"
   end
 
-  # it "should make props for a second comment" do
-  #   prop = scene.find('ticket_comment_2')
-  #   prop.text.should == "Comment Two"
-  #   prop.name.should == "ticket_comment_2"
-  # end
+  it "should make props for a second comment" do
+    prop = scene.find('ticket_comment_2')
+    prop.text.should == "Comment Two"
+    prop.name.should == "ticket_comment_2"
+  end
   
   it "should add a prop for the milestone_title" do
     prop = scene.find('ticket_milestone')
