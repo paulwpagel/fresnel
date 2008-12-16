@@ -13,7 +13,7 @@ describe TypeSelector, "when changing desired type" do
   end
   
   def do_call
-    @player_under_test.value_changed(ignored_event=nil)
+    @player_under_test.notify_ticket_master
   end
 
   it "should ask the scene for ticket_master" do
