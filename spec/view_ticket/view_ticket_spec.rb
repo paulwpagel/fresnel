@@ -7,8 +7,9 @@ describe ViewTicket, "load_current_ticket" do
   before(:each) do
     mock_lighthouse
     @lighthouse_client.stub!(:milestone_title).and_return("Goal One")
+    comments = ["Comment One", "Comment Two"]
     producer.production.current_ticket = mock("ticket", :title => 'title', :assigned_user_name => "Roger", :state => "open",
-                                                     :milestone_id => 12345, :description => "Some Description")
+          :milestone_id => 12345, :description => "Some Description", :comments => comments)
   end
   
   uses_scene :view_ticket

@@ -12,26 +12,22 @@ module ViewTicket
     # scene.find("ticket_state").text = current_ticket.state.capitalize
     # scene.find("ticket_assigned_user").text = "Assigned User: #{current_ticket.assigned_user_name}"
     # scene.find("ticket_milestone").text = milestone_title
-    group_one = Limelight::Prop.new(:name => "group")
-    group_one.add(make_prop(current_ticket.title, "ticket_title"))
-    group_one.add(make_prop(current_ticket.state.capitalize, "ticket_state"))
-    
-    group_two = Limelight::Prop.new(:name => "group")
-    group_two.add(make_prop("Assigned User: #{current_ticket.assigned_user_name}", "ticket_assigned_user"))
-    
-    group_three = Limelight::Prop.new(:name => "group")
-    group_three.add(make_prop(milestone_title, "ticket_milestone"))
-
-    group_four = Limelight::Prop.new(:name => "group")
-    group_four.add(make_prop(current_ticket.description, "ticket_description"))
-    
-    main.add(group_one)
-    main.add(group_two)
-    main.add(group_three)
-    main.add(group_four)
+    new_row do |row|
+      row.add(make_prop(current_ticket.title, "ticket_title"))
+      row.add(make_prop(current_ticket.state.capitalize, "ticket_state"))
+    end
+    new_row { |row| row.add(make_prop("Assigned User: #{current_ticket.assigned_user_name}", "ticket_assigned_user")) }
+    new_row { |row| row.add(make_prop(milestone_title, "ticket_milestone")) }
+    new_row { |row| row.add(make_prop(current_ticket.description, "ticket_description")) }
   end
   
   private ##################
+  
+  def new_row
+    row = Limelight::Prop.new(:name => "group")
+    yield row
+    main.add(row)
+  end
   
   def current_ticket
     return production.current_ticket
