@@ -21,6 +21,14 @@ module Lighthouse
       return self.versions[0].body if self.versions[0]
       return ""
     end
+    
+    def comments
+      comment_list = []
+      self.versions.each_with_index do |version, index|
+        comment_list << version.body unless index == 0
+      end
+      return comment_list
+    end
   end
   
 end

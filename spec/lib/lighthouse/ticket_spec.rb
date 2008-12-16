@@ -68,3 +68,32 @@ describe Lighthouse::Ticket, "description" do
     @ticket.description.should == ""
   end
 end
+
+describe Lighthouse::Ticket, "comments" do
+  before(:each) do
+    @ticket = Lighthouse::Ticket.new
+    @version_one = mock("version", :body => "Some Description")
+    @versions = [@version_one]
+    @ticket.stub!(:versions).and_return(@versions)
+  end
+  
+  it "should return an array of comments ingoring the description" do
+    @ticket.comments.should == []
+  end
+  
+  it "should give one comment" do
+    version_two = mock("version", :body => "First Comment")
+    @versions << version_two
+    
+    @ticket.comments.should == ["First Comment"]
+  end
+
+  it "should give two comments" do
+    version_two = mock("version", :body => "First Comment")
+    version_three = mock("version", :body => "Second Comment")
+    @versions << version_two
+    @versions << version_three
+    
+    @ticket.comments.should == ["First Comment", "Second Comment"]
+  end
+end
