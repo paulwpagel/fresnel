@@ -1,7 +1,12 @@
 require File.expand_path(File.dirname(__FILE__) + "/../spec_helper")
-
+require 'title_bar'
 
 describe "title_bar" do
+
+  before(:each) do
+    mock_lighthouse
+  end
+  
   uses_scene :ticket
   
   before(:each) do

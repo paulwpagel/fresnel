@@ -1,51 +1,5 @@
 require File.expand_path(File.dirname(__FILE__) + "/../vendor/lighthouse-api/lib/lighthouse")
 
-Lighthouse.account = "8thlight"
-Lighthouse.token = 'a47514c5dbe30d07302426a4e50709349618c05d'
-# projects = Lighthouse::Project.find(:all)
-# project = projects[0]
-# x = Lighthouse::Ticket.find(:all, :params => {:project_id => project.id, :q => "state:open"})
-# puts "x[0].id: #{x[0].id}"
-# ticket = Lighthouse::Ticket.find(16, :params => {:project_id => project.id})
-# puts "ticket.versions: #{ticket.versions[0].body}"
-# puts "ticket.title: #{ticket.title}"
-# ticket.attributes.each_pair do |key, value|
-  # puts "#{key}: #{value}"
-# end
-# puts "x.size: #{x.size}"
-# project.tickets[0].assigned_user.attributes.each_pair do |key, value|
-#   puts "#{key}: #{value}"
-# end
-# project.tickets.each do |ticket|
-#   puts "ticket.class.name: #{ticket.class.name}"
-
-# ticket = Lighthouse::Ticket.new(:project_id => "21095")
-# ticket.title = "TEST ticket"
-# ticket.save
-
-ticket = Lighthouse::Ticket.find(15, :params => { :project_id => 21095 })
-puts "ticket.versions.size: #{ticket.versions.size}"
-puts "ticket.title: #{ticket.title}"
-version = Lighthouse::Ticket::Version.new
-version.body = "Testing body"
-
-ticket.versions << version
-puts ticket.save
-puts "ticket.versions.size: #{ticket.versions.size}"
-# tickets.each do |ticket|
-#   puts "ticket.title: #{ticket.title}"
-#   puts ticket.body
-# end
-
-
-# puts "ticket.id: #{ticket.id}"
-# puts "ticket.title: #{ticket.title}"
-# puts ticket.versions
-# ticket.versions.each do |version|
-#   puts version.body
-# end
-
-
 class LighthouseClient  
   
   def login_to(account, user, password)
@@ -71,8 +25,8 @@ class LighthouseClient
   def add_ticket(options, project_id)
     ticket = Lighthouse::Ticket.new(:project_id => project_id)
     ticket.title = options[:title]
-    version = Ticket::Version.new
-    ticket.versions << version
+    ticket.body = options[:description]
+    ticket.body_html = options[:description]
     ticket.save
     
     return nil

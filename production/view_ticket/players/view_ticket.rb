@@ -3,9 +3,7 @@ require "lighthouse/ticket"
 module ViewTicket
   
   def scene_opened(event)
-    unless $testing
-      load_current_ticket
-    end
+    load_current_ticket
   end
   
   def load_current_ticket
@@ -33,7 +31,7 @@ module ViewTicket
     main.add(group_four)
   end
   
-  private
+  private ##################
   
   def current_ticket
     return production.current_ticket

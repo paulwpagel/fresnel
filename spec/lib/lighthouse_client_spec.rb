@@ -39,12 +39,11 @@ describe LighthouseClient do
   
   it "should add a ticket to the project" do
     ticket = mock(Lighthouse::Ticket)
-    versions = mock('versions')
     options = {:title => "Test title", :description => "description"}
     Lighthouse::Ticket.should_receive(:new).with(:project_id => 2).and_return(ticket)
     ticket.should_receive(:title=).with("Test title")
-    ticket.should_receive(:versions).and_return(versions)
-    versions.should_receive(:<<).with("description")
+    ticket.should_receive(:body=).with("description")
+    ticket.should_receive(:body_html=).with("description")
     ticket.should_receive(:save)
     
     @client.add_ticket(options, 2)

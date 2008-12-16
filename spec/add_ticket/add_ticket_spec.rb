@@ -3,14 +3,14 @@ require 'limelight/specs/spec_helper'
 require "add_ticket"
 
 describe AddTicket do
-  uses_scene :add_ticket
-
+  
   before(:each) do
+    mock_lighthouse
     @milestones = [mock("milestone", :title => "milestone 1")]
-    @lighthouse_client = mock(LighthouseClient, :authenticate => nil, :add_ticket => nil, :milestones => @milestones)
-    LighthouseClient.stub!(:new).and_return(@lighthouse_client)
   end
-    
+  
+  uses_scene :add_ticket
+  
   it "should call client" do
     scene.find("title").text = "some title"
     scene.find("description").text = "some description"
@@ -50,6 +50,9 @@ describe AddTicket do
 end
 
 describe AddTicket, "Props" do
+  before(:each) do
+    mock_lighthouse
+  end
   uses_scene :add_ticket
   
   it "should have title and description" do
@@ -68,11 +71,14 @@ describe AddTicket, "Props" do
 end
 
 describe AddTicket, "Limelight event mappings" do
-  uses_scene :add_ticket
-  
+
   before(:each) do
     @event = nil
+    mock_lighthouse
   end
+  
+  uses_scene :add_ticket
+  
   it "should call add_ticket on " do
     scene.should_receive(:add_ticket)
     

@@ -2,6 +2,10 @@ require File.dirname(__FILE__) + '/../spec_helper'
 require 'limelight/specs/spec_helper'
 
 describe "Props" do
+  before(:each) do
+    mock_lighthouse
+  end
+  
   uses_scene :ticket
   
   it "should have a combo box that points to a type selector player" do

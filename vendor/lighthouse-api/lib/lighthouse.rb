@@ -217,7 +217,7 @@ module Lighthouse
   class Ticket < Base
     attr_writer :tags
     site_format << '/projects/:project_id'
-
+    
     def id
       attributes['number'] ||= nil
       number

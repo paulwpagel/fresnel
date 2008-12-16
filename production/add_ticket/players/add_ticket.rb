@@ -3,9 +3,7 @@ require "lighthouse_client"
 module AddTicket
   
   def scene_opened(e)
-    unless $testing
-      load_milestones
-    end
+    load_milestones
   end
   
   def button_pressed(e)
@@ -28,8 +26,6 @@ module AddTicket
     title.text = ""
     description.text = ""
   end
-  
-  
     
   private #############
   
