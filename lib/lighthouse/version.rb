@@ -8,12 +8,16 @@ module Lighthouse
       end
   
       def created_by
-        begin
-          user = Lighthouse::User.find(self.user_id)
-        rescue ActiveResource::ResourceNotFound => e
-        end
         return user.name if user
         return ""
+      end
+      
+      def user
+        begin
+          return Lighthouse::User.find(self.user_id)
+        rescue ActiveResource::ResourceNotFound => e
+          return nil
+        end
       end
     end
   end
