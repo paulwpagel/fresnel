@@ -10,9 +10,8 @@ require 'spec'
 
 $PRODUCTION_PATH = File.expand_path(File.dirname(__FILE__) + "/../production")
 
-
 def mock_lighthouse
   @project = mock(Lighthouse::Project, :open_tickets => [])  
   @lighthouse_client = mock(LighthouseClient, :authenticate => nil, :add_ticket => nil, :milestones => [], :find_project => @project)
-  LighthouseClient.stub!(:new).and_return(@lighthouse_client)
+  producer.production.lighthouse_client = @lighthouse_client
 end

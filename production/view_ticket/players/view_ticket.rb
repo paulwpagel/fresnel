@@ -46,6 +46,6 @@ module ViewTicket
   end
   
   def milestone_title
-    return LighthouseClient.new.milestone_title('fresnel', current_ticket.milestone_id)
+    return production.lighthouse_client.milestone_title('fresnel', current_ticket.milestone_id)
   end
 end

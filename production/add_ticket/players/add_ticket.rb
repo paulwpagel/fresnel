@@ -19,9 +19,7 @@ module AddTicket
     title = scene.find("title")
     description = scene.find("description")
   
-    client = LighthouseClient.new
-    client.authenticate
-    client.add_ticket({:title => title.text}, 21095)
+    production.lighthouse_client.add_ticket({:title => title.text, :description => description.text}, 21095)
     
     title.text = ""
     description.text = ""
@@ -30,8 +28,7 @@ module AddTicket
   private #############
   
   def milestone_choices
-    client = LighthouseClient.new    
-    milestones = client.milestones("fresnel")
+    milestones = production.lighthouse_client.milestones("fresnel")
     choices = ["None"]
     choices += milestones.collect{ |milestone| milestone.title }
   end

@@ -5,21 +5,16 @@ describe TicketMaster do
   
   before(:each) do
     @ticket_lister = mock("ticket_lister", :show_these_tickets => nil)
-    @scene = mock("scene", :ticket_lister => @ticket_lister)
-
     @tickets = [mock('ticket')]
     @project = mock("project", :all_tickets => @tickets, :open_tickets => nil)
     @client = mock("client", :find_project => @project)
-    LighthouseClient.stub!(:new).and_return(@client)
+    @scene = mock("scene", :ticket_lister => @ticket_lister, :production => mock("production", :lighthouse_client => @client))
+
+    
+    
     @ticket_master = TicketMaster.new(@scene)
   end
-  
-  it "should create a lighthouse_client" do
-    LighthouseClient.should_receive(:new)
     
-    TicketMaster.new(@scene)
-  end
-  
   it "should find the project when showing tickets" do
     @client.should_receive(:find_project).and_return(@project)
     

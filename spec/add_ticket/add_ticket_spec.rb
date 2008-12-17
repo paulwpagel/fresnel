@@ -15,8 +15,7 @@ describe AddTicket do
     scene.find("title").text = "some title"
     scene.find("description").text = "some description"
     
-    @lighthouse_client.should_receive(:authenticate)
-    @lighthouse_client.should_receive(:add_ticket).with({:title => "some title"}, anything())
+    @lighthouse_client.should_receive(:add_ticket).with({:title => "some title", :description => "some description"}, anything())
   
     scene.add_ticket
   end
@@ -53,6 +52,7 @@ describe AddTicket, "Props" do
   before(:each) do
     mock_lighthouse
   end
+  
   uses_scene :add_ticket
   
   it "should have title and description" do

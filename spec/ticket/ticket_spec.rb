@@ -27,7 +27,7 @@ end
 describe Ticket, "view_ticket" do
   
   class Production
-    attr_accessor :current_ticket
+    attr_accessor :current_ticket, :lighthouse_client
   end
   
   before(:each) do
@@ -41,7 +41,7 @@ describe Ticket, "view_ticket" do
     
     @ticket = mock("ticket")    
     @lighthouse_client = mock(LighthouseClient, :ticket => @ticket)
-    LighthouseClient.stub!(:new).and_return(@lighthouse_client)
+    production.lighthouse_client = @lighthouse_client
   end
   
   it "should have a view method shows a ticket" do

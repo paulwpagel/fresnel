@@ -4,11 +4,10 @@ require "lighthouse/project"
 class TicketMaster
   def initialize(scene)
     @scene = scene
-    @client = LighthouseClient.new
   end
   
   def show_tickets(type)
-    project = @client.find_project('fresnel')
+    project = @scene.production.lighthouse_client.find_project('fresnel')
     if type == "Open Tickets"
       tickets = project.open_tickets
     else

@@ -8,3 +8,4 @@ name "Fresnel"
 
 attribute :credential
 attribute :current_ticket
+attribute :lighthouse_client

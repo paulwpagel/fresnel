@@ -14,4 +14,11 @@ production = Limelight::Production["Fresnel"]
 #require 'seomthing'
 
 # This is the ideal place to assign values to production attributes.
-#production.something = MySource::Something.new
+
+# Development
+require 'in_memory_lighthouse_client'
+production.lighthouse_client = InMemoryLighthouseClient.new
+
+# Real App
+# require 'lighthouse_client'
+# production.lighthouse_client = LighthouseClient.new

@@ -1,4 +1,3 @@
-require "lighthouse_client"
 require "credential"
 
 module Login
@@ -10,8 +9,7 @@ module Login
   
   def log_in
     begin
-      client = LighthouseClient.new
-      logged_in = client.login_to(@account.text, @username.text, @password.text)
+      logged_in = production.lighthouse_client.login_to(@account.text, @username.text, @password.text)
       attempt_login logged_in
     rescue ActiveResource::ResourceNotFound
       error_with "Authentication Failed, please try again"

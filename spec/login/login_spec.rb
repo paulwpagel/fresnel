@@ -3,11 +3,14 @@ require 'limelight/specs/spec_helper'
 require "login"
 
 describe Login do
+  
+  before(:each) do
+    mock_lighthouse
+  end
+  
   uses_scene :login
   
   before(:each) do
-    @lighthouse_client = mock(LighthouseClient)
-    LighthouseClient.stub!(:new).and_return(@lighthouse_client)
     scene.find("username").text = "Paul Pagel"
     scene.find("password").text = "wouldntyaouliketoknow"
     scene.find("account").text = "checking"
