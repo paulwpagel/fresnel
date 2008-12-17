@@ -7,8 +7,9 @@ describe ViewTicket, "load_current_ticket" do
   before(:each) do
     mock_lighthouse
     @lighthouse_client.stub!(:milestone_title).and_return("Goal One")
+    comments = ["Comment One", "Comment Two"]
     producer.production.current_ticket = mock("ticket", :title => 'title', :assigned_user_name => "Roger", :state => "open",
-                                                     :milestone_id => 12345, :description => "Some Description")
+          :milestone_id => 12345, :description => "Some Description", :comments => comments)
   end
   
   uses_scene :view_ticket
@@ -35,6 +36,18 @@ describe ViewTicket, "load_current_ticket" do
     prop = scene.find('ticket_description')
     prop.text.should == "Some Description"
     prop.name.should == "ticket_description"
+  end
+  
+  it "should make props for one comment" do
+    prop = scene.find('ticket_comment_1')
+    prop.text.should == "Comment One"
+    prop.name.should == "ticket_comment_1"
+  end
+
+  it "should make props for a second comment" do
+    prop = scene.find('ticket_comment_2')
+    prop.text.should == "Comment Two"
+    prop.name.should == "ticket_comment_2"
   end
   
   it "should add a prop for the milestone_title" do
