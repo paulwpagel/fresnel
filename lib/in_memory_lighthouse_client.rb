@@ -1,10 +1,20 @@
 class InMemoryProject
+  def open_tickets
+    return []
+  end
+  
+  def all_tickets
+    return []
+  end
 end
 
 class InMemoryTicket
 end
 
 class InMemoryMilestone
+  def title
+    return "This title"
+  end
 end
 
 class InMemoryLighthouseClient
