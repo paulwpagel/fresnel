@@ -97,18 +97,3 @@ describe Lighthouse::Ticket, "comments" do
     @ticket.comments.should == ["First Comment", "Second Comment"]
   end
 end
-
-describe Lighthouse::Ticket, "version" do
-  before(:each) do
-    @version_one = Lighthouse::Ticket::Version.new
-    @version_one.stub!(:user_id)
-    @versions = [@version_one]
-    @ticket = mock("ticket", :versions => @versions)
-    user = mock("user", :name => nil)
-    Lighthouse::User.stub!(:find).and_return(user)
-  end
-
-  it "should use the monkey_patched versions" do
-    lambda{@ticket.versions[0].created_by}.should_not raise_error
-  end
-end
