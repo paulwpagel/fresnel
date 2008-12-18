@@ -1,4 +1,5 @@
 require File.expand_path(File.dirname(__FILE__) + "/../../vendor/lighthouse-api/lib/lighthouse")
+require "lighthouse/version"
 
 module Lighthouse
   
@@ -9,6 +10,10 @@ module Lighthouse
       rescue
         return nil
       end
+    end
+    
+    def fresnel_versions
+      return self.versions.collect { |version| TicketVersion.new(version) }
     end
     
     def assigned_user_name
