@@ -1,24 +1,25 @@
 require File.expand_path(File.dirname(__FILE__) + "/../../vendor/lighthouse-api/lib/lighthouse")
 
-module Lighthouse
-  class Ticket
-    class Version
-      def comment
-        return self.body
-      end
+class TicketVersion
   
-      def created_by
-        return user.name if user
-        return ""
-      end
-      
-      def user
-        begin
-          return Lighthouse::User.find(self.user_id)
-        rescue ActiveResource::ResourceNotFound => e
-          return nil
-        end
-      end
+  def initialize(lighthouse_version)
+    @lighthouse_version = lighthouse_version
+  end
+  
+  def comment
+    return @lighthouse_version.body
+  end
+    
+  def created_by
+    return user.name if user
+    return ""
+  end
+  
+  def user
+    begin
+      return Lighthouse::User.find(@lighthouse_version.user_id)
+    rescue ActiveResource::ResourceNotFound => e
+      return nil
     end
   end
 end
