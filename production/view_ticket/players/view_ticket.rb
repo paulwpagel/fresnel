@@ -17,7 +17,7 @@ module ViewTicket
       row.add(make_prop(current_ticket.state.capitalize, "ticket_state"))
     end
     new_row { |row| row.add(make_prop("Assigned User: #{current_ticket.assigned_user_name}", "ticket_assigned_user")) }
-    new_row { |row| row.add(make_prop(milestone_title, "ticket_milestone")) }
+    new_row { |row| row.add(make_prop("Milestone: #{milestone_title}", "ticket_milestone")) }
     new_row { |row| row.add(make_prop(current_ticket.description, "ticket_description")) }
     current_ticket.fresnel_versions.each_with_index do |version, index|
       make_row_for_version(version, index)
