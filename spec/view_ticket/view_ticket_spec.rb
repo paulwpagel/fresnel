@@ -56,7 +56,7 @@ describe ViewTicket, "load_current_ticket" do
   
   it "should add a prop for the milestone_title" do
     prop = scene.find('ticket_milestone')
-    prop.text.should == "Goal One"
+    prop.text.should include("Goal One")
     prop.name.should == "ticket_milestone"
   end
   
