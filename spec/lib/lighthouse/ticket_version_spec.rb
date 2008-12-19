@@ -1,5 +1,5 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
-require "lighthouse/version"
+require "lighthouse/ticket_version"
 
 describe TicketVersion do
   before(:each) do
