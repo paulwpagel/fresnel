@@ -3,7 +3,7 @@ require "lighthouse/ticket_version"
 
 describe TicketVersion do
   before(:each) do
-    lighthouse_version = mock("lighthouse ticket version", :body => "Some Comment", :user_id => 12345)
+    lighthouse_version = mock("lighthouse ticket version", :body => "Some Comment", :user_id => 12345, :updated_at => "Now")
     @ticket_version = TicketVersion.new(lighthouse_version)
     
     @user = mock("user", :name => "Someone")
@@ -41,6 +41,10 @@ describe TicketVersion do
     Lighthouse::User.should_receive(:find).and_raise(error)
     
     @ticket_version.user.should == nil
+  end
+  
+  it "should have the timestamp" do
+    @ticket_version.timestamp.should == "Now"
   end
   
 end

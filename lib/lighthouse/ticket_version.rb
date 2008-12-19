@@ -9,7 +9,11 @@ class TicketVersion
   def comment
     return @lighthouse_version.body
   end
-    
+  
+  def timestamp
+    return @lighthouse_version.updated_at
+  end
+  
   def created_by
     return user.name if user
     return ""

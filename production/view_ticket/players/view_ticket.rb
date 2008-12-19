@@ -19,10 +19,15 @@ module ViewTicket
     new_row { |row| row.add(make_prop("Assigned User: #{current_ticket.assigned_user_name}", "ticket_assigned_user")) }
     new_row { |row| row.add(make_prop(milestone_title, "ticket_milestone")) }
     new_row { |row| row.add(make_prop(current_ticket.description, "ticket_description")) }
-    current_ticket.comments.each_with_index { |comment, index| make_row_for_comment(comment, index) }
+    new_row { |row| row.add(make_prop(version_content, "ticket_version_1"))}
   end
   
   private ##################
+  
+  def version_content
+    version = current_ticket.fresnel_versions[0]
+    return "#{version.created_by}\n#{version.timestamp}\n#{version.comment}"
+  end
   
   def new_row
     row = Limelight::Prop.new(:name => "row")
@@ -33,21 +38,11 @@ module ViewTicket
   def current_ticket
     return production.current_ticket
   end
-  
-  def make_row_for_comment(comment, index)
-    new_row do |row|
-      row.add(make_prop(comment, "ticket_comment_#{index + 1}"))
-    end
-  end
-  
+    
   def make_prop(text, name)
     return Limelight::Prop.new(:text => text, :name => name, :id => name)
   end
-   
-  def ticket_comments
-    return scene.find("ticket_comments")
-  end
-  
+    
   def main
     return scene.find_by_name('main')[0]
   end
