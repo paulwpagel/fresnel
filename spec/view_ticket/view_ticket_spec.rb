@@ -7,7 +7,9 @@ describe ViewTicket, "load_current_ticket" do
   before(:each) do
     mock_lighthouse
     @lighthouse_client.stub!(:milestone_title).and_return("Goal One")
-    versions = [mock("version", :comment => "Comment One", :created_by => "Version User One", :timestamp => "Time One")]
+    version_one = mock("version", :comment => "Comment One", :created_by => "Version User One", :timestamp => "Time One")
+    version_two = mock("version", :comment => "Comment Two", :created_by => "Version User Two", :timestamp => "Time Two")
+    versions = [version_one, version_two]
     producer.production.current_ticket = mock("ticket", :title => 'title', :assigned_user_name => "Roger", :state => "open",
           :milestone_id => 12345, :description => "Some Description", :fresnel_versions => versions)
   end
@@ -43,6 +45,13 @@ describe ViewTicket, "load_current_ticket" do
     prop.text.should include("Comment One")
     prop.text.should include("Version User One")
     prop.text.should include("Time One")
+  end
+  
+  it "should make props for a second version" do
+    prop = scene.find('ticket_version_2')
+    prop.text.should include("Comment Two")
+    prop.text.should include("Version User Two")
+    prop.text.should include("Time Two")
   end
   
   it "should add a prop for the milestone_title" do

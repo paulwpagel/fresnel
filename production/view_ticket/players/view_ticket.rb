@@ -19,13 +19,18 @@ module ViewTicket
     new_row { |row| row.add(make_prop("Assigned User: #{current_ticket.assigned_user_name}", "ticket_assigned_user")) }
     new_row { |row| row.add(make_prop(milestone_title, "ticket_milestone")) }
     new_row { |row| row.add(make_prop(current_ticket.description, "ticket_description")) }
-    new_row { |row| row.add(make_prop(version_content, "ticket_version_1"))}
+    current_ticket.fresnel_versions.each_with_index do |version, index|
+      make_row_for_version(version, index)
+    end
   end
   
   private ##################
   
-  def version_content
-    version = current_ticket.fresnel_versions[0]
+  def make_row_for_version(version, index)
+    new_row { |row| row.add(make_prop(version_content(version), "ticket_version_#{index + 1}"))}
+  end
+  
+  def version_content(version)
     return "#{version.created_by}\n#{version.timestamp}\n#{version.comment}"
   end
   
