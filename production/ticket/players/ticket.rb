@@ -1,6 +1,3 @@
-require "lighthouse_client"
-require "lighthouse/project"
-
 require 'ticket_lister'
 
 module Ticket

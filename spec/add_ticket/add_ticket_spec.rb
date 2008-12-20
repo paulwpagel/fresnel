@@ -10,10 +10,11 @@ describe AddTicket do
   end
   
   uses_scene :add_ticket
-  
+    
   it "should call client" do
     scene.find("title").text = "some title"
     scene.find("description").text = "some description"
+    scene.stub!(:load)
     
     @lighthouse_client.should_receive(:add_ticket).with({:title => "some title", :description => "some description"}, anything())
   
@@ -23,11 +24,21 @@ describe AddTicket do
   it "should clear out the text boxes when a ticket is added" do
     scene.find("title").text = "some title"
     scene.find("description").text = "some description"
-  
+    scene.stub!(:load)
+    
     scene.add_ticket
     
     scene.find("title").text.should == ""
     scene.find("description").text.should == ""
+  end
+  
+  it "should load the view_ticket scene" do
+    scene.find("title").text = "some title"
+    scene.find("description").text = "some description"
+    scene.should_receive(:load).with("ticket")
+    
+  
+    scene.add_ticket
   end
   
   it "should give a choice for milestones" do

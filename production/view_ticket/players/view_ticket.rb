@@ -1,5 +1,3 @@
-require "lighthouse/ticket"
-
 module ViewTicket
   
   def scene_opened(event)

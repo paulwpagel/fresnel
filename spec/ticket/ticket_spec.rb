@@ -40,7 +40,7 @@ describe Ticket, "view_ticket" do
     @player_under_test.stub!(:production).and_return(production)
     
     @ticket = mock("ticket")    
-    @lighthouse_client = mock(LighthouseClient, :ticket => @ticket)
+    @lighthouse_client = mock("LighthouseClient", :ticket => @ticket)
     production.lighthouse_client = @lighthouse_client
   end
   

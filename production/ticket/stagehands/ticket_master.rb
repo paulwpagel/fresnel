@@ -1,5 +1,3 @@
-require "lighthouse_client"
-require "lighthouse/project"
 
 class TicketMaster
   def initialize(scene)

@@ -1,5 +1,3 @@
-require "lighthouse_client"
-
 module AddTicket
   
   def scene_opened(e)
@@ -19,10 +17,12 @@ module AddTicket
     title = scene.find("title")
     description = scene.find("description")
   
-    production.lighthouse_client.add_ticket({:title => title.text, :description => description.text}, 21095)
+    production.lighthouse_client.add_ticket({:title => title.text, :description => description.text}, "fresnel")
     
     title.text = ""
     description.text = ""
+    
+    scene.load("ticket")
   end
     
   private #############
