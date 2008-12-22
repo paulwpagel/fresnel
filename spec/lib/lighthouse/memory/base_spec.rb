@@ -11,7 +11,7 @@ describe Lighthouse::Memory do
   end
   
   it "should return the project if it has it" do
-    project = mock(Lighthouse::Memory::Project, :name => "new")
+    project = Lighthouse::Memory::Project.new(:name => "new")
     Lighthouse::Memory::projects << project
 
     Lighthouse::Memory::find_project("new").should == project
@@ -22,13 +22,18 @@ describe Lighthouse::Memory do
   end
   
   it "should add ticket to a project" do
-    options = {:title => "test title", :description => "test description", }
+    options = {:title => "test title", :description => "test description" }
 
     Lighthouse::Memory::add_ticket(options, "fresnel")
     
     Lighthouse::Memory.projects[0].tickets.size.should == 1
     Lighthouse::Memory.projects[0].tickets[0].title.should == "test title"
     Lighthouse::Memory.projects[0].tickets[0].description.should == "test description"
+  end
+  
+  
+  it "should throw error if it doesn't know the project" do
+    lambda{Lighthouse::Memory::add_ticket({}, "fake")}.should raise_error("There is no project fake")
   end
   
 end

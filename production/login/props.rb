@@ -19,7 +19,7 @@ main {
     }
     
     button_group {
-      button :text => "Login", :players => "login"
+      button :text => "Login", :players => "login", :id => "login_button"
     }
     
     

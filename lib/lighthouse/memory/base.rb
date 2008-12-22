@@ -30,6 +30,8 @@ module Lighthouse
       if project
         ticket = Lighthouse::Memory::Ticket.new(options)
         project.tickets << ticket
+      else
+        raise "There is no project fake"
       end
     end
 

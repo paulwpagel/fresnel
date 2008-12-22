@@ -6,3 +6,12 @@ task :spec do
   gem 'rspec'
   load 'spec'
 end
+
+
+task :integration do
+  ARGV.clear
+  ARGV << "integration"
+  gem 'rspec'
+  load 'spec'
+end
+
