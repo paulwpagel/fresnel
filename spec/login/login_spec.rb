@@ -50,17 +50,6 @@ describe Login do
     scene.find("password").text.should == ""
   end  
   
-  it "should error if there is no account name" do
-    scene.find("account").text = ""
-    
-    @lighthouse_client.should_receive(:login_to).with(anything(), anything(), anything()).and_raise(ActiveResource::ResourceNotFound.new(""))
-
-    scene.load_inputs
-    scene.log_in
-    
-    scene.find("error_message").text.should == "Authentication Failed, please try again"
-  end
-  
   it "should error if there is no username" do
     scene.find("username").text = ""
     

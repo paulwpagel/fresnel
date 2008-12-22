@@ -22,6 +22,15 @@ describe Lighthouse::LighthouseApi do
     Lighthouse::LighthouseApi::login_to("AFlight", "paul", "nottelling").should be(false)
   end
   
+  it "should error if there is no account name" do
+    Lighthouse.should_receive(:account=).with("AFlight")
+    Lighthouse.should_receive(:authenticate).with("paul", "nottelling")
+    
+    Lighthouse::Project.should_receive(:find).with(:all).and_raise(ActiveResource::ResourceNotFound.new(mock('not found', :code => "Not Found")))
+
+    Lighthouse::LighthouseApi::login_to("AFlight", "paul", "nottelling").should be(false)  
+  end
+  
   it "should find a project by name" do
     project = mock(Lighthouse::Project, :name => "one")
     project2 = mock(Lighthouse::Project, :name => "two")

@@ -2,6 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + "/../../../vendor/lighthouse-a
 
 require "lighthouse/project"
 require "lighthouse/ticket"
+
 module Lighthouse
   module LighthouseApi
   
@@ -12,6 +13,8 @@ module Lighthouse
       begin
         Lighthouse::Project.find(:all)
       rescue ActiveResource::UnauthorizedAccess => e
+        return false
+      rescue ActiveResource::ResourceNotFound
         return false
       end
       return true
@@ -26,17 +29,12 @@ module Lighthouse
     end
     
     def self.add_ticket(options, project_name)
-      begin
-        project = find_project(project_name)
-        ticket = Lighthouse::Ticket.new(:project_id => project.id)
-        ticket.title = options[:title]
-        ticket.body = options[:description]
-        ticket.body_html = options[:description]
-        ticket.save
-    rescue Exception => e
-      puts e
-      puts e.backtrace
-    end
+      project = find_project(project_name)
+      ticket = Lighthouse::Ticket.new(:project_id => project.id)
+      ticket.title = options[:title]
+      ticket.body = options[:description]
+      ticket.body_html = options[:description]
+      ticket.save
       return nil
     end
   

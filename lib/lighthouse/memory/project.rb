@@ -1,9 +1,11 @@
+require "lighthouse/memory/ticket"
 module Lighthouse
   module Memory
     class Project
-      attr_accessor :tickets
+      attr_accessor :tickets, :name
   
-      def initialize
+      def initialize(options = {})
+        @name = options[:name]
         @tickets = []
       end
   

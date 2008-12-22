@@ -1,4 +1,3 @@
-
 class TicketMaster
   def initialize(scene)
     @scene = scene

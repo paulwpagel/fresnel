@@ -11,8 +11,6 @@ module Login
     begin
       logged_in = production.lighthouse_client.login_to(@account.text, @username.text, @password.text)
       attempt_login logged_in
-    rescue ActiveResource::ResourceNotFound
-      error_with "Authentication Failed, please try again"
     rescue URI::InvalidURIError
       error_with "Authentication Failed, please try again"
     end
