@@ -1,9 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + "/../../../spec_helper")
 require "lighthouse/lighthouse_api/base"
 
-module Lighthouse
-  module LighthouseApi
-
 describe Lighthouse::LighthouseApi do
   
   it "should not log in the user to the account" do
@@ -107,8 +104,4 @@ describe Lighthouse::LighthouseApi do
     Lighthouse::LighthouseApi::ticket(1).should == ticket
   end
   
-end
-
-
-end
 end

@@ -31,9 +31,17 @@ describe Lighthouse::Memory do
     Lighthouse::Memory.projects[0].tickets[0].description.should == "test description"
   end
   
-  
   it "should throw error if it doesn't know the project" do
     lambda{Lighthouse::Memory::add_ticket({}, "fake")}.should raise_error("There is no project fake")
+  end
+  
+  it "should have miletstones" do
+    Lighthouse::Memory.milestones("fresnel").size.should == 1
+    Lighthouse::Memory.milestones("fresnel")[0].title.should == "First Milestone"
+
+    Lighthouse::Memory.milestones("fresnel") << Lighthouse::Memory::Milestone.new()
+
+    Lighthouse::Memory.milestones("fresnel").size.should == 2
   end
   
 end

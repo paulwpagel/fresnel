@@ -4,11 +4,12 @@ module Lighthouse
   module Memory
     
     def self.create_default_project
-      return [Lighthouse::Memory::Project.new(:name => "fresnel")]
+      fresnel = Lighthouse::Memory::Project.new(:name => "fresnel")
+      fresnel.milestones << Lighthouse::Memory::Milestone.new(:title => "First Milestone")
+      return [fresnel]
     end
 
     @@projects = create_default_project
-    
     def self.projects
       return @@projects
     end
@@ -34,8 +35,10 @@ module Lighthouse
         raise "There is no project fake"
       end
     end
-
+ 
     def self.milestones(project_name)
+      project = find_project(project_name)
+      return project.milestones if project
       return []
     end
 
