@@ -3,10 +3,8 @@ require File.expand_path(File.dirname(__FILE__) + "/../stagehands/converts_ticke
 module TicketLister
   def show_these_tickets(tickets)
     self.remove_all
-    tickets.map { |ticket| 
-      ConvertsTicketToProp.convert(ticket)
-    }.each { |prop|
-      self.add(prop)
-    }
+    
+    mapped_tickets = tickets.map {|ticket| ConvertsTicketToProp.convert(ticket) }
+    mapped_tickets.each { |prop| self.add(prop) }
   end
 end

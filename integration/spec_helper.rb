@@ -16,3 +16,11 @@ require 'spec'
 
 $PRODUCTION_PATH = File.expand_path(File.dirname(__FILE__) + "/../production")
 
+$visual = true
+
+def press_button(button_prop_name, scene)
+  sleep 1 if $visual
+  scene.find(button_prop_name).button_pressed(@event)
+  sleep 1 if $visual
+end
+

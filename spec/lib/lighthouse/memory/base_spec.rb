@@ -6,6 +6,11 @@ describe Lighthouse::Memory do
     Lighthouse::Memory::login_to("AFlight", "paul", "nottelling").should be(true)
   end
   
+  it "should be a more reserved login" do
+    Lighthouse::Memory::fail_login
+    Lighthouse::Memory::login_to("AFlight", "paul", "nottelling").should be(false)
+  end
+  
   it "should return nil if it can't find the project" do
     Lighthouse::Memory::find_project("some project we dont have").should be_nil
   end

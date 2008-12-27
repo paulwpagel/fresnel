@@ -1,13 +1,15 @@
 module Lighthouse
   module Memory
     class Ticket
-      attr_reader :title, :description, :status
+      attr_reader :title, :description, :status, :id
+      alias :state :status
       
       def initialize(options = {})
         @title = options[:title]
         @description = options[:description]
         @status = options[:status]
         @milestone_id = options[:milestone_id]
+        @id = options[:id]
       end
       
       def milestone(project)

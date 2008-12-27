@@ -14,8 +14,13 @@ module Lighthouse
       return @@projects
     end
     
+    @@login = true
     def self.login_to(account, user, password)
-      return true
+      return @@login
+    end
+    
+    def self.fail_login
+      @@login = false
     end
 
     def self.find_project(project_name)
@@ -29,10 +34,11 @@ module Lighthouse
     def self.add_ticket(options, project_name)
       project = find_project(project_name)
       if project
+        options[:id] = rand 100000
         ticket = Lighthouse::Memory::Ticket.new(options)
         project.tickets << ticket
       else
-        raise "There is no project fake"
+        raise "There is no project #{project_name}"
       end
     end
  

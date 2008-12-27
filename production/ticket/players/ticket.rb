@@ -17,7 +17,7 @@ module Ticket
   prop_reader :ticket_lister
   
   def view(id)
-    production.current_ticket = production.lighthouse_client.ticket(id)#project.all_tickets.find{|ticket| ticket.id==id}
+    production.current_ticket = production.lighthouse_client.ticket(id)
     scene.load('view_ticket')
   end
   

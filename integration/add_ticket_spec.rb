@@ -9,31 +9,25 @@ describe "Add Ticket Integration Test" do
     scene.find("account").text = "fresnel"
     scene.find("username").text = "Tommy James"
     scene.find("password").text = "abracadabrah"
-    
-    sleep 1
-    
-    scene.find("login_button").button_pressed(nil)
-    
-    sleep 1
+
+    press_button("login_button", scene)
     
     scene = producer.production.theater['default'].current_scene
-    
     scene.name.should == "ticket"
-
-    scene.find("add_ticket").button_pressed(nil)
+    
+    press_button "add_ticket", scene
     
     scene = producer.production.theater['default'].current_scene
     scene.name.should == "add_ticket"
-
-    sleep 1
     
     scene.find("title").text = "Test Title One"
     scene.find("description").text = "Test Description One"
-    sleep 1
-    scene.find("add_ticket_button").button_pressed(nil)
+    scene.find("milestones").text = "First Milestone"
+
+    press_button "add_ticket_button", scene
     
-    sleep 1
     scene = producer.production.theater['default'].current_scene
-    sleep 1
+
+    scene.find("ticket_type").text = "All Tickets"
   end
 end
