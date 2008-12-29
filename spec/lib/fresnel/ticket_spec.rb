@@ -104,12 +104,12 @@ describe Lighthouse::Ticket, "fresnel versions" do
     @lighthouse_ticket = mock("Lighthouse::Ticket", :versions => @versions, :assigned_user_id => nil)
     @fresnel_ticket = Fresnel::Ticket.new(@lighthouse_ticket)
 
-    @fresnel_version = mock(TicketVersion)
-    TicketVersion.stub!(:new).and_return(@fresnel_version)
+    @fresnel_version = mock(Fresnel::TicketVersion)
+    Fresnel::TicketVersion.stub!(:new).and_return(@fresnel_version)
   end
   
   it "should have a fresnel version for one lighthouse version" do
-    TicketVersion.should_receive(:new).with(@version_one).and_return(@fresnel_version)
+    Fresnel::TicketVersion.should_receive(:new).with(@version_one).and_return(@fresnel_version)
     
     @fresnel_ticket.fresnel_versions.should == [@fresnel_version]
   end
@@ -117,7 +117,7 @@ describe Lighthouse::Ticket, "fresnel versions" do
   it "should have a fresnel version for a second lighthouse version" do
     version_two = mock("version")
     @versions << version_two
-    TicketVersion.should_receive(:new).with(version_two).and_return(@fresnel_version)
+    Fresnel::TicketVersion.should_receive(:new).with(version_two).and_return(@fresnel_version)
     
     @fresnel_ticket.fresnel_versions.should == [@fresnel_version, @fresnel_version]
   end
