@@ -20,7 +20,7 @@ describe Lighthouse::Ticket do
     @ticket.assigned_user.should == @muser
   end
   
-  it "should return assigned_user_name" do
+  it "should return the assigned_user_name" do
     @ticket.assigned_user_name.should == "Denny"
   end
   
