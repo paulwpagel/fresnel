@@ -96,29 +96,30 @@ describe Lighthouse::Ticket, "comments" do
     @fresnel_ticket.comments.should == ["First Comment", "Second Comment"]
   end
 end
-# 
-# describe Lighthouse::Ticket, "fresnel versions" do
-#   before(:each) do
-#     @ticket = Lighthouse::Ticket.new
-#     @version_one = mock("version")
-#     @versions = [@version_one]
-#     @ticket.stub!(:versions).and_return(@versions)
-#     @fresnel_version = mock(TicketVersion)
-#     TicketVersion.stub!(:new).and_return(@fresnel_version)
-#   end
-#   
-#   it "should have a fresnel version for one lighthouse version" do
-#     TicketVersion.should_receive(:new).with(@version_one).and_return(@fresnel_version)
-#     
-#     @ticket.fresnel_versions.should == [@fresnel_version]
-#   end
-#   
-#   it "should have a fresnel version for a second lighthouse version" do
-#     version_two = mock("version")
-#     @versions << version_two
-#     TicketVersion.should_receive(:new).with(version_two).and_return(@fresnel_version)
-#     
-#     @ticket.fresnel_versions.should == [@fresnel_version, @fresnel_version]
-#   end
-# end
-# 
+
+describe Lighthouse::Ticket, "fresnel versions" do
+  before(:each) do
+    @version_one = mock("version")
+    @versions = [@version_one]
+    @lighthouse_ticket = mock("Lighthouse::Ticket", :versions => @versions, :assigned_user_id => nil)
+    @fresnel_ticket = Fresnel::Ticket.new(@lighthouse_ticket)
+
+    @fresnel_version = mock(TicketVersion)
+    TicketVersion.stub!(:new).and_return(@fresnel_version)
+  end
+  
+  it "should have a fresnel version for one lighthouse version" do
+    TicketVersion.should_receive(:new).with(@version_one).and_return(@fresnel_version)
+    
+    @fresnel_ticket.fresnel_versions.should == [@fresnel_version]
+  end
+  
+  it "should have a fresnel version for a second lighthouse version" do
+    version_two = mock("version")
+    @versions << version_two
+    TicketVersion.should_receive(:new).with(version_two).and_return(@fresnel_version)
+    
+    @fresnel_ticket.fresnel_versions.should == [@fresnel_version, @fresnel_version]
+  end
+end
+

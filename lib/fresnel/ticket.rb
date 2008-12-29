@@ -1,4 +1,5 @@
 require File.expand_path(File.dirname(__FILE__) + "/../../vendor/lighthouse-api/lib/lighthouse")
+require "lighthouse/ticket_version"
 
 module Fresnel
   class Ticket
@@ -19,6 +20,10 @@ module Fresnel
       user = self.assigned_user
       return user.name unless user.nil?
       return ''
+    end
+    
+    def fresnel_versions
+      return @versions.collect { |version| TicketVersion.new(version) }
     end
     
     def description
