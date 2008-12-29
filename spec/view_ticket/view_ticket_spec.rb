@@ -55,10 +55,11 @@ describe ViewTicket, "load_current_ticket" do
     prop.text.should include("Time Two")
   end
   
-  it "should add a prop for the milestone_title" do
+  it "should add a combo_box for the milestone_title" do
     prop = scene.find('ticket_milestone')
-    prop.text.should include("Goal One")
-    prop.name.should == "ticket_milestone"
+    prop.value.should == "Goal One"
+    prop.choices.should include("Goal One")
+    prop.name.should == "combo_box"
   end
   
 end

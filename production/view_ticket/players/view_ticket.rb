@@ -18,7 +18,10 @@ module ViewTicket
       row.add(make_prop("Assigned User:", "assigned_user_header"))
       row.add(make_assigned_user_prop)
     end
-    new_row { |row| row.add(make_prop("Milestone: #{milestone_title}", "ticket_milestone")) }
+    new_row do |row|
+      row.add(make_prop("Milestone:", "milstone_header"))
+      row.add(make_milestone_prop)
+    end
     new_row { |row| row.add(make_prop(current_ticket.description, "ticket_description")) }
     current_ticket.fresnel_versions.each_with_index do |version, index|
       make_row_for_version(version, index)
@@ -43,6 +46,10 @@ module ViewTicket
   
   def current_ticket
     return production.current_ticket
+  end
+  
+  def make_milestone_prop
+    return Limelight::Prop.new(:choices => [milestone_title], :id => "ticket_milestone", :name => "combo_box")
   end
   
   def make_assigned_user_prop
