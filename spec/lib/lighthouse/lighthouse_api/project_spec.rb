@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../../../spec_helper'
 require "lighthouse/project"
 
-describe Lighthouse::Project do
+describe Lighthouse::Project, "tickets" do
   before(:each) do
     @project = Lighthouse::Project.new
     @project.stub!(:id).and_return(12345)
@@ -29,4 +29,24 @@ describe Lighthouse::Project do
     @project.all_tickets.should == @tickets    
   end
   
+end
+
+describe Lighthouse::Project, "milestones" do
+  before(:each) do
+    @project = Lighthouse::Project.new
+    milestone_one = mock("milestone", :title => "Goal One")
+    @milestones = [milestone_one]
+    @project.stub!(:milestones).and_return(@milestones)
+  end
+  
+  it "should have a title for one milestone" do    
+    @project.milestone_titles.should == ["Goal One"]
+  end
+  
+  it "should have a title for two milestones" do
+    milestone_two = mock("milestone", :title => "Goal Two")
+    @milestones << milestone_two
+    
+    @project.milestone_titles.should == ["Goal One", "Goal Two"]
+  end
 end
