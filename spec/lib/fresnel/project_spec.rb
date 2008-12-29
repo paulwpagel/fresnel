@@ -6,7 +6,7 @@ describe Fresnel::Project, "tickets" do
     @lighthoust_project = mock("Lighthouse::Project", :id => 12345, :milestones => [])
     @fresnel_project = Fresnel::Project.new(@lighthoust_project)
     @tickets = [mock("ticket")]
-    Lighthouse::Ticket.stub!(:find).and_return(@tickets)
+    Fresnel::Ticket.stub!(:find).and_return(@tickets)
   end
   
   it "should accept a project on init" do
@@ -14,7 +14,7 @@ describe Fresnel::Project, "tickets" do
   end
   
   it "should find all open tickets for a project" do
-    Lighthouse::Ticket.should_receive(:find).with(:all, :params => {:project_id => 12345, :q => "state:open"})
+    Fresnel::Ticket.should_receive(:find).with(:all, :params => {:project_id => 12345, :q => "state:open"})
     
     @fresnel_project.open_tickets
   end
@@ -24,7 +24,7 @@ describe Fresnel::Project, "tickets" do
   end
   
   it "should find all tickets for a project" do
-    Lighthouse::Ticket.should_receive(:find).with(:all, :params => {:project_id => 12345, :q => "all"})
+    Fresnel::Ticket.should_receive(:find).with(:all, :params => {:project_id => 12345, :q => "all"})
     
     @fresnel_project.all_tickets
   end
