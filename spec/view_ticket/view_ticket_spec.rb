@@ -22,10 +22,11 @@ describe ViewTicket, "load_current_ticket" do
     prop.name.should == "ticket_title"
   end
   
-  it "should make a prop on the scene for the assigned_user_name" do
+  it "should make a combo_box on the scene for the assigned_user_name" do
     prop = scene.find('ticket_assigned_user')
-    prop.text.should include("Roger")
-    prop.name.should == "ticket_assigned_user"
+    prop.value.should == "Roger"
+    prop.choices.should include("Roger")
+    prop.name.should == "combo_box"
   end
   
   it "should make a prop on the scene for the ticket_state" do
