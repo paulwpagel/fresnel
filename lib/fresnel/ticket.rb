@@ -1,11 +1,15 @@
 require File.expand_path(File.dirname(__FILE__) + "/../../vendor/lighthouse-api/lib/lighthouse")
-require "lighthouse/ticket_version"
 
-module Lighthouse
+module Fresnel
   class Ticket
+    def initialize(lighthouse_ticket)
+      @assigned_user_id = lighthouse_ticket.assigned_user_id
+      @versions = lighthouse_ticket.versions
+    end
+    
     def assigned_user
       begin
-        return Lighthouse::User.find(self.assigned_user_id)
+        return Lighthouse::User.find(@assigned_user_id)
       rescue
         return nil
       end
@@ -16,22 +20,19 @@ module Lighthouse
       return user.name unless user.nil?
       return ''
     end
-
-    def fresnel_versions
-      return self.versions.collect { |version| TicketVersion.new(version) }
-    end
-  
+    
     def description
-      return self.versions[0].body if self.versions[0]
+      return @versions[0].body if @versions[0]
       return ""
     end
-  
+    
     def comments
       comment_list = []
-      self.versions.each_with_index do |version, index|
+      @versions.each_with_index do |version, index|
         comment_list << version.body unless index == 0
       end
       return comment_list
     end
+    
   end
 end
