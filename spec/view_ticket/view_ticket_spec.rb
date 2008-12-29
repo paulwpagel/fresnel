@@ -70,4 +70,10 @@ describe ViewTicket, "load_current_ticket" do
     prop.choices.should include("Goal Two")
   end
   
+  it "should have a button to save changes to a ticket" do
+    prop = scene.find('save_button')
+    prop.name.should == "button"
+    prop.players.should == "save_ticket"
+  end
+  
 end
