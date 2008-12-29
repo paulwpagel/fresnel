@@ -19,4 +19,8 @@ describe Lighthouse::Memory::Project do
   it "should have milestones" do
     @project.milestones.should == []
   end
+  
+  it "should have milestone_titles" do
+    @project.milestone_titles.should == []
+  end
 end

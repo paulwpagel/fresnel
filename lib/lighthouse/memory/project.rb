@@ -21,6 +21,10 @@ module Lighthouse
       def all_tickets
         return @tickets
       end
+      
+      def milestone_titles
+        return []
+      end
     end
   end
 end
