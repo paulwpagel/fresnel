@@ -3,6 +3,11 @@ require "fresnel/ticket_version"
 
 module Fresnel
   class Ticket
+    def self.find(*params)
+      tickets = Lighthouse::Ticket.find(*params)
+      return tickets.collect { |lighthouse_ticket| self.new(lighthouse_ticket) }
+    end
+    
     def initialize(lighthouse_ticket)
       @assigned_user_id = lighthouse_ticket.assigned_user_id
       @versions = lighthouse_ticket.versions

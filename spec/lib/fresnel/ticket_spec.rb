@@ -68,7 +68,7 @@ describe Fresnel::Ticket, "description" do
   end
 end
 
-describe Lighthouse::Ticket, "comments" do
+describe Fresnel::Ticket, "comments" do
   before(:each) do
     @version_one = mock("version", :body => "Some Description")
     @versions = [@version_one]
@@ -97,7 +97,7 @@ describe Lighthouse::Ticket, "comments" do
   end
 end
 
-describe Lighthouse::Ticket, "fresnel versions" do
+describe Fresnel::Ticket, "fresnel versions" do
   before(:each) do
     @version_one = mock("version")
     @versions = [@version_one]
@@ -123,3 +123,45 @@ describe Lighthouse::Ticket, "fresnel versions" do
   end
 end
 
+describe Fresnel::Ticket, "find" do
+  before(:each) do
+    @ticket_one = mock("Lighthouse::Ticket")
+    @tickets = [@ticket_one]
+    @fresnel_ticket = mock(Fresnel::Ticket)
+    Fresnel::Ticket.stub!(:new).and_return(@fresnel_ticket)
+    Lighthouse::Ticket.stub!(:find).and_return(@tickets)
+  end
+  
+  it "should call Lighthouse ticket find with one parameter" do
+    Lighthouse::Ticket.should_receive(:find).with("some param").and_return([])
+    
+    Fresnel::Ticket.find("some param")
+  end
+  
+  it "should call Lighthouse ticket find with one parameter" do
+    Lighthouse::Ticket.should_receive(:find).with("first param", "second param").and_return([])
+    
+    Fresnel::Ticket.find("first param", "second param")
+  end
+  
+  it "should make fresnel tickets for the first ticket found" do
+    Fresnel::Ticket.should_receive(:new).with(@ticket_one)
+    
+    Fresnel::Ticket.find("some param")
+  end 
+
+  it "should make fresnel tickets for the second ticket found" do
+    @ticket_two = mock("Lighthouse::Ticket")
+    @tickets << @ticket_two
+    Fresnel::Ticket.should_receive(:new).with(@ticket_two)
+
+    Fresnel::Ticket.find("some param")
+  end
+  
+  it "should return the fresnel tickets" do
+    @ticket_two = mock("Lighthouse::Ticket")
+    @tickets << @ticket_two
+    
+    Fresnel::Ticket.find("some param").should == [@fresnel_ticket, @fresnel_ticket]
+  end
+end
