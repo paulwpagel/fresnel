@@ -203,3 +203,9 @@ describe Fresnel::Ticket, "lighthouse ticket attributes" do
     @fresnel_ticket.milestone_id.should == "Milestone ID"
   end
 end
+
+describe Fresnel::Ticket, "milestone" do
+  it "should have a milestone"
+  
+  it "should have a way to set the milestone"
+end
