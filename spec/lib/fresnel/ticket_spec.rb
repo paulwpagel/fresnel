@@ -179,3 +179,23 @@ describe Fresnel::Ticket, "find" do
     Fresnel::Ticket.find("some param").should == [@fresnel_ticket, @fresnel_ticket]
   end
 end
+
+describe Fresnel::Ticket, "lighthouse ticket attributes" do
+  before(:each) do
+    @lighthouse_ticket = mock("Lighthouse::Ticket", :versions => @versions, :assigned_user_id => nil,
+                                    :id => "ticket_id", :state => "Open", :title => "Some Title")
+    @fresnel_ticket = Fresnel::Ticket.new(@lighthouse_ticket)
+  end
+  
+  it "should have an id" do
+    @fresnel_ticket.id.should == "ticket_id"
+  end
+  
+  it "should have a state" do
+    @fresnel_ticket.state.should == "Open"
+  end
+  
+  it "should have a title" do
+    @fresnel_ticket.title.should == "Some Title"
+  end
+end

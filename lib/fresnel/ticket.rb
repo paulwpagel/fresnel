@@ -8,7 +8,18 @@ module Fresnel
       return tickets.collect { |lighthouse_ticket| self.new(lighthouse_ticket) }
     end
     
+    def self.ticket_attribute(attribute)
+      define_method(attribute) do
+        return @lighthouse_ticket.send(attribute)
+      end
+    end
+    
+    ticket_attribute :id
+    ticket_attribute :state
+    ticket_attribute :title
+    
     def initialize(lighthouse_ticket)
+      @lighthouse_ticket = lighthouse_ticket
       @assigned_user_id = lighthouse_ticket.assigned_user_id
       begin
         @versions = lighthouse_ticket.versions
@@ -16,7 +27,7 @@ module Fresnel
         @versions = []
       end
     end
-    
+        
     def assigned_user
       begin
         return Lighthouse::User.find(@assigned_user_id)
