@@ -7,7 +7,8 @@ module ViewTicket
   def load_current_ticket
     new_row do |row|
       row.add(Limelight::Prop.new(:text => current_ticket.title, :name => "text_box", :id => "ticket_title"))
-      row.add(make_prop(current_ticket.state.capitalize, "ticket_state"))
+      row.add(make_combo_box(["new", "open", "resolved", "hold", "invalid"], "ticket_state", current_ticket.state))
+      # row.add(make_prop(current_ticket.state.capitalize, "ticket_state"))
     end
     new_row do |row|
       row.add(make_prop("Assigned User:", "assigned_user_header"))

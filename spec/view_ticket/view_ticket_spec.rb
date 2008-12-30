@@ -33,8 +33,9 @@ describe ViewTicket, "load_current_ticket" do
   
   it "should make a prop on the scene for the ticket_state" do
     prop = scene.find('ticket_state')
-    prop.text.should == "Open"
-    prop.name.should == "ticket_state"
+    prop.value.should == "open"
+    prop.choices.should == ["new", "open", "resolved", "hold", "invalid"]
+    prop.name.should == "combo_box"
   end
   
   it "should make a prop on the scene for the ticket_description" do

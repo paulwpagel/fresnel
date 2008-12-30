@@ -5,7 +5,7 @@ require "save_ticket"
 describe SaveTicket, "on_click" do
   before(:each) do
     mock_lighthouse
-    @mock_ticket = mock("ticket", :title => "", :assigned_user_name => "", :state => "", :title= => nil,
+    @mock_ticket = mock("ticket", :title => "", :assigned_user_name => "", :state => "new", :state= => nil, :title= => nil,
           :milestone_id => 123, :description => "", :versions => [], :save => nil)
     producer.production.current_ticket = @mock_ticket
   end
@@ -13,9 +13,17 @@ describe SaveTicket, "on_click" do
   uses_scene :view_ticket
 
   it "should set the ticket's title" do
-    milestone_prop = scene.find("ticket_title")
-    milestone_prop.text = "New Title"
+    prop = scene.find("ticket_title")
+    prop.text = "New Title"
     @mock_ticket.should_receive(:title=).with("New Title")
+   
+    press_button
+  end
+  
+  it "should set the ticket's state" do
+    prop = scene.find("ticket_state")
+    prop.value = "open"
+    @mock_ticket.should_receive(:state=).with("open")
    
     press_button
   end
