@@ -8,16 +8,17 @@ module Fresnel
       return tickets.collect { |lighthouse_ticket| self.new(lighthouse_ticket) }
     end
     
-    def self.attribute_wrapper(attribute)
-      define_method(attribute) do
-        return @lighthouse_ticket.send(attribute)
+    def self.method_wrapper(method)
+      define_method(method) do
+        return @lighthouse_ticket.send(method)
       end
     end
     
-    attribute_wrapper :id
-    attribute_wrapper :state
-    attribute_wrapper :title
-    attribute_wrapper :milestone_id
+    method_wrapper :id
+    method_wrapper :state
+    method_wrapper :title
+    method_wrapper :milestone_id
+    method_wrapper :save
     
     def initialize(lighthouse_ticket)
       @lighthouse_ticket = lighthouse_ticket
