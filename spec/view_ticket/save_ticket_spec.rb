@@ -6,7 +6,7 @@ describe SaveTicket, "on_click" do
   before(:each) do
     mock_lighthouse
     @mock_ticket = mock("ticket", :title => "", :assigned_user_name => "", :state => "", :milestone_title= => nil,
-          :milestone_id => 123, :description => "", :fresnel_versions => [], :versions => [], :save => nil)
+          :milestone_id => 123, :description => "", :versions => [], :versions => [], :save => nil)
     producer.production.current_ticket = @mock_ticket
   end
   

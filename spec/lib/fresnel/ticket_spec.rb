@@ -11,7 +11,7 @@ describe Fresnel::Ticket, "initialize" do
     
     @fresnel_ticket = Fresnel::Ticket.new(@lighthouse_ticket)
     
-    @fresnel_ticket.fresnel_versions.should == []
+    @fresnel_ticket.versions.should == []
   end
 end
 
@@ -125,7 +125,7 @@ describe Fresnel::Ticket, "fresnel versions" do
   it "should have a fresnel version for one lighthouse version" do
     Fresnel::TicketVersion.should_receive(:new).with(@version_one).and_return(@fresnel_version)
     
-    @fresnel_ticket.fresnel_versions.should == [@fresnel_version]
+    @fresnel_ticket.versions.should == [@fresnel_version]
   end
   
   it "should have a fresnel version for a second lighthouse version" do
@@ -133,7 +133,7 @@ describe Fresnel::Ticket, "fresnel versions" do
     @versions << version_two
     Fresnel::TicketVersion.should_receive(:new).with(version_two).and_return(@fresnel_version)
     
-    @fresnel_ticket.fresnel_versions.should == [@fresnel_version, @fresnel_version]
+    @fresnel_ticket.versions.should == [@fresnel_version, @fresnel_version]
   end
 end
 

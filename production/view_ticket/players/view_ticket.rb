@@ -18,7 +18,7 @@ module ViewTicket
       row.add(make_combo_box(all_milestone_titles, "ticket_milestone", milestone_title))
     end
     new_row { |row| row.add(make_prop(current_ticket.description, "ticket_description")) }
-    current_ticket.fresnel_versions.each_with_index do |version, index|
+    current_ticket.versions.each_with_index do |version, index|
       make_row_for_version(version, index)
     end
   end

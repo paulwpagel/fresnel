@@ -13,7 +13,7 @@ describe ViewTicket, "load_current_ticket" do
     version_two = mock("version", :comment => "Comment Two", :created_by => "Version User Two", :timestamp => "Time Two")
     versions = [version_one, version_two]
     producer.production.current_ticket = mock("ticket", :title => 'title', :assigned_user_name => "Roger", :state => "open",
-          :milestone_id => 12345, :description => "Some Description", :fresnel_versions => versions)
+          :milestone_id => 12345, :description => "Some Description", :versions => versions)
   end
   
   uses_scene :view_ticket

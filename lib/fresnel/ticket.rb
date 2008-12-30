@@ -23,9 +23,9 @@ module Fresnel
       @lighthouse_ticket = lighthouse_ticket
       @assigned_user_id = lighthouse_ticket.assigned_user_id
       begin
-        @versions = lighthouse_ticket.versions
+        @lighthouse_versions = lighthouse_ticket.versions
       rescue NoMethodError
-        @versions = []
+        @lighthouse_versions = []
       end
     end
         
@@ -43,18 +43,18 @@ module Fresnel
       return ''
     end
     
-    def fresnel_versions
-      return @versions.collect { |version| Fresnel::TicketVersion.new(version) }
+    def versions
+      return @lighthouse_versions.collect { |version| Fresnel::TicketVersion.new(version) }
     end
     
     def description
-      return @versions[0].body if @versions[0]
+      return @lighthouse_versions[0].body if @lighthouse_versions[0]
       return ""
     end
     
     def comments
       comment_list = []
-      @versions.each_with_index do |version, index|
+      @lighthouse_versions.each_with_index do |version, index|
         comment_list << version.body unless index == 0
       end
       return comment_list
