@@ -5,26 +5,27 @@ require "save_ticket"
 describe SaveTicket, "on_click" do
   before(:each) do
     mock_lighthouse
-    @mock_ticket = mock("ticket", :title => "", :assigned_user_name => "", :state => "", :milestone_id= => nil,
+    @mock_ticket = mock("ticket", :title => "", :assigned_user_name => "", :state => "", :title= => nil,
           :milestone_id => 123, :description => "", :versions => [], :save => nil)
     producer.production.current_ticket = @mock_ticket
-    @lighthouse_client.stub!(:milestone_id_for_title).and_return("milestone_id")
   end
   
   uses_scene :view_ticket
   
-  it "should get the new milestone id from the title" do
-    milestone_prop = scene.find("ticket_milestone")
-    milestone_prop.choices = ["New Milestone"]
-    milestone_prop.value = "New Milestone"
-    @lighthouse_client.should_receive(:milestone_id_for_title).with("New Milestone")
-    
-    press_button
-  end
+  # it "should set the new milestone id for the ticket" do
+  #   milestone_prop = scene.find("ticket_milestone")
+  #   milestone_prop.choices = ["12345"]
+  #   milestone_prop.value = "12345"
+  #   @mock_ticket.should_receive(:milestone_id=).with(12345)
+  #   
+  #   press_button
+  # end
   
-  it "should set the milestone_id to the milestone_id from the title" do
-    @mock_ticket.should_receive(:milestone_id=).with("milestone_id")
-    
+  it "should set the ticket's title" do
+    milestone_prop = scene.find("ticket_title")
+    milestone_prop.text = "New Title"
+    @mock_ticket.should_receive(:title=).with("New Title")
+   
     press_button
   end
   
