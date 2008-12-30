@@ -3,4 +3,12 @@ main {
   row {
     button :text => "Save Ticket", :id => "save_button", :players => "save_ticket"
   }
+  row {
+    cell {
+      text_box :id => "ticket_title", :width => 250
+    }
+    cell {
+      combo_box :choices => ["new", "open", "resolved", "hold", "invalid"], :id => "ticket_state"
+    }
+  }
 }
