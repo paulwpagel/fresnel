@@ -204,7 +204,7 @@ describe Fresnel::Ticket, "lighthouse ticket attributes" do
   end
 end
 
-describe Fresnel::Ticket, "saving" do
+describe Fresnel::Ticket, "editing" do
   before(:each) do
     @lighthouse_ticket = mock("Lighthouse::Ticket", :versions => @versions, :assigned_user_id => nil)
     @fresnel_ticket = Fresnel::Ticket.new(@lighthouse_ticket)
@@ -214,5 +214,11 @@ describe Fresnel::Ticket, "saving" do
     @lighthouse_ticket.should_receive(:save)
     
     @fresnel_ticket.save
+  end
+  
+  it "should have a way to set the milestone_id" do
+    @lighthouse_ticket.should_receive(:milestone_id=).with(12345)
+    
+    @fresnel_ticket.milestone_id = 12345
   end
 end

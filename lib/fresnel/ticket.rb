@@ -29,6 +29,10 @@ module Fresnel
         @lighthouse_versions = []
       end
     end
+    
+    def milestone_id=(id)
+      @lighthouse_ticket.milestone_id = id
+    end
         
     def assigned_user
       begin
