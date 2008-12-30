@@ -221,4 +221,10 @@ describe Fresnel::Ticket, "editing" do
     
     @fresnel_ticket.milestone_id = 12345
   end
+  
+  it "should have a way to set the title" do
+    @lighthouse_ticket.should_receive(:title=).with("New Title")
+    
+    @fresnel_ticket.title = "New Title"
+  end
 end

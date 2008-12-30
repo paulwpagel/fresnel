@@ -21,7 +21,7 @@ describe ViewTicket, "load_current_ticket" do
   it "should make a prop on the scene for the current ticket title" do    
     prop = scene.find('ticket_title')
     prop.text.should == "title"
-    prop.name.should == "ticket_title"
+    prop.name.should == "text_box"
   end
   
   it "should make a combo_box on the scene for the assigned_user_name" do

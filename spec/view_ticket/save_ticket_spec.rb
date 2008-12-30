@@ -11,16 +11,7 @@ describe SaveTicket, "on_click" do
   end
   
   uses_scene :view_ticket
-  
-  # it "should set the new milestone id for the ticket" do
-  #   milestone_prop = scene.find("ticket_milestone")
-  #   milestone_prop.choices = ["12345"]
-  #   milestone_prop.value = "12345"
-  #   @mock_ticket.should_receive(:milestone_id=).with(12345)
-  #   
-  #   press_button
-  # end
-  
+
   it "should set the ticket's title" do
     milestone_prop = scene.find("ticket_title")
     milestone_prop.text = "New Title"

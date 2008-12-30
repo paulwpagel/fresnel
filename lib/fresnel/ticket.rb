@@ -8,17 +8,20 @@ module Fresnel
       return tickets.collect { |lighthouse_ticket| self.new(lighthouse_ticket) }
     end
     
-    def self.method_wrapper(method)
+    def self.ticket_accessor(method)
       define_method(method) do
         return @lighthouse_ticket.send(method)
       end
+      writer = "#{method}="
+      define_method(writer) do |value|
+        @lighthouse_ticket.send(writer, value)
+      end
     end
     
-    method_wrapper :id
-    method_wrapper :state
-    method_wrapper :title
-    method_wrapper :milestone_id
-    method_wrapper :save
+    ticket_accessor :id
+    ticket_accessor :state
+    ticket_accessor :title
+    ticket_accessor :milestone_id
     
     def initialize(lighthouse_ticket)
       @lighthouse_ticket = lighthouse_ticket
@@ -28,6 +31,10 @@ module Fresnel
       rescue NoMethodError
         @lighthouse_versions = []
       end
+    end
+    
+    def save
+      @lighthouse_ticket.save
     end
     
     def milestone_id=(id)
