@@ -1,7 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + "/../../../vendor/lighthouse-api/lib/lighthouse")
 
-require "lighthouse/project"
-require "lighthouse/ticket"
+require "fresnel/project"
 
 module Lighthouse
   module LighthouseApi
@@ -21,10 +20,8 @@ module Lighthouse
     end
     
     def self.find_project(project_name)
-      Lighthouse::Project.find(:all).each do |project|
-        return project if project.name == project_name
-      end
-    
+      found_project = Lighthouse::Project.find(:all).find { |project| project.name == project_name }      
+      return (Fresnel::Project.new(found_project)) if found_project
       return nil
     end
     
@@ -51,7 +48,9 @@ module Lighthouse
     end
   
     def self.ticket(id)
-      return Lighthouse::Ticket.find(id, :params => {:project_id => 21095})
+      found_ticket = Lighthouse::Ticket.find(id, :params => {:project_id => 21095})
+      return Fresnel::Ticket.new(found_ticket) if found_ticket
+      return nil
     end
   end
 end

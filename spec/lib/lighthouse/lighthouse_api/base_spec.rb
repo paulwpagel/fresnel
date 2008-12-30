@@ -2,7 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + "/../../../spec_helper")
 require "lighthouse/lighthouse_api/base"
 
 describe Lighthouse::LighthouseApi do
-  
+
   it "should not log in the user to the account" do
     Lighthouse.should_receive(:account=).with("AFlight")
     Lighthouse.should_receive(:authenticate).with("paul", "nottelling")
@@ -28,15 +28,7 @@ describe Lighthouse::LighthouseApi do
     Lighthouse::LighthouseApi::login_to("AFlight", "paul", "nottelling").should be(false)  
   end
   
-  it "should find a project by name" do
-    project = mock(Lighthouse::Project, :name => "one")
-    project2 = mock(Lighthouse::Project, :name => "two")
-    Lighthouse::Project.should_receive(:find).with(:all).and_return([project, project2])
-
-    Lighthouse::LighthouseApi::find_project("one").should == project
-  end
-  
-  it "should return nil if there is no project" do
+  it "should return nil if there is no project" do    
     Lighthouse::Project.should_receive(:find).with(:all).and_return([])
 
     Lighthouse::LighthouseApi::find_project("one").should be(nil)
@@ -58,7 +50,7 @@ describe Lighthouse::LighthouseApi do
   
   it "should get milestones for the project" do
     milestones = [mock("milestone")]
-    project = mock(Lighthouse::Project, :name => "one", :milestones => milestones)
+    project = mock(Lighthouse::Project, :name => "one", :milestones => milestones, :id => nil)
     Lighthouse::Project.stub!(:find).and_return([project])
     
     Lighthouse::LighthouseApi::milestones("one").should == milestones
@@ -72,14 +64,14 @@ describe Lighthouse::LighthouseApi do
   
   it "should return the milestone title for a given project and ticket" do
     milestones = [mock("milestone", :id => 123, :title => "Milestone Title")]
-    project = mock(Lighthouse::Project, :name => "project one", :milestones => milestones)
+    project = mock(Lighthouse::Project, :name => "project one", :milestones => milestones, :id => nil)
     Lighthouse::Project.stub!(:find).and_return([project])
     
     Lighthouse::LighthouseApi::milestone_title("project one", 123).should == "Milestone Title"
   end
   
   it "should work if there are no milestones matching the id given" do
-    project = mock(Lighthouse::Project, :name => "project one", :milestones => [])
+    project = mock(Lighthouse::Project, :name => "project one", :milestones => [], :id => nil)
     Lighthouse::Project.stub!(:find).and_return([project])
     
     Lighthouse::LighthouseApi::milestone_title("project one", 123).should == ""
@@ -91,17 +83,61 @@ describe Lighthouse::LighthouseApi do
     Lighthouse::LighthouseApi::milestone_title("project one", 123).should == ""
   end
   
+end
+
+describe "ticket" do
+  before(:each) do
+    @ticket = mock("ticket")
+    Lighthouse::Ticket.stub!(:find).and_return(@ticket)
+    @fresnel_ticket = mock(Fresnel::Ticket)
+    Fresnel::Ticket.stub!(:new).and_return(@fresnel_ticket)
+  end
+  
   it "should get a ticket from a ticket_id through the lighthouse api" do
-    Lighthouse::Ticket.should_receive(:find).with("ticket_id", :params => {:project_id => 21095})
+    Lighthouse::Ticket.should_receive(:find).with("ticket_id", :params => {:project_id => 21095}).and_return(@ticket)
 
     Lighthouse::LighthouseApi::ticket("ticket_id")
   end
   
-  it "should return the found ticket" do
-    ticket = mock("ticket")
-    Lighthouse::Ticket.stub!(:find).and_return(ticket)
+  it "should make a fresnel ticket from the found ticket" do
+    Fresnel::Ticket.should_receive(:new).with(@ticket)
     
-    Lighthouse::LighthouseApi::ticket(1).should == ticket
+    Lighthouse::LighthouseApi::ticket(1)
   end
   
+  it "should return the fresnel ticket" do
+    Lighthouse::LighthouseApi::ticket(1).should == @fresnel_ticket
+  end
+  
+  it "should return nil if it cannot find the lighthouse ticket" do
+    Lighthouse::Ticket.stub!(:find).and_return(nil)
+    
+    Lighthouse::LighthouseApi::ticket(1).should be_nil
+  end
+end
+
+describe Lighthouse::LighthouseApi, "find_project" do
+  before(:each) do
+    @project1 = mock(Lighthouse::Project, :name => "one")
+    @project2 = mock(Lighthouse::Project, :name => "two")
+    Lighthouse::Project.stub!(:find).and_return([@project1, @project2])
+    @fresnel_project = mock(Fresnel::Project)
+    Fresnel::Project.stub!(:new).and_return(@fresnel_project)
+  end
+  
+  it "should find all projects" do
+    Lighthouse::Project.should_receive(:find).with(:all).and_return([])
+
+    Lighthouse::LighthouseApi::find_project("anything")
+  end
+  
+  it "should find the specific project and create a fresnel project from it " do    
+    Fresnel::Project.should_receive(:new).with(@project1)
+    
+    Lighthouse::LighthouseApi::find_project("one")
+  end
+  
+  it "should return the created fresnel project" do
+    Lighthouse::LighthouseApi::find_project("one").should == @fresnel_project
+  end
 end

@@ -10,7 +10,12 @@ module Fresnel
     
     def initialize(lighthouse_ticket)
       @assigned_user_id = lighthouse_ticket.assigned_user_id
-      @versions = lighthouse_ticket.versions
+      begin
+        @versions = lighthouse_ticket.versions
+      rescue NoMethodError
+        ticket = Lighthouse::Ticket.find(lighthouse_ticket.id, :params => {:project_id => 21095})
+        @versions = ticket.versions
+      end
     end
     
     def assigned_user

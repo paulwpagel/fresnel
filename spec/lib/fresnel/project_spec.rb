@@ -43,6 +43,10 @@ describe Fresnel::Project, "milestones" do
     @fresnel_project = Fresnel::Project.new(@lighthoust_project)
   end
   
+  it "should return the milestones for a project" do
+    @fresnel_project.milestones.should == @milestones
+  end
+  
   it "should have a title for one milestone" do    
     @fresnel_project.milestone_titles.should == ["Goal One"]
   end

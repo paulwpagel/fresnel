@@ -3,6 +3,8 @@ require "fresnel/ticket"
 
 module Fresnel
   class Project
+    attr_reader :milestones
+    
     def initialize(lighthouse_project)
       @id = lighthouse_project.id
       @milestones = lighthouse_project.milestones
