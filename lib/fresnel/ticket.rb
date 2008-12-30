@@ -17,6 +17,7 @@ module Fresnel
     attribute_wrapper :id
     attribute_wrapper :state
     attribute_wrapper :title
+    attribute_wrapper :milestone_id
     
     def initialize(lighthouse_ticket)
       @lighthouse_ticket = lighthouse_ticket

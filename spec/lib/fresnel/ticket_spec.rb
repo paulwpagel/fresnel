@@ -183,7 +183,7 @@ end
 describe Fresnel::Ticket, "lighthouse ticket attributes" do
   before(:each) do
     @lighthouse_ticket = mock("Lighthouse::Ticket", :versions => @versions, :assigned_user_id => nil,
-                                    :id => "ticket_id", :state => "Open", :title => "Some Title")
+                                    :id => "ticket_id", :state => "Open", :title => "Some Title", :milestone_id => "Milestone ID")
     @fresnel_ticket = Fresnel::Ticket.new(@lighthouse_ticket)
   end
   
@@ -197,5 +197,9 @@ describe Fresnel::Ticket, "lighthouse ticket attributes" do
   
   it "should have a title" do
     @fresnel_ticket.title.should == "Some Title"
+  end
+  
+  it "should have a milestone_id" do
+    @fresnel_ticket.milestone_id.should == "Milestone ID"
   end
 end
