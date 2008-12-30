@@ -4,27 +4,14 @@ require "fresnel/ticket"
 describe Fresnel::Ticket, "initialize" do
   before(:each) do
     @lighthouse_ticket = mock("Lighthouse::Ticket", :assigned_user_id => 123, :id => "ticket_id")
-    @lighthouse_ticket.stub!(:versions).and_raise(NoMethodError)
-    @version_one = mock("version")
-    @fresnel_version = mock(Fresnel::TicketVersion)
-    Fresnel::TicketVersion.stub!(:new).and_return(@fresnel_version)
-    @fresnel_versions = [@fresnel_version]
-    @ticket_with_versions = mock("ticket", :versions => [@version_one])
   end
   
-  it "should find the ticket that has versions if it does not have any" do
+  it "should have no versions if the given ticket has none" do
     @lighthouse_ticket.should_receive(:versions).and_raise(NoMethodError)
-    Lighthouse::Ticket.should_receive(:find).with("ticket_id", anything()).and_return(@ticket_with_versions)
-    
-    @fresnel_ticket = Fresnel::Ticket.new(@lighthouse_ticket)
-  end
-  
-  it "should use the lighthouse ticket versions" do
-    Lighthouse::Ticket.stub!(:find).and_return(@ticket_with_versions)
     
     @fresnel_ticket = Fresnel::Ticket.new(@lighthouse_ticket)
     
-    @fresnel_ticket.fresnel_versions.should == @fresnel_versions
+    @fresnel_ticket.fresnel_versions.should == []
   end
 end
 

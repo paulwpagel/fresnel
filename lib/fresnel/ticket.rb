@@ -13,8 +13,7 @@ module Fresnel
       begin
         @versions = lighthouse_ticket.versions
       rescue NoMethodError
-        ticket = Lighthouse::Ticket.find(lighthouse_ticket.id, :params => {:project_id => 21095})
-        @versions = ticket.versions
+        @versions = []
       end
     end
     
