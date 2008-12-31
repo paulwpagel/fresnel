@@ -24,11 +24,16 @@ module ViewTicket
   private ##################
   
   def make_row_for_version(version, index)
-    new_row { |row| row.add(make_prop(version_content(version), "ticket_version_#{index + 1}"))}
+    new_row { |row| row.add(make_prop(version_content(version, index), "ticket_version_#{index + 1}"))}
   end
   
-  def version_content(version)
-    return "#{version.created_by}\n#{version.timestamp}\n#{version.comment}"
+  def version_content(version, index)
+    changed_attributes = current_ticket.changed_attributes_for_version(index)
+    change_message = ""
+    changed_attributes.each do |attribute|
+      change_message << "#{attribute.name} changed from #{attribute.old_value} to #{attribute.new_value}"
+    end
+    return "#{version.created_by}\n#{version.timestamp}\n#{change_message}\n#{version.comment}"
   end
   
   def new_row
