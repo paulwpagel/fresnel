@@ -16,9 +16,9 @@ production = Limelight::Production["Fresnel"]
 # This is the ideal place to assign values to production attributes.
 
 # Development
-require 'lighthouse/memory/base'
-production.lighthouse_client = Lighthouse::Memory
+# require 'lighthouse/memory/base'
+# production.lighthouse_client = Lighthouse::Memory
 
 # Real App
-# require 'lighthouse/lighthouse_api/base'
-# production.lighthouse_client = Lighthouse::LighthouseApi
+require 'lighthouse/lighthouse_api/base'
+production.lighthouse_client = Lighthouse::LighthouseApi

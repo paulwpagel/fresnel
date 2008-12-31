@@ -31,7 +31,7 @@ module ViewTicket
     changed_attributes = current_ticket.changed_attributes_for_version(index)
     change_message = ""
     changed_attributes.each do |attribute|
-      change_message << "#{attribute.name} changed from #{attribute.old_value} to #{attribute.new_value}"
+      change_message << "#{attribute.name} changed from \"#{attribute.old_value}\" to \"#{attribute.new_value}\""
     end
     return "#{version.created_by}\n#{version.timestamp}\n#{change_message}\n#{version.comment}"
   end
