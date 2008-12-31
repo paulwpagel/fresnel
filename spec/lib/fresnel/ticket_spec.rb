@@ -113,8 +113,9 @@ end
 
 describe Fresnel::Ticket, "fresnel versions" do
   before(:each) do
+    @original_state = mock("original version")
     @version_one = mock("version")
-    @versions = [@version_one]
+    @versions = [@original_state, @version_one]
     @lighthouse_ticket = mock("Lighthouse::Ticket", :versions => @versions, :assigned_user_id => nil)
     @fresnel_ticket = Fresnel::Ticket.new(@lighthouse_ticket)
 
