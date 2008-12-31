@@ -1,6 +1,11 @@
 module Fresnel
   class ChangedAttribute
-    attr_accessor :name, :old_value, :new_value
+    attr_reader :name, :old_value, :new_value
+    def initialize(params)
+      @name = params[:name]
+      @old_value = params[:old_value]
+      @new_value = params[:new_value]
+    end
   end
 
   class ChangedAttributes
@@ -11,17 +16,15 @@ module Fresnel
     
     def list
       attributes = []
-      if title_has_changed?
-        changed_attribute = ChangedAttribute.new
-        changed_attribute.name = "title"
-        changed_attribute.old_value = @versions.first.diffable_attributes.title
-        changed_attribute.new_value = find_new_title
-        attributes << changed_attribute
-      end
+      add_title_attribute(attributes) if title_has_changed?
       return attributes
     end
     
     private
+    
+    def add_title_attribute(attributes)
+      attributes << ChangedAttribute.new(:name => "title", :old_value => old_title, :new_value => new_title)
+    end
     
     def title_has_changed?
       begin
@@ -32,7 +35,11 @@ module Fresnel
       end
     end
     
-    def find_new_title      
+    def old_title
+      @versions.first.diffable_attributes.title
+    end
+    
+    def new_title      
       @versions[1..@versions.length].each do |version|
         begin
           return version.diffable_attributes.title
