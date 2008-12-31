@@ -3,7 +3,9 @@ require "fresnel/ticket_version"
 
 describe Fresnel::TicketVersion do
   before(:each) do
-    lighthouse_version = mock("lighthouse ticket version", :body => "Some Comment", :user_id => 12345, :updated_at => "Now")
+    @diffable_attributes = mock("diffable_attributes")
+    lighthouse_version = mock("lighthouse ticket version", :body => "Some Comment", :user_id => 12345,
+                                :updated_at => "Now", :diffable_attributes => @diffable_attributes)
     @ticket_version = Fresnel::TicketVersion.new(lighthouse_version)
     
     @user = mock("user", :name => "Someone")
@@ -47,4 +49,7 @@ describe Fresnel::TicketVersion do
     @ticket_version.timestamp.should == "Now"
   end
   
+  it "should have diffable_attributes" do
+    @ticket_version.diffable_attributes.should == @diffable_attributes
+  end
 end
