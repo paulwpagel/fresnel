@@ -6,7 +6,7 @@ describe "Props" do
     mock_lighthouse
   end
   
-  uses_scene :ticket
+  uses_scene :list_tickets
   
   it "should have a combo box that points to a type selector player" do
     prop = scene.find("ticket_type")

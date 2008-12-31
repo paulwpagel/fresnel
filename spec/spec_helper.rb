@@ -3,8 +3,8 @@ def add_to_search_path path
 end
 
 [
-  "production/ticket/players",
-  "production/ticket/stagehands",
+  "production/list_tickets/players",
+  "production/list_tickets/stagehands",
   "production/view_ticket/players",
   "production/login/players",
   "production/add_ticket/players",

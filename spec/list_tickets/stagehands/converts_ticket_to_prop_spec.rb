@@ -24,7 +24,7 @@ describe ConvertsTicketToProp, "when converting a ticket to a prop" do
   end
   
   it "should set the player" do
-    Limelight::Prop.should_receive(:new).with(hash_including(:players => "ticket"))
+    Limelight::Prop.should_receive(:new).with(hash_including(:players => "list_tickets"))
     ConvertsTicketToProp.convert(@ticket)
   end
   

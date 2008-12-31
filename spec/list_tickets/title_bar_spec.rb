@@ -7,7 +7,7 @@ describe "title_bar" do
     mock_lighthouse
   end
   
-  uses_scene :ticket
+  uses_scene :list_tickets
   
   before(:each) do
     @event = nil

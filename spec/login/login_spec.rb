@@ -26,7 +26,7 @@ describe Login do
   it "should take the name, password, and account name and send it to be authenticated" do
     @lighthouse_client.should_receive(:login_to).with("checking", "Paul Pagel", "wouldntyaouliketoknow").and_return(true)
     
-    scene.should_receive(:load).with("ticket")
+    scene.should_receive(:load).with("list_tickets")
     
     scene.load_inputs
     scene.log_in
@@ -41,7 +41,7 @@ describe Login do
   it "should error when authentication fails" do
     @lighthouse_client.should_receive(:login_to).with(anything(), anything(), anything()).and_return(false)
     
-    scene.should_not_receive(:load).with("ticket")
+    scene.should_not_receive(:load).with("list_tickets")
     
     scene.load_inputs
     scene.log_in

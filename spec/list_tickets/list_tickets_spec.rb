@@ -1,10 +1,10 @@
 require File.dirname(__FILE__) + '/../spec_helper'
-require 'ticket'
+require 'list_tickets'
 
-describe Ticket do
+describe ListTickets do
   before(:each) do
     @player_under_test = Object.new
-    @player_under_test.extend(Ticket)
+    @player_under_test.extend(ListTickets)
   end
   
   it "should have a ticket_master" do
@@ -24,7 +24,7 @@ describe Ticket do
   end
 end
 
-describe Ticket, "view_ticket" do
+describe ListTickets, "view_ticket" do
   
   class Production
     attr_accessor :current_ticket, :lighthouse_client
@@ -32,7 +32,7 @@ describe Ticket, "view_ticket" do
   
   before(:each) do
     @player_under_test = Object.new
-    @player_under_test.extend(Ticket)
+    @player_under_test.extend(ListTickets)
     @scene = mock("scene", :load => nil)
     @player_under_test.stub!(:scene).and_return(@scene)
 

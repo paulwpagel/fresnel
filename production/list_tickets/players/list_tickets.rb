@@ -1,7 +1,6 @@
-
 require 'ticket_lister'
 
-module Ticket
+module ListTickets
   
   class << self
     def stage_hand(name)

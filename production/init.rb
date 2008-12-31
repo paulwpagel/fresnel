@@ -4,8 +4,8 @@
 # If your production is using external ruby source code that will be required in player modules, you may
 # add the path to $: here.
 $: << File.expand_path(File.dirname(__FILE__) + "/../lib")
-$: << File.expand_path(File.dirname(__FILE__) + "/../production/ticket/players")
-$: << File.expand_path(File.dirname(__FILE__) + "/../production/ticket/stagehands")
+$: << File.expand_path(File.dirname(__FILE__) + "/../production/list_tickets/players")
+$: << File.expand_path(File.dirname(__FILE__) + "/../production/list_tickets/stagehands")
 
 # Acquires a reference to the production.
 production = Limelight::Production["Fresnel"]
@@ -16,9 +16,9 @@ production = Limelight::Production["Fresnel"]
 # This is the ideal place to assign values to production attributes.
 
 # Development
-require 'lighthouse/memory/base'
-production.lighthouse_client = Lighthouse::Memory
+# require 'lighthouse/memory/base'
+# production.lighthouse_client = Lighthouse::Memory
 
 # Real App
-# require 'lighthouse/lighthouse_api/base'
-# production.lighthouse_client = Lighthouse::LighthouseApi
+require 'lighthouse/lighthouse_api/base'
+production.lighthouse_client = Lighthouse::LighthouseApi
