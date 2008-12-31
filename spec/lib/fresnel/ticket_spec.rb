@@ -229,3 +229,12 @@ describe Fresnel::Ticket, "editing" do
     @fresnel_ticket.title = "New Title"
   end
 end
+
+describe Fresnel::Ticket, "changed attributes" do
+  it "should have create a changed attribute list from the versions after the given one" do
+    @lighthouse_ticket = mock("Lighthouse::Ticket", :versions => @versions, :assigned_user_id => nil)
+    @fresnel_ticket = Fresnel::Ticket.new(@lighthouse_ticket)
+    
+    @fresnel_ticket.changed_attributes_for_version(0).should == []
+  end
+end

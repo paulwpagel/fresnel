@@ -63,6 +63,10 @@ module Fresnel
       return version_list
     end
     
+    def changed_attributes_for_version(number)
+      return []
+    end
+    
     def description
       return @lighthouse_versions[0].body if @lighthouse_versions[0]
       return ""
