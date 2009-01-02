@@ -15,8 +15,5 @@ describe "Login Integration Test" do
     scene = producer.production.theater['default'].current_scene
     scene.name.should == "ticket"
   end
-  
-  it "should fail to login" do
     
-  end
 end
