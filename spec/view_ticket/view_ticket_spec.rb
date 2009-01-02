@@ -74,10 +74,15 @@ describe ViewTicket, "load_current_ticket" do
     prop.name.should == "combo_box"
   end
   
-  it "should include all the milstones in the choices" do
+  it "should include all the milestones in the choices" do
     prop = scene.find('ticket_milestone')
     prop.choices.should include("Goal One")
     prop.choices.should include("Goal Two")
+  end
+  
+  it "should inclue an empty option in the milestone choices" do
+    prop = scene.find('ticket_milestone')
+    prop.choices.should include("")
   end
   
   it "should have a button to save changes to a ticket" do
