@@ -5,7 +5,31 @@ module Fresnel
     end
     
     def title
-      return @lighthouse_attributes.title
+      return attempt_attribute(:title)
+    end
+    
+    def title_has_changed?
+      return true if title
+      return false
+    end
+    
+    def state
+      return attempt_attribute(:state)
+    end
+    
+    def state_has_changed?
+      return true if state
+      return false
+    end
+    
+    private
+    
+    def attempt_attribute(name)
+      begin
+        return @lighthouse_attributes.send(name)
+      rescue
+        return nil
+      end
     end
   end
 end
