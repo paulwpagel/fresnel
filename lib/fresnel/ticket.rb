@@ -35,6 +35,10 @@ module Fresnel
       end
     end
     
+    def milestone_title
+      return ""
+    end
+    
     def save
       @lighthouse_ticket.save
     end

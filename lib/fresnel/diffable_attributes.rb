@@ -1,3 +1,4 @@
+require File.expand_path(File.dirname(__FILE__) + "/../../vendor/lighthouse-api/lib/lighthouse")
 require "fresnel/user"
 
 module Fresnel
@@ -29,12 +30,28 @@ module Fresnel
       return true
     end
     
+    def milestone_title
+      milestone.title if milestone
+    end
+    
     def has_milestone_changed?
       @lighthouse_attributes.milestone rescue return false
       return true
     end
     
+    def milestone
+      begin
+        return Lighthouse::Milestone.find(milestone_id, :params => {:project_id => 21095})
+      rescue
+        return nil
+      end
+    end
+    
     private
+    
+    def milestone_id
+      @lighthouse_attributes.milestone
+    end
     
     def assigned_user_id
       return attempt_attribute(:assigned_user)

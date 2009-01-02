@@ -240,3 +240,12 @@ describe Fresnel::Ticket, "changed attributes" do
     @fresnel_ticket.changed_attributes_for_version(1).should == @changed_attributes_list
   end
 end
+
+describe Fresnel::Ticket, "milestone_title" do
+  it "should have a milestone title" do
+    @lighthouse_ticket = mock("Lighthouse::Ticket", :versions => [], :assigned_user_id => nil)
+    @fresnel_ticket = Fresnel::Ticket.new(@lighthouse_ticket)
+    
+    @fresnel_ticket.milestone_title.should == ""   
+  end
+end

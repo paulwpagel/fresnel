@@ -90,8 +90,10 @@ end
 
 describe Fresnel::DiffableAttributes, "milestone" do
   before(:each) do
-    @lighthoust_attributes = mock("Lighthouse::DiffableAttributes")
-    @fresnel_attributes = Fresnel::DiffableAttributes.new(@lighthoust_attributes)    
+    @lighthoust_attributes = mock("Lighthouse::DiffableAttributes", :milestone => "Some Milestone Id")
+    @fresnel_attributes = Fresnel::DiffableAttributes.new(@lighthoust_attributes)
+    @milestone = mock(Lighthouse::Milestone, :title => "Milestone Title")
+    Lighthouse::Milestone.stub!(:find).and_return(@milestone)
   end
   
   it "should know if the milestone has changed" do
@@ -103,5 +105,27 @@ describe Fresnel::DiffableAttributes, "milestone" do
     @lighthoust_attributes.should_receive(:milestone).and_raise(NoMethodError)
     
     @fresnel_attributes.has_milestone_changed?.should == false
+  end
+  
+  it "should find the milestone for its title" do
+    Lighthouse::Milestone.should_receive(:find).with("Some Milestone Id", anything())
+    
+    @fresnel_attributes.milestone
+  end
+  
+  it "should return nil if the milestone is not found" do
+    Lighthouse::Milestone.should_receive(:find).and_raise(ActiveResource::ResourceNotFound.new(mock('not found', :code => "Not Found")))
+    
+    @fresnel_attributes.milestone.should be_nil
+  end
+
+  it "should return the title of the found milestone" do
+    @fresnel_attributes.milestone_title.should == "Milestone Title"
+  end  
+  
+  it "should return nil for the milestone_title if the milestone cannot be found" do
+    Lighthouse::Milestone.should_receive(:find).and_raise(ActiveResource::ResourceNotFound.new(mock('not found', :code => "Not Found")))
+    
+    @fresnel_attributes.milestone_title.should be_nil
   end
 end
