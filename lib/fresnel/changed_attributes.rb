@@ -1,13 +1,6 @@
-module Fresnel
-  class ChangedAttribute
-    attr_reader :name, :old_value, :new_value
-    def initialize(params={})
-      @name = params[:name]
-      @old_value = params[:old_value]
-      @new_value = params[:new_value]
-    end
-  end
+require "fresnel/changed_attribute"
 
+module Fresnel
   class ChangedAttributes
     def initialize(versions, ticket)
       @versions = versions
@@ -18,6 +11,7 @@ module Fresnel
       attributes = []
       add_attribute(attributes, :title) if diffable_attributes.title
       add_attribute(attributes, :state) if diffable_attributes.state
+      add_attribute(attributes, :assigned_user_name) if diffable_attributes.assigned_user_name_has_changed?
       return attributes
     end
     
