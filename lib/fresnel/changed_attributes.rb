@@ -1,7 +1,7 @@
 module Fresnel
   class ChangedAttribute
     attr_reader :name, :old_value, :new_value
-    def initialize(params)
+    def initialize(params={})
       @name = params[:name]
       @old_value = params[:old_value]
       @new_value = params[:new_value]
@@ -16,37 +16,38 @@ module Fresnel
     
     def list
       attributes = []
-      add_title_attribute(attributes) if title_has_changed?
+      add_attribute(attributes, :title) 
+      add_attribute(attributes, :state)
       return attributes
     end
     
     private
     
-    def add_title_attribute(attributes)
-      attributes << ChangedAttribute.new(:name => "title", :old_value => old_title, :new_value => new_title)
+    def add_attribute(attributes, name)
+      attributes << ChangedAttribute.new(:name => name.to_s, :old_value => old_value(name), :new_value => new_value(name)) if attribute_has_changed?(name)
     end
-    
-    def title_has_changed?
+
+    def attribute_has_changed?(attribute)
       begin
-        @versions.first.diffable_attributes.title
+        @versions.first.diffable_attributes.send(attribute)
         return true
       rescue
         return false
       end
     end
-    
-    def old_title
-      @versions.first.diffable_attributes.title
+
+    def old_value(attribute)
+      @versions.first.diffable_attributes.send(attribute)
     end
     
-    def new_title      
+    def new_value(attribute)
       @versions[1..@versions.length].each do |version|
         begin
-          return version.diffable_attributes.title
+          return version.diffable_attributes.send(attribute)
         rescue
         end
       end
-      return @ticket.title
+      return @ticket.send(attribute)
     end
   end
 end

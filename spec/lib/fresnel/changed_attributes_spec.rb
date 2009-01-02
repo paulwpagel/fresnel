@@ -65,3 +65,45 @@ describe Fresnel::ChangedAttributes, "with title changed" do
     first_attribute.new_value.should == "Some Other New Title"
   end
 end
+
+describe Fresnel::ChangedAttributes, "with state changed" do
+  before(:each) do
+    @versions = [mock_version(:state => "Old State")]
+    @ticket = mock("ticket", :state => "Current Ticket State")
+    @changed_attributes = Fresnel::ChangedAttributes.new(@versions, @ticket)
+  end
+
+  it "should have on changed attribute" do
+    @changed_attributes.list.size.should == 1
+  end
+  
+  it "should give the name of the attribute" do
+    first_attribute = @changed_attributes.list[0]
+    first_attribute.name.should == "state"
+  end
+  
+  it "should give the old value" do
+    first_attribute = @changed_attributes.list[0]
+    first_attribute.old_value.should == "Old State"
+  end
+  
+  it "should give the new value from the ticket if the state hasn't changed again" do
+    first_attribute = @changed_attributes.list[0]
+    first_attribute.new_value.should == "Current Ticket State"
+  end
+  
+  it "should look ahead to the next version for the new state" do
+    @versions << mock_version(:state => "New State")
+    
+    first_attribute = @changed_attributes.list[0]
+    first_attribute.new_value.should == "New State"
+  end
+  
+  it "should look ahead multiple versions if the first doesn't have it" do
+    @versions << mock_version
+    @versions << mock_version(:state => "Some Other New State")
+  
+    first_attribute = @changed_attributes.list[0]
+    first_attribute.new_value.should == "Some Other New State"
+  end
+end
