@@ -13,7 +13,7 @@ describe "Add Ticket Integration Test" do
     press_button("login_button", scene)
     
     scene = producer.production.theater['default'].current_scene
-    scene.name.should == "ticket"
+    scene.name.should == "list_tickets"
     
     press_button "add_ticket", scene
     
@@ -27,7 +27,7 @@ describe "Add Ticket Integration Test" do
     press_button "add_ticket_button", scene
     
     scene = producer.production.theater['default'].current_scene
-
+    
     scene.find("ticket_type").text = "All Tickets"
   end
 end

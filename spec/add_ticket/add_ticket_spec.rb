@@ -35,7 +35,7 @@ describe AddTicket do
   it "should load the view_ticket scene" do
     scene.find("title").text = "some title"
     scene.find("description").text = "some description"
-    scene.should_receive(:load).with("ticket")
+    scene.should_receive(:load).with("list_tickets")
     
   
     scene.add_ticket

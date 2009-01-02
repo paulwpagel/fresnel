@@ -22,7 +22,7 @@ module AddTicket
     title.text = ""
     description.text = ""
     
-    scene.load("ticket")
+    scene.load("list_tickets")
   end
     
   private #############
