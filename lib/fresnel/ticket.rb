@@ -39,11 +39,7 @@ module Fresnel
     end
         
     def assigned_user
-      begin
-        return Lighthouse::User.find(@assigned_user_id)
-      rescue
-        return nil
-      end
+      return Fresnel::User.find(@assigned_user_id)
     end
   
     def assigned_user_name

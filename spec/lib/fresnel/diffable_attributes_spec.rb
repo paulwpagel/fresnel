@@ -33,3 +33,32 @@ describe Fresnel::DiffableAttributes do
     @fresnel_attributes.state.should be_nil
   end
 end
+
+describe Fresnel::DiffableAttributes, "assigned_user_name" do
+  before(:each) do
+    @lighthoust_attributes = mock("Lighthouse::DiffableAttributes", :assigned_user => 12345)
+    @fresnel_attributes = Fresnel::DiffableAttributes.new(@lighthoust_attributes)
+    @muser = mock("user", :name => "Some Name")
+    Fresnel::User.stub!(:find_by_id).and_return(@muser)
+  end
+  
+  it "should have an assigned_user_name" do
+    @fresnel_attributes.assigned_user_name
+  end
+  
+  it "should find the user from the user id" do
+    Fresnel::User.should_receive(:find_by_id).with(12345)
+    
+    @fresnel_attributes.assigned_user_name
+  end
+  
+  it "should return the user's name" do
+    @fresnel_attributes.assigned_user_name.should == "Some Name"
+  end
+  
+  it "should return nothing if the user cannot be found" do
+    Fresnel::User.stub!(:find_by_id).and_return(nil)
+    
+    @fresnel_attributes.assigned_user_name.should be_nil
+  end
+end

@@ -1,3 +1,5 @@
+require "fresnel/user"
+
 module Fresnel
   class DiffableAttributes
     def initialize(lighthouse_attributes)
@@ -11,7 +13,13 @@ module Fresnel
     def state
       return attempt_attribute(:state)
     end
-        
+    
+    def assigned_user_name
+      user = Fresnel::User.find_by_id(@lighthouse_attributes.assigned_user)
+      return user.name if user
+      return nil
+    end
+          
     private
     
     def attempt_attribute(name)
