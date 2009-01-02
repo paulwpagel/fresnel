@@ -16,8 +16,8 @@ module Fresnel
     
     def list
       attributes = []
-      add_attribute(attributes, :title) if current_diffable_attributes.title
-      add_attribute(attributes, :state) if current_diffable_attributes.state
+      add_attribute(attributes, :title) if diffable_attributes.title
+      add_attribute(attributes, :state) if diffable_attributes.state
       return attributes
     end
     
@@ -28,7 +28,7 @@ module Fresnel
     end
 
     def old_value(attribute)
-      current_diffable_attributes.send(attribute)
+      diffable_attributes.send(attribute)
     end
     
     def new_value(attribute)
@@ -40,7 +40,7 @@ module Fresnel
     
     private
     
-    def current_diffable_attributes
+    def diffable_attributes
       return @versions.first.diffable_attributes
     end
   end
