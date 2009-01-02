@@ -61,4 +61,11 @@ describe Fresnel::DiffableAttributes, "assigned_user_name" do
     
     @fresnel_attributes.assigned_user_name.should be_nil
   end
+  
+  it "should not find the user if there is not user id" do
+    @lighthoust_attributes.should_receive(:assigned_user).and_raise(NoMethodError)
+    Fresnel::User.should_not_receive(:find_by_id)
+    
+    @fresnel_attributes.assigned_user_name.should be_nil
+  end
 end

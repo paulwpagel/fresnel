@@ -15,12 +15,20 @@ module Fresnel
     end
     
     def assigned_user_name
-      user = Fresnel::User.find_by_id(@lighthouse_attributes.assigned_user)
-      return user.name if user
+      return assigned_user.name if assigned_user
+      return nil
+    end
+    
+    def assigned_user
+      return Fresnel::User.find_by_id(assigned_user_id) if assigned_user_id
       return nil
     end
           
     private
+    
+    def assigned_user_id
+      return attempt_attribute(:assigned_user)
+    end
     
     def attempt_attribute(name)
       begin
