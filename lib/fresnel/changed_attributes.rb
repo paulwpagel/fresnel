@@ -17,6 +17,7 @@ module Fresnel
     
     private
     
+    #TODO - EWM move some of this logic into ChangedAttribute so it is easier to use/test
     def add_attribute(attributes, name)
       attributes << ChangedAttribute.new(:name => name.to_s, :old_value => old_value(name), :new_value => new_value(name))
     end
