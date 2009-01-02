@@ -69,3 +69,21 @@ describe Fresnel::DiffableAttributes, "assigned_user_name" do
     @fresnel_attributes.assigned_user_name.should be_nil
   end
 end
+describe Fresnel::DiffableAttributes, "assigned_user_name_has_changed?" do
+  before(:each) do
+    @lighthoust_attributes = mock("Lighthouse::DiffableAttributes")
+    @fresnel_attributes = Fresnel::DiffableAttributes.new(@lighthoust_attributes)
+  end
+  
+  it "should know if the assigned_user_name_has_changed" do
+    @lighthoust_attributes.should_receive(:assigned_user).and_raise(NoMethodError)
+    
+    @fresnel_attributes.assigned_user_name_has_changed?.should be_false
+  end
+  
+  it "should know if the assigned_user_name_has_changed" do
+    @lighthoust_attributes.stub!(:assigned_user).and_return(nil)
+    
+    @fresnel_attributes.assigned_user_name_has_changed?.should be_true
+  end
+end

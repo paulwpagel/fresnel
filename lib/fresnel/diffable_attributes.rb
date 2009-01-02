@@ -23,6 +23,11 @@ module Fresnel
       return Fresnel::User.find_by_id(assigned_user_id) if assigned_user_id
       return nil
     end
+    
+    def assigned_user_name_has_changed?
+      @lighthouse_attributes.assigned_user rescue return false
+      return true
+    end
           
     private
     
