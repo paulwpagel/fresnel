@@ -1,4 +1,5 @@
 require File.expand_path(File.dirname(__FILE__) + "/../../vendor/lighthouse-api/lib/lighthouse")
+require "fresnel/diffable_attributes"
 
 module Fresnel
   class TicketVersion
@@ -21,7 +22,7 @@ module Fresnel
     end
 
     def diffable_attributes
-      return @lighthouse_version.diffable_attributes
+      return Fresnel::DiffableAttributes.new(@lighthouse_version.diffable_attributes)
     end
     
     def user

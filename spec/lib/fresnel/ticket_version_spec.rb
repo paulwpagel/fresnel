@@ -49,7 +49,15 @@ describe Fresnel::TicketVersion do
     @ticket_version.timestamp.should == "Now"
   end
   
-  it "should have diffable_attributes" do
-    @ticket_version.diffable_attributes.should == @diffable_attributes
+  it "should make a fresnel diffable_attributes" do
+    Fresnel::DiffableAttributes.should_receive(:new).with(@diffable_attributes)
+    @ticket_version.diffable_attributes
+  end
+  
+  it "should return the created fresnel diffable_attributes" do
+    fresnel_attributes = mock(Fresnel::DiffableAttributes)
+    Fresnel::DiffableAttributes.stub!(:new).and_return(fresnel_attributes)
+    
+    @ticket_version.diffable_attributes.should == fresnel_attributes
   end
 end
