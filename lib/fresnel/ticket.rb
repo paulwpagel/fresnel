@@ -37,10 +37,6 @@ module Fresnel
     def save
       @lighthouse_ticket.save
     end
-    
-    def milestone_id=(id)
-      @lighthouse_ticket.milestone_id = id
-    end
         
     def assigned_user
       begin
