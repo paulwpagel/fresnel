@@ -8,8 +8,7 @@ end
 
 describe Fresnel::ChangedAttributes, "with no changed_attributes" do
   before(:each) do
-    diffable_attributes = mock("diffable_attributes")
-    @versions = [mock_version, mock_version]
+    @versions = [mock_version(:title => nil, :state => nil), mock_version(:title => nil, :state => nil)]
     @ticket = mock("ticket")
   end
 
@@ -26,7 +25,7 @@ end
 
 describe Fresnel::ChangedAttributes, "with title changed" do
   before(:each) do
-    @versions = [mock_version(:title => "Old Title")]
+    @versions = [mock_version(:title => "Old Title", :state => nil)]
     @ticket = mock("ticket", :title => "Current Ticket Title")
     @changed_attributes = Fresnel::ChangedAttributes.new(@versions, @ticket)
   end
@@ -51,15 +50,15 @@ describe Fresnel::ChangedAttributes, "with title changed" do
   end
   
   it "should look ahead to the next version for the new title" do
-    @versions << mock_version(:title => "New Title")
+    @versions << mock_version(:title => "New Title", :state => nil)
     
     first_attribute = @changed_attributes.list[0]
     first_attribute.new_value.should == "New Title"
   end
   
   it "should look ahead multiple versions if the first doesn't have it" do
-    @versions << mock_version
-    @versions << mock_version(:title => "Some Other New Title")
+    @versions << mock_version(:title => nil, :state => nil)
+    @versions << mock_version(:title => "Some Other New Title", :state => nil)
 
     first_attribute = @changed_attributes.list[0]
     first_attribute.new_value.should == "Some Other New Title"
@@ -68,7 +67,7 @@ end
 
 describe Fresnel::ChangedAttributes, "with state changed" do
   before(:each) do
-    @versions = [mock_version(:state => "Old State")]
+    @versions = [mock_version(:state => "Old State", :title => nil)]
     @ticket = mock("ticket", :state => "Current Ticket State")
     @changed_attributes = Fresnel::ChangedAttributes.new(@versions, @ticket)
   end
@@ -93,15 +92,15 @@ describe Fresnel::ChangedAttributes, "with state changed" do
   end
   
   it "should look ahead to the next version for the new state" do
-    @versions << mock_version(:state => "New State")
+    @versions << mock_version(:state => "New State", :title => nil)
     
     first_attribute = @changed_attributes.list[0]
     first_attribute.new_value.should == "New State"
   end
   
   it "should look ahead multiple versions if the first doesn't have it" do
-    @versions << mock_version
-    @versions << mock_version(:state => "Some Other New State")
+    @versions << mock_version(:title => nil, :state => nil)
+    @versions << mock_version(:state => "Some Other New State", :title => nil)
   
     first_attribute = @changed_attributes.list[0]
     first_attribute.new_value.should == "Some Other New State"
