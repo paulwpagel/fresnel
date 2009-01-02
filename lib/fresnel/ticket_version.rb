@@ -19,7 +19,11 @@ module Fresnel
       return user.name if user
       return ""
     end
-  
+
+    def diffable_attributes
+      return @lighthouse_version.diffable_attributes
+    end
+    
     def user
       begin
         return Lighthouse::User.find(@lighthouse_version.user_id)

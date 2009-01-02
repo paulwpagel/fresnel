@@ -1,5 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + "/../../vendor/lighthouse-api/lib/lighthouse")
 require "fresnel/ticket_version"
+require "fresnel/changed_attributes"
 
 module Fresnel
   class Ticket
@@ -36,10 +37,6 @@ module Fresnel
     def save
       @lighthouse_ticket.save
     end
-    
-    def milestone_id=(id)
-      @lighthouse_ticket.milestone_id = id
-    end
         
     def assigned_user
       begin
@@ -61,6 +58,10 @@ module Fresnel
         version_list << Fresnel::TicketVersion.new(version) unless index == 0
       end
       return version_list
+    end
+    
+    def changed_attributes_for_version(number)
+      return Fresnel::ChangedAttributes.new(versions[number..versions.length], self).list
     end
     
     def description

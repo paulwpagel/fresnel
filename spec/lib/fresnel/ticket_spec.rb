@@ -183,7 +183,7 @@ end
 
 describe Fresnel::Ticket, "lighthouse ticket attributes" do
   before(:each) do
-    @lighthouse_ticket = mock("Lighthouse::Ticket", :versions => @versions, :assigned_user_id => nil,
+    @lighthouse_ticket = mock("Lighthouse::Ticket", :versions => [], :assigned_user_id => nil,
                                     :id => "ticket_id", :state => "Open", :title => "Some Title", :milestone_id => "Milestone ID")
     @fresnel_ticket = Fresnel::Ticket.new(@lighthouse_ticket)
   end
@@ -227,5 +227,29 @@ describe Fresnel::Ticket, "editing" do
     @lighthouse_ticket.should_receive(:title=).with("New Title")
     
     @fresnel_ticket.title = "New Title"
+  end
+end
+
+describe Fresnel::Ticket, "changed attributes" do
+  before(:each) do
+    lighthouse_version = mock("lighthouse_version")
+    @versions = [lighthouse_version, lighthouse_version, lighthouse_version, lighthouse_version]
+    @fresnel_version = mock('fresnel_version')
+    Fresnel::TicketVersion.stub!(:new).and_return(@fresnel_version)
+    @lighthouse_ticket = mock("Lighthouse::Ticket", :versions => @versions, :assigned_user_id => nil)
+    @fresnel_ticket = Fresnel::Ticket.new(@lighthouse_ticket)    
+    @changed_attributes_list = mock('changed_attributes_list')
+    @changed_attributes = mock("changed_attributes", :list => @changed_attributes_list)
+    Fresnel::ChangedAttributes.stub!(:new).and_return(@changed_attributes)
+  end
+  
+  it "should create a changed attributes with the versions from the given one" do
+    Fresnel::ChangedAttributes.should_receive(:new).with([@fresnel_version, @fresnel_version], @fresnel_ticket).and_return(@changed_attributes)
+    
+    @fresnel_ticket.changed_attributes_for_version(1)
+  end
+  
+  it "should return the list ofchanged_attributes" do    
+    @fresnel_ticket.changed_attributes_for_version(1).should == @changed_attributes_list
   end
 end

@@ -13,7 +13,7 @@ module ViewTicket
     end
     new_row do |row|
       row.add(make_prop("Milestone:", "milestone_header"))
-      row.add(make_combo_box(all_milestone_titles, "ticket_milestone", milestone_title))
+      row.add(make_combo_box(milestone_choices, "ticket_milestone", milestone_title))
     end
     new_row { |row| row.add(make_prop(current_ticket.description, "ticket_description")) }
     current_ticket.versions.each_with_index do |version, index|
@@ -24,11 +24,16 @@ module ViewTicket
   private ##################
   
   def make_row_for_version(version, index)
-    new_row { |row| row.add(make_prop(version_content(version), "ticket_version_#{index + 1}"))}
+    new_row { |row| row.add(make_prop(version_content(version, index), "ticket_version_#{index + 1}"))}
   end
   
-  def version_content(version)
-    return "#{version.created_by}\n#{version.timestamp}\n#{version.comment}"
+  def version_content(version, index)
+    changed_attributes = current_ticket.changed_attributes_for_version(index)
+    change_message = ""
+    changed_attributes.each do |attribute|
+      change_message << "#{attribute.name} changed from \"#{attribute.old_value}\" to \"#{attribute.new_value}\""
+    end
+    return "#{version.created_by}\n#{version.timestamp}\n#{change_message}\n#{version.comment}"
   end
   
   def new_row
@@ -51,6 +56,10 @@ module ViewTicket
     
   def main
     return scene.find_by_name('main')[0]
+  end
+  
+  def milestone_choices
+    return [""] + all_milestone_titles
   end
   
   def all_milestone_titles

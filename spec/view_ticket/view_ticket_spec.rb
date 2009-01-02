@@ -14,6 +14,8 @@ describe ViewTicket, "load_current_ticket" do
     versions = [version_one, version_two]
     producer.production.current_ticket = mock("ticket", :title => 'title', :assigned_user_name => "Roger", :state => "open",
           :milestone_id => 12345, :description => "Some Description", :versions => versions)
+    attribute_one = mock("changed_attribute", :name => "Name", :old_value => "Old Value", :new_value => "New Value")
+    producer.production.current_ticket.stub!(:changed_attributes_for_version).and_return([attribute_one])
   end
   
   uses_scene :view_ticket
@@ -58,6 +60,13 @@ describe ViewTicket, "load_current_ticket" do
     prop.text.should include("Time Two")
   end
   
+  it "should include the change message for a version" do
+    prop = scene.find("ticket_version_1")
+    prop.text.should include("Name")
+    prop.text.should include("Old Value")
+    prop.text.should include("New Value")
+  end
+  
   it "should add a combo_box for the milestone_title" do
     prop = scene.find('ticket_milestone')
     prop.value.should == "Goal Two"
@@ -65,10 +74,15 @@ describe ViewTicket, "load_current_ticket" do
     prop.name.should == "combo_box"
   end
   
-  it "should include all the milstones in the choices" do
+  it "should include all the milestones in the choices" do
     prop = scene.find('ticket_milestone')
     prop.choices.should include("Goal One")
     prop.choices.should include("Goal Two")
+  end
+  
+  it "should inclue an empty option in the milestone choices" do
+    prop = scene.find('ticket_milestone')
+    prop.choices.should include("")
   end
   
   it "should have a button to save changes to a ticket" do
