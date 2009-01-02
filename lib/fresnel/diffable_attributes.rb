@@ -28,7 +28,12 @@ module Fresnel
       @lighthouse_attributes.assigned_user rescue return false
       return true
     end
-          
+    
+    def has_milestone_changed?
+      @lighthouse_attributes.milestone rescue return false
+      return true
+    end
+    
     private
     
     def assigned_user_id

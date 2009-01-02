@@ -87,3 +87,21 @@ describe Fresnel::DiffableAttributes, "assigned_user_name_has_changed?" do
     @fresnel_attributes.assigned_user_name_has_changed?.should be_true
   end
 end
+
+describe Fresnel::DiffableAttributes, "milestone" do
+  before(:each) do
+    @lighthoust_attributes = mock("Lighthouse::DiffableAttributes")
+    @fresnel_attributes = Fresnel::DiffableAttributes.new(@lighthoust_attributes)    
+  end
+  
+  it "should know if the milestone has changed" do
+    @lighthoust_attributes.should_receive(:milestone).and_return("Some Milestone Id")
+    @fresnel_attributes.has_milestone_changed?.should == true
+  end
+  
+  it "should handle errors when retrieving the milestone id" do
+    @lighthoust_attributes.should_receive(:milestone).and_raise(NoMethodError)
+    
+    @fresnel_attributes.has_milestone_changed?.should == false
+  end
+end
