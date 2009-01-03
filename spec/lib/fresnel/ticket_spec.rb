@@ -20,16 +20,16 @@ describe Fresnel::Ticket, "assigned_user" do
     @lighthouse_ticket = mock("Lighthouse::Ticket", :assigned_user_id => 123, :versions => [])
     @fresnel_ticket = Fresnel::Ticket.new(@lighthouse_ticket)
     @muser = mock(Lighthouse::User, :name => "Denny")
-    Lighthouse::User.stub!(:find).and_return(@muser)
+    Fresnel::User.stub!(:find_by_id).and_return(@muser)
   end
 
-  it "should have an assigned_user" do
-    Lighthouse::User.should_receive(:find).with(123)
+  it "should find the assigned_user" do
+    Fresnel::User.should_receive(:find_by_id).with(123)
     
     @fresnel_ticket.assigned_user
   end
   
-  it "should find the assigned_user" do    
+  it "should return the assigned_user" do    
     @fresnel_ticket.assigned_user.should == @muser
   end
   
@@ -38,22 +38,9 @@ describe Fresnel::Ticket, "assigned_user" do
   end
   
   it "should be blank if the user isn't found" do
-    Lighthouse::User.stub!(:find).and_return(nil)
+    Fresnel::User.stub!(:find_by_id).and_return(nil)
     
     @fresnel_ticket.assigned_user_name.should == ''
-  end
-end
-
-describe Fresnel::Ticket, "with no assigned_user" do
-  before(:each) do
-    @lighthouse_ticket = mock("Lighthouse::Ticket", :assigned_user_id => 123, :versions => [])
-    @fresnel_ticket = Fresnel::Ticket.new(@lighthouse_ticket)
-    response = mock('unauthorized', :code => "500 Internal Server Error")
-    Lighthouse::User.stub!(:find).and_raise(ActiveResource::ServerError.new(response))
-  end
-  
-  it "should return nothing if it cannot find the user" do    
-    @fresnel_ticket.assigned_user.should == nil
   end
 end
 

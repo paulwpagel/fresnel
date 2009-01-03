@@ -1,6 +1,7 @@
 require File.expand_path(File.dirname(__FILE__) + "/../../vendor/lighthouse-api/lib/lighthouse")
 require "fresnel/ticket_version"
 require "fresnel/changed_attributes"
+require "fresnel/user"
 
 module Fresnel
   class Ticket
@@ -39,11 +40,7 @@ module Fresnel
     end
         
     def assigned_user
-      begin
-        return Lighthouse::User.find(@assigned_user_id)
-      rescue
-        return nil
-      end
+      return Fresnel::User.find_by_id(@assigned_user_id)
     end
   
     def assigned_user_name
