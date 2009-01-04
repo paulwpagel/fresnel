@@ -8,6 +8,7 @@ end
   "production/view_ticket/players",
   "production/login/players",
   "production/add_ticket/players",
+  "production/project/players",
   "lib"
 ].each {|path| add_to_search_path path}
 

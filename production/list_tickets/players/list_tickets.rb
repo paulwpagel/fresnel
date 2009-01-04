@@ -21,9 +21,5 @@ module ListTickets
   end
   
   private #######################
-  
-  def project
-    return production.lighthouse_client.find_project("fresnel")
-  end
-  
+    
 end
