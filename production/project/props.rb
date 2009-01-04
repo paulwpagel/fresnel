@@ -1,4 +1,6 @@
 main {
- projects :text => "Projects" 
+  projects_display {
+    projects :text => "Projects" 
+  }
   
 }

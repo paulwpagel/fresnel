@@ -7,7 +7,6 @@ task :spec do
   load 'spec'
 end
 
-
 task :integration do
   ARGV.clear
   ARGV << "integration"
