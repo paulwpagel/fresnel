@@ -140,4 +140,12 @@ describe Lighthouse::LighthouseApi, "find_project" do
   it "should return the created fresnel project" do
     Lighthouse::LighthouseApi::find_project("one").should == @fresnel_project
   end
+  
+  it "should get projects" do
+    projects = [mock('project')]
+    
+    Lighthouse::Project.should_receive(:find).with(:all).and_return(projects)
+    
+    Lighthouse::LighthouseApi.projects.should == projects
+  end
 end

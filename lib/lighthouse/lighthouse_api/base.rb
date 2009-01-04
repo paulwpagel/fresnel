@@ -19,8 +19,12 @@ module Lighthouse
       return true
     end
     
+    def self.projects
+      return Lighthouse::Project.find(:all) 
+    end
+    
     def self.find_project(project_name)
-      found_project = Lighthouse::Project.find(:all).find { |project| project.name == project_name }      
+      found_project = projects.find { |project| project.name == project_name }      
       return (Fresnel::Project.new(found_project)) if found_project
       return nil
     end

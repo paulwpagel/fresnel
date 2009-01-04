@@ -13,7 +13,7 @@ describe "Login Integration Test" do
     press_button("login_button", scene)
     
     scene = producer.production.theater['default'].current_scene
-    scene.name.should == "list_tickets"
+    scene.name.should == "project"
   end
     
 end
