@@ -49,14 +49,14 @@ describe Fresnel::TicketVersion do
     @ticket_version.timestamp.should == "Now"
   end
   
-  it "should make a fresnel diffable_attributes" do
-    Fresnel::DiffableAttributes.should_receive(:new).with(@diffable_attributes, "project_id")
+  it "should make a api diffable_attributes" do
+    Lighthouse::LighthouseApi::DiffableAttributes.should_receive(:new).with(@diffable_attributes, "project_id")
     @ticket_version.diffable_attributes
   end
   
-  it "should return the created fresnel diffable_attributes" do
-    fresnel_attributes = mock(Fresnel::DiffableAttributes)
-    Fresnel::DiffableAttributes.stub!(:new).and_return(fresnel_attributes)
+  it "should return the created api diffable_attributes" do
+    fresnel_attributes = mock(Lighthouse::LighthouseApi::DiffableAttributes)
+    Lighthouse::LighthouseApi::DiffableAttributes.stub!(:new).and_return(fresnel_attributes)
     
     @ticket_version.diffable_attributes.should == fresnel_attributes
   end
