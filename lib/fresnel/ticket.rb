@@ -5,9 +5,9 @@ require "fresnel/user"
 
 module Fresnel
   class Ticket
-    def self.find(*params)
-      tickets = Lighthouse::Ticket.find(*params)
-      return tickets.collect { |lighthouse_ticket| self.new(lighthouse_ticket) }
+    def self.find_tickets(project_id, query)
+      tickets = Lighthouse::Ticket.find(:all, :params => {:project_id => project_id, :q => query})
+      return tickets.collect { |lighthouse_ticket| self.new(lighthouse_ticket, project_id) }
     end
     
     def self.ticket_accessor(method)

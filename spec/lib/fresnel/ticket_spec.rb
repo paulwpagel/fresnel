@@ -134,38 +134,33 @@ describe Fresnel::Ticket, "find" do
     Lighthouse::Ticket.stub!(:find).and_return(@tickets)
   end
   
-  it "should call Lighthouse ticket find with one parameter" do
-    Lighthouse::Ticket.should_receive(:find).with("some param").and_return([])
+  it "should call find tickets with the state and project_id" do
+    Lighthouse::Ticket.should_receive(:find).with(:all, :params => {:project_id => "project_id", :q => "query"}).and_return([])
     
-    Fresnel::Ticket.find("some param")
-  end
-  
-  it "should call Lighthouse ticket find with one parameter" do
-    Lighthouse::Ticket.should_receive(:find).with("first param", "second param").and_return([])
-    
-    Fresnel::Ticket.find("first param", "second param")
+    Fresnel::Ticket.find_tickets("project_id", "query")
   end
   
   it "should make fresnel tickets for the first ticket found" do
-    Fresnel::Ticket.should_receive(:new).with(@ticket_one)
+    Fresnel::Ticket.should_receive(:new).with(@ticket_one, "project_id")
     
-    Fresnel::Ticket.find("some param")
+    Fresnel::Ticket.find_tickets("project_id", "query")
   end 
-
+  
   it "should make fresnel tickets for the second ticket found" do
     @ticket_two = mock("Lighthouse::Ticket")
     @tickets << @ticket_two
-    Fresnel::Ticket.should_receive(:new).with(@ticket_two)
-
-    Fresnel::Ticket.find("some param")
+    Fresnel::Ticket.should_receive(:new).with(@ticket_two, "project_id")
+  
+    Fresnel::Ticket.find_tickets("project_id", "query")
   end
   
   it "should return the fresnel tickets" do
     @ticket_two = mock("Lighthouse::Ticket")
     @tickets << @ticket_two
     
-    Fresnel::Ticket.find("some param").should == [@fresnel_ticket, @fresnel_ticket]
+    Fresnel::Ticket.find_tickets("project_id", "query").should == [@fresnel_ticket, @fresnel_ticket]
   end
+
 end
 
 describe Fresnel::Ticket, "lighthouse ticket attributes" do
