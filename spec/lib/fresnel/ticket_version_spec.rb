@@ -6,7 +6,7 @@ describe Fresnel::TicketVersion do
     @diffable_attributes = mock("diffable_attributes")
     lighthouse_version = mock("lighthouse ticket version", :body => "Some Comment", :user_id => 12345,
                                 :updated_at => "Now", :diffable_attributes => @diffable_attributes)
-    @ticket_version = Fresnel::TicketVersion.new(lighthouse_version)
+    @ticket_version = Fresnel::TicketVersion.new(lighthouse_version, "project_id")
     
     @user = mock("user", :name => "Someone")
     Lighthouse::User.stub!(:find).and_return(@user)
@@ -50,7 +50,7 @@ describe Fresnel::TicketVersion do
   end
   
   it "should make a fresnel diffable_attributes" do
-    Fresnel::DiffableAttributes.should_receive(:new).with(@diffable_attributes)
+    Fresnel::DiffableAttributes.should_receive(:new).with(@diffable_attributes, "project_id")
     @ticket_version.diffable_attributes
   end
   

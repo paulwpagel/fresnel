@@ -4,13 +4,9 @@ require "fresnel/diffable_attributes"
 describe Fresnel::DiffableAttributes do
   before(:each) do
     @lighthoust_attributes = mock("Lighthouse::DiffableAttributes")
-    @fresnel_attributes = Fresnel::DiffableAttributes.new(@lighthoust_attributes)
+    @fresnel_attributes = Fresnel::DiffableAttributes.new(@lighthoust_attributes, "project_id")
   end
-  
-  it "should accept a lighthouse diffable attribute on init" do
-    fresnel_attributes = Fresnel::DiffableAttributes.new(@lighthoust_attributes)
-  end
-  
+
   it "should have a title" do
     @lighthoust_attributes.should_receive(:title).and_return("Some Title")
     @fresnel_attributes.title.should == "Some Title"
@@ -37,7 +33,7 @@ end
 describe Fresnel::DiffableAttributes, "assigned_user_name" do
   before(:each) do
     @lighthoust_attributes = mock("Lighthouse::DiffableAttributes", :assigned_user => 12345)
-    @fresnel_attributes = Fresnel::DiffableAttributes.new(@lighthoust_attributes)
+    @fresnel_attributes = Fresnel::DiffableAttributes.new(@lighthoust_attributes, "project_id")
     @muser = mock("user", :name => "Some Name")
     Fresnel::User.stub!(:find_by_id).and_return(@muser)
   end
@@ -72,7 +68,7 @@ end
 describe Fresnel::DiffableAttributes, "assigned_user_name_has_changed?" do
   before(:each) do
     @lighthoust_attributes = mock("Lighthouse::DiffableAttributes")
-    @fresnel_attributes = Fresnel::DiffableAttributes.new(@lighthoust_attributes)
+    @fresnel_attributes = Fresnel::DiffableAttributes.new(@lighthoust_attributes, "project_id")
   end
   
   it "should know if the assigned_user_name_has_changed" do
@@ -91,7 +87,7 @@ end
 describe Fresnel::DiffableAttributes, "milestone" do
   before(:each) do
     @lighthoust_attributes = mock("Lighthouse::DiffableAttributes", :milestone => "Some Milestone Id")
-    @fresnel_attributes = Fresnel::DiffableAttributes.new(@lighthoust_attributes)
+    @fresnel_attributes = Fresnel::DiffableAttributes.new(@lighthoust_attributes, "project_id")
     @milestone = mock(Lighthouse::Milestone, :title => "Milestone Title")
     Lighthouse::Milestone.stub!(:find).and_return(@milestone)
   end
@@ -108,7 +104,7 @@ describe Fresnel::DiffableAttributes, "milestone" do
   end
   
   it "should find the milestone for its title" do
-    Lighthouse::Milestone.should_receive(:find).with("Some Milestone Id", anything())
+    Lighthouse::Milestone.should_receive(:find).with("Some Milestone Id", :params => {:project_id => "project_id"})
     
     @fresnel_attributes.milestone
   end

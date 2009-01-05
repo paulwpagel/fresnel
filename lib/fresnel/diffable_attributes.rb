@@ -3,8 +3,9 @@ require "fresnel/user"
 
 module Fresnel
   class DiffableAttributes
-    def initialize(lighthouse_attributes)
+    def initialize(lighthouse_attributes, project_id)
       @lighthouse_attributes = lighthouse_attributes
+      @project_id = project_id
     end
     
     def title
@@ -41,7 +42,7 @@ module Fresnel
     
     def milestone
       begin
-        return Lighthouse::Milestone.find(milestone_id, :params => {:project_id => 21095})
+        return Lighthouse::Milestone.find(milestone_id, :params => {:project_id => @project_id})
       rescue
         return nil
       end

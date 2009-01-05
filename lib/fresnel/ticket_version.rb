@@ -4,8 +4,9 @@ require "fresnel/diffable_attributes"
 module Fresnel
   class TicketVersion
   
-    def initialize(lighthouse_version)
+    def initialize(lighthouse_version, project_id)
       @lighthouse_version = lighthouse_version
+      @project_id = project_id
     end
   
     def comment
@@ -22,7 +23,7 @@ module Fresnel
     end
 
     def diffable_attributes
-      return Fresnel::DiffableAttributes.new(@lighthouse_version.diffable_attributes)
+      return Fresnel::DiffableAttributes.new(@lighthouse_version.diffable_attributes, @project_id)
     end
     
     def user

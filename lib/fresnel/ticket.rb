@@ -58,7 +58,7 @@ module Fresnel
     def versions
       version_list = []
       @lighthouse_versions.each_with_index do |version, index|
-        version_list << Fresnel::TicketVersion.new(version) unless index == 0
+        version_list << Fresnel::TicketVersion.new(version, @project_id) unless index == 0
       end
       return version_list
     end
