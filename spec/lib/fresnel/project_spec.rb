@@ -33,6 +33,9 @@ describe Fresnel::Project, "tickets" do
     @fresnel_project.all_tickets.should == @tickets    
   end
   
+  it "should have an id" do
+    @fresnel_project.id.should == 12345
+  end
 end
 
 describe Fresnel::Project, "milestones" do

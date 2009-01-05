@@ -93,26 +93,26 @@ describe "ticket" do
     Fresnel::Ticket.stub!(:new).and_return(@fresnel_ticket)
   end
   
-  it "should get a ticket from a ticket_id through the lighthouse api" do
-    Lighthouse::Ticket.should_receive(:find).with("ticket_id", :params => {:project_id => 21095}).and_return(@ticket)
+  it "should get a ticket from a ticket and project id through the lighthouse api" do
+    Lighthouse::Ticket.should_receive(:find).with("ticket_id", :params => {:project_id => "project_id"}).and_return(@ticket)
 
-    Lighthouse::LighthouseApi::ticket("ticket_id")
+    Lighthouse::LighthouseApi::ticket("ticket_id", "project_id")
   end
   
   it "should make a fresnel ticket from the found ticket" do
     Fresnel::Ticket.should_receive(:new).with(@ticket)
     
-    Lighthouse::LighthouseApi::ticket(1)
+    Lighthouse::LighthouseApi::ticket(1, 2)
   end
   
   it "should return the fresnel ticket" do
-    Lighthouse::LighthouseApi::ticket(1).should == @fresnel_ticket
+    Lighthouse::LighthouseApi::ticket(1, 2).should == @fresnel_ticket
   end
   
   it "should return nil if it cannot find the lighthouse ticket" do
     Lighthouse::Ticket.stub!(:find).and_return(nil)
     
-    Lighthouse::LighthouseApi::ticket(1).should be_nil
+    Lighthouse::LighthouseApi::ticket(1, 2).should be_nil
   end
 end
 
