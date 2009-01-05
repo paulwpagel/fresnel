@@ -29,7 +29,7 @@ module Login
   
   def attempt_login(logged_in)
     if logged_in
-      scene.load('list_tickets') 
+      scene.load('project') 
       scene.production.credential = Credential.new(:account => @account.text, :login => @username.text, :password => @password.text, :logged_in => true)
     else
       error_with "Authentication Failed, please try again"

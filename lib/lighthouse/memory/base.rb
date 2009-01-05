@@ -5,8 +5,13 @@ module Lighthouse
     
     def self.create_default_project
       fresnel = Lighthouse::Memory::Project.new(:name => "fresnel")
+      
       fresnel.milestones << Lighthouse::Memory::Milestone.new(:title => "First Milestone")
-      return [fresnel]
+      my_projects =  [fresnel]
+      # 10.times do |num| 
+      #   my_projects << Lighthouse::Memory::Project.new(:name => "Project #{num} &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
+      # end
+      return my_projects
     end
 
     @@projects = create_default_project

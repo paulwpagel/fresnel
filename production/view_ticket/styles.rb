@@ -6,8 +6,7 @@ cell {
   border_color "006699"
   background_color "5A9ECF"
   font_style :bold
-  horizontal_alignment :left
-  
+  horizontal_alignment :left 
 }
 
 ticket_assigned_user {

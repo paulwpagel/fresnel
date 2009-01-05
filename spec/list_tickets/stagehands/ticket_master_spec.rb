@@ -7,20 +7,13 @@ describe TicketMaster do
     @ticket_lister = mock("ticket_lister", :show_these_tickets => nil)
     @tickets = [mock('ticket')]
     @project = mock("project", :all_tickets => @tickets, :open_tickets => nil)
-    @client = mock("client", :find_project => @project)
-    @scene = mock("scene", :ticket_lister => @ticket_lister, :production => mock("production", :lighthouse_client => @client))
+    @scene = mock("scene", :ticket_lister => @ticket_lister, :production => mock("production", :current_project => @project))
 
     
     
     @ticket_master = TicketMaster.new(@scene)
   end
     
-  it "should find the project when showing tickets" do
-    @client.should_receive(:find_project).and_return(@project)
-    
-    @ticket_master.show_tickets("All Tickets")
-  end
-
   it "should get all_tickets from the project if All Tickets" do
     @project.should_receive(:all_tickets)
     

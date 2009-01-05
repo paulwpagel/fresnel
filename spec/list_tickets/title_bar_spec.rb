@@ -5,6 +5,7 @@ describe "title_bar" do
 
   before(:each) do
     mock_lighthouse
+    producer.production.current_project = mock('Project', :open_tickets => [])
   end
   
   uses_scene :list_tickets

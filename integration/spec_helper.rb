@@ -20,7 +20,9 @@ $visual = true
 
 def press_button(button_prop_name, scene)
   sleep 1 if $visual
-  scene.find(button_prop_name).button_pressed(@event)
+  button = scene.find(button_prop_name)
+  raise "There is no button named #{button_prop_name} in scene #{scene.name}" unless button
+  button.button_pressed(@event)
   sleep 1 if $visual
 end
 

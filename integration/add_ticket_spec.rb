@@ -13,8 +13,11 @@ describe "Add Ticket Integration Test" do
     press_button("login_button", scene)
     
     scene = producer.production.theater['default'].current_scene
-    scene.name.should == "list_tickets"
+    scene.name.should == "project"
     
+    scene.find("fresnel").mouse_clicked(nil)
+    scene = producer.production.theater['default'].current_scene
+
     press_button "add_ticket", scene
     
     scene = producer.production.theater['default'].current_scene

@@ -4,7 +4,8 @@ class TicketMaster
   end
   
   def show_tickets(type)
-    project = @scene.production.lighthouse_client.find_project('fresnel')
+    project = @scene.production.current_project
+    
     if type == "Open Tickets"
       tickets = project.open_tickets
     else
