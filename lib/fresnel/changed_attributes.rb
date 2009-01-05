@@ -17,7 +17,7 @@ module Fresnel
     end
     
     private
-            
+    
     def diffable_attributes
       return @versions.first.diffable_attributes
     end

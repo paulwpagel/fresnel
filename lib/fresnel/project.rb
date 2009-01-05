@@ -12,13 +12,10 @@ module Fresnel
     
     def open_tickets
       return Fresnel::Ticket.find_tickets(@id, "state:open")
-      # Fresnel::Ticket.find(:all, :params => {:project_id => @id, :q => "state:open"})
     end
     
     def all_tickets
       return Fresnel::Ticket.find_tickets(@id, "all")
-      
-      # return Fresnel::Ticket.find(:all, :params => {:project_id => @id, :q => "all"})
     end
     
     def milestone_titles
