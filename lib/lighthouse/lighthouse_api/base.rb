@@ -1,6 +1,5 @@
 require File.expand_path(File.dirname(__FILE__) + "/../../../vendor/lighthouse-api/lib/lighthouse")
-
-require "fresnel/project"
+require "lighthouse/lighthouse_api/project"
 
 module Lighthouse
   module LighthouseApi
@@ -25,7 +24,7 @@ module Lighthouse
     
     def self.find_project(project_name)
       found_project = projects.find { |project| project.name == project_name }      
-      return (Fresnel::Project.new(found_project)) if found_project
+      return (Lighthouse::LighthouseApi::Project.new(found_project)) if found_project
       return nil
     end
     

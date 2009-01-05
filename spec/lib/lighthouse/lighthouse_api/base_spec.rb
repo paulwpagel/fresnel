@@ -121,8 +121,8 @@ describe Lighthouse::LighthouseApi, "find_project" do
     @project1 = mock(Lighthouse::Project, :name => "one")
     @project2 = mock(Lighthouse::Project, :name => "two")
     Lighthouse::Project.stub!(:find).and_return([@project1, @project2])
-    @fresnel_project = mock(Fresnel::Project)
-    Fresnel::Project.stub!(:new).and_return(@fresnel_project)
+    @fresnel_project = mock(Lighthouse::LighthouseApi::Project)
+    Lighthouse::LighthouseApi::Project.stub!(:new).and_return(@fresnel_project)
   end
   
   it "should find all projects" do
@@ -132,7 +132,7 @@ describe Lighthouse::LighthouseApi, "find_project" do
   end
   
   it "should find the specific project and create a fresnel project from it " do    
-    Fresnel::Project.should_receive(:new).with(@project1)
+    Lighthouse::LighthouseApi::Project.should_receive(:new).with(@project1)
     
     Lighthouse::LighthouseApi::find_project("one")
   end
