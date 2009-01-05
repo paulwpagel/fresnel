@@ -25,7 +25,7 @@ module Fresnel
     ticket_accessor :title
     ticket_accessor :milestone_id
     
-    def initialize(lighthouse_ticket)
+    def initialize(lighthouse_ticket, project_id)
       @lighthouse_ticket = lighthouse_ticket
       @assigned_user_id = lighthouse_ticket.assigned_user_id
       begin

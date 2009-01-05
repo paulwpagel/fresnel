@@ -100,9 +100,9 @@ describe "ticket" do
   end
   
   it "should make a fresnel ticket from the found ticket" do
-    Fresnel::Ticket.should_receive(:new).with(@ticket)
+    Fresnel::Ticket.should_receive(:new).with(@ticket, "project_id")
     
-    Lighthouse::LighthouseApi::ticket(1, 2)
+    Lighthouse::LighthouseApi::ticket(1, "project_id")
   end
   
   it "should return the fresnel ticket" do

@@ -9,7 +9,7 @@ describe Fresnel::Ticket, "initialize" do
   it "should have no versions if the given ticket has none" do
     @lighthouse_ticket.should_receive(:versions).and_raise(NoMethodError)
     
-    @fresnel_ticket = Fresnel::Ticket.new(@lighthouse_ticket)
+    @fresnel_ticket = Fresnel::Ticket.new(@lighthouse_ticket, "project_id")
     
     @fresnel_ticket.versions.should == []
   end
@@ -18,7 +18,7 @@ end
 describe Fresnel::Ticket, "assigned_user" do
   before(:each) do
     @lighthouse_ticket = mock("Lighthouse::Ticket", :assigned_user_id => 123, :versions => [])
-    @fresnel_ticket = Fresnel::Ticket.new(@lighthouse_ticket)
+    @fresnel_ticket = Fresnel::Ticket.new(@lighthouse_ticket, "project_id")
     @muser = mock(Lighthouse::User, :name => "Denny")
     Fresnel::User.stub!(:find_by_id).and_return(@muser)
   end
@@ -48,7 +48,7 @@ describe Fresnel::Ticket, "description" do
   before(:each) do
     @version_one = mock("version", :body => "Some Description")
     @lighthouse_ticket = mock("Lighthouse::Ticket", :versions => [@version_one], :assigned_user_id => nil)
-    @fresnel_ticket = Fresnel::Ticket.new(@lighthouse_ticket)
+    @fresnel_ticket = Fresnel::Ticket.new(@lighthouse_ticket, "project_id")
   end
 
   it "should have get the description from the first version" do
@@ -63,7 +63,7 @@ describe Fresnel::Ticket, "description" do
   
   it "should not crash if there are no versions" do
     @lighthouse_ticket.stub!(:versions).and_return([])
-    @fresnel_ticket = Fresnel::Ticket.new(@lighthouse_ticket)
+    @fresnel_ticket = Fresnel::Ticket.new(@lighthouse_ticket, "project_id")
     
     @fresnel_ticket.description.should == ""
   end
@@ -74,7 +74,7 @@ describe Fresnel::Ticket, "comments" do
     @version_one = mock("version", :body => "Some Description")
     @versions = [@version_one]
     @lighthouse_ticket = mock("Lighthouse::Ticket", :versions => @versions, :assigned_user_id => nil)
-    @fresnel_ticket = Fresnel::Ticket.new(@lighthouse_ticket)
+    @fresnel_ticket = Fresnel::Ticket.new(@lighthouse_ticket, "project_id")
   end
   
   it "should return an array of comments ingoring the description" do
@@ -104,7 +104,7 @@ describe Fresnel::Ticket, "fresnel versions" do
     @version_one = mock("version")
     @versions = [@original_state, @version_one]
     @lighthouse_ticket = mock("Lighthouse::Ticket", :versions => @versions, :assigned_user_id => nil)
-    @fresnel_ticket = Fresnel::Ticket.new(@lighthouse_ticket)
+    @fresnel_ticket = Fresnel::Ticket.new(@lighthouse_ticket, "project_id")
 
     @fresnel_version = mock(Fresnel::TicketVersion)
     Fresnel::TicketVersion.stub!(:new).and_return(@fresnel_version)
@@ -172,7 +172,7 @@ describe Fresnel::Ticket, "lighthouse ticket attributes" do
   before(:each) do
     @lighthouse_ticket = mock("Lighthouse::Ticket", :versions => [], :assigned_user_id => nil,
                                     :id => "ticket_id", :state => "Open", :title => "Some Title", :milestone_id => "Milestone ID")
-    @fresnel_ticket = Fresnel::Ticket.new(@lighthouse_ticket)
+    @fresnel_ticket = Fresnel::Ticket.new(@lighthouse_ticket, "project_id")
   end
   
   it "should have an id" do
@@ -195,7 +195,7 @@ end
 describe Fresnel::Ticket, "editing" do
   before(:each) do
     @lighthouse_ticket = mock("Lighthouse::Ticket", :versions => @versions, :assigned_user_id => nil)
-    @fresnel_ticket = Fresnel::Ticket.new(@lighthouse_ticket)
+    @fresnel_ticket = Fresnel::Ticket.new(@lighthouse_ticket, "project_id")
   end
   
   it "should have a save method" do
@@ -224,7 +224,7 @@ describe Fresnel::Ticket, "changed attributes" do
     @fresnel_version = mock('fresnel_version')
     Fresnel::TicketVersion.stub!(:new).and_return(@fresnel_version)
     @lighthouse_ticket = mock("Lighthouse::Ticket", :versions => @versions, :assigned_user_id => nil)
-    @fresnel_ticket = Fresnel::Ticket.new(@lighthouse_ticket)    
+    @fresnel_ticket = Fresnel::Ticket.new(@lighthouse_ticket, "project_id")    
     @changed_attributes_list = mock('changed_attributes_list')
     @changed_attributes = mock("changed_attributes", :list => @changed_attributes_list)
     Fresnel::ChangedAttributes.stub!(:new).and_return(@changed_attributes)
@@ -244,7 +244,7 @@ end
 describe Fresnel::Ticket, "milestone_title" do
   it "should have a milestone title" do
     @lighthouse_ticket = mock("Lighthouse::Ticket", :versions => [], :assigned_user_id => nil)
-    @fresnel_ticket = Fresnel::Ticket.new(@lighthouse_ticket)
+    @fresnel_ticket = Fresnel::Ticket.new(@lighthouse_ticket, "project_id")
     
     @fresnel_ticket.milestone_title.should == ""   
   end
