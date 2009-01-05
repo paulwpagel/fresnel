@@ -1,5 +1,5 @@
 require File.expand_path(File.dirname(__FILE__) + "/../../../vendor/lighthouse-api/lib/lighthouse")
-require "fresnel/ticket_version"
+require "lighthouse/lighthouse_api/ticket_version"
 require "lighthouse/lighthouse_api/changed_attributes"
 require "fresnel/user"
 
@@ -64,7 +64,7 @@ module Lighthouse
       def versions
         version_list = []
         @lighthouse_versions.each_with_index do |version, index|
-          version_list << Fresnel::TicketVersion.new(version, @project_id) unless index == 0
+          version_list << Lighthouse::LighthouseApi::TicketVersion.new(version, @project_id) unless index == 0
         end
         return version_list
       end
