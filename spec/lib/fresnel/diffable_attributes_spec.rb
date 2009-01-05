@@ -94,13 +94,13 @@ describe Fresnel::DiffableAttributes, "milestone" do
   
   it "should know if the milestone has changed" do
     @lighthoust_attributes.should_receive(:milestone).and_return("Some Milestone Id")
-    @fresnel_attributes.has_milestone_changed?.should == true
+    @fresnel_attributes.milestone_title_has_changed?.should == true
   end
   
   it "should handle errors when retrieving the milestone id" do
     @lighthoust_attributes.should_receive(:milestone).and_raise(NoMethodError)
     
-    @fresnel_attributes.has_milestone_changed?.should == false
+    @fresnel_attributes.milestone_title_has_changed?.should == false
   end
   
   it "should find the milestone for its title" do

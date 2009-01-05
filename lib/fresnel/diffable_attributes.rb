@@ -35,7 +35,7 @@ module Fresnel
       milestone.title if milestone
     end
     
-    def has_milestone_changed?
+    def milestone_title_has_changed?
       @lighthouse_attributes.milestone rescue return false
       return true
     end
