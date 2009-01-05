@@ -1,5 +1,5 @@
 require File.expand_path(File.dirname(__FILE__) + "/../../../vendor/lighthouse-api/lib/lighthouse")
-require "fresnel/ticket"
+require "lighthouse/lighthouse_api/ticket"
 
 module Lighthouse
   module LighthouseApi
@@ -12,11 +12,11 @@ module Lighthouse
       end
     
       def open_tickets
-        return Fresnel::Ticket.find_tickets(@id, "state:open")
+        return Lighthouse::LighthouseApi::Ticket.find_tickets(@id, "state:open")
       end
     
       def all_tickets
-        return Fresnel::Ticket.find_tickets(@id, "all")
+        return Lighthouse::LighthouseApi::Ticket.find_tickets(@id, "all")
       end
     
       def milestone_titles

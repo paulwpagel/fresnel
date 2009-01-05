@@ -89,8 +89,8 @@ describe "ticket" do
   before(:each) do
     @ticket = mock("ticket")
     Lighthouse::Ticket.stub!(:find).and_return(@ticket)
-    @fresnel_ticket = mock(Fresnel::Ticket)
-    Fresnel::Ticket.stub!(:new).and_return(@fresnel_ticket)
+    @fresnel_ticket = mock(Lighthouse::LighthouseApi::Ticket)
+    Lighthouse::LighthouseApi::Ticket.stub!(:new).and_return(@fresnel_ticket)
   end
   
   it "should get a ticket from a ticket and project id through the lighthouse api" do
@@ -100,7 +100,7 @@ describe "ticket" do
   end
   
   it "should make a fresnel ticket from the found ticket" do
-    Fresnel::Ticket.should_receive(:new).with(@ticket, "project_id")
+    Lighthouse::LighthouseApi::Ticket.should_receive(:new).with(@ticket, "project_id")
     
     Lighthouse::LighthouseApi::ticket(1, "project_id")
   end

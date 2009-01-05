@@ -52,7 +52,7 @@ module Lighthouse
   
     def self.ticket(ticket_id, project_id)
       found_ticket = Lighthouse::Ticket.find(ticket_id, :params => {:project_id => project_id})
-      return Fresnel::Ticket.new(found_ticket, project_id) if found_ticket
+      return Lighthouse::LighthouseApi::Ticket.new(found_ticket, project_id) if found_ticket
       return nil
     end
   end
