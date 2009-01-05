@@ -12,6 +12,7 @@ module Fresnel
       attributes << ChangedAttribute.new(@versions, :title, @ticket.title) if diffable_attributes.title
       attributes << ChangedAttribute.new(@versions, :state, @ticket.state) if diffable_attributes.state
       attributes << ChangedAttribute.new(@versions, :assigned_user_name, @ticket.assigned_user_name) if diffable_attributes.assigned_user_name_has_changed?
+      attributes << ChangedAttribute.new(@versions, :milestone_title, @ticket.milestone_title) if diffable_attributes.milestone_title_has_changed?
       return attributes
     end
     
