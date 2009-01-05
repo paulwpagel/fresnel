@@ -226,11 +226,11 @@ describe Fresnel::Ticket, "changed attributes" do
     @fresnel_ticket = Fresnel::Ticket.new(@lighthouse_ticket, "project_id")    
     @changed_attributes_list = mock('changed_attributes_list')
     @changed_attributes = mock("changed_attributes", :list => @changed_attributes_list)
-    Fresnel::ChangedAttributes.stub!(:new).and_return(@changed_attributes)
+    Lighthouse::LighthouseApi::ChangedAttributes.stub!(:new).and_return(@changed_attributes)
   end
   
   it "should create a changed attributes with the versions from the given one" do
-    Fresnel::ChangedAttributes.should_receive(:new).with([@fresnel_version, @fresnel_version], @fresnel_ticket).and_return(@changed_attributes)
+    Lighthouse::LighthouseApi::ChangedAttributes.should_receive(:new).with([@fresnel_version, @fresnel_version], @fresnel_ticket).and_return(@changed_attributes)
     
     @fresnel_ticket.changed_attributes_for_version(1)
   end
