@@ -1,5 +1,5 @@
 require File.expand_path(File.dirname(__FILE__) + "/../../../vendor/lighthouse-api/lib/lighthouse")
-require "fresnel/user"
+require "lighthouse/lighthouse_api/user"
 
 module Lighthouse
   module LighthouseApi
@@ -23,7 +23,7 @@ module Lighthouse
       end
     
       def assigned_user
-        return Fresnel::User.find_by_id(assigned_user_id) if assigned_user_id
+        return Lighthouse::LighthouseApi::User.find_by_id(assigned_user_id) if assigned_user_id
         return nil
       end
     

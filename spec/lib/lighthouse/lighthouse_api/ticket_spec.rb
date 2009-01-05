@@ -20,11 +20,11 @@ describe Lighthouse::LighthouseApi::Ticket, "assigned_user" do
     @lighthouse_ticket = mock("Lighthouse::Ticket", :assigned_user_id => 123, :versions => [])
     @fresnel_ticket = Lighthouse::LighthouseApi::Ticket.new(@lighthouse_ticket, "project_id")
     @muser = mock(Lighthouse::User, :name => "Denny")
-    Fresnel::User.stub!(:find_by_id).and_return(@muser)
+    Lighthouse::LighthouseApi::User.stub!(:find_by_id).and_return(@muser)
   end
 
   it "should find the assigned_user" do
-    Fresnel::User.should_receive(:find_by_id).with(123)
+    Lighthouse::LighthouseApi::User.should_receive(:find_by_id).with(123)
     
     @fresnel_ticket.assigned_user
   end
@@ -38,7 +38,7 @@ describe Lighthouse::LighthouseApi::Ticket, "assigned_user" do
   end
   
   it "should be blank if the user isn't found" do
-    Fresnel::User.stub!(:find_by_id).and_return(nil)
+    Lighthouse::LighthouseApi::User.stub!(:find_by_id).and_return(nil)
     
     @fresnel_ticket.assigned_user_name.should == ''
   end

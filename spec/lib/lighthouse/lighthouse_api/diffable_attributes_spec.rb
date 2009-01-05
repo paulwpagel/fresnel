@@ -35,7 +35,7 @@ describe Lighthouse::LighthouseApi::DiffableAttributes, "assigned_user_name" do
     @lighthouse_attributes = mock("Lighthouse::DiffableAttributes", :assigned_user => 12345)
     @fresnel_attributes = Lighthouse::LighthouseApi::DiffableAttributes.new(@lighthouse_attributes, "project_id")
     @muser = mock("user", :name => "Some Name")
-    Fresnel::User.stub!(:find_by_id).and_return(@muser)
+    Lighthouse::LighthouseApi::User.stub!(:find_by_id).and_return(@muser)
   end
   
   it "should have an assigned_user_name" do
@@ -43,7 +43,7 @@ describe Lighthouse::LighthouseApi::DiffableAttributes, "assigned_user_name" do
   end
   
   it "should find the user from the user id" do
-    Fresnel::User.should_receive(:find_by_id).with(12345)
+    Lighthouse::LighthouseApi::User.should_receive(:find_by_id).with(12345)
     
     @fresnel_attributes.assigned_user_name
   end
@@ -53,14 +53,14 @@ describe Lighthouse::LighthouseApi::DiffableAttributes, "assigned_user_name" do
   end
   
   it "should return nothing if the user cannot be found" do
-    Fresnel::User.stub!(:find_by_id).and_return(nil)
+    Lighthouse::LighthouseApi::User.stub!(:find_by_id).and_return(nil)
     
     @fresnel_attributes.assigned_user_name.should be_nil
   end
   
   it "should not find the user if there is not user id" do
     @lighthouse_attributes.should_receive(:assigned_user).and_raise(NoMethodError)
-    Fresnel::User.should_not_receive(:find_by_id)
+    Lighthouse::LighthouseApi::User.should_not_receive(:find_by_id)
     
     @fresnel_attributes.assigned_user_name.should be_nil
   end
