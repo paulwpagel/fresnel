@@ -38,7 +38,12 @@ module Fresnel
     end
     
     def milestone_title
-      return ""
+      begin
+        milestone = Lighthouse::Milestone.find(milestone_id, :params => {:project_id => @project_id})
+      rescue
+        return nil
+      end
+      return milestone.title
     end
     
     def save

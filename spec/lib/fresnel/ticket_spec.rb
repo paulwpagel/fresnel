@@ -241,10 +241,27 @@ describe Fresnel::Ticket, "changed attributes" do
 end
 
 describe Fresnel::Ticket, "milestone_title" do
-  it "should have a milestone title" do
-    @lighthouse_ticket = mock("Lighthouse::Ticket", :versions => [], :assigned_user_id => nil)
+  before(:each) do
+    @lighthouse_ticket = mock("Lighthouse::Ticket", :versions => [], :assigned_user_id => nil, :milestone_id => "Milestone ID")
     @fresnel_ticket = Fresnel::Ticket.new(@lighthouse_ticket, "project_id")
-    
-    @fresnel_ticket.milestone_title.should == ""   
+    @milestone = mock("milestone", :title => "Milestone Title")
+    Lighthouse::Milestone.stub!(:find).and_return(@milestone)
   end
+  
+  it "should find the milestone" do
+    Lighthouse::Milestone.should_receive(:find).with("Milestone ID", :params => {:project_id => "project_id"}).and_return(@milestone)
+    
+    @fresnel_ticket.milestone_title
+  end
+  
+  it "should return the title of the found milestone" do
+    @fresnel_ticket.milestone_title.should == "Milestone Title"
+  end
+  
+  it "should not crash if the milestone is not found" do
+    Lighthouse::Milestone.should_receive(:find).and_raise(ActiveResource::Redirection.new(mock('resource moved', :code => "moved")))
+    
+    @fresnel_ticket.milestone_title.should be_nil
+  end
+  
 end
