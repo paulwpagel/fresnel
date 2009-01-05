@@ -24,6 +24,7 @@ module Fresnel
     ticket_accessor :state
     ticket_accessor :title
     ticket_accessor :milestone_id
+    attr_reader :project_id
     
     def initialize(lighthouse_ticket, project_id)
       @lighthouse_ticket = lighthouse_ticket
@@ -33,6 +34,7 @@ module Fresnel
       rescue NoMethodError
         @lighthouse_versions = []
       end
+      @project_id = project_id
     end
     
     def milestone_title
