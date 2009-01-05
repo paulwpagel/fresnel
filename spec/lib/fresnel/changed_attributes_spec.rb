@@ -30,7 +30,7 @@ describe Fresnel::ChangedAttributes, "title changed" do
   it "should add a new changed attribute for title" do
     @changed_attributes = Fresnel::ChangedAttributes.new(@versions, @ticket)
     changed_attribute = mock("changed_attribute")
-    Fresnel::ChangedAttribute.should_receive(:new).with(@versions, :title, "Current Title").and_return(changed_attribute)
+    Lighthouse::LighthouseApi::ChangedAttribute.should_receive(:new).with(@versions, :title, "Current Title").and_return(changed_attribute)
     
     list = @changed_attributes.list
     list.size.should == 1
@@ -48,7 +48,7 @@ describe Fresnel::ChangedAttributes, "state changed" do
   it "should add a new changed attribute for title" do
     @changed_attributes = Fresnel::ChangedAttributes.new(@versions, @ticket)
     changed_attribute = mock("changed_attribute")
-    Fresnel::ChangedAttribute.should_receive(:new).with(@versions, :state, "Current State").and_return(changed_attribute)
+    Lighthouse::LighthouseApi::ChangedAttribute.should_receive(:new).with(@versions, :state, "Current State").and_return(changed_attribute)
     
     list = @changed_attributes.list
     list.size.should == 1
@@ -67,7 +67,7 @@ describe Fresnel::ChangedAttributes, "assigned user changed" do
   it "should add a new changed attribute for title" do
     @changed_attributes = Fresnel::ChangedAttributes.new(@versions, @ticket)
     changed_attribute = mock("changed_attribute")
-    Fresnel::ChangedAttribute.should_receive(:new).with(@versions, :assigned_user_name, "Current Assigned User Name").and_return(changed_attribute)
+    Lighthouse::LighthouseApi::ChangedAttribute.should_receive(:new).with(@versions, :assigned_user_name, "Current Assigned User Name").and_return(changed_attribute)
     
     list = @changed_attributes.list
     list.size.should == 1
@@ -86,7 +86,7 @@ describe Fresnel::ChangedAttributes, "milestone title changed" do
   it "should add a new changed attribute for title" do
     @changed_attributes = Fresnel::ChangedAttributes.new(@versions, @ticket)
     changed_attribute = mock("changed_attribute")
-    Fresnel::ChangedAttribute.should_receive(:new).with(@versions, :milestone_title, "Current Milestone Title").and_return(changed_attribute)
+    Lighthouse::LighthouseApi::ChangedAttribute.should_receive(:new).with(@versions, :milestone_title, "Current Milestone Title").and_return(changed_attribute)
     
     list = @changed_attributes.list
     list.size.should == 1

@@ -1,15 +1,15 @@
-require File.dirname(__FILE__) + '/../../spec_helper'
-require "fresnel/changed_attribute"
+require File.dirname(__FILE__) + '/../../../spec_helper'
+require "lighthouse/lighthouse_api/changed_attribute"
 
 def mock_version(options={})
   diffable_attributes = mock("diffable_attributes", options)
   return mock("version", :diffable_attributes => diffable_attributes)
 end
 
-describe Fresnel::ChangedAttribute do
+describe Lighthouse::LighthouseApi::ChangedAttribute do
   before(:each) do
     @versions = [mock_version(:name => "Old Value")]
-    @attribute = Fresnel::ChangedAttribute.new(@versions, :name, "Current Value")
+    @attribute = Lighthouse::LighthouseApi::ChangedAttribute.new(@versions, :name, "Current Value")
   end
   
   it "should have a name" do
