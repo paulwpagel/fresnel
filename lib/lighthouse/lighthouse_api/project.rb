@@ -11,7 +11,7 @@ module Lighthouse
         @id = lighthouse_project.id
         @milestones = lighthouse_project.milestones
       end
-    
+      
       def open_tickets
         return Lighthouse::LighthouseApi::Ticket.find_tickets(@id, "state:open")
       end

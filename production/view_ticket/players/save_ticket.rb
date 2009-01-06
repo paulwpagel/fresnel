@@ -5,6 +5,7 @@ module SaveTicket
     current_ticket.milestone_id = new_milestone_id
     current_ticket.new_comment = new_comment
     current_ticket.save
+    scene.load('view_ticket')
   end
   
   def current_ticket

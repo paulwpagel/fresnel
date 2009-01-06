@@ -59,6 +59,12 @@ describe SaveTicket, "on_click" do
     press_button
   end
   
+  it "should reload the view ticket scene" do
+    scene.should_receive(:load).with("view_ticket")
+    
+    press_button
+  end
+  
   def press_button
     scene.find("save_button").button_pressed(nil)
   end
