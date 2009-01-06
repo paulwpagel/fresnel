@@ -41,7 +41,7 @@ end
 
 describe Lighthouse::LighthouseApi::Project, "milestones" do
   before(:each) do
-    milestone_one = mock("milestone", :title => "Goal One")
+    milestone_one = mock("milestone", :title => "Goal One", :id => "id_one")
     @milestones = [milestone_one]
     @lighthoust_project = mock("Lighthouse::Project", :id => nil, :milestones => @milestones)
     @fresnel_project = Lighthouse::LighthouseApi::Project.new(@lighthoust_project)
@@ -60,5 +60,16 @@ describe Lighthouse::LighthouseApi::Project, "milestones" do
     @milestones << milestone_two
     
     @fresnel_project.milestone_titles.should == ["Goal One", "Goal Two"]
+  end
+  
+  it "should get an id from a milestone title" do
+    @fresnel_project.milestone_id("Goal One").should == "id_one"
+  end
+  
+  it "should get an id for a different mileston" do
+    milestone_two = mock("milestone", :title => "Goal Two", :id => "id_two")
+    @milestones << milestone_two
+    
+    @fresnel_project.milestone_id("Goal Two").should == "id_two"
   end
 end

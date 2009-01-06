@@ -22,6 +22,16 @@ module Lighthouse
       def milestone_titles
         return @milestones.collect { |milestone| milestone.title }
       end
+      
+      def milestone_id(title)
+        return milestone_from_title(title).id
+      end
+      
+      private
+      
+      def milestone_from_title(title)
+        return @milestones.find { |milestone| milestone.title == title }
+      end
     end
   end
 end
