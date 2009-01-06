@@ -6,7 +6,7 @@ describe SaveTicket, "on_click" do
   before(:each) do
     mock_lighthouse
     @mock_ticket = mock("ticket", :title => "", :assigned_user_name => "", :state => "new", :state= => nil, :title= => nil,
-          :milestone_id => 123, :description => "", :versions => [], :save => nil, :milestone_id= => nil)
+          :milestone_id => 123, :description => "", :versions => [], :save => nil, :milestone_id= => nil, :new_comment= => nil)
     producer.production.current_ticket = @mock_ticket
     @mock_project = mock("project", :milestone_id => "Milestone ID")
     producer.production.current_project = @mock_project
@@ -47,6 +47,14 @@ describe SaveTicket, "on_click" do
   
   it "should set the milestone id on the ticket" do
     @mock_ticket.should_receive(:milestone_id=).with("Milestone ID")
+    
+    press_button
+  end
+  
+  it "should set the new comment for the ticket" do
+    prop = scene.find("ticket_comment")
+    prop.text = "Some Comment"
+    @mock_ticket.should_receive(:new_comment=).with("Some Comment")
     
     press_button
   end
