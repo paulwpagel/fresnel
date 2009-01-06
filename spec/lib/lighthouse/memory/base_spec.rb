@@ -20,6 +20,7 @@ describe Lighthouse::Memory do
     Lighthouse::Memory::projects << project
 
     Lighthouse::Memory::find_project("new").should == project
+    Lighthouse::Memory::projects.delete(project)
   end
   
   it "should start with a fresnel project" do
@@ -34,7 +35,6 @@ describe Lighthouse::Memory do
     Lighthouse::Memory.projects[0].tickets.size.should == 1
     Lighthouse::Memory.projects[0].tickets[0].title.should == "test title"
     Lighthouse::Memory.projects[0].tickets[0].description.should == "test description"
-    Lighthouse::Memory.projects.delete(Lighthouse::Memory.projects[1])
   end
   
   it "should throw error if it doesn't know the project" do
@@ -52,7 +52,12 @@ describe Lighthouse::Memory do
   
   it "should list projects" do
     Lighthouse::Memory.projects.size.should == 1
+    
     Lighthouse::Memory.projects[0].name.should == "fresnel"
   end
+  
+  # it "should find ticket" do
+  #   Lighthouse::Memory.ticket()
+  # end
   
 end
