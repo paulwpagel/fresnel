@@ -1,6 +1,6 @@
 module SaveTicket
   def button_pressed(event)
-    current_ticket .title = new_title
+    current_ticket.title = new_title
     current_ticket.state = new_state
     current_ticket.milestone_id = new_milestone_id
     current_ticket.save

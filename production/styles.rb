@@ -3,6 +3,7 @@ main {
 	height 800
 	background_color "#34689b"
 	horizontal_alignment "center"
+	vertical_scrollbar "on"
 }
 
 input_group {
