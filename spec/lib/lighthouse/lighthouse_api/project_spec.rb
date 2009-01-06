@@ -72,4 +72,8 @@ describe Lighthouse::LighthouseApi::Project, "milestones" do
     
     @fresnel_project.milestone_id("Goal Two").should == "id_two"
   end
+  
+  it "should return nil if it cannot find the title" do
+    @fresnel_project.milestone_id("Bad Title").should be_nil
+  end
 end

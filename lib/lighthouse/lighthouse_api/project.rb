@@ -24,7 +24,8 @@ module Lighthouse
       end
       
       def milestone_id(title)
-        return milestone_from_title(title).id
+        return milestone_from_title(title).id if milestone_from_title(title)
+        return nil
       end
       
       private
