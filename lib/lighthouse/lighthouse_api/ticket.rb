@@ -37,7 +37,7 @@ module Lighthouse
         end
         @project_id = project_id
       end
-    
+      
       def milestone_title
         begin
           milestone = Lighthouse::Milestone.find(milestone_id, :params => {:project_id => @project_id})
@@ -84,6 +84,10 @@ module Lighthouse
           comment_list << version.body unless index == 0
         end
         return comment_list
+      end
+      
+      def new_comment=(comment)
+        @lighthouse_ticket.body = comment
       end
     end
   end

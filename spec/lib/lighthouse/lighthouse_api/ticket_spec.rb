@@ -189,6 +189,12 @@ describe Lighthouse::LighthouseApi::Ticket, "lighthouse ticket attributes" do
   it "should have a project_id" do
     @fresnel_ticket.project_id.should == "project_id"
   end
+  
+  it "should have way to set a new comment" do
+    @lighthouse_ticket.should_receive(:body=).with("new comment")
+    
+    @fresnel_ticket.new_comment = "new comment"
+  end
 end
 
 describe Lighthouse::LighthouseApi::Ticket, "editing" do
