@@ -5,19 +5,16 @@ require "view_ticket"
 describe ViewTicket, "load_current_ticket" do
   
   before(:each) do
-    mock_lighthouse
-    @lighthouse_client.stub!(:milestone_title).and_return("Goal Two")
-    mock_project = mock("project", :milestone_titles => ["Goal One", "Goal Two"])
-    @lighthouse_client.stub!(:find_project).and_return(mock_project)
     version_one = mock("version", :comment => "Comment One", :created_by => "Version User One", :timestamp => "Time One")
     version_two = mock("version", :comment => "Comment Two", :created_by => "Version User Two", :timestamp => "Time Two")
     versions = [version_one, version_two]
-    producer.production.current_ticket = mock("ticket", :title => 'title', :assigned_user_name => "Roger", :state => "open",
-          :milestone_id => 12345, :description => "Some Description", :versions => versions)
-    attribute_one = mock("changed_attribute", :name => "Name", :old_value => "Old Value", :new_value => "New Value")
-    producer.production.current_ticket.stub!(:changed_attributes_for_version).and_return([attribute_one])
-    
-    @current_project = mock("project", :all_states => ["new", "open", "resolved", "hold", "invalid"], :milestone_titles => ["Goal One", "Goal Two"])
+
+    attribute_one = mock("changed_attribute", :name => "Name", :old_value => "Old Value", :new_value => "New Value")    
+    current_ticket = mock("ticket", :title => 'title', :assigned_user_name => "Roger", :state => "open",
+          :milestone_id => 12345, :description => "Some Description", :versions => versions, :changed_attributes_for_version => [attribute_one])
+    producer.production.current_ticket = current_ticket
+    @current_project = mock("project", :all_states => ["new", "open", "resolved", "hold", "invalid"], :milestone_title => "Goal Two",
+                                       :milestone_titles => ["Goal One", "Goal Two"])
     producer.production.current_project = @current_project
   end
   

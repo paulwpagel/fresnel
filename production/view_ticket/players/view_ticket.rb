@@ -6,7 +6,7 @@ module ViewTicket
   
   def load_current_ticket
     scene.find("ticket_title").text = current_ticket.title
-    scene.find("ticket_state").choices = production.current_project.all_states
+    scene.find("ticket_state").choices = current_project.all_states
     scene.find("ticket_state").value = current_ticket.state
     new_row do |row|
       row.add(make_prop("Assigned User:", "assigned_user_header"))
@@ -55,6 +55,10 @@ module ViewTicket
     return production.current_ticket
   end
   
+  def current_project
+    return production.current_project
+  end
+  
   def make_combo_box(choices, id, value)
     return Limelight::Prop.new(:choices => choices, :id => id, :name => "combo_box", :value => value)
   end
@@ -72,10 +76,10 @@ module ViewTicket
   end
   
   def all_milestone_titles
-    return production.current_project.milestone_titles
+    return current_project.milestone_titles
   end
   
   def milestone_title
-    return production.lighthouse_client.milestone_title('fresnel', current_ticket.milestone_id)
+    return current_project.milestone_title(current_ticket.milestone_id)
   end
 end
