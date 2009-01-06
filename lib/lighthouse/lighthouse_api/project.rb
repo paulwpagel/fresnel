@@ -24,6 +24,11 @@ module Lighthouse
         return @milestones.collect { |milestone| milestone.title }
       end
       
+      def milestone_title(id)
+        return milestone_from_id(id).title if milestone_from_id(id)
+        return nil
+      end
+      
       def milestone_id(title)
         return milestone_from_title(title).id if milestone_from_title(title)
         return nil
@@ -45,6 +50,10 @@ module Lighthouse
       
       def milestone_from_title(title)
         return @milestones.find { |milestone| milestone.title == title }
+      end
+      
+      def milestone_from_id(id)
+        return @milestones.find { |milestone| milestone.id == id }
       end
     end
   end

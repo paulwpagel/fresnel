@@ -76,6 +76,21 @@ describe Lighthouse::LighthouseApi::Project, "milestones" do
   it "should return nil if it cannot find the title" do
     @fresnel_project.milestone_id("Bad Title").should be_nil
   end
+  
+  it "should have a way to get the first milestone title from the id" do
+    @fresnel_project.milestone_title("id_one").should == "Goal One"
+  end
+
+  it "should have a way to get the second milestone title from the id" do
+    milestone_two = mock("milestone", :title => "Goal Two", :id => "id_two")
+    @milestones << milestone_two
+    
+    @fresnel_project.milestone_title("id_two").should == "Goal Two"
+  end
+  
+  it "should return nil if it cannot find the milestone" do
+    @fresnel_project.milestone_title("Bad ID").should be_nil
+  end
 end
 
 describe Lighthouse::LighthouseApi::Project, "states" do
