@@ -2,6 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + "/../../../vendor/lighthouse-a
 require "lighthouse/lighthouse_api/ticket_version"
 require "lighthouse/lighthouse_api/changed_attributes"
 require "lighthouse/lighthouse_api/user"
+require "lighthouse/lighthouse_api/ticket_accessors"
 
 module Lighthouse
   module LighthouseApi
@@ -10,18 +11,9 @@ module Lighthouse
         tickets = Lighthouse::Ticket.find(:all, :params => {:project_id => project_id, :q => query})
         return tickets.collect { |lighthouse_ticket| self.new(lighthouse_ticket, project_id) }
       end
-    
-      def self.ticket_accessor(method)
-        define_method(method) do
-          return @lighthouse_ticket.send(method)
-        end
-        writer = "#{method}="
-        define_method(writer) do |value|
-          @lighthouse_ticket.send(writer, value)
-        end
-      end
-    
-      ticket_accessor :id
+      
+      include TicketAccessors
+      ticket_reader :id
       ticket_accessor :state
       ticket_accessor :title
       ticket_accessor :milestone_id

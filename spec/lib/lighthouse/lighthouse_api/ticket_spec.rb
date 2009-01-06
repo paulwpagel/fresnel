@@ -174,6 +174,10 @@ describe Lighthouse::LighthouseApi::Ticket, "lighthouse ticket attributes" do
     @fresnel_ticket.id.should == "ticket_id"
   end
   
+  it "should not allow the id to be editable" do
+    lambda{@fresnel_ticket.id = "New ID"}.should raise_error(NoMethodError)
+  end
+  
   it "should have a state" do
     @fresnel_ticket.state.should == "Open"
   end
