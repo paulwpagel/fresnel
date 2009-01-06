@@ -77,3 +77,23 @@ describe Lighthouse::LighthouseApi::Project, "milestones" do
     @fresnel_project.milestone_id("Bad Title").should be_nil
   end
 end
+
+describe Lighthouse::LighthouseApi::Project, "states" do
+  before(:each) do
+    @lighthoust_project = mock("Lighthouse::Project", :id => nil, :milestones => [], :open_states_list => "one,two,three",
+                                                      :closed_states_list => "closed_one,closed_two,closed_three")
+    @fresnel_project = Lighthouse::LighthouseApi::Project.new(@lighthoust_project)
+  end
+  
+  it "should get the open_states" do
+    @fresnel_project.open_states.should == ["one", "two", "three"]
+  end
+  
+  it "should get the closed_states" do
+    @fresnel_project.closed_states.should == ["closed_one", "closed_two", "closed_three"]
+  end
+  
+  it "should get all the states" do
+    @fresnel_project.all_states.should == ["one", "two", "three", "closed_one", "closed_two", "closed_three"]
+  end
+end
