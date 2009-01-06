@@ -17,7 +17,7 @@ describe ViewTicket, "load_current_ticket" do
     attribute_one = mock("changed_attribute", :name => "Name", :old_value => "Old Value", :new_value => "New Value")
     producer.production.current_ticket.stub!(:changed_attributes_for_version).and_return([attribute_one])
     
-    @current_project = mock("project", :all_states => ["new", "open", "resolved", "hold", "invalid"])
+    @current_project = mock("project", :all_states => ["new", "open", "resolved", "hold", "invalid"], :milestone_titles => ["Goal One", "Goal Two"])
     producer.production.current_project = @current_project
   end
   

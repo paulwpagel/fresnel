@@ -72,7 +72,7 @@ module ViewTicket
   end
   
   def all_milestone_titles
-    return production.lighthouse_client.find_project('fresnel').milestone_titles
+    return production.current_project.milestone_titles
   end
   
   def milestone_title

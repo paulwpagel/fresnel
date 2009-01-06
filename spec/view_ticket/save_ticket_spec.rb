@@ -8,7 +8,7 @@ describe SaveTicket, "on_click" do
     @mock_ticket = mock("ticket", :title => "", :assigned_user_name => "", :state => "new", :state= => nil, :title= => nil,
           :milestone_id => 123, :description => "", :versions => [], :save => nil, :milestone_id= => nil, :new_comment= => nil)
     producer.production.current_ticket = @mock_ticket
-    @mock_project = mock("project", :milestone_id => "Milestone ID", :all_states => ["open"])
+    @mock_project = mock("project", :milestone_id => "Milestone ID", :all_states => ["open"], :milestone_titles => ["Goal One", "Goal Two"])
     producer.production.current_project = @mock_project
   end
   
