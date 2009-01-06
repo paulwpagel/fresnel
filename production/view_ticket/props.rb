@@ -8,7 +8,7 @@ main {
       text_box :id => "ticket_title", :width => 250
     }
     cell {
-      combo_box :choices => ["new", "open", "resolved", "hold", "invalid"], :id => "ticket_state"
+      combo_box :id => "ticket_state"
     }
   }
 }

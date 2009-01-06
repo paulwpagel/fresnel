@@ -6,6 +6,7 @@ module ViewTicket
   
   def load_current_ticket
     scene.find("ticket_title").text = current_ticket.title
+    scene.find("ticket_state").choices = ["new", "open", "resolved", "hold", "invalid"]
     scene.find("ticket_state").value = current_ticket.state
     new_row do |row|
       row.add(make_prop("Assigned User:", "assigned_user_header"))
