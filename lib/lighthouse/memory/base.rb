@@ -4,14 +4,9 @@ module Lighthouse
   module Memory
     
     def self.create_default_project
-      fresnel = Lighthouse::Memory::Project.new(:name => "fresnel")
-      
+      fresnel = Lighthouse::Memory::Project.new(:name => "fresnel", :id => 9)
       fresnel.milestones << Lighthouse::Memory::Milestone.new(:title => "First Milestone")
-      my_projects =  [fresnel]
-      # 10.times do |num| 
-      #   my_projects << Lighthouse::Memory::Project.new(:name => "Project #{num} &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
-      # end
-      return my_projects
+      return [fresnel]
     end
 
     @@projects = create_default_project

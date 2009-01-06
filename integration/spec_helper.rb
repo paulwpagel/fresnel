@@ -26,3 +26,10 @@ def press_button(button_prop_name, scene)
   sleep 1 if $visual
 end
 
+def current_scene(producer)
+    return producer.production.theater['default'].current_scene
+end
+
+def login_scene(producer)
+  return producer.open_scene("login", producer.theater["default"])
+end
