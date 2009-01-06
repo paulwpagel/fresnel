@@ -16,6 +16,9 @@ describe ViewTicket, "load_current_ticket" do
           :milestone_id => 12345, :description => "Some Description", :versions => versions)
     attribute_one = mock("changed_attribute", :name => "Name", :old_value => "Old Value", :new_value => "New Value")
     producer.production.current_ticket.stub!(:changed_attributes_for_version).and_return([attribute_one])
+    
+    @current_project = mock("project", :all_states => ["new", "open", "resolved", "hold", "invalid"])
+    producer.production.current_project = @current_project
   end
   
   uses_scene :view_ticket
@@ -35,9 +38,13 @@ describe ViewTicket, "load_current_ticket" do
   
   it "should make a prop on the scene for the ticket_state" do
     prop = scene.find('ticket_state')
-    prop.value.should == "open"
-    prop.choices.should == ["new", "open", "resolved", "hold", "invalid"]
     prop.name.should == "combo_box"
+    prop.value.should == "open"
+  end
+
+  it "should get the choices from the current project" do
+    prop = scene.find('ticket_state')
+    prop.choices.should == ["new", "open", "resolved", "hold", "invalid"]    
   end
   
   it "should make a prop on the scene for the ticket_description" do
