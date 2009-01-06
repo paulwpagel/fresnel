@@ -19,6 +19,10 @@ module ViewTicket
     current_ticket.versions.each_with_index do |version, index|
       make_row_for_version(version, index)
     end
+    new_row do |row|
+      row.add(make_prop("Add Comment:", "comment_header"))
+      row.add(Limelight::Prop.new(:name => "text_box", :id => "ticket_comment"))
+    end
   end
   
   private ##################
