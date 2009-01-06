@@ -40,3 +40,11 @@ row {
   width "100%"
   padding 10
 }
+
+version_cell {
+  padding 15
+  rounded_corner_radius "10"
+  border_width 4
+  border_color "006699"
+  background_color "5A9ECF"
+}

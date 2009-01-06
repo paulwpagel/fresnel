@@ -24,7 +24,11 @@ module ViewTicket
   private ##################
   
   def make_row_for_version(version, index)
-    new_row { |row| row.add(make_prop(version_content(version, index), "ticket_version_#{index + 1}"))}
+    new_row do |row|
+      version_cell = Limelight::Prop.new(:name => "version_cell")
+      row.add(version_cell)
+      version_cell.add(make_prop(version_content(version, index), "ticket_version_#{index + 1}"))
+    end
   end
   
   def version_content(version, index)
