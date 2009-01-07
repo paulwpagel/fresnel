@@ -14,6 +14,7 @@ describe AddTicket do
   it "should call client" do
     scene.find("title").text = "some title"
     scene.find("description").text = "some description"
+
     scene.stub!(:load)
     
     @lighthouse_client.should_receive(:add_ticket).with({:title => "some title", :description => "some description"}, anything())
@@ -70,6 +71,7 @@ describe AddTicket, "Props" do
     scene.find("title").should_not be_nil
     scene.find("description").should_not be_nil
     scene.find("milestones").should_not be_nil
+    scene.find("responsible_person").should_not be_nil
   end
   
   it "should have add ticket button" do

@@ -8,18 +8,22 @@ module ViewTicket
     scene.find("ticket_title").text = current_ticket.title
     scene.find("ticket_state").choices = current_project.all_states
     scene.find("ticket_state").value = current_ticket.state
+
     new_row do |row|
       row.add(make_prop("Assigned User:", "assigned_user_header"))
       row.add(make_combo_box([current_ticket.assigned_user_name], "ticket_assigned_user", current_ticket.assigned_user_name))
     end
+
     new_row do |row|
       row.add(make_prop("Milestone:", "milestone_header"))
       row.add(make_combo_box(milestone_choices, "ticket_milestone", milestone_title))
     end
+
     new_row { |row| row.add(make_prop(current_ticket.description, "ticket_description")) }
     current_ticket.versions.each_with_index do |version, index|
       make_row_for_version(version, index)
     end
+
     new_row do |row|
       row.add(make_prop("Add Comment:", "comment_header"))
       row.add(Limelight::Prop.new(:name => "text_box", :id => "ticket_comment"))

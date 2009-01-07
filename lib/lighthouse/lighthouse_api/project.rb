@@ -46,7 +46,7 @@ module Lighthouse
         return open_states + closed_states
       end
       
-      private
+      private ######################
       
       def milestone_from_title(title)
         return @milestones.find { |milestone| milestone.title == title }

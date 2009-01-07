@@ -7,7 +7,7 @@ main {
       }
     
     input_group {  
-      label :text => "Description:"
+      label :text => "Describe the problem:"
       input :players => "text_box", :id => "description", :width => 200
     }
   
@@ -15,7 +15,12 @@ main {
       label :text => "Milestone:"
       input :players => 'combo_box', :id => 'milestones'
     }
-  
+
+    input_group{
+      label :text => "Who's Responsible:"
+      input :players => 'combo_box', :id => 'responsible_person'
+    }
+    
     button :text => "Add Ticket", :players => "add_ticket", :width => 125, :id => "add_ticket_button"
   }
 }
