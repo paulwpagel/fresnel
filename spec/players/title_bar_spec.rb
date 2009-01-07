@@ -19,4 +19,8 @@ describe "title_bar" do
 
     scene.find("add_ticket").button_pressed(@event)
   end
+  
+  it "should have a button to select a different project" do
+    scene.find("list_projects").players.should == "title_bar"
+  end
 end
