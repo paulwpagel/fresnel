@@ -56,8 +56,20 @@ describe Lighthouse::Memory do
     Lighthouse::Memory.projects[0].name.should == "fresnel"
   end
   
-  # it "should find ticket" do
-  #   Lighthouse::Memory.ticket()
-  # end
+  it "should find ticket" do
+    project = Lighthouse::Memory::Project.new(:name => "new")
+    Lighthouse::Memory::projects << project
+    
+    Lighthouse::Memory.add_ticket({:title => "test title", :description => "test description" }, "new")
+
+    ticket = Lighthouse::Memory.ticket(project.tickets[0].id, project.id)
+    ticket.title.should == "test title"
+    ticket.description.should == "test description"
+    Lighthouse::Memory::projects.delete(project)
+  end
+  
+  it "should throw an error if it can't find the ticket it is looking for" do
+    lambda{ticket = Lighthouse::Memory.ticket(0, 0)}.should raise_error
+  end
   
 end

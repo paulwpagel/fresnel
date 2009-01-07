@@ -4,7 +4,7 @@ require "lighthouse/memory/milestone"
 module Lighthouse
   module Memory
     class Project
-      attr_accessor :tickets, :name, :milestones
+      attr_accessor :tickets, :name, :milestones, :id
   
       def initialize(options = {})
         @name = options[:name]

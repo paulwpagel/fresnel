@@ -52,8 +52,18 @@ module Lighthouse
       return nil
     end
 
-    def self.ticket(id)
+    def self.ticket(id, project_id)
+      current_project = nil
+      @@projects.each do |project|
+        current_project = project if project.id == project_id
+      end
+      
+      current_project.tickets.each do |ticket|
+        return ticket if ticket.id == id
+      end if current_project
+      raise "There is no ticket with the id=#{id}"
       return nil
+      
     end
   end
 end
