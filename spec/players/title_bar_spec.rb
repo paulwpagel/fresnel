@@ -23,4 +23,10 @@ describe "title_bar" do
   it "should have a button to select a different project" do
     scene.find("list_projects").players.should == "title_bar"
   end
+  
+  it "should go to the project scene when the list projects button is clicked" do
+    scene.should_receive(:load).with("project")
+
+    scene.find("list_projects").button_pressed(@event)
+  end
 end

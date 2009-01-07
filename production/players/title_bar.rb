@@ -1,7 +1,11 @@
 module TitleBar
   
   def button_pressed(event)
-    scene.load('add_ticket')
+    if id == "add_ticket"
+      scene.load('add_ticket')
+    else
+      scene.load("project")
+    end
   end
   
 end
