@@ -23,15 +23,15 @@ module Lighthouse
       end
       
       def milestone_titles
-        return []
+        return @milestones.collect {|milestone| milestone.title}
       end
       
       def milestone_title(id)
-        return ""
+        return milestone_from_id(id).title if milestone_from_id(id)
       end
       
       def milestone_id(title)
-        return ""
+        return milestone_from_title(title).id if milestone_from_title(title)
       end
       
       def open_states
@@ -44,6 +44,16 @@ module Lighthouse
       
       def all_states
         return open_states + closed_states
+      end
+      
+      private
+      
+      def milestone_from_id(id)
+        return @milestones.find { |milestone| milestone.id == id }
+      end
+      
+      def milestone_from_title(title)
+        return @milestones.find { |milestone| milestone.title == title }
       end
     end
   end

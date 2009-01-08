@@ -1,6 +1,10 @@
 module Lighthouse
   module Memory
     class Ticket
+      def self.find_tickets(project_id, query)
+        return []
+      end
+      
       attr_reader :title, :description, :status, :id
       alias :state :status
       

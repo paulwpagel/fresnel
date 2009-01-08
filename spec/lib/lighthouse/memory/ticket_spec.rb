@@ -1,5 +1,5 @@
 require File.expand_path(File.dirname(__FILE__) + "/../../../spec_helper")
-
+require "lighthouse/memory/project"
 
 describe Lighthouse::Memory::Ticket do
   it "should have basic information" do
@@ -18,5 +18,10 @@ describe Lighthouse::Memory::Ticket do
     
     ticket.milestone(project).should == milestone
   end
-  
+end
+
+describe Lighthouse::Memory::Ticket, "find_tickets" do
+  it "should return no tickets" do
+    Lighthouse::Memory::Ticket.find_tickets("project id", "query").should == []
+  end
 end
