@@ -3,6 +3,13 @@ require "lighthouse/lighthouse_api/base"
 
 describe Lighthouse::LighthouseApi do
 
+  before(:each) do
+    @mock_project = mock("project")
+    Lighthouse::LighthouseApi::Project.stub!(:new).and_return(@mock_project)
+    project = mock(Lighthouse::Project, :name => "one", :id => nil)
+    Lighthouse::Project.stub!(:find).and_return([project])
+  end
+  
   it "should not log in the user to the account" do
     Lighthouse.should_receive(:account=).with("AFlight")
     Lighthouse.should_receive(:authenticate).with("paul", "nottelling")
@@ -50,8 +57,7 @@ describe Lighthouse::LighthouseApi do
   
   it "should get milestones for the project" do
     milestones = [mock("milestone")]
-    project = mock(Lighthouse::Project, :name => "one", :milestones => milestones, :id => nil)
-    Lighthouse::Project.stub!(:find).and_return([project])
+    @mock_project.stub!(:milestones).and_return(milestones)
     
     Lighthouse::LighthouseApi::milestones("one").should == milestones
   end
@@ -64,16 +70,16 @@ describe Lighthouse::LighthouseApi do
   
   it "should return the milestone title for a given project and ticket" do
     milestones = [mock("milestone", :id => 123, :title => "Milestone Title")]
-    project = mock(Lighthouse::Project, :name => "project one", :milestones => milestones, :id => nil)
+    project = mock(Lighthouse::Project, :name => "project one", :id => nil)
     Lighthouse::Project.stub!(:find).and_return([project])
+    @mock_project.stub!(:milestones).and_return(milestones)
     
     Lighthouse::LighthouseApi::milestone_title("project one", 123).should == "Milestone Title"
   end
   
-  it "should work if there are no milestones matching the id given" do
-    project = mock(Lighthouse::Project, :name => "project one", :milestones => [], :id => nil)
-    Lighthouse::Project.stub!(:find).and_return([project])
-    
+  it "should not crash if there are no milestones matching the id given" do
+    @mock_project.stub!(:milestones).and_return([])
+
     Lighthouse::LighthouseApi::milestone_title("project one", 123).should == ""
   end
   
