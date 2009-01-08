@@ -55,5 +55,6 @@ module Lighthouse
       return Lighthouse::LighthouseApi::Ticket.new(found_ticket, project_id) if found_ticket
       return nil
     end
+    
   end
 end

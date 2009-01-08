@@ -7,8 +7,6 @@ module Lighthouse
       attr_reader :milestones, :id
     
       def initialize(lighthouse_project)
-        p lighthouse_project
-  
         @lighthouse_project = lighthouse_project
         @id = lighthouse_project.id
         @milestones = lighthouse_project.milestones
