@@ -4,16 +4,18 @@ module Lighthouse
       def self.find_tickets(project_id, query)
         return []
       end
-      
-      attr_reader :title, :description, :status, :id
+
+      attr_reader :id
+      attr_accessor :status, :title, :milestone_id, :project_id, :description
       alias :state :status
       
       def initialize(options = {})
         @title = options[:title]
-        @description = options[:description]
         @status = options[:status]
         @milestone_id = options[:milestone_id]
         @id = options[:id]
+        @project_id = options[:project_id]
+        @description = options[:description]
       end
       
       def milestone(project)

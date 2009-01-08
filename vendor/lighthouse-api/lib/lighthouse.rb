@@ -176,7 +176,8 @@ module Lighthouse
   end
   
   class Membership < Base
-    site_format << '/users/:user_id'
+    site_format << '/projects/:project_id'
+    # site_format << '/users/:user_id'
     def save
       raise Error, "Cannot modify memberships from the API"
     end
