@@ -5,13 +5,17 @@ require "lighthouse/lighthouse_api/membership"
 module Lighthouse
   module LighthouseApi
     class Project
-      attr_reader :milestones, :id, :user_names
+      attr_reader :milestones, :id
     
       def initialize(lighthouse_project)
         @lighthouse_project = lighthouse_project
         @id = lighthouse_project.id
         @milestones = lighthouse_project.milestones
-        @user_names = Membership.all_user_names(@id)
+        @users = Membership.all_users_for_project(@id)
+      end
+      
+      def user_names
+        @users.collect {|user| user.name }
       end
       
       def open_tickets

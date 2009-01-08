@@ -10,11 +10,6 @@ module Lighthouse
           return nil
         end
       end
-      
-      def self.user_name_for_id(id)
-        cached_user = find_by_id(id)
-        return cached_user.name if cached_user
-      end
     end
   end
 end
