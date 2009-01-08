@@ -7,6 +7,8 @@ module Lighthouse
       attr_reader :milestones, :id
     
       def initialize(lighthouse_project)
+        p lighthouse_project
+  
         @lighthouse_project = lighthouse_project
         @id = lighthouse_project.id
         @milestones = lighthouse_project.milestones
@@ -45,7 +47,7 @@ module Lighthouse
       def all_states
         return open_states + closed_states
       end
-      
+                  
       private ######################
       
       def milestone_from_title(title)
