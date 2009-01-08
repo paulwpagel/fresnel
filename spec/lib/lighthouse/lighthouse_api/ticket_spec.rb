@@ -199,6 +199,12 @@ describe Lighthouse::LighthouseApi::Ticket, "lighthouse ticket attributes" do
     
     @fresnel_ticket.new_comment = "new comment"
   end
+  
+  it "should have a writable assigned_user_id" do
+    @lighthouse_ticket.should_receive(:assigned_user_id=).with("new assigned user id")
+    
+    @fresnel_ticket.assigned_user_id = "new assigned user id"
+  end
 end
 
 describe Lighthouse::LighthouseApi::Ticket, "editing" do

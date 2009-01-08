@@ -14,6 +14,7 @@ module Lighthouse
       
       include TicketAccessors
       ticket_reader :id
+      ticket_accessor :assigned_user_id
       ticket_accessor :state
       ticket_accessor :title
       ticket_accessor :milestone_id
@@ -21,7 +22,6 @@ module Lighthouse
     
       def initialize(lighthouse_ticket, project_id)
         @lighthouse_ticket = lighthouse_ticket
-        @assigned_user_id = lighthouse_ticket.assigned_user_id
         begin
           @lighthouse_versions = lighthouse_ticket.versions
         rescue NoMethodError
@@ -44,7 +44,7 @@ module Lighthouse
       end
         
       def assigned_user
-        return Lighthouse::LighthouseApi::User.find_by_id(@assigned_user_id)
+        return Lighthouse::LighthouseApi::User.find_by_id(assigned_user_id)
       end
   
       def assigned_user_name
