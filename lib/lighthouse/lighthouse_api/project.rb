@@ -1,15 +1,17 @@
 require File.expand_path(File.dirname(__FILE__) + "/../../../vendor/lighthouse-api/lib/lighthouse")
 require "lighthouse/lighthouse_api/ticket"
+require "lighthouse/lighthouse_api/membership"
 
 module Lighthouse
   module LighthouseApi
     class Project
-      attr_reader :milestones, :id
+      attr_reader :milestones, :id, :user_names
     
       def initialize(lighthouse_project)
         @lighthouse_project = lighthouse_project
         @id = lighthouse_project.id
         @milestones = lighthouse_project.milestones
+        @user_names = Membership.all_user_names(@id)
       end
       
       def open_tickets

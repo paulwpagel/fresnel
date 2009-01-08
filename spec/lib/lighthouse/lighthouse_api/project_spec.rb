@@ -1,17 +1,37 @@
 require File.dirname(__FILE__) + '/../../../spec_helper'
 require "lighthouse/lighthouse_api/project"
 
+describe Lighthouse::LighthouseApi::Project, "user names" do
+  before(:each) do
+    @lighthouse_project = mock("Lighthouse::Project", :id => 12345, :milestones => [])
+    Lighthouse::LighthouseApi::Membership.stub!(:all_user_names).and_return(["user one", "user two"])
+  end
+
+  it "should find all memberships on init" do
+    Lighthouse::LighthouseApi::Membership.should_receive(:all_user_names).with(12345)
+    
+    @fresnel_project = Lighthouse::LighthouseApi::Project.new(@lighthouse_project)
+  end
+  
+  it "should assign the memberships" do
+    @fresnel_project = Lighthouse::LighthouseApi::Project.new(@lighthouse_project)
+
+    @fresnel_project.user_names.should == ["user one", "user two"]
+  end
+end
+
 describe Lighthouse::LighthouseApi::Project, "tickets" do
   before(:each) do
-    @lighthoust_project = mock("Lighthouse::Project", :id => 12345, :milestones => [])
-    @fresnel_project = Lighthouse::LighthouseApi::Project.new(@lighthoust_project)
+    Lighthouse::LighthouseApi::Membership.stub!(:all_user_names)
+    @lighthouse_project = mock("Lighthouse::Project", :id => 12345, :milestones => [])
+    @fresnel_project = Lighthouse::LighthouseApi::Project.new(@lighthouse_project)
     @tickets = [mock("ticket")]
     Lighthouse::LighthouseApi::Ticket.stub!(:find_tickets).and_return(@tickets)
     @fresnel_tickets = [mock(Lighthouse::LighthouseApi::Ticket)]
   end
   
   it "should accept a project on init" do
-    @fresnel_project = Lighthouse::LighthouseApi::Project.new(@lighthoust_project)
+    @fresnel_project = Lighthouse::LighthouseApi::Project.new(@lighthouse_project)
   end
   
   it "should find all open tickets for a project" do
@@ -41,10 +61,11 @@ end
 
 describe Lighthouse::LighthouseApi::Project, "milestones" do
   before(:each) do
+    Lighthouse::LighthouseApi::Membership.stub!(:all_user_names)
     milestone_one = mock("milestone", :title => "Goal One", :id => "id_one")
     @milestones = [milestone_one]
-    @lighthoust_project = mock("Lighthouse::Project", :id => nil, :milestones => @milestones)
-    @fresnel_project = Lighthouse::LighthouseApi::Project.new(@lighthoust_project)
+    @lighthouse_project = mock("Lighthouse::Project", :id => nil, :milestones => @milestones)
+    @fresnel_project = Lighthouse::LighthouseApi::Project.new(@lighthouse_project)
   end
   
   it "should return the milestones for a project" do
@@ -102,9 +123,10 @@ end
 
 describe Lighthouse::LighthouseApi::Project, "states" do
   before(:each) do
-    @lighthoust_project = mock("Lighthouse::Project", :id => nil, :milestones => [], :open_states_list => "one,two,three",
+    Lighthouse::LighthouseApi::Membership.stub!(:all_user_names)
+    @lighthouse_project = mock("Lighthouse::Project", :id => nil, :milestones => [], :open_states_list => "one,two,three",
                                                       :closed_states_list => "closed_one,closed_two,closed_three")
-    @fresnel_project = Lighthouse::LighthouseApi::Project.new(@lighthoust_project)
+    @fresnel_project = Lighthouse::LighthouseApi::Project.new(@lighthouse_project)
   end
   
   it "should get the open_states" do
