@@ -5,11 +5,10 @@ require "save_ticket"
 describe SaveTicket, "on_click" do
   before(:each) do
     mock_lighthouse
-    Lighthouse::LighthouseApi::User.stub!(:user_id_for_name).and_return("User ID")
     @mock_ticket = mock("ticket", :title => "", :assigned_user_name => "", :state => "new", :state= => nil, :title= => nil,
           :milestone_id => 123, :description => "", :versions => [], :save => nil, :milestone_id= => nil, :new_comment= => nil, :assigned_user_id= => nil)
     producer.production.current_ticket = @mock_ticket
-    @mock_project = mock("project", :milestone_id => "Milestone ID", :all_states => ["open"], :milestone_title => nil,
+    @mock_project = mock("project", :milestone_id => "Milestone ID", :all_states => ["open"], :milestone_title => nil, :user_id => "User ID",
                                     :milestone_titles => ["Goal One", "Goal Two"], :user_names => ["User One", "User Two", "User Three"])
     producer.production.current_project = @mock_project
   end
@@ -70,7 +69,7 @@ describe SaveTicket, "on_click" do
   it "should get the id for the new assigned user" do
     prop = scene.find("ticket_assigned_user")
     prop.value = "User Two"
-    Lighthouse::LighthouseApi::User.should_receive(:user_id_for_name).with("User Two")
+    @mock_project.should_receive(:user_id).with("User Two")
     
     press_button
   end

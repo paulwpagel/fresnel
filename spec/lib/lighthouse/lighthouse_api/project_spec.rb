@@ -1,11 +1,12 @@
 require File.dirname(__FILE__) + '/../../../spec_helper'
 require "lighthouse/lighthouse_api/project"
 
-describe Lighthouse::LighthouseApi::Project, "user names" do
+describe Lighthouse::LighthouseApi::Project, "users" do
   before(:each) do
     @lighthouse_project = mock("Lighthouse::Project", :id => 12345, :milestones => [])
-    @users = [mock("user", :name => "user one"), mock("user", :name => "user two")]
+    @users = [mock("user", :name => "user one", :id => "id one"), mock("user", :name => "user two", :id => "id two")]
     Lighthouse::LighthouseApi::Membership.stub!(:all_users_for_project).and_return(@users)
+    @fresnel_project = Lighthouse::LighthouseApi::Project.new(@lighthouse_project)
   end
 
   it "should find all users on init" do
@@ -14,10 +15,20 @@ describe Lighthouse::LighthouseApi::Project, "user names" do
     @fresnel_project = Lighthouse::LighthouseApi::Project.new(@lighthouse_project)
   end
   
-  it "should return the user names" do
-    @fresnel_project = Lighthouse::LighthouseApi::Project.new(@lighthouse_project)
-  
+  it "should return the user names" do  
     @fresnel_project.user_names.should == ["user one", "user two"]
+  end
+  
+  it "should get the id of a user from the name for the first user" do
+    @fresnel_project.user_id("user one").should == "id one"
+  end
+  
+  it "should get the id of a user from the name for the second user" do
+    @fresnel_project.user_id("user two").should == "id two"
+  end
+  
+  it "should return nil if the given user name doesn't exist" do
+    @fresnel_project.user_id("bad name").should be_nil
   end
 end
 

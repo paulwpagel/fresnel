@@ -18,6 +18,10 @@ module Lighthouse
         @users.collect {|user| user.name }
       end
       
+      def user_id(user_name)
+        return user_from_name(user_name).id if user_from_name(user_name)
+      end
+      
       def open_tickets
         return Lighthouse::LighthouseApi::Ticket.find_tickets(@id, "state:open")
       end
@@ -53,6 +57,10 @@ module Lighthouse
       end
                   
       private ######################
+      
+      def user_from_name(user_name)
+        return @users.find { |user| user.name == user_name }
+      end
       
       def milestone_from_title(title)
         return @milestones.find { |milestone| milestone.title == title }

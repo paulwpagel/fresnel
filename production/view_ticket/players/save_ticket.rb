@@ -13,8 +13,12 @@ module SaveTicket
     return production.current_ticket
   end
   
+  def current_project
+    return production.current_project
+  end
+  
   def new_assigned_user_id
-    return Lighthouse::LighthouseApi::User.user_id_for_name(new_assigned_user_name)
+    return current_project.user_id(new_assigned_user_name)
   end
   
   def new_assigned_user_name
