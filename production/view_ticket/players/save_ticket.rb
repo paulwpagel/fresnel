@@ -4,12 +4,21 @@ module SaveTicket
     current_ticket.state = new_state
     current_ticket.milestone_id = new_milestone_id
     current_ticket.new_comment = new_comment
+    current_ticket.assigned_user_id = new_assigned_user_id
     current_ticket.save
     scene.load('view_ticket')
   end
   
   def current_ticket
     return production.current_ticket
+  end
+  
+  def new_assigned_user_id
+    return Lighthouse::LighthouseApi::User.user_id_for_name(new_assigned_user_name)
+  end
+  
+  def new_assigned_user_name
+    return scene.find("ticket_assigned_user").value
   end
   
   def new_comment
