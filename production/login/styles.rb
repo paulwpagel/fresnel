@@ -1,3 +1,10 @@
+header {
+  width "100%"
+  horizontal_alignment "center"  
+  font_size 50
+  padding 10
+}
+
 login_group {
   padding 10
   rounded_corner_radius "10"
@@ -5,7 +12,7 @@ login_group {
   border_color "006699"
   background_color "5A9ECF"
   width 500
-  height 500
+  height 200
 }
 
 button_group {
