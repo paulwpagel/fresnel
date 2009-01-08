@@ -14,7 +14,7 @@ describe ViewTicket, "load_current_ticket" do
           :milestone_id => 12345, :description => "Some Description", :versions => versions, :changed_attributes_for_version => [attribute_one])
     producer.production.current_ticket = current_ticket
     @current_project = mock("project", :all_states => ["new", "open", "resolved", "hold", "invalid"], :milestone_title => "Goal Two",
-                                       :milestone_titles => ["Goal One", "Goal Two"])
+                                       :milestone_titles => ["Goal One", "Goal Two"], :user_names => ["Some User", "Roger", "Eric"])
     producer.production.current_project = @current_project
   end
   
@@ -29,8 +29,15 @@ describe ViewTicket, "load_current_ticket" do
   it "should make a combo_box on the scene for the assigned_user_name" do
     prop = scene.find('ticket_assigned_user')
     prop.value.should == "Roger"
-    prop.choices.should include("Roger")
     prop.name.should == "combo_box"
+  end
+  
+  it "should have all user names as choices for the assigned user" do
+    prop = scene.find('ticket_assigned_user')
+    prop.choices.should include("")    
+    prop.choices.should include("Some User")    
+    prop.choices.should include("Roger")    
+    prop.choices.should include("Eric")    
   end
   
   it "should make a prop on the scene for the ticket_state" do

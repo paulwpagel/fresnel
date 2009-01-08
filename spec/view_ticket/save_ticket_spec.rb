@@ -9,7 +9,7 @@ describe SaveTicket, "on_click" do
           :milestone_id => 123, :description => "", :versions => [], :save => nil, :milestone_id= => nil, :new_comment= => nil)
     producer.production.current_ticket = @mock_ticket
     @mock_project = mock("project", :milestone_id => "Milestone ID", :all_states => ["open"], :milestone_title => nil,
-                                    :milestone_titles => ["Goal One", "Goal Two"])
+                                    :milestone_titles => ["Goal One", "Goal Two"], :user_names => [""])
     producer.production.current_project = @mock_project
   end
   

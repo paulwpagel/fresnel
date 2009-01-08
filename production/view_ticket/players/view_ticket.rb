@@ -11,7 +11,7 @@ module ViewTicket
 
     new_row do |row|
       row.add(make_prop("Assigned User:", "assigned_user_header"))
-      row.add(make_combo_box([current_ticket.assigned_user_name], "ticket_assigned_user", current_ticket.assigned_user_name))
+      row.add(make_combo_box(user_names, "ticket_assigned_user", current_ticket.assigned_user_name))
     end
 
     new_row do |row|
@@ -85,5 +85,9 @@ module ViewTicket
   
   def milestone_title
     return current_project.milestone_title(current_ticket.milestone_id)
+  end
+  
+  def user_names
+    return [""] + current_project.user_names
   end
 end
