@@ -1,4 +1,5 @@
 require File.expand_path(File.dirname(__FILE__) + "/../../../spec_helper")
+require "lighthouse/memory/project"
 
 describe Lighthouse::Memory::Project do
   before(:each) do
@@ -22,5 +23,25 @@ describe Lighthouse::Memory::Project do
   
   it "should have milestone_titles" do
     @project.milestone_titles.should == []
+  end
+  
+  it "should respond to milestone_title given an id" do
+    @project.milestone_title(1).should == ""
+  end
+  
+  it "should respond to milestone_id given a title" do
+    @project.milestone_id("title").should == ""
+  end
+  
+  it "should give the open states" do
+    @project.open_states.should == ["new", "open"]
+  end
+  
+  it "should give the closed states" do
+    @project.closed_states.should == ["resolved", "hold", "invalid"]
+  end
+  
+  it "should give all states" do
+    @project.all_states.should == ["new", "open", "resolved", "hold", "invalid"]
   end
 end

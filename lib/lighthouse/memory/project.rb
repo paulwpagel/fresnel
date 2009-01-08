@@ -25,6 +25,26 @@ module Lighthouse
       def milestone_titles
         return []
       end
+      
+      def milestone_title(id)
+        return ""
+      end
+      
+      def milestone_id(title)
+        return ""
+      end
+      
+      def open_states
+        return ["new", "open"]
+      end
+      
+      def closed_states
+        return ["resolved", "hold", "invalid"]
+      end
+      
+      def all_states
+        return open_states + closed_states
+      end
     end
   end
 end
