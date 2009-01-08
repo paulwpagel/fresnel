@@ -1,4 +1,5 @@
 main {
+  header :text => "Fresnel"
   login_group {
 
     error_message :id => "error_message"
@@ -20,8 +21,7 @@ main {
     
     button_group {
       button :text => "Login", :players => "login", :id => "login_button"
-    }
-    
+    }    
     
   }
 }
