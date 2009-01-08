@@ -45,7 +45,7 @@ module Lighthouse
       def all_states
         return open_states + closed_states
       end
-      
+                  
       private ######################
       
       def milestone_from_title(title)

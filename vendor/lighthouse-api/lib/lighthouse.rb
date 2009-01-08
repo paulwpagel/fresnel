@@ -167,6 +167,7 @@ module Lighthouse
     def changesets(options = {})
       Changeset.find(:all, :params => options.update(:project_id => id))
     end
+    
   end
 
   class User < Base

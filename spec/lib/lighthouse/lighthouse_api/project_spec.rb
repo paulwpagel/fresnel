@@ -91,6 +91,13 @@ describe Lighthouse::LighthouseApi::Project, "milestones" do
   it "should return nil if it cannot find the milestone" do
     @fresnel_project.milestone_title("Bad ID").should be_nil
   end
+  
+  # it "should get all users assigned to tickets" do
+  #   tickets = [mock(Lighthouse::LighthouseApi::Ticket)]
+  #   Lighthouse::LighthouseApi::Ticket.should_receive(:find_tickets).with(anything(), "all").and_return(tickets)
+  #   
+  #   @fresnel_project.assigned_users.size.should == 1
+  # end
 end
 
 describe Lighthouse::LighthouseApi::Project, "states" do
