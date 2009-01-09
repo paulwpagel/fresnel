@@ -5,7 +5,7 @@ require "lighthouse/lighthouse_api/project_membership"
 module Lighthouse
   module LighthouseApi
     class Project
-      attr_reader :milestones, :id
+      attr_reader :milestones, :id, :users
     
       def initialize(lighthouse_project)
         @lighthouse_project = lighthouse_project
@@ -51,7 +51,7 @@ module Lighthouse
       def closed_states
         return @lighthouse_project.closed_states_list.split(",")
       end
-      
+     
       def all_states
         return open_states + closed_states
       end
