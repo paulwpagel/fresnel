@@ -86,12 +86,14 @@ describe Lighthouse::Ticket do
     @ticket.id.should be_nil
   end
   
-  it "should have a state" do
-    @ticket.state = "open"
-    
-    @ticket.state.should == "open"
+  it "should have read/writable basic informatioin" do
+    [:state, :title, :body, :body_html].each do |attribute|
+      @ticket.send("#{attribute}=", "value")
+
+      @ticket.send(attribute).should == "value"
+    end
   end
-  
+    
   describe "with one saved ticket" do
     before(:each) do
       @ticket.save

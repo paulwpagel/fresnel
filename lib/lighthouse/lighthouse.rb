@@ -57,7 +57,7 @@ module Lighthouse
     end
     
     attr_reader :id, :project_id
-    attr_accessor :state
+    attr_accessor :state, :title, :body, :body_html
     
     def initialize(options={})
       @project_id = options[:project_id]
