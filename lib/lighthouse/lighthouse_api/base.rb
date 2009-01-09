@@ -56,5 +56,14 @@ module Lighthouse
       return nil
     end
     
+    def self.users_for_project(project_name)
+      users = []
+      project = find_project(project_name)
+      project.memberships.each do |project_membership|
+        users << Lighthouse::User.find(project_membership.user_id)
+      end
+      return users
+    end
+    
   end
 end

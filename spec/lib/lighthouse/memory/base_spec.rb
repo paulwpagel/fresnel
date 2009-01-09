@@ -72,4 +72,11 @@ describe Lighthouse::Memory do
     lambda{ticket = Lighthouse::Memory.ticket(0, 0)}.should raise_error
   end
   
+  it "should get users for a project" do
+    users = Lighthouse::Memory.users_for_project("fresnel")
+    
+    users.size.should == 1
+    users[0].name.should == "Marion"
+  end
+  
 end

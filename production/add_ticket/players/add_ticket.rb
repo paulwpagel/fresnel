@@ -12,7 +12,7 @@ module AddTicket
     milestone_input = scene.find("milestones")
     milestone_input.choices = milestone_choices
   end
-  
+    
   def add_ticket
     title = scene.find("title")
     description = scene.find("description")
@@ -27,8 +27,12 @@ module AddTicket
     
   private #############
   
+  def project_id
+    production.current_project.id
+  end
+  
   def milestone_choices
-    milestones = production.lighthouse_client.milestones("fresnel")
+    milestones = production.lighthouse_client.milestones("fresnel") #TODO - PWP - we have the project name now, dont need to hard code anymore.
     choices = ["None"]
     choices += milestones.collect{ |milestone| milestone.title }
   end

@@ -89,6 +89,16 @@ describe Lighthouse::LighthouseApi do
     Lighthouse::LighthouseApi::milestone_title("project one", 123).should == ""
   end
   
+  it "should get all users for a project" do
+    @project = mock(Lighthouse::Project, :id => 2)
+    @user = mock(Lighthouse::User, :name => "Paul")
+    Lighthouse::LighthouseApi.should_receive(:find_project).with("fresnel").and_return(@project)
+    Lighthouse::User.should_receive(:find).with(1234).and_return(@user)
+    @project.should_receive(:memberships).and_return([mock(Lighthouse::ProjectMembership, :user_id => 1234)])
+    
+    Lighthouse::LighthouseApi::users_for_project("fresnel")
+  end
+  
 end
 
 describe "ticket" do

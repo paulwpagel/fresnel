@@ -57,6 +57,11 @@ describe AddTicket do
     milestone_input = scene.find("milestones")
     milestone_input.choices.should include("None")
   end
+  
+  # it "should load users" do
+  #   
+  #   @lighthouse_client.should_receive(:users_for_project).with("fresnel")
+  # end
     
 end
 

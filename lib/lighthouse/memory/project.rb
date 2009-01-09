@@ -4,12 +4,13 @@ require "lighthouse/memory/milestone"
 module Lighthouse
   module Memory
     class Project
-      attr_accessor :tickets, :name, :milestones, :id
+      attr_accessor :tickets, :name, :milestones, :id, :memberships
   
       def initialize(options = {})
         @name = options[:name]
         @tickets = []
         @milestones = []
+        @memberships = []
       end
   
       def open_tickets
@@ -45,6 +46,7 @@ module Lighthouse
       def all_states
         return open_states + closed_states
       end
+      
       
       private
       
