@@ -45,9 +45,12 @@ module Lighthouse
     end
     
     def self.find(param_one, param_two)
-      if param_one == :all
-        project_id = param_two[:params][:project_id]
-        return @@tickets.find_all { |ticket| ticket.project_id == project_id }
+      query = param_two[:params][:q]
+      project_id = param_two[:params][:project_id]
+      if param_one == :all && query == "all"
+        return @@tickets.find_all { |ticket| ticket.project_id == project_id  }
+      elsif param_one == :all && query == "state:open"
+        return @@tickets.find_all { |ticket| ticket.project_id == project_id && ticket.state == "open" }
       else
         return @@tickets.find {|ticket| ticket.id == param_one}
       end

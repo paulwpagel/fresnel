@@ -105,7 +105,7 @@ describe Lighthouse::Ticket do
     end
     
     it "should have a find method that returns all tickets for a project when searching for all tickets" do
-      tickets = Lighthouse::Ticket.find(:all, :params => {:project_id => @project.id, :query => "all"})
+      tickets = Lighthouse::Ticket.find(:all, :params => {:project_id => @project.id, :q => "all"})
     
       tickets.size.should == 1
       tickets[0].should == @ticket
@@ -114,7 +114,7 @@ describe Lighthouse::Ticket do
     it "should not return tickets on a different project" do
       project_two = create_project
       ticket_two = create_ticket(project_two.id)
-      tickets = Lighthouse::Ticket.find(:all, :params => {:project_id => @project.id, :query => "all"})
+      tickets = Lighthouse::Ticket.find(:all, :params => {:project_id => @project.id, :q => "all"})
 
       tickets.size.should == 1
       tickets[0].should == @ticket
@@ -139,6 +139,19 @@ describe Lighthouse::Ticket do
       found_ticket = Lighthouse::Ticket.find(ticket_two.id, :params => {:project_id => project_two.id})
     
       found_ticket.should == ticket_two
+    end
+    
+    it "should find no tickets if there are no open tickets" do
+      tickets = Lighthouse::Ticket.find(:all, :params => {:project_id => @project.id, :q => "state:open"})
+      
+      tickets.should be_empty
+    end
+    
+    it "should find open tickets" do
+      @ticket.state = "open"
+      tickets = Lighthouse::Ticket.find(:all, :params => {:project_id => @project.id, :q => "state:open"})
+      
+      tickets.should == [@ticket]
     end
   end
   # Lighthouse::Ticket.find(ticket_id, :params => {:project_id => project_id})
