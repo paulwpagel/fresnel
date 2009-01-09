@@ -1,8 +1,4 @@
 require 'rubygems'
-require 'activesupport'
-require 'activeresource'
-
-
 
 begin
   require 'uri'
@@ -27,7 +23,8 @@ rescue LoadError
   puts
 end
 
-
+require 'activesupport'
+require 'activeresource'
 
 # Ruby lib for working with the Lighthouse API's XML interface.  
 # The first thing you need to set is the account name.  This is the same
@@ -50,16 +47,11 @@ end
 # This library is a small wrapper around the REST interface.  You should read the docs at
 # http://lighthouseapp.com/api.
 #
-
-
-
 module Lighthouse
   class Error < StandardError; end
   class << self
     attr_accessor :email, :password, :host_format, :domain_format, :protocol, :port
     attr_reader :account, :token
-
-
 
     # Sets the account name, and updates all the resources with the new domain.
     def account=(name)
@@ -167,18 +159,37 @@ module Lighthouse
     def changesets(options = {})
       Changeset.find(:all, :params => options.update(:project_id => id))
     end
-    
+
+    def memberships(options = {})
+      ProjectMembership.find(:all, :params => options.update(:project_id => id))
+    end
+
+    def tags(options = {})
+      TagResource.find(:all, :params => options.update(:project_id => id))
+    end
   end
 
   class User < Base
-    def memberships
+    def memberships(options = {})
       Membership.find(:all, :params => {:user_id => id})
     end
   end
   
   class Membership < Base
+    site_format << '/users/:user_id'
+    def save
+      raise Error, "Cannot modify memberships from the API"
+    end
+  end
+  
+  class ProjectMembership < Base
+    self.element_name = 'membership'
     site_format << '/projects/:project_id'
-    # site_format << '/users/:user_id'
+
+    def url
+      respond_to?(:account) ? account : project
+    end
+
     def save
       raise Error, "Cannot modify memberships from the API"
     end
@@ -214,12 +225,10 @@ module Lighthouse
   #  ticket.tags.delete '@high'
   #  ticket.save
   #
-  
-  
   class Ticket < Base
     attr_writer :tags
     site_format << '/projects/:project_id'
-    
+
     def id
       attributes['number'] ||= nil
       number
@@ -252,10 +261,8 @@ module Lighthouse
       end.join(" ") if @tags.is_a?(Array)
       @tags = nil ; save_without_tags
     end
-  
+    
     alias_method_chain :save, :tags
-
-
 
     private
       # taken from Lighthouse Tag code
@@ -316,13 +323,34 @@ module Lighthouse
   
   class Change < Array; end
 
+  class TagResource < Base
+    self.element_name = 'tag'
+    site_format << '/projects/:project_id'
+
+    def name
+      @name ||= Tag.new(attributes['name'], prefix_options[:project_id])
+    end
+
+    def tickets(options = {})
+      name.tickets(options)
+    end
+  end
+  
   class Tag < String
     attr_writer :prefix_options
+    attr_accessor :project_id
+
+    def initialize(s, project_id)
+      @project_id = project_id
+      super(s)
+    end
+
     def prefix_options
       @prefix_options || {}
     end
 
     def tickets(options = {})
+      options[:project_id] ||= @project_id
       Ticket.find(:all, :params => options.merge(prefix_options).update(:q => %{tagged:"#{self}"}))
     end
   end
@@ -330,7 +358,6 @@ end
 
 module ActiveResource
   class Connection
-    
     private
       def authorization_header
         (Lighthouse.email || Lighthouse.password ? { 'Authorization' => 'Basic ' + ["#{Lighthouse.email}:#{Lighthouse.password}"].pack('m').delete("\r\n") } : {})
