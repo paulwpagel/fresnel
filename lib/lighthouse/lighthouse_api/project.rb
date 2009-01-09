@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + "/../../../vendor/lighthouse-api/lib/lighthouse")
 require "lighthouse/lighthouse_api/ticket"
-require "lighthouse/lighthouse_api/membership"
+require "lighthouse/lighthouse_api/project_membership"
 
 module Lighthouse
   module LighthouseApi
@@ -11,7 +11,7 @@ module Lighthouse
         @lighthouse_project = lighthouse_project
         @id = lighthouse_project.id
         @milestones = lighthouse_project.milestones
-        @users = Membership.all_users_for_project(@id)
+        @users = ProjectMembership.all_users_for_project(@id)
       end
       
       def user_names

@@ -5,12 +5,12 @@ describe Lighthouse::LighthouseApi::Project, "users" do
   before(:each) do
     @lighthouse_project = mock("Lighthouse::Project", :id => 12345, :milestones => [])
     @users = [mock("user", :name => "user one", :id => "id one"), mock("user", :name => "user two", :id => "id two")]
-    Lighthouse::LighthouseApi::Membership.stub!(:all_users_for_project).and_return(@users)
+    Lighthouse::LighthouseApi::ProjectMembership.stub!(:all_users_for_project).and_return(@users)
     @fresnel_project = Lighthouse::LighthouseApi::Project.new(@lighthouse_project)
   end
 
   it "should find all users on init" do
-    Lighthouse::LighthouseApi::Membership.should_receive(:all_users_for_project).with(12345).and_return([])
+    Lighthouse::LighthouseApi::ProjectMembership.should_receive(:all_users_for_project).with(12345).and_return([])
     
     @fresnel_project = Lighthouse::LighthouseApi::Project.new(@lighthouse_project)
   end
@@ -34,7 +34,7 @@ end
 
 describe Lighthouse::LighthouseApi::Project, "tickets" do
   before(:each) do
-    Lighthouse::LighthouseApi::Membership.stub!(:all_users_for_project).and_return([])
+    Lighthouse::LighthouseApi::ProjectMembership.stub!(:all_users_for_project).and_return([])
     @lighthouse_project = mock("Lighthouse::Project", :id => 12345, :milestones => [])
     @fresnel_project = Lighthouse::LighthouseApi::Project.new(@lighthouse_project)
     @tickets = [mock("ticket")]
@@ -73,7 +73,7 @@ end
 
 describe Lighthouse::LighthouseApi::Project, "milestones" do
   before(:each) do
-    Lighthouse::LighthouseApi::Membership.stub!(:all_users_for_project).and_return([])
+    Lighthouse::LighthouseApi::ProjectMembership.stub!(:all_users_for_project).and_return([])
     milestone_one = mock("milestone", :title => "Goal One", :id => "id_one")
     @milestones = [milestone_one]
     @lighthouse_project = mock("Lighthouse::Project", :id => nil, :milestones => @milestones)
@@ -129,7 +129,7 @@ end
 
 describe Lighthouse::LighthouseApi::Project, "states" do
   before(:each) do
-    Lighthouse::LighthouseApi::Membership.stub!(:all_users_for_project).and_return([])
+    Lighthouse::LighthouseApi::ProjectMembership.stub!(:all_users_for_project).and_return([])
     @lighthouse_project = mock("Lighthouse::Project", :id => nil, :milestones => [], :open_states_list => "one,two,three",
                                                       :closed_states_list => "closed_one,closed_two,closed_three")
     @fresnel_project = Lighthouse::LighthouseApi::Project.new(@lighthouse_project)

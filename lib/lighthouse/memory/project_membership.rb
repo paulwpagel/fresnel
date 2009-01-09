@@ -1,6 +1,6 @@
 module Lighthouse
   module Memory
-    class Membership
+    class ProjectMembership
       attr_accessor :user_id
       def initialize(options = {})
         @user_id = options[:user_id]

@@ -1,6 +1,6 @@
 require "lighthouse/memory/project"
 require "lighthouse/memory/user"
-require "lighthouse/memory/membership"
+require "lighthouse/memory/project_membership"
 
 module Lighthouse
   module Memory
@@ -9,7 +9,7 @@ module Lighthouse
       puts "create default project"
       fresnel = Lighthouse::Memory::Project.new(:name => "fresnel", :id => 9)
       fresnel.milestones << Lighthouse::Memory::Milestone.new(:title => "First Milestone")
-      fresnel.memberships << Lighthouse::Memory::Membership.new(:user_id => 9)
+      fresnel.memberships << Lighthouse::Memory::ProjectMembership.new(:user_id => 9)
       return [fresnel]
     end
     
