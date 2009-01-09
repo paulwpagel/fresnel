@@ -11,10 +11,10 @@ $: << File.expand_path(File.dirname(__FILE__) + "/../production/list_tickets/sta
 production = Limelight::Production["Fresnel"]
 
 # This is the ideal place to assign values to production attributes.
-if ARGV[1] and ARGV[1].downcase == "net"
+# if ARGV[1] and ARGV[1].downcase == "net"
   require 'lighthouse/lighthouse_api/base'
   production.lighthouse_client = Lighthouse::LighthouseApi
-else
-  require 'lighthouse/memory/base'
-  production.lighthouse_client = Lighthouse::Memory  
-end
+# else
+#   require 'lighthouse/memory/base'
+#   production.lighthouse_client = Lighthouse::Memory  
+# end
