@@ -1,12 +1,21 @@
 module SaveTicket
   def button_pressed(event)
+    update_ticket
+    refresh_ticket
+    scene.load('view_ticket')
+  end
+  
+  def update_ticket
     current_ticket.title = new_title
     current_ticket.state = new_state
     current_ticket.milestone_id = new_milestone_id
     current_ticket.new_comment = new_comment
     current_ticket.assigned_user_id = new_assigned_user_id
     current_ticket.save
-    scene.load('view_ticket')
+  end
+  
+  def refresh_ticket
+    production.current_ticket = production.lighthouse_client.ticket(current_ticket.id, current_project.id)
   end
   
   def current_ticket
