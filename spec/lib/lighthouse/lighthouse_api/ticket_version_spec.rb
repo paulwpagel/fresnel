@@ -26,18 +26,12 @@ describe Lighthouse::LighthouseApi::TicketVersion do
     @ticket_version.created_by.should == "Some Name"
   end
 
-  it "should not crash if the user is nil" do
-    Lighthouse::User.stub!(:find).and_return(nil)
-    
-    @ticket_version.created_by.should be_nil
-  end  
-  
   it "should have the timestamp" do
     @ticket_version.timestamp.should == "Now"
   end
   
   it "should make a api diffable_attributes" do
-    Lighthouse::LighthouseApi::DiffableAttributes.should_receive(:new).with(@diffable_attributes, "project_id")
+    Lighthouse::LighthouseApi::DiffableAttributes.should_receive(:new).with(@diffable_attributes, @project)
     @ticket_version.diffable_attributes
   end
   

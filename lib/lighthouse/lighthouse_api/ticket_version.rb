@@ -25,7 +25,7 @@ module Lighthouse
       end
 
       def diffable_attributes
-        return Lighthouse::LighthouseApi::DiffableAttributes.new(@lighthouse_version.diffable_attributes, @project_id)
+        return Lighthouse::LighthouseApi::DiffableAttributes.new(@lighthouse_version.diffable_attributes, @project)
       end
 
     end
