@@ -3,13 +3,14 @@ require "lighthouse/lighthouse_api/ticket"
 
 describe Lighthouse::LighthouseApi::Ticket, "initialize" do
   before(:each) do
+    @project = mock("project", :id => "project_id")
     @lighthouse_ticket = mock("Lighthouse::Ticket", :assigned_user_id => 123, :id => "ticket_id")
   end
   
   it "should have no versions if the given ticket has none" do
     @lighthouse_ticket.should_receive(:versions).and_raise(NoMethodError)
     
-    @fresnel_ticket = Lighthouse::LighthouseApi::Ticket.new(@lighthouse_ticket, "project_id")
+    @fresnel_ticket = Lighthouse::LighthouseApi::Ticket.new(@lighthouse_ticket, @project)
     
     @fresnel_ticket.versions.should == []
   end
@@ -17,8 +18,9 @@ end
 
 describe Lighthouse::LighthouseApi::Ticket, "assigned_user" do
   before(:each) do
+    @project = mock("project", :id => "project_id")
     @lighthouse_ticket = mock("Lighthouse::Ticket", :assigned_user_id => 123, :versions => [])
-    @fresnel_ticket = Lighthouse::LighthouseApi::Ticket.new(@lighthouse_ticket, "project_id")
+    @fresnel_ticket = Lighthouse::LighthouseApi::Ticket.new(@lighthouse_ticket, @project)
     @muser = mock(Lighthouse::User, :name => "Denny")
     Lighthouse::LighthouseApi::User.stub!(:find_by_id).and_return(@muser)
   end
@@ -46,9 +48,10 @@ end
 
 describe Lighthouse::LighthouseApi::Ticket, "description" do
   before(:each) do
+    @project = mock("project", :id => "project_id")
     @version_one = mock("version", :body => "Some Description")
     @lighthouse_ticket = mock("Lighthouse::Ticket", :versions => [@version_one], :assigned_user_id => nil)
-    @fresnel_ticket = Lighthouse::LighthouseApi::Ticket.new(@lighthouse_ticket, "project_id")
+    @fresnel_ticket = Lighthouse::LighthouseApi::Ticket.new(@lighthouse_ticket, @project)
   end
 
   it "should have get the description from the first version" do
@@ -63,7 +66,7 @@ describe Lighthouse::LighthouseApi::Ticket, "description" do
   
   it "should not crash if there are no versions" do
     @lighthouse_ticket.stub!(:versions).and_return([])
-    @fresnel_ticket = Lighthouse::LighthouseApi::Ticket.new(@lighthouse_ticket, "project_id")
+    @fresnel_ticket = Lighthouse::LighthouseApi::Ticket.new(@lighthouse_ticket, @project)
     
     @fresnel_ticket.description.should == ""
   end
@@ -71,10 +74,11 @@ end
 
 describe Lighthouse::LighthouseApi::Ticket, "comments" do
   before(:each) do
+    @project = mock("project", :id => "project_id")
     @version_one = mock("version", :body => "Some Description")
     @versions = [@version_one]
     @lighthouse_ticket = mock("Lighthouse::Ticket", :versions => @versions, :assigned_user_id => nil)
-    @fresnel_ticket = Lighthouse::LighthouseApi::Ticket.new(@lighthouse_ticket, "project_id")
+    @fresnel_ticket = Lighthouse::LighthouseApi::Ticket.new(@lighthouse_ticket, @project)
   end
   
   it "should return an array of comments ingoring the description" do
@@ -100,18 +104,19 @@ end
 
 describe Lighthouse::LighthouseApi::Ticket, "fresnel versions" do
   before(:each) do
+    @project = mock("project", :id => "project_id")
     @original_state = mock("original version")
     @version_one = mock("version")
     @versions = [@original_state, @version_one]
     @lighthouse_ticket = mock("Lighthouse::Ticket", :versions => @versions, :assigned_user_id => nil)
-    @fresnel_ticket = Lighthouse::LighthouseApi::Ticket.new(@lighthouse_ticket, "project_id")
+    @fresnel_ticket = Lighthouse::LighthouseApi::Ticket.new(@lighthouse_ticket, @project)
 
     @fresnel_version = mock(Lighthouse::LighthouseApi::TicketVersion)
     Lighthouse::LighthouseApi::TicketVersion.stub!(:new).and_return(@fresnel_version)
   end
   
   it "should have a fresnel version for one lighthouse version" do
-    Lighthouse::LighthouseApi::TicketVersion.should_receive(:new).with(@version_one, "project_id").and_return(@fresnel_version)
+    Lighthouse::LighthouseApi::TicketVersion.should_receive(:new).with(@version_one, @project).and_return(@fresnel_version)
     
     @fresnel_ticket.versions.should == [@fresnel_version]
   end
@@ -119,7 +124,7 @@ describe Lighthouse::LighthouseApi::Ticket, "fresnel versions" do
   it "should have a fresnel version for a second lighthouse version" do
     version_two = mock("version")
     @versions << version_two
-    Lighthouse::LighthouseApi::TicketVersion.should_receive(:new).with(version_two, "project_id").and_return(@fresnel_version)
+    Lighthouse::LighthouseApi::TicketVersion.should_receive(:new).with(version_two, @project).and_return(@fresnel_version)
     
     @fresnel_ticket.versions.should == [@fresnel_version, @fresnel_version]
   end
@@ -165,9 +170,10 @@ end
 
 describe Lighthouse::LighthouseApi::Ticket, "lighthouse ticket attributes" do
   before(:each) do
+    @project = mock("project", :id => "project_id")
     @lighthouse_ticket = mock("Lighthouse::Ticket", :versions => [], :assigned_user_id => nil,
                                     :id => "ticket_id", :state => "Open", :title => "Some Title", :milestone_id => "Milestone ID")
-    @fresnel_ticket = Lighthouse::LighthouseApi::Ticket.new(@lighthouse_ticket, "project_id")
+    @fresnel_ticket = Lighthouse::LighthouseApi::Ticket.new(@lighthouse_ticket, @project)
   end
   
   it "should have an id" do
@@ -209,8 +215,9 @@ end
 
 describe Lighthouse::LighthouseApi::Ticket, "editing" do
   before(:each) do
+    @project = mock("project", :id => "project_id")
     @lighthouse_ticket = mock("Lighthouse::Ticket", :versions => @versions, :assigned_user_id => nil)
-    @fresnel_ticket = Lighthouse::LighthouseApi::Ticket.new(@lighthouse_ticket, "project_id")
+    @fresnel_ticket = Lighthouse::LighthouseApi::Ticket.new(@lighthouse_ticket, @project)
   end
   
   it "should have a save method" do
@@ -234,12 +241,13 @@ end
 
 describe Lighthouse::LighthouseApi::Ticket, "changed attributes" do
   before(:each) do
+    @project = mock("project", :id => "project_id")
     lighthouse_version = mock("lighthouse_version")
     @versions = [lighthouse_version, lighthouse_version, lighthouse_version, lighthouse_version]
     @fresnel_version = mock('fresnel_version')
     Lighthouse::LighthouseApi::TicketVersion.stub!(:new).and_return(@fresnel_version)
     @lighthouse_ticket = mock("Lighthouse::Ticket", :versions => @versions, :assigned_user_id => nil)
-    @fresnel_ticket = Lighthouse::LighthouseApi::Ticket.new(@lighthouse_ticket, "project_id")    
+    @fresnel_ticket = Lighthouse::LighthouseApi::Ticket.new(@lighthouse_ticket, @project)    
     @changed_attributes_list = mock('changed_attributes_list')
     @changed_attributes = mock("changed_attributes", :list => @changed_attributes_list)
     Lighthouse::LighthouseApi::ChangedAttributes.stub!(:new).and_return(@changed_attributes)
@@ -258,8 +266,9 @@ end
 
 describe Lighthouse::LighthouseApi::Ticket, "milestone_title" do
   before(:each) do
+    @project = mock("project", :id => "project_id")
     @lighthouse_ticket = mock("Lighthouse::Ticket", :versions => [], :assigned_user_id => nil, :milestone_id => "Milestone ID")
-    @fresnel_ticket = Lighthouse::LighthouseApi::Ticket.new(@lighthouse_ticket, "project_id")
+    @fresnel_ticket = Lighthouse::LighthouseApi::Ticket.new(@lighthouse_ticket, @project)
     @milestone = mock("milestone", :title => "Milestone Title")
     Lighthouse::Milestone.stub!(:find).and_return(@milestone)
   end

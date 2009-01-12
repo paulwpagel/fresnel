@@ -15,7 +15,7 @@ module SaveTicket
   end
   
   def refresh_ticket
-    production.current_ticket = production.lighthouse_client.ticket(current_ticket.id, current_project.id)
+    production.current_ticket = production.lighthouse_client.ticket(current_ticket.id, current_project)
   end
   
   def current_ticket

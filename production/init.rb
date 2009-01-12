@@ -12,9 +12,10 @@ production = Limelight::Production["Fresnel"]
 
 # This is the ideal place to assign values to production attributes.
 if ARGV[1] and ARGV[1].downcase == "net"
-  require 'lighthouse/lighthouse_api/base'
-  production.lighthouse_client = Lighthouse::LighthouseApi
+  $adapter = "net"
 else
-  require 'lighthouse/memory/base'
-  production.lighthouse_client = Lighthouse::Memory  
+  $adapter = "memory"
 end
+require "lighthouse/adapter"
+require 'lighthouse/lighthouse_api/base'
+production.lighthouse_client = Lighthouse::LighthouseApi

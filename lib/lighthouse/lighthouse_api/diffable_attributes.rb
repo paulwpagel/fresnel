@@ -1,12 +1,13 @@
-require File.expand_path(File.dirname(__FILE__) + "/../../../vendor/lighthouse-api/lib/lighthouse")
+# require File.expand_path(File.dirname(__FILE__) + "/../../../vendor/lighthouse-api/lib/lighthouse")
+require "lighthouse/adapter"
 require "lighthouse/lighthouse_api/user"
 
 module Lighthouse
   module LighthouseApi
     class DiffableAttributes
-      def initialize(lighthouse_attributes, project_id)
+      def initialize(lighthouse_attributes, project)
         @lighthouse_attributes = lighthouse_attributes
-        @project_id = project_id
+        @project = project
       end
     
       def title
@@ -18,15 +19,9 @@ module Lighthouse
       end
     
       def assigned_user_name
-        return assigned_user.name if assigned_user
-        return nil
+        return @project.user_name(assigned_user_id)
       end
-    
-      def assigned_user
-        return Lighthouse::LighthouseApi::User.find_by_id(assigned_user_id) if assigned_user_id
-        return nil
-      end
-    
+
       def assigned_user_name_has_changed?
         @lighthouse_attributes.assigned_user rescue return false
         return true
@@ -42,8 +37,9 @@ module Lighthouse
       end
     
       def milestone
+        #TODO - EWM get the milestone title from the project using project.milestone_title(milestone_id)
         begin
-          return Lighthouse::Milestone.find(milestone_id, :params => {:project_id => @project_id})
+          return Lighthouse::Milestone.find(milestone_id, :params => {:project_id => @project.id})
         rescue
           return nil
         end

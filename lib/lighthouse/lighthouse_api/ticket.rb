@@ -1,4 +1,5 @@
-require File.expand_path(File.dirname(__FILE__) + "/../../../vendor/lighthouse-api/lib/lighthouse")
+# require File.expand_path(File.dirname(__FILE__) + "/../../../vendor/lighthouse-api/lib/lighthouse")
+require "lighthouse/adapter"
 require "lighthouse/lighthouse_api/ticket_version"
 require "lighthouse/lighthouse_api/changed_attributes"
 require "lighthouse/lighthouse_api/user"
@@ -18,21 +19,24 @@ module Lighthouse
       ticket_accessor :state
       ticket_accessor :title
       ticket_accessor :milestone_id
-      attr_reader :project_id
     
-      def initialize(lighthouse_ticket, project_id)
+      def initialize(lighthouse_ticket, project)
         @lighthouse_ticket = lighthouse_ticket
+        @project = project
         begin
           @lighthouse_versions = lighthouse_ticket.versions
         rescue NoMethodError
           @lighthouse_versions = []
         end
-        @project_id = project_id
+      end
+      
+      def project_id
+        return @project.id
       end
       
       def milestone_title
         begin
-          milestone = Lighthouse::Milestone.find(milestone_id, :params => {:project_id => @project_id})
+          milestone = Lighthouse::Milestone.find(milestone_id, :params => {:project_id => project_id})
         rescue
           return nil
         end
@@ -56,7 +60,7 @@ module Lighthouse
       def versions
         version_list = []
         @lighthouse_versions.each_with_index do |version, index|
-          version_list << Lighthouse::LighthouseApi::TicketVersion.new(version, @project_id) unless index == 0
+          version_list << Lighthouse::LighthouseApi::TicketVersion.new(version, @project) unless index == 0
         end
         return version_list
       end

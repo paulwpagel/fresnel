@@ -1,13 +1,15 @@
-require File.expand_path(File.dirname(__FILE__) + "/../../../vendor/lighthouse-api/lib/lighthouse")
+# require File.expand_path(File.dirname(__FILE__) + "/../../../vendor/lighthouse-api/lib/lighthouse")
+require "lighthouse/adapter"
 require "lighthouse/lighthouse_api/diffable_attributes"
 
 module Lighthouse
   module LighthouseApi
     class TicketVersion
   
-      def initialize(lighthouse_version, project_id)
+      def initialize(lighthouse_version, project)
         @lighthouse_version = lighthouse_version
-        @project_id = project_id
+        @project_id = project.id
+        @project = project
       end
   
       def comment
@@ -19,21 +21,13 @@ module Lighthouse
       end
   
       def created_by
-        return user.name if user
-        return ""
+        return @project.user_name(@lighthouse_version.user_id)
       end
 
       def diffable_attributes
-        return Lighthouse::LighthouseApi::DiffableAttributes.new(@lighthouse_version.diffable_attributes, @project_id)
+        return Lighthouse::LighthouseApi::DiffableAttributes.new(@lighthouse_version.diffable_attributes, @project)
       end
-    
-      def user
-        begin
-          return Lighthouse::User.find(@lighthouse_version.user_id)
-        rescue ActiveResource::ResourceNotFound => e
-          return nil
-        end
-      end
+
     end
   end
 end

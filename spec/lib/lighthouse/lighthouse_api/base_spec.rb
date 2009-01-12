@@ -105,29 +105,30 @@ describe "ticket" do
     @ticket = mock("ticket")
     Lighthouse::Ticket.stub!(:find).and_return(@ticket)
     @fresnel_ticket = mock(Lighthouse::LighthouseApi::Ticket)
+    @project = mock("project", :id => "project_id")
     Lighthouse::LighthouseApi::Ticket.stub!(:new).and_return(@fresnel_ticket)
   end
   
   it "should get a ticket from a ticket and project id through the lighthouse api" do
     Lighthouse::Ticket.should_receive(:find).with("ticket_id", :params => {:project_id => "project_id"}).and_return(@ticket)
 
-    Lighthouse::LighthouseApi::ticket("ticket_id", "project_id")
+    Lighthouse::LighthouseApi::ticket("ticket_id", @project)
   end
   
   it "should make a fresnel ticket from the found ticket" do
-    Lighthouse::LighthouseApi::Ticket.should_receive(:new).with(@ticket, "project_id")
+    Lighthouse::LighthouseApi::Ticket.should_receive(:new).with(@ticket, @project)
     
-    Lighthouse::LighthouseApi::ticket(1, "project_id")
+    Lighthouse::LighthouseApi::ticket(1, @project)
   end
   
   it "should return the fresnel ticket" do
-    Lighthouse::LighthouseApi::ticket(1, 2).should == @fresnel_ticket
+    Lighthouse::LighthouseApi::ticket(1, @project).should == @fresnel_ticket
   end
   
   it "should return nil if it cannot find the lighthouse ticket" do
     Lighthouse::Ticket.stub!(:find).and_return(nil)
     
-    Lighthouse::LighthouseApi::ticket(1, 2).should be_nil
+    Lighthouse::LighthouseApi::ticket(1, @project).should be_nil
   end
 end
 

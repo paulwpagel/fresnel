@@ -1,4 +1,5 @@
-require File.expand_path(File.dirname(__FILE__) + "/../../../vendor/lighthouse-api/lib/lighthouse")
+# require File.expand_path(File.dirname(__FILE__) + "/../../../vendor/lighthouse-api/lib/lighthouse")
+require "lighthouse/adapter"
 require "lighthouse/lighthouse_api/project"
 
 module Lighthouse
@@ -49,9 +50,9 @@ module Lighthouse
       return ""
     end
   
-    def self.ticket(ticket_id, project_id)
-      found_ticket = Lighthouse::Ticket.find(ticket_id, :params => {:project_id => project_id})
-      return Lighthouse::LighthouseApi::Ticket.new(found_ticket, project_id) if found_ticket
+    def self.ticket(ticket_id, project)
+      found_ticket = Lighthouse::Ticket.find(ticket_id, :params => {:project_id => project.id})
+      return Lighthouse::LighthouseApi::Ticket.new(found_ticket, project) if found_ticket
       return nil
     end
     
