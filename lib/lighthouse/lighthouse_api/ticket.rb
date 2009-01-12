@@ -20,14 +20,14 @@ module Lighthouse
       ticket_accessor :milestone_id
       attr_reader :project_id
     
-      def initialize(lighthouse_ticket, project_id)
+      def initialize(lighthouse_ticket, project)
         @lighthouse_ticket = lighthouse_ticket
         begin
           @lighthouse_versions = lighthouse_ticket.versions
         rescue NoMethodError
           @lighthouse_versions = []
         end
-        @project_id = project_id
+        @project_id = project.id
       end
       
       def milestone_title

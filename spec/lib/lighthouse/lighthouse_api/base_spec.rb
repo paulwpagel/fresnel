@@ -117,7 +117,7 @@ describe "ticket" do
   end
   
   it "should make a fresnel ticket from the found ticket" do
-    Lighthouse::LighthouseApi::Ticket.should_receive(:new).with(@ticket, "project_id")
+    Lighthouse::LighthouseApi::Ticket.should_receive(:new).with(@ticket, @project)
     
     Lighthouse::LighthouseApi::ticket(1, @project)
   end
