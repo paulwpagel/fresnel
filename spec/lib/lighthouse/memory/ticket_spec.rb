@@ -53,6 +53,12 @@ describe Lighthouse::Memory::Ticket do
     ticket.project_id.should == "ticket project_id"
   end
   
+  it "should accept assigned_user_id on init" do
+    ticket = make_ticket(:assigned_user_id => 456)
+    
+    ticket.assigned_user_id.should == 456
+  end
+  
   it "should accept a description on init" do
     ticket = make_ticket({:description => "ticket description"})
 

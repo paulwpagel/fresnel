@@ -28,8 +28,7 @@ module Lighthouse
       return nil
     end
     
-    def self.add_ticket(options, project_name)
-      project = find_project(project_name)
+    def self.add_ticket(options, project)
       ticket = Lighthouse::Ticket.new(:project_id => project.id)
       ticket.title = options[:title]
       ticket.body = options[:description]
@@ -56,9 +55,8 @@ module Lighthouse
       return nil
     end
     
-    def self.users_for_project(project_name)
+    def self.users_for_project(project) #TODO - PWP - this method can now be pushed into the model
       users = []
-      project = find_project(project_name)
       project.users.each do |project_membership|
         users << Lighthouse::User.find(project_membership.id)
       end

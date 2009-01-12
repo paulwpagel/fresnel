@@ -7,39 +7,30 @@ describe AddTicket do
   before(:each) do
     mock_lighthouse
     @milestones = [mock("milestone", :title => "milestone 1")]
-    @lighthouse_client.stub!(:users_for_project).and_return([mock('user', :name => "Name")])
+    @lighthouse_client.stub!(:users_for_project).and_return([mock('user', :name => "Name", :id => 234)])
   end
   
   uses_scene :add_ticket
     
   it "should call client" do
+    project = mock('project')
+    producer.production.current_project = project
     scene.find("title").text = "some title"
     scene.find("description").text = "some description"
-
+    scene.find("responsible_person").text = "Name"
+    
     scene.stub!(:load)
 
-    @lighthouse_client.should_receive(:add_ticket).with({:title => "some title", :description => "some description"}, anything())
+    @lighthouse_client.should_receive(:add_ticket).with({:title => "some title", :description => "some description", :assigned_user_id => 234}, project)
   
     scene.add_ticket
   end
-  
-  it "should clear out the text boxes when a ticket is added" do
-    scene.find("title").text = "some title"
-    scene.find("description").text = "some description"
-    scene.stub!(:load)
     
-    scene.add_ticket
-    
-    scene.find("title").text.should == ""
-    scene.find("description").text.should == ""
-  end
-  
   it "should load the view_ticket scene" do
     scene.find("title").text = "some title"
     scene.find("description").text = "some description"
     scene.should_receive(:load).with("list_tickets")
     
-  
     scene.add_ticket
   end
   
@@ -60,7 +51,9 @@ describe AddTicket do
   end
   
   it "should load users" do
-    @lighthouse_client.should_receive(:users_for_project).with("fresnel").and_return([mock('user', :name => "Name")])
+    project = mock("Project")
+    producer.production.current_project = project
+    @lighthouse_client.should_receive(:users_for_project).with(project).and_return([mock('user', :name => "Name")])
     
     scene.load_users
     

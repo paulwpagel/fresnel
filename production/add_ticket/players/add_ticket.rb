@@ -15,8 +15,7 @@ module AddTicket
   end
   
   def load_users
-    users = production.lighthouse_client.users_for_project("fresnel")
-    
+    users = production.lighthouse_client.users_for_project(production.current_project)
     responsible_person = scene.find("responsible_person")
     users.collect! {|user| user.name}
     responsible_person.choices = users
@@ -25,11 +24,19 @@ module AddTicket
   def add_ticket
     title = scene.find("title")
     description = scene.find("description")
-  
-    production.lighthouse_client.add_ticket({:title => title.text, :description => description.text}, "fresnel")
+    responsible_person = scene.find("responsible_person")
     
-    title.text = ""
-    description.text = ""
+    assigned_user_id = nil
+    production.lighthouse_client.users_for_project(production.current_project).each do |user|
+      assigned_user_id = user.id if responsible_person.text == user.name
+    end
+    
+    ticket_options = {}
+    ticket_options[:title] = title.text 
+    ticket_options[:description] = description.text
+    ticket_options[:assigned_user_id] = assigned_user_id
+
+    production.lighthouse_client.add_ticket(ticket_options, production.current_project)
     
     scene.load("list_tickets")
   end

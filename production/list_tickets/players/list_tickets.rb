@@ -6,7 +6,7 @@ module ListTickets
     def stage_hand(name)
       require name.to_s
       define_method(name) do
-        return TicketMaster.new(self)
+        return TicketMaster.new(self) #TODO - PWP - solve why this needs to be instantiated rather than the eval working
         # eval(name.to_s.camelize).new(self)
       end
     end

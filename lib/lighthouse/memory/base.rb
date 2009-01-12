@@ -6,7 +6,6 @@ module Lighthouse
   module Memory
     
     def self.create_default_project
-      puts "create default project"
       fresnel = Lighthouse::Memory::Project.new(:name => "fresnel", :id => 9)
       fresnel.milestones << Lighthouse::Memory::Milestone.new(:title => "First Milestone")
       fresnel.memberships << Lighthouse::Memory::ProjectMembership.new(:user_id => 9)
@@ -18,7 +17,11 @@ module Lighthouse
       return [user]
     end
     
-    @@users = create_default_users
+    @@users = create_default_users    
+    def self.users
+      return @@users
+    end
+    
     @@projects = create_default_project
     def self.projects
       return @@projects
@@ -41,15 +44,11 @@ module Lighthouse
       return nil
     end
 
-    def self.add_ticket(options, project_name)
-      project = find_project(project_name)
-      if project
-        options[:id] = rand 100000
-        ticket = Lighthouse::Memory::Ticket.new(options)
-        project.tickets << ticket
-      else
-        raise "There is no project #{project_name}"
-      end
+    def self.add_ticket(options, project)
+      options[:id] = rand 100000
+      ticket = Lighthouse::Memory::Ticket.new(options)
+      
+      project.tickets << ticket
     end
  
     def self.milestones(project_name)
@@ -75,9 +74,8 @@ module Lighthouse
       return nil
     end
     
-    def self.users_for_project(project_name)
+    def self.users_for_project(project)
       users = []
-      project = find_project(project_name)
       project.memberships.each do |project_membership|
         users << get_user_by_id(project_membership.user_id)
       end

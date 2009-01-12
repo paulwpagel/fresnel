@@ -6,7 +6,7 @@ module Lighthouse
       end
 
       attr_reader :id
-      attr_accessor :status, :title, :milestone_id, :project_id, :description
+      attr_accessor :status, :title, :milestone_id, :project_id, :description, :assigned_user_id
       alias :state :status
       
       def initialize(options = {})
@@ -16,6 +16,7 @@ module Lighthouse
         @id = options[:id]
         @project_id = options[:project_id]
         @description = options[:description]
+        @assigned_user_id = options[:assigned_user_id]
       end
       
       def milestone(project)
