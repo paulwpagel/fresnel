@@ -78,6 +78,14 @@ describe Lighthouse::User do
   end
 end
 
+describe Lighthouse::Ticket::TicketVersion do
+  it "should have a body" do
+    version = Lighthouse::Ticket::TicketVersion.new(:body => "Some Body")
+    
+    version.body.should == "Some Body"
+  end
+end
+
 describe Lighthouse::Ticket do
   before(:each) do
     Lighthouse::Project.destroy_all
@@ -106,8 +114,15 @@ describe Lighthouse::Ticket do
     end
   end
   
-  it "should have versions" do
+  it "should have no versions before saving" do
     @ticket.versions.should == []
+  end
+  
+  it "should have one version after being saved once" do
+    @ticket.body = "Some Description"
+    @ticket.save
+    @ticket.versions.size.should == 1
+    @ticket.versions.first.body.should == "Some Description"
   end
 
   describe "with one saved ticket" do

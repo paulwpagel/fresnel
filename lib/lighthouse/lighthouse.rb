@@ -47,6 +47,13 @@ module Lighthouse
   end
   
   class Ticket
+    class TicketVersion
+      attr_reader :body
+      def initialize(options={})
+        @body = options[:body]
+      end
+    end
+
     @@tickets = []
     
     def self.destroy_all
@@ -65,21 +72,19 @@ module Lighthouse
       end
     end
     
-    attr_reader :id, :project_id
+    attr_reader :id, :project_id, :versions
     attr_accessor :state, :title, :body, :body_html, :assigned_user_id, :milestone_id
     
     def initialize(options={})
       @project_id = options[:project_id]
       @state = "new"
+      @versions = []
     end
-    
-    def versions
-      return []
-    end
-    
+        
     def save
       unless @id
         @id = rand 10000
+        @versions << TicketVersion.new(:body => body)
         @@tickets << self
       end
     end
