@@ -36,6 +36,7 @@ module Lighthouse
       end
     
       def milestone
+        #TODO - EWM get the milestone title from the project using project.milestone_title(milestone_id)
         begin
           return Lighthouse::Milestone.find(milestone_id, :params => {:project_id => @project.id})
         rescue
