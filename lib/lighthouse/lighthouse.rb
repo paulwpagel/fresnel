@@ -6,6 +6,7 @@ module Lighthouse
   def self.authenticate(username, password)
     return true
   end
+  
   class Project
     @@projects = []
     
@@ -32,6 +33,14 @@ module Lighthouse
       @id = rand 10000
       @@projects << self
     end
+    
+     def open_states_list
+       return "new,open"
+     end
+
+     def closed_states_list
+       return "resolved,hold,invalid"
+     end
   end
   
   class User
@@ -57,15 +66,21 @@ module Lighthouse
     end
     
     attr_reader :id, :project_id
-    attr_accessor :state, :title, :body, :body_html
+    attr_accessor :state, :title, :body, :body_html, :assigned_user_id, :milestone_id
     
     def initialize(options={})
       @project_id = options[:project_id]
     end
     
+    def versions
+      return []
+    end
+    
     def save
-      @id = rand 10000
-      @@tickets << self
+      unless @id
+        @id = rand 10000
+        @@tickets << self
+      end
     end
   end
   

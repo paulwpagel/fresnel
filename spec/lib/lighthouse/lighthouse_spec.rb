@@ -62,6 +62,14 @@ describe Lighthouse::Project do
   it "should have milestones" do
     @project.milestones.should == []
   end
+  
+  it "should have an open_states_list" do
+    @project.open_states_list.should == "new,open"
+  end
+  
+  it "should have an closed_states_list" do
+    @project.closed_states_list.should == "resolved,hold,invalid"
+  end
 end
 
 describe Lighthouse::User do
@@ -87,13 +95,17 @@ describe Lighthouse::Ticket do
   end
   
   it "should have read/writable basic informatioin" do
-    [:state, :title, :body, :body_html].each do |attribute|
+    [:state, :title, :body, :body_html, :assigned_user_id, :milestone_id].each do |attribute|
       @ticket.send("#{attribute}=", "value")
 
       @ticket.send(attribute).should == "value"
     end
   end
-    
+  
+  it "should have versions" do
+    @ticket.versions.should == []
+  end
+
   describe "with one saved ticket" do
     before(:each) do
       @ticket.save
@@ -155,9 +167,16 @@ describe Lighthouse::Ticket do
       
       tickets.should == [@ticket]
     end
+    
+    it "should not duplicate a ticket on save" do
+      @ticket.title = "New Title"
+      @ticket.save
+      tickets = Lighthouse::Ticket.find(:all, :params => {:project_id => @project.id, :q => "all"})
+      
+      tickets.size.should == 1
+      tickets[0].title.should == "New Title"
+    end
   end
-  # Lighthouse::Ticket.find(ticket_id, :params => {:project_id => project_id})
-  # Lighthouse::Ticket.find(:all, :params => {:project_id => project_id, :q => "state:open"})
 end
 
 describe Lighthouse::Milestone do
