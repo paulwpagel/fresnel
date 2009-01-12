@@ -26,7 +26,7 @@ module Lighthouse
       end
     
       def milestone_title
-        milestone.title if milestone
+        return @project.milestone_title(milestone_id)
       end
     
       def milestone_title_has_changed?
@@ -34,19 +34,10 @@ module Lighthouse
         return true
       end
     
-      def milestone
-        #TODO - EWM get the milestone title from the project using project.milestone_title(milestone_id)
-        begin
-          return Lighthouse::Milestone.find(milestone_id, :params => {:project_id => @project.id})
-        rescue
-          return nil
-        end
-      end
-    
       private
     
       def milestone_id
-        @lighthouse_attributes.milestone
+        return attempt_attribute(:milestone)
       end
     
       def assigned_user_id

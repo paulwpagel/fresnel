@@ -75,11 +75,9 @@ end
 
 describe Lighthouse::LighthouseApi::DiffableAttributes, "milestone" do
   before(:each) do
-    @project = mock("project", :id => "project_id")
+    @project = mock("project", :id => "project_id", :milestone_title => nil)
     @lighthouse_attributes = mock("Lighthouse::DiffableAttributes", :milestone => "Some Milestone Id")
     @fresnel_attributes = Lighthouse::LighthouseApi::DiffableAttributes.new(@lighthouse_attributes, @project)
-    @milestone = mock(Lighthouse::Milestone, :title => "Milestone Title")
-    Lighthouse::Milestone.stub!(:find).and_return(@milestone)
   end
   
   it "should know if the milestone has changed" do
@@ -92,25 +90,21 @@ describe Lighthouse::LighthouseApi::DiffableAttributes, "milestone" do
     
     @fresnel_attributes.milestone_title_has_changed?.should == false
   end
-  
-  it "should find the milestone for its title" do
-    Lighthouse::Milestone.should_receive(:find).with("Some Milestone Id", :params => {:project_id => "project_id"})
-    
-    @fresnel_attributes.milestone
-  end
-  
-  it "should return nil if the milestone is not found" do
-    Lighthouse::Milestone.should_receive(:find).and_raise(ActiveResource::ResourceNotFound.new(mock('not found', :code => "Not Found")))
-    
-    @fresnel_attributes.milestone.should be_nil
-  end
 
-  it "should return the title of the found milestone" do
-    @fresnel_attributes.milestone_title.should == "Milestone Title"
+  it "should get the milestone title from the project" do
+    @project.should_receive(:milestone_title).with("Some Milestone Id")
+    
+    @fresnel_attributes.milestone_title
   end  
   
-  it "should return nil for the milestone_title if the milestone cannot be found" do
-    Lighthouse::Milestone.should_receive(:find).and_raise(ActiveResource::ResourceNotFound.new(mock('not found', :code => "Not Found")))
+  it "should the milestone_title" do
+    @project.stub!(:milestone_title).and_return("Milestone Title")
+    
+    @fresnel_attributes.milestone_title.should == "Milestone Title"
+  end
+  
+  it "should handle errors in getting the milestone title" do
+    @lighthouse_attributes.should_receive(:milestone).and_raise(NoMethodError)
     
     @fresnel_attributes.milestone_title.should be_nil
   end
