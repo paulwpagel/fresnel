@@ -45,12 +45,8 @@ module Lighthouse
       end
     
       def versions
-        version_list = []
-        @lighthouse_versions.each_with_index do |version, index|
-          version_list << Lighthouse::LighthouseApi::TicketVersion.new(version, @project) unless index == 0
-        end
-        return version_list
-      end
+        return tail_versions.collect { |version| api_version(version) }        
+      end      
     
       def changed_attributes_for_version(number)
         return Lighthouse::LighthouseApi::ChangedAttributes.new(versions[number..versions.length], self).list
@@ -63,6 +59,17 @@ module Lighthouse
           
       def new_comment=(comment)
         @lighthouse_ticket.body = comment
+      end
+      
+      private
+      
+      def api_version(version)
+        return Lighthouse::LighthouseApi::TicketVersion.new(version, @project)
+      end
+      
+      def tail_versions
+        return @lighthouse_versions[1..-1] unless @lighthouse_versions.empty?
+        return []
       end
     end
   end
