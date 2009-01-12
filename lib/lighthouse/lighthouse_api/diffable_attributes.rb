@@ -4,9 +4,9 @@ require "lighthouse/lighthouse_api/user"
 module Lighthouse
   module LighthouseApi
     class DiffableAttributes
-      def initialize(lighthouse_attributes, project_id)
+      def initialize(lighthouse_attributes, project)
         @lighthouse_attributes = lighthouse_attributes
-        @project_id = project_id
+        @project = project
       end
     
       def title
@@ -43,7 +43,7 @@ module Lighthouse
     
       def milestone
         begin
-          return Lighthouse::Milestone.find(milestone_id, :params => {:project_id => @project_id})
+          return Lighthouse::Milestone.find(milestone_id, :params => {:project_id => @project.id})
         rescue
           return nil
         end

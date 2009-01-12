@@ -3,8 +3,9 @@ require "lighthouse/lighthouse_api/diffable_attributes"
 
 describe Lighthouse::LighthouseApi::DiffableAttributes do
   before(:each) do
+    @project = mock("project", :id => "project_id")
     @lighthouse_attributes = mock("Lighthouse::DiffableAttributes")
-    @fresnel_attributes = Lighthouse::LighthouseApi::DiffableAttributes.new(@lighthouse_attributes, "project_id")
+    @fresnel_attributes = Lighthouse::LighthouseApi::DiffableAttributes.new(@lighthouse_attributes, @project)
   end
 
   it "should have a title" do
@@ -32,8 +33,9 @@ end
 
 describe Lighthouse::LighthouseApi::DiffableAttributes, "assigned_user_name" do
   before(:each) do
+    @project = mock("project", :id => "project_id")
     @lighthouse_attributes = mock("Lighthouse::DiffableAttributes", :assigned_user => 12345)
-    @fresnel_attributes = Lighthouse::LighthouseApi::DiffableAttributes.new(@lighthouse_attributes, "project_id")
+    @fresnel_attributes = Lighthouse::LighthouseApi::DiffableAttributes.new(@lighthouse_attributes, @project)
     @muser = mock("user", :name => "Some Name")
     Lighthouse::LighthouseApi::User.stub!(:find_by_id).and_return(@muser)
   end
@@ -67,8 +69,9 @@ describe Lighthouse::LighthouseApi::DiffableAttributes, "assigned_user_name" do
 end
 describe Lighthouse::LighthouseApi::DiffableAttributes, "assigned_user_name_has_changed?" do
   before(:each) do
+    @project = mock("project", :id => "project_id")
     @lighthouse_attributes = mock("Lighthouse::DiffableAttributes")
-    @fresnel_attributes = Lighthouse::LighthouseApi::DiffableAttributes.new(@lighthouse_attributes, "project_id")
+    @fresnel_attributes = Lighthouse::LighthouseApi::DiffableAttributes.new(@lighthouse_attributes, @project)
   end
   
   it "should know if the assigned_user_name_has_changed" do
@@ -86,8 +89,9 @@ end
 
 describe Lighthouse::LighthouseApi::DiffableAttributes, "milestone" do
   before(:each) do
+    @project = mock("project", :id => "project_id")
     @lighthouse_attributes = mock("Lighthouse::DiffableAttributes", :milestone => "Some Milestone Id")
-    @fresnel_attributes = Lighthouse::LighthouseApi::DiffableAttributes.new(@lighthouse_attributes, "project_id")
+    @fresnel_attributes = Lighthouse::LighthouseApi::DiffableAttributes.new(@lighthouse_attributes, @project)
     @milestone = mock(Lighthouse::Milestone, :title => "Milestone Title")
     Lighthouse::Milestone.stub!(:find).and_return(@milestone)
   end

@@ -37,7 +37,7 @@ describe Lighthouse::LighthouseApi::TicketVersion do
   end
   
   it "should make a api diffable_attributes" do
-    Lighthouse::LighthouseApi::DiffableAttributes.should_receive(:new).with(@diffable_attributes, "project_id")
+    Lighthouse::LighthouseApi::DiffableAttributes.should_receive(:new).with(@diffable_attributes, @project)
     @ticket_version.diffable_attributes
   end
   
