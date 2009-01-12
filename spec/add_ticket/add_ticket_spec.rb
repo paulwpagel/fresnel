@@ -7,42 +7,26 @@ describe AddTicket do
   before(:each) do
     mock_lighthouse
     @milestones = [mock("milestone", :title => "milestone 1")]
-    @lighthouse_client.stub!(:users_for_project).and_return([mock('user', :name => "Name")])
+    @lighthouse_client.stub!(:users_for_project).and_return([mock('user', :name => "Name", :id => 234)])
   end
   
   uses_scene :add_ticket
     
   it "should call client" do
-    scene.find("title").text = "some title"
-    scene.find("description").text = "some description"
+    project = mock('project')
+    producer.production.current_project = project
 
-    scene.stub!(:load)
-
-    @lighthouse_client.should_receive(:add_ticket).with({:title => "some title", :description => "some description"}, anything())
-  
-    scene.add_ticket
-  end
-  
-  it "should clear out the text boxes when a ticket is added" do
     scene.find("title").text = "some title"
     scene.find("description").text = "some description"
-    scene.stub!(:load)
-    
-    scene.add_ticket
-    
-    scene.find("title").text.should == ""
-    scene.find("description").text.should == ""
-  end
-  
-  it "should load the view_ticket scene" do
-    scene.find("title").text = "some title"
-    scene.find("description").text = "some description"
+    scene.find("responsible_person").text = "Name"
+    project.should_receive(:user_id).with("Name").and_return(234)    
     scene.should_receive(:load).with("list_tickets")
-    
+
+    @lighthouse_client.should_receive(:add_ticket).with({:title => "some title", :description => "some description", :assigned_user_id => 234}, project)
   
     scene.add_ticket
   end
-  
+      
   it "should give a choice for milestones" do
     @lighthouse_client.should_receive(:milestones).with(anything()).and_return(@milestones)
     
@@ -60,14 +44,16 @@ describe AddTicket do
   end
   
   it "should load users" do
-    @lighthouse_client.should_receive(:users_for_project).with("fresnel").and_return([mock('user', :name => "Name")])
+    project = mock("Project")
+    producer.production.current_project = project
+    @lighthouse_client.should_receive(:users_for_project).with(project).and_return([mock('user', :name => "Name")])
     
     scene.load_users
     
     responsible_person = scene.find("responsible_person")
     responsible_person.choices.should include("Name")
   end
-    
+  
 end
 
 describe AddTicket, "Props" do

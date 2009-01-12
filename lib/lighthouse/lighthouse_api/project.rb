@@ -19,10 +19,12 @@ module Lighthouse
       
       def user_id(user_name)
         return user_from_name(user_name).id if user_from_name(user_name)
+        return nil
       end
       
       def user_name(user_id)
         return user_from_id(user_id).name if user_from_id(user_id)
+        return nil
       end
       
       def open_tickets

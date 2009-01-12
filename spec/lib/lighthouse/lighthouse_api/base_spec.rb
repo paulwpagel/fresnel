@@ -43,16 +43,16 @@ describe Lighthouse::LighthouseApi do
   
   it "should add a ticket to the project" do
     @project = mock(Lighthouse::Project, :id => 2)
-    Lighthouse::LighthouseApi.should_receive(:find_project).with("fresnel").and_return(@project)
     ticket = mock(Lighthouse::Ticket)
-    options = {:title => "Test title", :description => "description"}
+    options = {:title => "Test title", :description => "description", :assigned_user_id => 456}
     Lighthouse::Ticket.should_receive(:new).with(:project_id => 2).and_return(ticket)
     ticket.should_receive(:title=).with("Test title")
     ticket.should_receive(:body=).with("description")
     ticket.should_receive(:body_html=).with("description")
+    ticket.should_receive(:assigned_user_id=).with(456)
     ticket.should_receive(:save)
     
-    Lighthouse::LighthouseApi::add_ticket(options, "fresnel")
+    Lighthouse::LighthouseApi::add_ticket(options, @project)
   end
   
   it "should get milestones for the project" do
@@ -92,11 +92,11 @@ describe Lighthouse::LighthouseApi do
   it "should get all users for a project" do
     @project = mock(Lighthouse::Project, :id => 2)
     @user = mock(Lighthouse::User, :name => "Paul")
-    Lighthouse::LighthouseApi.should_receive(:find_project).with("fresnel").and_return(@project)
+
     Lighthouse::User.should_receive(:find).with(1234).and_return(@user)
     @project.should_receive(:users).and_return([mock(Lighthouse::ProjectMembership, :id => 1234)])
     
-    Lighthouse::LighthouseApi::users_for_project("fresnel")
+    Lighthouse::LighthouseApi::users_for_project(@project)
   end
   
 end

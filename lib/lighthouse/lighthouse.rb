@@ -1,8 +1,10 @@
 require 'activeresource'
 
 module Lighthouse
+  
   def self.account=(value)
   end
+  
   def self.authenticate(username, password)
     return true
   end
@@ -18,11 +20,12 @@ module Lighthouse
       return @@projects
     end
     
-    attr_reader :name, :id
+    attr_reader :name, :id, :users
     
-    def initialize(options={})
+    def initialize(options = {})
       @name = options[:name]
       @id = nil
+      @users = []
     end
     
     def milestones
@@ -33,7 +36,7 @@ module Lighthouse
       @id = rand 10000
       @@projects << self
     end
-    
+
      def open_states_list
        return "new,open"
      end
@@ -42,14 +45,19 @@ module Lighthouse
        return "resolved,hold,invalid"
      end
   end
-  
+
   class User
+    attr_reader :name, :id
+    def initialize(options = {})
+      @name = options[:name]
+      @id = options[:id]
+    end
   end
-  
+
   class Ticket
     class TicketVersion
       attr_reader :body
-      def initialize(options={})
+      def initialize(options = {})
         @body = options[:body]
       end
     end
@@ -96,26 +104,35 @@ module Lighthouse
   class ProjectMembership
     @@project_memberships = []
     
-    def self.find(*params)
-      project_id = params[1][:params][:project_id]
-      return @@project_memberships.find_all {|membership| membership.project_id == project_id}
+    class << self
+      def find(*params)
+        project_id = params[1][:params][:project_id]
+        return @@project_memberships.find_all {|membership| membership.project_id == project_id}
+      end
+    
+      def destroy_all
+        @@project_memberships = []
+      end
+      
+      def all_users_for_project(project_id)
+        return []
+      end
     end
     
-    def self.destroy_all
-      @@project_memberships = []
-    end
     
     attr_reader :project_id
     
-    def initialize(options={})
+    def initialize(options = {})
       @project_id = options[:project_id]
     end
     
     def save
       @@project_memberships << self
     end
+    
   end
 end
 
 project = Lighthouse::Project.new(:name => "fresnel")
+Lighthouse::User.new(:name => "Marion Morison", :id => rand(1000))
 project.save

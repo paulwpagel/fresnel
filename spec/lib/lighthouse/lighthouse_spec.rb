@@ -70,11 +70,25 @@ describe Lighthouse::Project do
   it "should have an closed_states_list" do
     @project.closed_states_list.should == "resolved,hold,invalid"
   end
+  
+  it "should have users" do
+    @project.users.size.should == 0
+    @project.users << Lighthouse::User.new(:name => "Bob")
+    @project.users.size.should == 1
+  end
+  
 end
 
 describe Lighthouse::User do
   it "should exist" do
     Lighthouse::User.new
+  end
+  
+  it "should have basic user informartion" do
+    user = Lighthouse::User.new(:name => "Eric", :id => "User ID")
+
+    user.name.should == "Eric"
+    user.id.should == "User ID"
   end
 end
 
@@ -210,6 +224,10 @@ describe Lighthouse::ProjectMembership do
     Lighthouse::ProjectMembership.destroy_all
     @project_one = create_project
     @membership = Lighthouse::ProjectMembership.new(:project_id => @project_one.id)
+  end
+  
+  it "should no users for a project" do
+    Lighthouse::ProjectMembership.all_users_for_project("some id").should == []
   end
   
   it "should have a project_id" do
