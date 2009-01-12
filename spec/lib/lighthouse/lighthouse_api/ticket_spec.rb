@@ -72,36 +72,6 @@ describe Lighthouse::LighthouseApi::Ticket, "description" do
   end
 end
 
-describe Lighthouse::LighthouseApi::Ticket, "comments" do
-  before(:each) do
-    @project = mock("project", :id => "project_id")
-    @version_one = mock("version", :body => "Some Description")
-    @versions = [@version_one]
-    @lighthouse_ticket = mock("Lighthouse::Ticket", :versions => @versions, :assigned_user_id => nil)
-    @fresnel_ticket = Lighthouse::LighthouseApi::Ticket.new(@lighthouse_ticket, @project)
-  end
-  
-  it "should return an array of comments ingoring the description" do
-    @fresnel_ticket.comments.should == []
-  end
-  
-  it "should give one comment" do
-    version_two = mock("version", :body => "First Comment")
-    @versions << version_two
-    
-    @fresnel_ticket.comments.should == ["First Comment"]
-  end
-
-  it "should give two comments" do
-    version_two = mock("version", :body => "First Comment")
-    version_three = mock("version", :body => "Second Comment")
-    @versions << version_two
-    @versions << version_three
-    
-    @fresnel_ticket.comments.should == ["First Comment", "Second Comment"]
-  end
-end
-
 describe Lighthouse::LighthouseApi::Ticket, "fresnel versions" do
   before(:each) do
     @project = mock("project", :id => "project_id")

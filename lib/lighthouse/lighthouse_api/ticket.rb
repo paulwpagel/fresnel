@@ -33,6 +33,7 @@ module Lighthouse
       end
       
       def milestone_title
+        #TODO use milestone from project
         begin
           milestone = Lighthouse::Milestone.find(milestone_id, :params => {:project_id => project_id})
         rescue
@@ -50,6 +51,7 @@ module Lighthouse
       end
   
       def assigned_user_name
+        #TODO use username from project
         user = self.assigned_user
         return user.name unless user.nil?
         return ''
@@ -71,15 +73,7 @@ module Lighthouse
         return @lighthouse_versions[0].body if @lighthouse_versions[0]
         return ""
       end
-    
-      def comments
-        comment_list = []
-        @lighthouse_versions.each_with_index do |version, index|
-          comment_list << version.body unless index == 0
-        end
-        return comment_list
-      end
-      
+          
       def new_comment=(comment)
         @lighthouse_ticket.body = comment
       end
