@@ -6,7 +6,7 @@ require "lighthouse/lighthouse_api/project_membership"
 module Lighthouse
   module LighthouseApi
     class Project
-      attr_reader :milestones, :id
+      attr_reader :milestones, :id, :users
     
       def initialize(lighthouse_project)
         @lighthouse_project = lighthouse_project
@@ -21,6 +21,10 @@ module Lighthouse
       
       def user_id(user_name)
         return user_from_name(user_name).id if user_from_name(user_name)
+      end
+      
+      def user_name(user_id)
+        return user_from_id(user_id).name if user_from_id(user_id)
       end
       
       def open_tickets
@@ -52,7 +56,7 @@ module Lighthouse
       def closed_states
         return @lighthouse_project.closed_states_list.split(",")
       end
-      
+     
       def all_states
         return open_states + closed_states
       end
@@ -61,6 +65,10 @@ module Lighthouse
       
       def user_from_name(user_name)
         return @users.find { |user| user.name == user_name }
+      end
+      
+      def user_from_id(user_id)
+        return @users.find { |user| user.id == user_id }
       end
       
       def milestone_from_title(title)

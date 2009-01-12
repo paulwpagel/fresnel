@@ -30,6 +30,19 @@ describe Lighthouse::LighthouseApi::Project, "users" do
   it "should return nil if the given user name doesn't exist" do
     @fresnel_project.user_id("bad name").should be_nil
   end
+  
+  it "should return the name of a user given the id" do
+    @fresnel_project.user_name("id one").should == "user one"
+  end
+  
+  it "should get the name of a user from the id for the second user" do
+    @fresnel_project.user_name("id two").should == "user two"
+  end
+  
+  it "should return nil if the given user id doesn't exist" do
+    @fresnel_project.user_id("bad id").should be_nil
+  end
+  
 end
 
 describe Lighthouse::LighthouseApi::Project, "tickets" do

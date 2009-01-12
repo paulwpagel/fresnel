@@ -51,17 +51,17 @@ module Lighthouse
       return ""
     end
   
-    def self.ticket(ticket_id, project_id)
-      found_ticket = Lighthouse::Ticket.find(ticket_id, :params => {:project_id => project_id})
-      return Lighthouse::LighthouseApi::Ticket.new(found_ticket, project_id) if found_ticket
+    def self.ticket(ticket_id, project)
+      found_ticket = Lighthouse::Ticket.find(ticket_id, :params => {:project_id => project.id})
+      return Lighthouse::LighthouseApi::Ticket.new(found_ticket, project) if found_ticket
       return nil
     end
     
     def self.users_for_project(project_name)
       users = []
       project = find_project(project_name)
-      project.memberships.each do |project_membership|
-        users << Lighthouse::User.find(project_membership.user_id)
+      project.users.each do |project_membership|
+        users << Lighthouse::User.find(project_membership.id)
       end
       return users
     end

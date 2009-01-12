@@ -43,7 +43,8 @@ describe ListTickets, "view_ticket" do
     @lighthouse_client = mock("LighthouseClient", :ticket => @ticket)
     production.lighthouse_client = @lighthouse_client
     
-    production.current_project = mock("project", :id => "project_id")
+    @current_project = mock("project", :id => "project_id")
+    production.current_project = @current_project
   end
   
   it "should have a view method shows a ticket" do
@@ -53,7 +54,7 @@ describe ListTickets, "view_ticket" do
   end
   
   it "should find the ticket with an id on view" do
-    @lighthouse_client.should_receive(:ticket).with(1234, "project_id")
+    @lighthouse_client.should_receive(:ticket).with(1234, @current_project)
     
     @player_under_test.view(1234)
   end

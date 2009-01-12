@@ -2,6 +2,7 @@ module AddTicket
   
   def scene_opened(e)
     load_milestones
+    load_users
   end
   
   def button_pressed(e)
@@ -12,7 +13,15 @@ module AddTicket
     milestone_input = scene.find("milestones")
     milestone_input.choices = milestone_choices
   end
+  
+  def load_users
+    users = production.lighthouse_client.users_for_project("fresnel")
     
+    responsible_person = scene.find("responsible_person")
+    users.collect! {|user| user.name}
+    responsible_person.choices = users
+  end  
+  
   def add_ticket
     title = scene.find("title")
     description = scene.find("description")
