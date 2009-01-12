@@ -1,5 +1,3 @@
-# require File.expand_path(File.dirname(__FILE__) + "/../../../vendor/lighthouse-api/lib/lighthouse")
-require "lighthouse/adapter"
 require "lighthouse/lighthouse_api/ticket"
 require "lighthouse/lighthouse_api/project_membership"
 
@@ -7,7 +5,7 @@ module Lighthouse
   module LighthouseApi
     class Project
       attr_reader :milestones, :id, :users
-    
+          
       def initialize(lighthouse_project)
         @lighthouse_project = lighthouse_project
         @id = lighthouse_project.id

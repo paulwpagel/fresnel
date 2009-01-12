@@ -1,5 +1,3 @@
-# require File.expand_path(File.dirname(__FILE__) + "/../../../vendor/lighthouse-api/lib/lighthouse")
-require "lighthouse/adapter"
 require "lighthouse/lighthouse_api/ticket_version"
 require "lighthouse/lighthouse_api/changed_attributes"
 require "lighthouse/lighthouse_api/user"
