@@ -76,7 +76,7 @@ describe SaveTicket, "on_click" do
   end
   
   it "should re-find the ticket" do
-    @lighthouse_client.should_receive(:ticket).with("Ticket ID", "Project ID").and_return(@mock_ticket)
+    @lighthouse_client.should_receive(:ticket).with("Ticket ID", @mock_project).and_return(@mock_ticket)
     
     press_button
   end
