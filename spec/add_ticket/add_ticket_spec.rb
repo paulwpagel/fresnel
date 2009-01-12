@@ -15,25 +15,18 @@ describe AddTicket do
   it "should call client" do
     project = mock('project')
     producer.production.current_project = project
+
     scene.find("title").text = "some title"
     scene.find("description").text = "some description"
     scene.find("responsible_person").text = "Name"
-    
-    scene.stub!(:load)
+    project.should_receive(:user_id).with("Name").and_return(234)    
+    scene.should_receive(:load).with("list_tickets")
 
     @lighthouse_client.should_receive(:add_ticket).with({:title => "some title", :description => "some description", :assigned_user_id => 234}, project)
   
     scene.add_ticket
   end
-    
-  it "should load the view_ticket scene" do
-    scene.find("title").text = "some title"
-    scene.find("description").text = "some description"
-    scene.should_receive(:load).with("list_tickets")
-    
-    scene.add_ticket
-  end
-  
+      
   it "should give a choice for milestones" do
     @lighthouse_client.should_receive(:milestones).with(anything()).and_return(@milestones)
     
@@ -60,7 +53,7 @@ describe AddTicket do
     responsible_person = scene.find("responsible_person")
     responsible_person.choices.should include("Name")
   end
-    
+  
 end
 
 describe AddTicket, "Props" do

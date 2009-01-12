@@ -26,11 +26,8 @@ module AddTicket
     description = scene.find("description")
     responsible_person = scene.find("responsible_person")
     
-    assigned_user_id = nil
-    production.lighthouse_client.users_for_project(production.current_project).each do |user|
-      assigned_user_id = user.id if responsible_person.text == user.name
-    end
-    
+    assigned_user_id = production.current_project.user_id(responsible_person.text)
+        
     ticket_options = {}
     ticket_options[:title] = title.text 
     ticket_options[:description] = description.text
