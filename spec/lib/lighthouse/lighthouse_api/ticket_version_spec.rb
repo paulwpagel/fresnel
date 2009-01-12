@@ -26,12 +26,6 @@ describe Lighthouse::LighthouseApi::TicketVersion do
     @ticket_version.created_by.should == "Some Name"
   end
 
-  it "should not crash if the user is nil" do
-    Lighthouse::User.stub!(:find).and_return(nil)
-    
-    @ticket_version.created_by.should be_nil
-  end  
-  
   it "should have the timestamp" do
     @ticket_version.timestamp.should == "Now"
   end
