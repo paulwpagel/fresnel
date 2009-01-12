@@ -18,31 +18,21 @@ end
 
 describe Lighthouse::LighthouseApi::Ticket, "assigned_user" do
   before(:each) do
-    @project = mock("project", :id => "project_id")
-    @lighthouse_ticket = mock("Lighthouse::Ticket", :assigned_user_id => 123, :versions => [])
+    @project = mock("project", :id => "project_id", :user_name => nil)
+    @lighthouse_ticket = mock("Lighthouse::Ticket", :assigned_user_id => "user id", :versions => [])
     @fresnel_ticket = Lighthouse::LighthouseApi::Ticket.new(@lighthouse_ticket, @project)
-    @muser = mock(Lighthouse::User, :name => "Denny")
-    Lighthouse::LighthouseApi::User.stub!(:find_by_id).and_return(@muser)
   end
-
-  it "should find the assigned_user" do
-    Lighthouse::LighthouseApi::User.should_receive(:find_by_id).with(123)
+  
+  it "should get the assigned_user_name from the project" do
+    @project.should_receive(:user_name).with("user id")
     
-    @fresnel_ticket.assigned_user
-  end
-  
-  it "should return the assigned_user" do    
-    @fresnel_ticket.assigned_user.should == @muser
-  end
-  
-  it "should return the assigned_user_name" do
-    @fresnel_ticket.assigned_user_name.should == "Denny"
+    @fresnel_ticket.assigned_user_name
   end
   
   it "should be blank if the user isn't found" do
-    Lighthouse::LighthouseApi::User.stub!(:find_by_id).and_return(nil)
+    @project.stub!(:user_name).and_return("Assigned User Name")
     
-    @fresnel_ticket.assigned_user_name.should == ''
+    @fresnel_ticket.assigned_user_name.should == "Assigned User Name"
   end
 end
 
@@ -237,27 +227,20 @@ end
 
 describe Lighthouse::LighthouseApi::Ticket, "milestone_title" do
   before(:each) do
-    @project = mock("project", :id => "project_id")
+    @project = mock("project", :id => "project_id", :milestone_title => nil)
     @lighthouse_ticket = mock("Lighthouse::Ticket", :versions => [], :assigned_user_id => nil, :milestone_id => "Milestone ID")
     @fresnel_ticket = Lighthouse::LighthouseApi::Ticket.new(@lighthouse_ticket, @project)
-    @milestone = mock("milestone", :title => "Milestone Title")
-    Lighthouse::Milestone.stub!(:find).and_return(@milestone)
   end
   
-  it "should find the milestone" do
-    Lighthouse::Milestone.should_receive(:find).with("Milestone ID", :params => {:project_id => "project_id"}).and_return(@milestone)
+  it "should get the milestone from the project" do
+    @project.should_receive(:milestone_title).with("Milestone ID")
     
     @fresnel_ticket.milestone_title
   end
   
-  it "should return the title of the found milestone" do
+  it "should return the milestone_title" do
+    @project.stub!(:milestone_title).and_return("Milestone Title")
+
     @fresnel_ticket.milestone_title.should == "Milestone Title"
-  end
-  
-  it "should not crash if the milestone is not found" do
-    Lighthouse::Milestone.should_receive(:find).and_raise(ActiveResource::Redirection.new(mock('resource moved', :code => "moved")))
-    
-    @fresnel_ticket.milestone_title.should be_nil
-  end
-  
+  end  
 end

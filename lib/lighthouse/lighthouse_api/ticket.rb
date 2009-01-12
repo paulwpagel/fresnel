@@ -33,28 +33,15 @@ module Lighthouse
       end
       
       def milestone_title
-        #TODO use milestone from project
-        begin
-          milestone = Lighthouse::Milestone.find(milestone_id, :params => {:project_id => project_id})
-        rescue
-          return nil
-        end
-        return milestone.title
+        @project.milestone_title(milestone_id)
       end
     
       def save
         @lighthouse_ticket.save
       end
-        
-      def assigned_user
-        return Lighthouse::LighthouseApi::User.find_by_id(assigned_user_id)
-      end
-  
+
       def assigned_user_name
-        #TODO use user_name from project
-        user = self.assigned_user
-        return user.name unless user.nil?
-        return ''
+        return @project.user_name(assigned_user_id)
       end
     
       def versions
