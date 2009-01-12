@@ -5,9 +5,9 @@ module Lighthouse
   module LighthouseApi
     class TicketVersion
   
-      def initialize(lighthouse_version, project_id)
+      def initialize(lighthouse_version, project)
         @lighthouse_version = lighthouse_version
-        @project_id = project_id
+        @project_id = project.id
       end
   
       def comment

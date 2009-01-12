@@ -6,7 +6,8 @@ describe Lighthouse::LighthouseApi::TicketVersion do
     @diffable_attributes = mock("diffable_attributes")
     lighthouse_version = mock("lighthouse ticket version", :body => "Some Comment", :user_id => 12345,
                                 :updated_at => "Now", :diffable_attributes => @diffable_attributes)
-    @ticket_version = Lighthouse::LighthouseApi::TicketVersion.new(lighthouse_version, "project_id")
+    @project = mock("project", :id => "project_id")
+    @ticket_version = Lighthouse::LighthouseApi::TicketVersion.new(lighthouse_version, @project)
     
     @user = mock("user", :name => "Someone")
     Lighthouse::User.stub!(:find).and_return(@user)
