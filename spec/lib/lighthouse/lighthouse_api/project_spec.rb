@@ -60,7 +60,7 @@ describe Lighthouse::LighthouseApi::Project, "tickets" do
   end
   
   it "should find all open tickets for a project" do
-    Lighthouse::LighthouseApi::Ticket.should_receive(:find_tickets).with(12345, "state:open")
+    Lighthouse::LighthouseApi::Ticket.should_receive(:find_tickets).with(@fresnel_project, "state:open")
     
     @fresnel_project.open_tickets
   end
@@ -70,7 +70,7 @@ describe Lighthouse::LighthouseApi::Project, "tickets" do
   end
   
   it "should find all tickets for a project" do
-    Lighthouse::LighthouseApi::Ticket.should_receive(:find_tickets).with(12345, "all")
+    Lighthouse::LighthouseApi::Ticket.should_receive(:find_tickets).with(@fresnel_project, "all")
     
     @fresnel_project.all_tickets
   end

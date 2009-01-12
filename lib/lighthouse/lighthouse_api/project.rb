@@ -28,11 +28,11 @@ module Lighthouse
       end
       
       def open_tickets
-        return Lighthouse::LighthouseApi::Ticket.find_tickets(@id, "state:open")
+        return Lighthouse::LighthouseApi::Ticket.find_tickets(self, "state:open")
       end
     
       def all_tickets
-        return Lighthouse::LighthouseApi::Ticket.find_tickets(@id, "all")
+        return Lighthouse::LighthouseApi::Ticket.find_tickets(self, "all")
       end
     
       def milestone_titles

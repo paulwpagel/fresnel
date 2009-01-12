@@ -6,9 +6,9 @@ require "lighthouse/lighthouse_api/ticket_accessors"
 module Lighthouse
   module LighthouseApi
     class Ticket
-      def self.find_tickets(project_id, query)
-        tickets = Lighthouse::Ticket.find(:all, :params => {:project_id => project_id, :q => query})
-        return tickets.collect { |lighthouse_ticket| self.new(lighthouse_ticket, project_id) }
+      def self.find_tickets(project, query)
+        tickets = Lighthouse::Ticket.find(:all, :params => {:project_id => project.id, :q => query})
+        return tickets.collect { |lighthouse_ticket| self.new(lighthouse_ticket, project.id) }
       end
       
       include TicketAccessors
@@ -51,7 +51,7 @@ module Lighthouse
       end
   
       def assigned_user_name
-        #TODO use username from project
+        #TODO use user_name from project
         user = self.assigned_user
         return user.name unless user.nil?
         return ''

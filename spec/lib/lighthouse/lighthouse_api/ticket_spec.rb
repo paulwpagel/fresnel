@@ -102,6 +102,7 @@ end
 
 describe Lighthouse::LighthouseApi::Ticket, "find" do
   before(:each) do
+    @project = mock("project", :id => "project_id")
     @ticket_one = mock("Lighthouse::Ticket")
     @tickets = [@ticket_one]
     @fresnel_ticket = mock(Lighthouse::LighthouseApi::Ticket)
@@ -112,13 +113,13 @@ describe Lighthouse::LighthouseApi::Ticket, "find" do
   it "should call find tickets with the state and project_id" do
     Lighthouse::Ticket.should_receive(:find).with(:all, :params => {:project_id => "project_id", :q => "query"}).and_return([])
     
-    Lighthouse::LighthouseApi::Ticket.find_tickets("project_id", "query")
+    Lighthouse::LighthouseApi::Ticket.find_tickets(@project, "query")
   end
   
   it "should make fresnel tickets for the first ticket found" do
     Lighthouse::LighthouseApi::Ticket.should_receive(:new).with(@ticket_one, "project_id")
     
-    Lighthouse::LighthouseApi::Ticket.find_tickets("project_id", "query")
+    Lighthouse::LighthouseApi::Ticket.find_tickets(@project, "query")
   end 
   
   it "should make fresnel tickets for the second ticket found" do
@@ -126,14 +127,14 @@ describe Lighthouse::LighthouseApi::Ticket, "find" do
     @tickets << @ticket_two
     Lighthouse::LighthouseApi::Ticket.should_receive(:new).with(@ticket_two, "project_id")
   
-    Lighthouse::LighthouseApi::Ticket.find_tickets("project_id", "query")
+    Lighthouse::LighthouseApi::Ticket.find_tickets(@project, "query")
   end
   
   it "should return the fresnel tickets" do
     @ticket_two = mock("Lighthouse::Ticket")
     @tickets << @ticket_two
     
-    Lighthouse::LighthouseApi::Ticket.find_tickets("project_id", "query").should == [@fresnel_ticket, @fresnel_ticket]
+    Lighthouse::LighthouseApi::Ticket.find_tickets(@project, "query").should == [@fresnel_ticket, @fresnel_ticket]
   end
 
 end
