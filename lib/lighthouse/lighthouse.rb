@@ -70,6 +70,7 @@ module Lighthouse
     
     def initialize(options={})
       @project_id = options[:project_id]
+      @state = "new"
     end
     
     def versions
