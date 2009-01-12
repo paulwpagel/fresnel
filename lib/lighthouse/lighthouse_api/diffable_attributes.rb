@@ -18,15 +18,9 @@ module Lighthouse
       end
     
       def assigned_user_name
-        return assigned_user.name if assigned_user
-        return nil
+        return @project.user_name(assigned_user_id)
       end
-    
-      def assigned_user
-        return Lighthouse::LighthouseApi::User.find_by_id(assigned_user_id) if assigned_user_id
-        return nil
-      end
-    
+
       def assigned_user_name_has_changed?
         @lighthouse_attributes.assigned_user rescue return false
         return true
