@@ -26,7 +26,7 @@ module ViewTicket
 
     new_row do |row|
       row.add(make_prop("Add Comment:", "comment_header"))
-      row.add(Limelight::Prop.new(:name => "text_box", :id => "ticket_comment"))
+      row.add(Limelight::Prop.new(:name => "text_area", :id => "ticket_comment", :width => 500, :height => 80))
     end
   end
   

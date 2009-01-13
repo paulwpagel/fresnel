@@ -98,7 +98,7 @@ describe ViewTicket, "load_current_ticket" do
   
   it "should have a place to enter a comment" do
     prop = scene.find("ticket_comment")
-    prop.name.should == "text_box"
+    prop.name.should == "text_area"
   end
   
   it "should have a button to save changes to a ticket" do
