@@ -4,10 +4,11 @@ require "lighthouse/lighthouse_api/ticket_version"
 describe Lighthouse::LighthouseApi::TicketVersion do
   before(:each) do
     @diffable_attributes = mock("diffable_attributes")
-    lighthouse_version = mock("lighthouse ticket version", :body => "Some Comment", :user_id => 12345,
-                                :updated_at => "Now", :diffable_attributes => @diffable_attributes)
+    @time = Time.now
+    @lighthouse_version = mock("lighthouse ticket version", :body => "Some Comment", :user_id => 12345,
+                                :updated_at => @time, :diffable_attributes => @diffable_attributes)
     @project = mock("project", :id => "project_id", :user_name => nil)
-    @ticket_version = Lighthouse::LighthouseApi::TicketVersion.new(lighthouse_version, @project)
+    @ticket_version = Lighthouse::LighthouseApi::TicketVersion.new(@lighthouse_version, @project)
   end
   
   it "should have a comment" do
@@ -26,8 +27,14 @@ describe Lighthouse::LighthouseApi::TicketVersion do
     @ticket_version.created_by.should == "Some Name"
   end
 
-  it "should have the timestamp" do
-    @ticket_version.timestamp.should == "Now"
+  it "should get the timestamp from the lighthouse_version" do
+    @lighthouse_version.should_receive(:updated_at).and_return(@time)
+    
+    @ticket_version.timestamp#.should == "Now"
+  end
+  
+  it "should format the time" do
+    @ticket_version.timestamp.should == @time.strftime("%B %d, %Y @ %I:%M %p")
   end
   
   it "should make a api diffable_attributes" do

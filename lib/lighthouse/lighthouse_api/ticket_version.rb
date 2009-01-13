@@ -15,7 +15,7 @@ module Lighthouse
       end
   
       def timestamp
-        return @lighthouse_version.updated_at
+        return @lighthouse_version.updated_at.strftime("%B %d, %Y @ %I:%M %p")
       end
   
       def created_by
