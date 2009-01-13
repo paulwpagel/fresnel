@@ -14,11 +14,9 @@ module AddTicket
     milestone_input.choices = milestone_choices
   end
   
-  def load_users 
-    users = production.lighthouse_client.users_for_project(production.current_project)
+  def load_users
     responsible_person = scene.find("responsible_person")
-    users.collect! {|user| user.name} #TODO - PWP - use the model to do this
-    responsible_person.choices = users
+    responsible_person.choices = production.current_project.user_names
   end  
   
   def add_ticket
