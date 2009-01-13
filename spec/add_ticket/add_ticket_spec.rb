@@ -53,6 +53,14 @@ describe AddTicket do
     responsible_person.choices.should include("Name")
   end
   
+  it "should have a choice for no user" do
+    @lighthouse_client.stub!(:users_for_project).and_return([])
+    
+    scene.load_users
+    
+    responsible_person = scene.find("responsible_person")
+    responsible_person.choices.should include("None")
+  end
 end
 
 describe AddTicket, "Props" do
