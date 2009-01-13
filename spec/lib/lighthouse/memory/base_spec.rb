@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../../../spec_helper'
 require File.expand_path(File.dirname(__FILE__) + "/memory_spec_helper")
-require "lighthouse/memory/base"
+require "lighthouse/lighthouse"
 
 describe Lighthouse, "base methods" do
   it "should have an account= method" do

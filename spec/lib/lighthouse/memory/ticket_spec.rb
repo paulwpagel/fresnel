@@ -1,6 +1,5 @@
 require File.expand_path(File.dirname(__FILE__) + "/../../../spec_helper")
 require File.expand_path(File.dirname(__FILE__) + "/memory_spec_helper")
-require "lighthouse/memory/ticket"
 require "lighthouse/lighthouse"
 
 describe Lighthouse::Ticket::TicketVersion do
