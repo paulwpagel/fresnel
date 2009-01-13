@@ -30,6 +30,10 @@ describe Lighthouse::Ticket do
     @ticket.state.should == "new"
   end
   
+  it "should have tags" do
+    @ticket.tags = "new tags"
+  end
+  
   it "should have read/writable basic informatioin" do
     [:state, :title, :body, :body_html, :assigned_user_id, :milestone_id].each do |attribute|
       @ticket.send("#{attribute}=", "value")
