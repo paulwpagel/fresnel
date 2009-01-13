@@ -1,18 +1,7 @@
 require File.expand_path(File.dirname(__FILE__) + "/../../../spec_helper")
+require File.expand_path(File.dirname(__FILE__) + "/memory_spec_helper")
 require "lighthouse/memory/project"
 require "lighthouse/lighthouse"
-
-def create_project
-  project = Lighthouse::Project.new
-  project.save
-  return project
-end
-
-def create_milestone(options)
-  milestone = Lighthouse::Milestone.new(options)
-  milestone.save
-  return milestone
-end
 
 describe Lighthouse::Project do
   before(:each) do
