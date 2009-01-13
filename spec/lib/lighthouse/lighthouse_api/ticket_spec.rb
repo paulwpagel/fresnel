@@ -88,6 +88,10 @@ describe Lighthouse::LighthouseApi::Ticket, "fresnel versions" do
     
     @fresnel_ticket.versions.should == [@fresnel_version, @fresnel_version]
   end
+  
+  it "should not have access to the lighthouse versions" do
+    lambda{@fresnel_ticket.tail_versions}.should raise_error(NoMethodError, /private method/)
+  end
 end
 
 describe Lighthouse::LighthouseApi::Ticket, "find" do
