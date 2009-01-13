@@ -14,7 +14,7 @@ module AddTicket
     milestone_input.choices = milestone_choices
   end
   
-  def load_users #TODO - PWP - should have default user of none responsible
+  def load_users 
     users = production.lighthouse_client.users_for_project(production.current_project)
     responsible_person = scene.find("responsible_person")
     users.collect! {|user| user.name} #TODO - PWP - use the model to do this
@@ -25,13 +25,13 @@ module AddTicket
     title = scene.find("title")
     description = scene.find("description")
     responsible_person = scene.find("responsible_person")
+    tags = scene.find("tags")
     
-    assigned_user_id = production.current_project.user_id(responsible_person.text)
-        
     ticket_options = {}
     ticket_options[:title] = title.text 
     ticket_options[:description] = description.text
-    ticket_options[:assigned_user_id] = assigned_user_id
+    ticket_options[:assigned_user_id] = production.current_project.user_id(responsible_person.text)
+    ticket_options[:tags] = tags.text
 
     production.lighthouse_client.add_ticket(ticket_options, production.current_project)
     

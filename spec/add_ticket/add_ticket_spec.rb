@@ -18,11 +18,12 @@ describe AddTicket do
     scene.find("title").text = "some title"
     scene.find("description").text = "some description"
     scene.find("responsible_person").text = "Name"
+    scene.find("tags").text = "One Two"
     
     @project.should_receive(:user_id).with("Name").and_return(234)    
     scene.should_receive(:load).with("list_tickets")
 
-    @lighthouse_client.should_receive(:add_ticket).with({:title => "some title", :description => "some description", :assigned_user_id => 234}, @project)
+    @lighthouse_client.should_receive(:add_ticket).with({:title => "some title", :description => "some description", :assigned_user_id => 234, :tags => "One Two"}, @project)
   
     scene.add_ticket
   end
@@ -69,6 +70,7 @@ describe AddTicket, "Props" do
     scene.find("description").should_not be_nil
     scene.find("milestones").should_not be_nil
     scene.find("responsible_person").should_not be_nil
+    scene.find("tags").should_not be_nil
   end
   
   it "should have add ticket button" do

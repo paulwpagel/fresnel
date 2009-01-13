@@ -33,16 +33,11 @@ module Lighthouse
       ticket.body = options[:description]
       ticket.body_html = options[:description]
       ticket.assigned_user_id = options[:assigned_user_id]
+      ticket.tags = options[:tags]
       ticket.save
       return nil
     end
-  
-    # def self.milestone_title(project_name, milestone_id)
-    #   milestone = milestones(project_name).find {|m| m.id == milestone_id }
-    #   return milestone.title if milestone
-    #   return ""
-    # end
-  
+    
     def self.ticket(ticket_id, project)
       found_ticket = Lighthouse::Ticket.find(ticket_id, :params => {:project_id => project.id})
       return Lighthouse::LighthouseApi::Ticket.new(found_ticket, project) if found_ticket

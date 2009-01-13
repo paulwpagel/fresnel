@@ -44,37 +44,17 @@ describe Lighthouse::LighthouseApi do
   it "should add a ticket to the project" do
     @project = mock(Lighthouse::Project, :id => 2)
     ticket = mock(Lighthouse::Ticket)
-    options = {:title => "Test title", :description => "description", :assigned_user_id => 456}
+    options = {:title => "Test title", :description => "description", :assigned_user_id => 456, :tags => "fake tag"}
     Lighthouse::Ticket.should_receive(:new).with(:project_id => 2).and_return(ticket)
     ticket.should_receive(:title=).with("Test title")
     ticket.should_receive(:body=).with("description")
     ticket.should_receive(:body_html=).with("description")
     ticket.should_receive(:assigned_user_id=).with(456)
+    ticket.should_receive(:tags=).with("fake tag")
     ticket.should_receive(:save)
     
     Lighthouse::LighthouseApi::add_ticket(options, @project)
   end
-    
-  # it "should return the milestone title for a given project and ticket" do
-  #   milestones = [mock("milestone", :id => 123, :title => "Milestone Title")]
-  #   project = mock(Lighthouse::Project, :name => "project one", :id => nil)
-  #   Lighthouse::Project.stub!(:find).and_return([project])
-  #   @mock_project.stub!(:milestones).and_return(milestones)
-  #   
-  #   Lighthouse::LighthouseApi::milestone_title("project one", 123).should == "Milestone Title"
-  # end
-  # 
-  # it "should not crash if there are no milestones matching the id given" do
-  #   @mock_project.stub!(:milestones).and_return([])
-  # 
-  #   Lighthouse::LighthouseApi::milestone_title("project one", 123).should == ""
-  # end
-  # 
-  # it "should work if the project doesn't exist" do
-  #   Lighthouse::Project.stub!(:find).and_return([])
-  #   
-  #   Lighthouse::LighthouseApi::milestone_title("project one", 123).should == ""
-  # end
   
   it "should get all users for a project" do
     @project = mock(Lighthouse::Project, :id => 2)

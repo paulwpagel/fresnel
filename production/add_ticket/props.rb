@@ -20,6 +20,11 @@ main {
       label :text => "Who's Responsible:"
       input :players => 'combo_box', :id => 'responsible_person'
     }
+    input_group{
+      label :text => "Tags"
+      input :players => 'text_box', :id => 'tags'
+    }
+    
     
     button :text => "Add Ticket", :players => "add_ticket", :width => 125, :id => "add_ticket_button"
   }
