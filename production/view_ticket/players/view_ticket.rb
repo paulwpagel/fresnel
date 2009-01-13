@@ -19,14 +19,18 @@ module ViewTicket
       row.add(make_combo_box(milestone_choices, "ticket_milestone", milestone_title))
     end
 
-    new_row { |row| row.add(make_prop(current_ticket.description, "ticket_description")) }
-    current_ticket.versions.each_with_index do |version, index|
-      make_row_for_version(version, index)
+    new_row do |row|
+      row.add(make_prop("Description:", "description_header"))
+      row.add(make_prop(current_ticket.description, "ticket_description"))
     end
 
     new_row do |row|
       row.add(make_prop("Add Comment:", "comment_header"))
       row.add(Limelight::Prop.new(:name => "text_area", :id => "ticket_comment", :width => 500, :height => 80))
+    end
+
+    current_ticket.versions.each_with_index do |version, index|
+      make_row_for_version(version, index)
     end
   end
   
