@@ -43,14 +43,6 @@ module Lighthouse
       return Lighthouse::LighthouseApi::Ticket.new(found_ticket, project) if found_ticket
       return nil
     end
-    
-    def self.users_for_project(project)
-      users = []
-      project.users.each do |project_membership|
-        users << Lighthouse::User.find(project_membership.id)
-      end
-      return users
-    end
-    
+        
   end
 end

@@ -43,9 +43,7 @@ module AddTicket
   end
   
   def user_choices
-    users = production.lighthouse_client.users_for_project(production.current_project)
-    users.collect! {|user| user.name} #TODO - PWP - use the model to do this
-    return ["None"] + users
+    return ["None"] + production.current_project.user_names
   end
   
   def milestone_choices

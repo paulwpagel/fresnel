@@ -7,8 +7,7 @@ describe AddTicket do
   before(:each) do
     mock_lighthouse
     @milestones = [mock("milestone", :title => "milestone 1")]
-    @lighthouse_client.stub!(:users_for_project).and_return([mock('user', :name => "Name", :id => 234)])
-    @project = mock("Project", :milestones => [])
+    @project = mock("Project", :milestones => [], :user_names => ["Name"])
     producer.production.current_project = @project
   end
   
@@ -45,8 +44,7 @@ describe AddTicket do
   end
   
   it "should load users" do
-    @lighthouse_client.should_receive(:users_for_project).with(@project).and_return([mock('user', :name => "Name")])
-    
+    @project.should_receive(:user_names).and_return(["Name"])
     scene.load_users
     
     responsible_person = scene.find("responsible_person")
@@ -54,8 +52,6 @@ describe AddTicket do
   end
   
   it "should have a choice for no user" do
-    @lighthouse_client.stub!(:users_for_project).and_return([])
-    
     scene.load_users
     
     responsible_person = scene.find("responsible_person")
@@ -66,8 +62,7 @@ end
 describe AddTicket, "Props" do
   before(:each) do
     mock_lighthouse
-    @lighthouse_client.stub!(:users_for_project).and_return([mock('user', :name => "Name")])
-    @project = mock("Project", :milestones => [])
+    @project = mock("Project", :milestones => [], :user_names => ["Name"])
     producer.production.current_project = @project
   end
   
@@ -95,8 +90,7 @@ describe AddTicket, "Limelight event mappings" do
   before(:each) do
     @event = nil
     mock_lighthouse
-    @lighthouse_client.stub!(:users_for_project).and_return([mock('user', :name => "Name")])
-    @project = mock("Project", :milestones => [])
+    @project = mock("Project", :milestones => [], :user_names => ["Name"])
     producer.production.current_project = @project
   end
   
