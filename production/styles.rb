@@ -1,6 +1,6 @@
 main {
 	width 800
-	height 800
+	height 756
 	background_color "#34689b"
 	horizontal_alignment "center"
 	vertical_scrollbar "on"
