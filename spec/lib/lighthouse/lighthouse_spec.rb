@@ -14,6 +14,12 @@ def create_project_membership(project_id)
   return membership
 end
 
+def create_milestone(options)
+  milestone = Lighthouse::Milestone.new(options)
+  milestone.save
+  return milestone
+end
+
 def create_ticket(project_id)
   ticket = Lighthouse::Ticket.new(:project_id => project_id)
   ticket.save
@@ -59,8 +65,23 @@ describe Lighthouse::Project do
     Lighthouse::Project.find(:all).should == [@project]
   end
   
-  it "should have milestones" do
+  it "should have no milestones" do
     @project.milestones.should == []
+  end
+  
+  it "should have one milestone" do
+    @project.save
+    milestone = create_milestone(:project_id => @project.id, :title => "Milestone One")
+
+    @project.milestones.should == [milestone]
+  end
+
+  it "should have two milestones" do
+    @project.save
+    milestone_one = create_milestone(:project_id => @project.id, :title => "Milestone One")
+    milestone_two = create_milestone(:project_id => @project.id, :title => "Milestone Two")
+
+    @project.milestones.should == [milestone_one, milestone_two]
   end
   
   it "should have an open_states_list" do
@@ -213,8 +234,33 @@ describe Lighthouse::Ticket do
 end
 
 describe Lighthouse::Milestone do
-  it "should exist" do
-    Lighthouse::Milestone.new
+  before(:each) do
+    Lighthouse::Milestone.destroy_all
+    @milestone = create_milestone(:project_id => "project_id", :title => "Milestone One")
+  end
+
+  it "should have basic information" do
+    @milestone.project_id.should == "project_id"
+    @milestone.title.should == "Milestone One"
+  end
+
+  it "should find one milestone by project id" do
+    milestones = Lighthouse::Milestone.find(:all, :params => {:project_id => "project_id"})
+    milestones.should == [@milestone]
+  end
+  
+  it "should not find a milestone if the project_id does not match" do
+    milestone_two = create_milestone(:project_id => "different id", :title => "Milestone Two")
+
+    milestones = Lighthouse::Milestone.find(:all, :params => {:project_id => "project_id"})
+    milestones.should == [@milestone]
+  end
+
+  it "should not duplicate objects on save" do
+    @milestone.save
+    
+    milestones = Lighthouse::Milestone.find(:all, :params => {:project_id => "project_id"})
+    milestones.size.should == 1
   end
 end
 
