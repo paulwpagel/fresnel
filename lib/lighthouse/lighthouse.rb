@@ -29,7 +29,7 @@ module Lighthouse
     end
     
     def milestones
-      return []
+      return Lighthouse::Milestone.find(:all, :params => {:project_id => @id})
     end
     
     def save
@@ -99,6 +99,30 @@ module Lighthouse
   end
   
   class Milestone
+    @@milestones = []
+    
+    def self.destroy_all
+      @@milestones = []
+    end
+    
+    def self.find(param1, param2)
+      project_id = param2[:params][:project_id]
+      return @@milestones.find_all { |milestone| milestone.project_id == project_id }
+    end
+    
+    attr_reader :project_id, :title
+    
+    def initialize(options = {})
+      @project_id = options[:project_id]
+      @title = options[:title]
+    end
+    
+    def save
+      unless @id
+        @id = rand 10000
+        @@milestones << self
+      end
+    end
   end
   
   class ProjectMembership
@@ -135,3 +159,6 @@ end
 project = Lighthouse::Project.new(:name => "fresnel")
 Lighthouse::User.new(:name => "Marion Morison", :id => rand(1000))
 project.save
+
+milestone = Lighthouse::Milestone.new(:project_id => project.id, :title => "First Milestone")
+milestone.save
