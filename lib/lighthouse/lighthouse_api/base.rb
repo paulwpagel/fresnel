@@ -37,17 +37,11 @@ module Lighthouse
       return nil
     end
   
-    def self.milestones(project_name)
-      project = find_project(project_name)
-      return project.milestones if project
-      return []
-    end
-
-    def self.milestone_title(project_name, milestone_id)
-      milestone = milestones(project_name).find {|m| m.id == milestone_id }
-      return milestone.title if milestone
-      return ""
-    end
+    # def self.milestone_title(project_name, milestone_id)
+    #   milestone = milestones(project_name).find {|m| m.id == milestone_id }
+    #   return milestone.title if milestone
+    #   return ""
+    # end
   
     def self.ticket(ticket_id, project)
       found_ticket = Lighthouse::Ticket.find(ticket_id, :params => {:project_id => project.id})

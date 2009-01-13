@@ -54,40 +54,27 @@ describe Lighthouse::LighthouseApi do
     
     Lighthouse::LighthouseApi::add_ticket(options, @project)
   end
-  
-  it "should get milestones for the project" do
-    milestones = [mock("milestone")]
-    @mock_project.stub!(:milestones).and_return(milestones)
     
-    Lighthouse::LighthouseApi::milestones("one").should == milestones
-  end
-  
-  it "should return no milestones if there is no project" do
-    Lighthouse::Project.stub!(:find).and_return([])
-
-    Lighthouse::LighthouseApi::milestones("one").should == []
-  end
-  
-  it "should return the milestone title for a given project and ticket" do
-    milestones = [mock("milestone", :id => 123, :title => "Milestone Title")]
-    project = mock(Lighthouse::Project, :name => "project one", :id => nil)
-    Lighthouse::Project.stub!(:find).and_return([project])
-    @mock_project.stub!(:milestones).and_return(milestones)
-    
-    Lighthouse::LighthouseApi::milestone_title("project one", 123).should == "Milestone Title"
-  end
-  
-  it "should not crash if there are no milestones matching the id given" do
-    @mock_project.stub!(:milestones).and_return([])
-
-    Lighthouse::LighthouseApi::milestone_title("project one", 123).should == ""
-  end
-  
-  it "should work if the project doesn't exist" do
-    Lighthouse::Project.stub!(:find).and_return([])
-    
-    Lighthouse::LighthouseApi::milestone_title("project one", 123).should == ""
-  end
+  # it "should return the milestone title for a given project and ticket" do
+  #   milestones = [mock("milestone", :id => 123, :title => "Milestone Title")]
+  #   project = mock(Lighthouse::Project, :name => "project one", :id => nil)
+  #   Lighthouse::Project.stub!(:find).and_return([project])
+  #   @mock_project.stub!(:milestones).and_return(milestones)
+  #   
+  #   Lighthouse::LighthouseApi::milestone_title("project one", 123).should == "Milestone Title"
+  # end
+  # 
+  # it "should not crash if there are no milestones matching the id given" do
+  #   @mock_project.stub!(:milestones).and_return([])
+  # 
+  #   Lighthouse::LighthouseApi::milestone_title("project one", 123).should == ""
+  # end
+  # 
+  # it "should work if the project doesn't exist" do
+  #   Lighthouse::Project.stub!(:find).and_return([])
+  #   
+  #   Lighthouse::LighthouseApi::milestone_title("project one", 123).should == ""
+  # end
   
   it "should get all users for a project" do
     @project = mock(Lighthouse::Project, :id => 2)

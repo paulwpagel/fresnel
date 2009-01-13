@@ -14,10 +14,10 @@ module AddTicket
     milestone_input.choices = milestone_choices
   end
   
-  def load_users
+  def load_users #TODO - PWP - should have default user of none responsible
     users = production.lighthouse_client.users_for_project(production.current_project)
     responsible_person = scene.find("responsible_person")
-    users.collect! {|user| user.name}
+    users.collect! {|user| user.name} #TODO - PWP - use the model to do this
     responsible_person.choices = users
   end  
   
@@ -45,9 +45,8 @@ module AddTicket
   end
   
   def milestone_choices
-    milestones = production.lighthouse_client.milestones("fresnel") #TODO - PWP - we have the project name now, dont need to hard code anymore.
     choices = ["None"]
-    choices += milestones.collect{ |milestone| milestone.title }
+    choices += production.current_project.milestones.collect{ |milestone| milestone.title }
   end
     
 end
