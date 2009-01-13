@@ -12,20 +12,6 @@ describe Lighthouse, "base methods" do
   end
 end
 
-
-describe Lighthouse::User do
-  it "should exist" do
-    Lighthouse::User.new
-  end
-  
-  it "should have basic user informartion" do
-    user = Lighthouse::User.new(:name => "Eric", :id => "User ID")
-
-    user.name.should == "Eric"
-    user.id.should == "User ID"
-  end
-end
-
 describe Lighthouse::Ticket::TicketVersion do
   it "should have a body" do
     version = Lighthouse::Ticket::TicketVersion.new(:body => "Some Body")

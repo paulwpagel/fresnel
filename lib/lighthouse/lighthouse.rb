@@ -1,5 +1,6 @@
 require 'activeresource'
 require "lighthouse/memory/project"
+require "lighthouse/memory/user"
 
 module Lighthouse
   
@@ -10,14 +11,6 @@ module Lighthouse
     return true
   end
   
-  class User
-    attr_reader :name, :id
-    def initialize(options = {})
-      @name = options[:name]
-      @id = options[:id]
-    end
-  end
-
   class Ticket
     class TicketVersion
       attr_reader :body
