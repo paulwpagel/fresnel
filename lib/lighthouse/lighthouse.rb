@@ -119,7 +119,6 @@ module Lighthouse
       end
     end
     
-    
     attr_reader :project_id
     
     def initialize(options = {})

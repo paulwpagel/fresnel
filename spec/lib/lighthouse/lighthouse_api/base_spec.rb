@@ -56,16 +56,6 @@ describe Lighthouse::LighthouseApi do
     Lighthouse::LighthouseApi::add_ticket(options, @project)
   end
   
-  it "should get all users for a project" do
-    @project = mock(Lighthouse::Project, :id => 2)
-    @user = mock(Lighthouse::User, :name => "Paul")
-
-    Lighthouse::User.should_receive(:find).with(1234).and_return(@user)
-    @project.should_receive(:users).and_return([mock(Lighthouse::ProjectMembership, :id => 1234)])
-    
-    Lighthouse::LighthouseApi::users_for_project(@project)
-  end
-  
 end
 
 describe "ticket" do
