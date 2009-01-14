@@ -6,8 +6,8 @@ describe AddTicket do
   
   before(:each) do
     mock_lighthouse
-    @milestones = [mock("milestone", :title => "milestone 1")]
-    @project = mock("Project", :milestones => [], :user_names => ["Name"])
+    @milestones = [mock("milestone", :title => "milestone 1", :id => 998)]
+    @project = mock("Project", :milestones => @milestones, :user_names => ["Name"])
     producer.production.current_project = @project
   end
   
@@ -18,11 +18,19 @@ describe AddTicket do
     scene.find("description").text = "some description"
     scene.find("responsible_person").text = "Name"
     scene.find("tags").text = "One Two"
+    scene.find("milestones").text = "milestone 1"
     
     @project.should_receive(:user_id).with("Name").and_return(234)    
+    @project.should_receive(:milestone_id).with("milestone 1").and_return(998)
     scene.should_receive(:load).with("list_tickets")
 
-    @lighthouse_client.should_receive(:add_ticket).with({:title => "some title", :description => "some description", :assigned_user_id => 234, :tags => "One Two"}, @project)
+    @lighthouse_client.should_receive(:add_ticket).with(
+                                                        { :title => "some title", 
+                                                          :description => "some description", 
+                                                          :assigned_user_id => 234, 
+                                                          :tags => "One Two",
+                                                          :milestone_id => 998
+                                                          }, @project)
   
     scene.add_ticket
   end
