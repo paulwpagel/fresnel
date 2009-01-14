@@ -16,6 +16,7 @@ describe "Add Ticket Integration Test" do
     scene.find("ticket_title").text.should == "Test Title One"
     scene.find("ticket_state").value.should == "new"
     scene.find("ticket_description").text.should == "Test Description One"
+    scene.find("ticket_milestone").value.should == "First Milestone"
   end
   
   def go_to_ticket
