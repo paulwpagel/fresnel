@@ -12,6 +12,11 @@ describe Lighthouse::Milestone do
     @milestone.project_id.should == "project_id"
     @milestone.title.should == "Milestone One"
   end
+  
+  it "should have a nil id before saving" do
+    milestone = Lighthouse::Milestone.new
+    milestone.id.should be_nil
+  end
 
   it "should find one milestone by project id" do
     milestones = Lighthouse::Milestone.find(:all, :params => {:project_id => "project_id"})
@@ -25,6 +30,10 @@ describe Lighthouse::Milestone do
     milestones.should == [@milestone]
   end
 
+  it "should have an id after save" do
+    @milestone.id.should_not be_nil
+  end
+  
   it "should not duplicate objects on save" do
     @milestone.save
     
