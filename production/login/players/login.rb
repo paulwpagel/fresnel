@@ -7,6 +7,10 @@ module Login
     log_in
   end
   
+  def scene_opened(e)
+    load_credentials
+  end
+  
   def log_in
     # TODO - EWM - Should this exception handling be part of base.login_to ?
     begin
@@ -36,5 +40,9 @@ module Login
     else
       error_with "Authentication Failed, please try again"
     end
+  end
+  
+  def load_credentials
+    scene.production.credential = Credential.load_saved
   end
 end

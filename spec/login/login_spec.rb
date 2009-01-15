@@ -6,6 +6,7 @@ describe Login do
   
   before(:each) do
     mock_lighthouse
+    Credential.stub!(:load_saved).and_return(nil)
   end
   
   uses_scene :login
@@ -87,4 +88,20 @@ describe Login do
     scene.find("error_message").text.should == "Authentication Failed, please try again"
   end
   
+  it "should attempt to load a saved credential when loading" do
+    Credential.should_receive(:load_saved).and_return(nil)
+    
+    scene.load_credentials
+    
+    scene.production.credential.should be_nil
+  end
+  
+  it "should put the credential into the production if it was successful" do
+    credential = mock(Credential)
+    Credential.stub!(:load_saved).and_return(credential)
+    
+    scene.load_credentials
+    
+    scene.production.credential.should == credential
+  end
 end
