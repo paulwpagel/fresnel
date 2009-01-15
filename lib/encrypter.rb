@@ -6,8 +6,12 @@ class Encrypter
     return Digest::SHA1.hexdigest("fresnel")
   end
   
+  def self.iv
+    return "1234567890"
+  end
+  
   def self.encrypt(string)
-    encrypter = OpenSSL::Cipher::Cipher.new("aes-256-cbc")
+    encrypter = create_cipher
     encrypter.encrypt
     encrypter.key = self.key
     encrypter.update(string)
@@ -15,6 +19,17 @@ class Encrypter
   end
   
   def self.decrypt(encrypted_data)
+    decrypter = create_cipher
+    decrypter.decrypt
+    decrypter.key = self.key
+    decrypter.update(encrypted_data)
+    return decrypter.final
+  end
+  
+  private
+  
+  def self.create_cipher
+    return OpenSSL::Cipher::Cipher.new("aes-256-cbc")
   end
 end
 
