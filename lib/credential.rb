@@ -2,8 +2,7 @@ require "encrypter"
 require "lighthouse/lighthouse_api/base"
 
 class Credential
-  #TODO - EWM - What is logged_in being used for?
-  attr_reader :account, :login, :password, :logged_in
+  attr_reader :account, :login, :password
 
   def self.load_saved
     if File.exist?("/fresnel_credentials")
@@ -17,11 +16,6 @@ class Credential
     @account ||= options[:account]
     @login ||= options[:login]
     @password ||= options[:password]
-    @logged_in ||= options[:logged_in]
-  end
-  
-  def logged_in?
-    return @logged_in
   end
   
   def save
@@ -48,6 +42,6 @@ class Credential
   def self.credential_from_file(file)
     lines = file.read.split("\n")
     decrypted_data = lines.collect{ |line| Encrypter.decrypt(line) }
-    return Credential.new(:account => decrypted_data[0], :login => decrypted_data[1], :password => decrypted_data[2], :logged_in => true)
+    return Credential.new(:account => decrypted_data[0], :login => decrypted_data[1], :password => decrypted_data[2])
   end
 end

@@ -41,7 +41,6 @@ describe Login do
     scene.production.credential.account.should == "checking"
     scene.production.credential.login.should == "Paul Pagel"
     scene.production.credential.password.should == "wouldntyaouliketoknow"
-    scene.production.credential.logged_in?.should be(true)
   end
   
   it "should create an object to save the user's credentials if the check box is checked and authentication is successful" do

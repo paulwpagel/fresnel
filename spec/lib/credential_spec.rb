@@ -6,14 +6,13 @@ describe Credential do
     Encrypter.stub!(:encrypt).and_return("encrypted data")
     @file = mock(File, :write => nil)
     File.stub!(:open).and_yield(@file)
-    @credential = Credential.new(:account => "AFlight", :login => "paul", :password => "guessingwontwork", :logged_in => true)
+    @credential = Credential.new(:account => "AFlight", :login => "paul", :password => "guessingwontwork")
   end
   
   it "should have account, login, and password" do
     @credential.account.should == "AFlight"
     @credential.login.should == "paul"
     @credential.password.should == "guessingwontwork"
-    @credential.logged_in?.should be(true)
   end
   
   it "should respond to save" do
@@ -56,7 +55,7 @@ describe Credential, "load_saved" do
     Encrypter.stub!(:decrypt).and_return("account", "login", "password")
     @file = StringIO.new("encrypted account\nencrypted login\nencrypted password\n")
     File.stub!(:open).and_yield(@file)
-    @credential = Credential.new(:account => "AFlight", :login => "paul", :password => "guessingwontwork", :logged_in => true)
+    @credential = Credential.new(:account => "AFlight", :login => "paul", :password => "guessingwontwork")
     Lighthouse::LighthouseApi.stub!(:login_to).and_return(true)
   end
   
@@ -94,7 +93,7 @@ describe Credential, "load_saved" do
   
   it "should create a valid credential if the login was successful" do
     Lighthouse::LighthouseApi.stub!(:login_to).and_return(false)
-    Credential.should_receive(:new).with(:account => "account", :login => "login", :password => "password", :logged_in => true).and_return(@credential)
+    Credential.should_receive(:new).with(:account => "account", :login => "login", :password => "password").and_return(@credential)
     
     Credential.load_saved
   end
