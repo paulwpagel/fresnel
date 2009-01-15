@@ -11,4 +11,7 @@ class Credential
   def logged_in?
     return @logged_in
   end
+  
+  def save
+  end
 end

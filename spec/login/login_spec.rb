@@ -14,6 +14,7 @@ describe Login do
     scene.find("username").text = "Paul Pagel"
     scene.find("password").text = "wouldntyaouliketoknow"
     scene.find("account").text = "checking"
+    scene.stub!(:load)
   end
 
   it "should have user name and password fields" do
@@ -41,6 +42,27 @@ describe Login do
     scene.production.credential.login.should == "Paul Pagel"
     scene.production.credential.password.should == "wouldntyaouliketoknow"
     scene.production.credential.logged_in?.should be(true)
+  end
+  
+  it "should create an object to save the user's credentials if the check box is checked and authentication is successful" do
+    @lighthouse_client.stub!(:login_to).and_return(true)
+    scene.find("save_credentials").checked = true
+    credential = mock(Credential)
+    Credential.stub!(:new).and_return(credential)
+    credential.should_receive(:save)
+    
+    scene.load_inputs
+    scene.log_in
+  end
+  
+  it "should not save the credentials if the check box is not checked" do
+    @lighthouse_client.stub!(:login_to).and_return(true)
+    credential = mock(Credential)
+    Credential.stub!(:new).and_return(credential)
+    credential.should_not_receive(:save)
+    
+    scene.load_inputs
+    scene.log_in
   end
   
   it "should error when authentication fails" do
