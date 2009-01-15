@@ -15,7 +15,6 @@ describe Login do
     scene.find("username").text = "Paul Pagel"
     scene.find("password").text = "wouldntyaouliketoknow"
     scene.find("account").text = "checking"
-    scene.stub!(:load)
   end
 
   it "should have user name and password fields" do
@@ -87,21 +86,38 @@ describe Login do
     
     scene.find("error_message").text.should == "Authentication Failed, please try again"
   end
-  
+    
   it "should attempt to load a saved credential when loading" do
     Credential.should_receive(:load_saved).and_return(nil)
-    
+  
     scene.load_credentials
-    
+  
     scene.production.credential.should be_nil
   end
+
+  it "should not skip the login page if the saved credentials were not found" do
+    Credential.stub!(:load_saved).and_return(nil)
+    scene.should_not_receive(:load)
   
-  it "should put the credential into the production if it was successful" do
-    credential = mock(Credential)
-    Credential.stub!(:load_saved).and_return(credential)
-    
     scene.load_credentials
+  end
+  
+  describe "with valid saved credentials" do
+    before(:each) do
+      @credential = mock(Credential)
+      Credential.stub!(:load_saved).and_return(@credential)
+    end
     
-    scene.production.credential.should == credential
+    it "should put the credential into the production if it was successful" do    
+      scene.load_credentials
+    
+      scene.production.credential.should == @credential
+    end
+  
+    it "should load the projects if the saved credentials were found" do
+      scene.should_receive(:load).with("project")
+      
+      scene.load_credentials
+    end
   end
 end

@@ -43,6 +43,8 @@ module Login
   end
   
   def load_credentials
-    scene.production.credential = Credential.load_saved
+    credential = Credential.load_saved
+    scene.production.credential = credential
+    scene.load('project') if credential
   end
 end

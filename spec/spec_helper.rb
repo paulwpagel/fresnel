@@ -22,6 +22,6 @@ $PRODUCTION_PATH = File.expand_path(File.dirname(__FILE__) + "/../production")
 def mock_lighthouse
   @project = mock(Lighthouse::Project, :open_tickets => [], :milestone_titles => [""])
   @lighthouse_client = mock("lighthouse module", :authenticate => nil, :add_ticket => nil, :milestones => [], :milestone_title => "",
-                                                 :find_project => @project)
+                                                 :find_project => @project, :projects => [])
   producer.production.lighthouse_client = @lighthouse_client
 end
