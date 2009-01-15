@@ -1,3 +1,5 @@
+require "encrypter"
+
 class Credential
   attr_reader :account, :login, :password, :logged_in
 
@@ -13,5 +15,6 @@ class Credential
   end
   
   def save
+    Encrypter.encrypt(@password)
   end
 end
