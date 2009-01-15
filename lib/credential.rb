@@ -16,7 +16,9 @@ class Credential
   
   def save
     File.open("/fresnel_credentials", "w+") do |file|
-      file.write(Encrypter.encrypt(@password))
+      file.write("#{Encrypter.encrypt(@password)}\n")
+      file.write("#{Encrypter.encrypt(@login)}\n")
+      file.write("#{Encrypter.encrypt(@account)}\n")
     end
   end
 end

@@ -26,6 +26,18 @@ describe Credential do
     @credential.save
   end
   
+  it "should encrypt the username on save" do
+    Encrypter.should_receive(:encrypt).with("paul")
+    
+    @credential.save
+  end
+  
+  it "should encrypt the account on save" do
+    Encrypter.should_receive(:encrypt).with("AFlight")
+    
+    @credential.save
+  end
+  
   it "should make a file to save the encrypted data" do
     File.should_receive(:open).with(anything(), "w+")
     
@@ -33,7 +45,7 @@ describe Credential do
   end
   
   it "should write the encrypted data" do
-    @file.should_receive(:write).with("encrypted data")
+    @file.should_receive(:write).with("encrypted data\n").exactly(3).times
     
     @credential.save
   end
