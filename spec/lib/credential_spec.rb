@@ -3,7 +3,9 @@ require "credential"
 
 describe Credential do
   before(:each) do
-    Encrypter.stub!(:encrypt).and_return(nil)
+    Encrypter.stub!(:encrypt).and_return("encrypted data")
+    @file = mock(File, :write => nil)
+    File.stub!(:open).and_yield(@file)
     @credential = Credential.new(:account => "AFlight", :login => "paul", :password => "guessingwontwork", :logged_in => true)
   end
   
@@ -20,6 +22,18 @@ describe Credential do
   
   it "should encrypt the password on save" do
     Encrypter.should_receive(:encrypt).with("guessingwontwork")
+    
+    @credential.save
+  end
+  
+  it "should make a file to save the encrypted data" do
+    File.should_receive(:open).with(anything(), "w+")
+    
+    @credential.save
+  end
+  
+  it "should write the encrypted data" do
+    @file.should_receive(:write).with("encrypted data")
     
     @credential.save
   end
