@@ -12,7 +12,7 @@ login_group {
   border_color "006699"
   background_color "5A9ECF"
   width 500
-  height 200
+  height 230
 }
 
 button_group {

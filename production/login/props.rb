@@ -19,9 +19,13 @@ main {
       input :players => "password_box", :id => "password", :width => 270
     }
     
+    input_group {
+      label :text => "Remember my info:"
+      input :players => "check_box", :id => "save_credentials"
+    }
+    
     button_group {
       button :text => "Login", :players => "login", :id => "login_button"
     }    
-    
   }
 }

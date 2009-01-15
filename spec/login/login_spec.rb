@@ -23,6 +23,11 @@ describe Login do
     scene.find("error_message").should_not be(nil)
   end
   
+  it "should have an option to save credentials when logging in" do
+    save_credentials = scene.find("save_credentials")
+    save_credentials.players.should include("check_box")
+  end
+  
   it "should take the name, password, and account name and send it to be authenticated" do
     @lighthouse_client.should_receive(:login_to).with("checking", "Paul Pagel", "wouldntyaouliketoknow").and_return(true)
     
