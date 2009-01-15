@@ -50,3 +50,58 @@ describe Credential do
     @credential.save
   end
 end
+
+describe Credential, "load_saved" do
+  before(:each) do
+    Encrypter.stub!(:decrypt).and_return("account", "login", "password")
+    @file = StringIO.new("encrypted account\nencrypted login\nencrypted password\n")
+    File.stub!(:open).and_yield(@file)
+    @credential = Credential.new(:account => "AFlight", :login => "paul", :password => "guessingwontwork", :logged_in => true)
+    Lighthouse::LighthouseApi.stub!(:login_to).and_return(true)
+  end
+  
+  it "should open the file containing the save credentials" do
+    File.should_receive(:open).with(anything(), "r")
+    
+    Credential.load_saved
+  end
+  
+  it "should return nil if the file does not exist" do
+    File.should_receive(:exist?).and_return(false)
+    
+    Credential.load_saved.should be_nil
+  end
+
+  it "should decrypt the contents of the file" do
+    Encrypter.should_receive(:decrypt).with("encrypted account")
+    Encrypter.should_receive(:decrypt).with("encrypted login")
+    Encrypter.should_receive(:decrypt).with("encrypted password")
+    
+    Credential.load_saved
+  end
+
+  it "should login using the contents of the file" do
+    Lighthouse::LighthouseApi.should_receive(:login_to).with("account", "login", "password")
+    
+    Credential.load_saved
+  end
+  
+  it "should return nil if the login was unsuccessful" do
+    Lighthouse::LighthouseApi.stub!(:login_to).and_return(false)
+    
+    Credential.load_saved.should be_nil
+  end
+  
+  it "should create a valid credential if the login was successful" do
+    Lighthouse::LighthouseApi.stub!(:login_to).and_return(false)
+    Credential.should_receive(:new).with(:account => "account", :login => "login", :password => "password", :logged_in => true).and_return(@credential)
+    
+    Credential.load_saved
+  end
+  
+  it "should return the created credential" do
+    Credential.stub!(:new).and_return(@credential)
+    
+    Credential.load_saved.should == @credential
+  end
+end
