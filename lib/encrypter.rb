@@ -5,11 +5,7 @@ class Encrypter
   def self.key
     return Digest::SHA1.hexdigest("fresnel")
   end
-  
-  def self.iv
-    return "1234567890"
-  end
-  
+
   def self.encrypt(string)
     encrypter = create_cipher
     encrypter.encrypt
