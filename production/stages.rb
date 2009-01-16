@@ -1,3 +1,4 @@
+# TODO - EWM - pull this logic out of here so it be better tested?
 credential = Credential.load_saved
 if credential
   first_scene = 'project'

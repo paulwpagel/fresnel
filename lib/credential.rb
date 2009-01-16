@@ -4,7 +4,7 @@ require "lighthouse/lighthouse_api/base"
 class Credential
   attr_reader :account, :login, :password
 
-  @@filename = "/fresnel_credentials"
+  @@filename = File.expand_path("~/.fresnel_credentials")
   
   def self.load_saved
     if File.exist?(@@filename)
