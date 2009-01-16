@@ -57,6 +57,7 @@ describe Credential, "load_saved" do
     File.stub!(:open).and_yield(@file)
     @credential = Credential.new(:account => "AFlight", :login => "paul", :password => "guessingwontwork")
     Lighthouse::LighthouseApi.stub!(:login_to).and_return(true)
+    File.stub!(:exist?).and_return(true)
   end
   
   it "should open the file containing the save credentials" do

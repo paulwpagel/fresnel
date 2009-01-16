@@ -31,16 +31,12 @@ describe Login do
   
   it "should take the name, password, and account name and send it to be authenticated" do
     @lighthouse_client.should_receive(:login_to).with("checking", "Paul Pagel", "wouldntyaouliketoknow").and_return(true)
+    Credential.should_receive(:new).with(:account => "checking", :login => "Paul Pagel", :password => "wouldntyaouliketoknow")
     
     scene.should_receive(:load).with("project")
     
     scene.load_inputs
     scene.log_in
-    
-    scene.production.credential.should_not be(nil)
-    scene.production.credential.account.should == "checking"
-    scene.production.credential.login.should == "Paul Pagel"
-    scene.production.credential.password.should == "wouldntyaouliketoknow"
   end
   
   it "should create an object to save the user's credentials if the check box is checked and authentication is successful" do

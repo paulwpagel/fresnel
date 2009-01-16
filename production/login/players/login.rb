@@ -31,8 +31,8 @@ module Login
   def attempt_login(logged_in)
     if logged_in
       scene.load('project') 
-      scene.production.credential = Credential.new(:account => @account.text, :login => @username.text, :password => @password.text, :logged_in => true)
-      scene.production.credential.save if scene.find("save_credentials").checked?
+      credential = Credential.new(:account => @account.text, :login => @username.text, :password => @password.text)
+      credential.save if scene.find("save_credentials").checked?
     else
       error_with "Authentication Failed, please try again"
     end
