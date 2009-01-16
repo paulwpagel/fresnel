@@ -71,6 +71,13 @@ describe Credential, "load_saved" do
     
     Credential.load_saved.should be_nil
   end
+  
+  it "should return nil if the file contents are bad" do
+    bad_file = StringIO.new("")
+    File.stub!(:open).and_yield(bad_file)
+    
+    Credential.load_saved.should be_nil
+  end
 
   it "should decrypt the contents of the file" do
     Encrypter.should_receive(:decrypt).with("encrypted account")

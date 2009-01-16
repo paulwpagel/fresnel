@@ -37,7 +37,7 @@ class Credential
   def self.opened_credential
     File.open(@@filename, "r") do |file|
       credential = credential_from_file(file)
-      if Lighthouse::LighthouseApi.login_to(credential.account, credential.login, credential.password)
+      if valid_credential?(credential)
         return credential
       else
         return nil
@@ -47,7 +47,17 @@ class Credential
   
   def self.credential_from_file(file)
     lines = file.read.split("\n")
-    decrypted_data = lines.collect{ |line| Encrypter.decrypt(line) }
-    return Credential.new(:account => decrypted_data[0], :login => decrypted_data[1], :password => decrypted_data[2])
+    if lines.size >= 3
+      decrypted_data = lines.collect{ |line| Encrypter.decrypt(line) }
+      return Credential.new(:account => decrypted_data[0], :login => decrypted_data[1], :password => decrypted_data[2])
+    else
+      return nil
+    end
+  end
+  
+  private
+  
+  def self.valid_credential?(credential)
+    return credential && Lighthouse::LighthouseApi.login_to(credential.account, credential.login, credential.password)
   end
 end
