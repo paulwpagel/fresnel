@@ -4,12 +4,18 @@ require "lighthouse/lighthouse_api/base"
 class Credential
   attr_reader :account, :login, :password
 
+  @@filename = "/fresnel_credentials"
+  
   def self.load_saved
-    if File.exist?("/fresnel_credentials")
+    if File.exist?(@@filename)
       return opened_credential
     else
       return nil
     end
+  end
+  
+  def self.clear_saved
+    File.delete(@@filename) if File.exist?(@@filename)
   end
   
   def initialize(options = {})
@@ -19,7 +25,7 @@ class Credential
   end
   
   def save
-    File.open("/fresnel_credentials", "w+") do |file|
+    File.open(@@filename, "w+") do |file|
       file.write("#{Encrypter.encrypt(@account)}\n")
       file.write("#{Encrypter.encrypt(@login)}\n")
       file.write("#{Encrypter.encrypt(@password)}\n")
@@ -29,7 +35,7 @@ class Credential
   private
   
   def self.opened_credential
-    File.open("/fresnel_credentials", "r") do |file|
+    File.open(@@filename, "r") do |file|
       credential = credential_from_file(file)
       if Lighthouse::LighthouseApi.login_to(credential.account, credential.login, credential.password)
         return credential

@@ -105,3 +105,29 @@ describe Credential, "load_saved" do
     Credential.load_saved.should == @credential
   end
 end
+
+describe Credential, "clear_saved" do
+  before(:each) do
+    File.stub!(:delete)
+  end
+  
+  it "should check to see if the file exists" do
+    File.should_receive(:exist?).and_return(false)
+
+    Credential.clear_saved
+  end
+  
+  it "should delete the saved credentials if they exist" do
+    File.stub!(:exist?).and_return(true)
+    File.should_receive(:delete).with(anything())
+    
+    Credential.clear_saved
+  end
+  
+  it "should not delete the saved credentials if they do not exist" do
+    File.stub!(:exist?).and_return(false)
+    File.should_not_receive(:delete)
+    
+    Credential.clear_saved
+  end
+end
