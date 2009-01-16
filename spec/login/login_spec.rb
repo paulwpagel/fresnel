@@ -31,7 +31,6 @@ describe Login do
   
   it "should take the name, password, and account name and send it to be authenticated" do
     @lighthouse_client.should_receive(:login_to).with("checking", "Paul Pagel", "wouldntyaouliketoknow").and_return(true)
-    Credential.should_receive(:new).with(:account => "checking", :login => "Paul Pagel", :password => "wouldntyaouliketoknow")
     
     scene.should_receive(:load).with("project")
     
@@ -71,16 +70,5 @@ describe Login do
     scene.find("error_message").text.should == "Authentication Failed, please try again"
     scene.find("password").text.should == ""
   end  
-  
-  it "should error if there is no username" do
-    scene.find("username").text = ""
-    
-    @lighthouse_client.should_receive(:login_to).with(anything(), anything(), anything()).and_raise(URI::InvalidURIError.new(""))
-
-    scene.load_inputs
-    scene.log_in
-    
-    scene.find("error_message").text.should == "Authentication Failed, please try again"
-  end
     
 end

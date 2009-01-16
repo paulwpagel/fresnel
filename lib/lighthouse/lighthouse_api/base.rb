@@ -4,7 +4,11 @@ module Lighthouse
   module LighthouseApi
   
     def self.login_to(account, user, password)
-      Lighthouse.account = account
+      begin
+        Lighthouse.account = account
+      rescue URI::InvalidURIError
+        return false
+      end
       Lighthouse.authenticate(user, password)
 
       begin

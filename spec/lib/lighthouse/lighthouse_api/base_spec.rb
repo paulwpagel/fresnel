@@ -35,6 +35,12 @@ describe Lighthouse::LighthouseApi do
     Lighthouse::LighthouseApi::login_to("AFlight", "paul", "nottelling").should be(false)  
   end
   
+  it "should not log in the user if the account is empty" do
+    Lighthouse.should_receive(:account=).and_raise(URI::InvalidURIError)
+    
+    Lighthouse::LighthouseApi::login_to("", "paul", "nottelling").should be(false)  
+  end
+  
   it "should return nil if there is no project" do    
     Lighthouse::Project.should_receive(:find).with(:all).and_return([])
 

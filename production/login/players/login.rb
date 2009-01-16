@@ -8,11 +8,9 @@ module Login
   end
   
   def log_in
-    # TODO - EWM - Should this exception handling be part of base.login_to
-    begin
-      logged_in = production.lighthouse_client.login_to(@account.text, @username.text, @password.text)
-      attempt_login(logged_in)
-    rescue URI::InvalidURIError
+    if attempt_login
+      handle_successful_login
+    else
       error_with "Authentication Failed, please try again"
     end
   end
@@ -28,14 +26,17 @@ module Login
     @password = scene.find('password')
   end
   
-  def attempt_login(logged_in)
-    if logged_in
-      scene.load('project') 
-      credential = Credential.new(:account => @account.text, :login => @username.text, :password => @password.text)
-      credential.save if scene.find("save_credentials").checked?
-    else
-      error_with "Authentication Failed, please try again"
-    end
+  def attempt_login
+    return production.lighthouse_client.login_to(@account.text, @username.text, @password.text)
   end
   
+  private
+  
+  def handle_successful_login
+    if scene.find("save_credentials").checked?
+      credential = Credential.new(:account => @account.text, :login => @username.text, :password => @password.text)
+      credential.save
+    end
+    scene.load('project')
+  end
 end
