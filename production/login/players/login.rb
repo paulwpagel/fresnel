@@ -7,12 +7,8 @@ module Login
     log_in
   end
   
-  def scene_opened(e)
-    load_credentials
-  end
-  
   def log_in
-    # TODO - EWM - Should this exception handling be part of base.login_to ?
+    # TODO - EWM - Should this exception handling be part of base.login_to
     begin
       logged_in = production.lighthouse_client.login_to(@account.text, @username.text, @password.text)
       attempt_login(logged_in)
@@ -42,9 +38,4 @@ module Login
     end
   end
   
-  def load_credentials
-    credential = Credential.load_saved
-    scene.production.credential = credential
-    scene.load('project') if credential
-  end
 end

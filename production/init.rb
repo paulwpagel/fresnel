@@ -18,4 +18,5 @@ else
 end
 require "lighthouse/adapter"
 require 'lighthouse/lighthouse_api/base'
+require "credential"
 production.lighthouse_client = Lighthouse::LighthouseApi
