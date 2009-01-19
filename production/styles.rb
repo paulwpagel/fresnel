@@ -1,5 +1,5 @@
 main {
-	width 800
+	width 1000
 	height 756
 	background_color "#34689b"
 	horizontal_alignment "center"

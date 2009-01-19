@@ -9,5 +9,5 @@ stage "default" do
   default_scene first_scene
   title "Fresnel"
   location [200, 25]
-  size [800, 800]
+  size [1000, 800]
 end

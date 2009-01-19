@@ -38,7 +38,7 @@ age_header {
 }
 ticket_in_list {
   padding 10
-  width "90%"
+  width "98%"
   border_width 2
   border_color "006699"
   background_color "5A9ECF"
