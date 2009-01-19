@@ -11,6 +11,9 @@ title_header {
     text_color "CCCCCC"
   }
 }
+ticket_title {
+  width 550
+}
 ticket_in_list {
   padding 10
   width "90%"
