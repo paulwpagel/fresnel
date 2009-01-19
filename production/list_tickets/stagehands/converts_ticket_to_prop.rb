@@ -17,6 +17,6 @@ class ConvertsTicketToProp
   end
   
   def self.title_prop(ticket)
-    return Limelight::Prop.new(:id => "ticket_title_#{ticket.id}", :text => ticket.title, :name => "ticket_title")
+    return Limelight::Prop.new(:text => ticket.title, :name => "ticket_title")
   end
 end

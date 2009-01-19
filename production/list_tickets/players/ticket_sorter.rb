@@ -11,6 +11,6 @@ module TicketSorter
   
   def sorted_tickets
     tickets = scene.ticket_master.get_tickets(type)
-    sorted_tickets = tickets.sort_by { |ticket| ticket.title }
+    sorted_tickets = tickets.sort_by { |ticket| ticket.title.downcase }
   end
 end

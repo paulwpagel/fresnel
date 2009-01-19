@@ -20,16 +20,31 @@ describe TicketSorter do
     
     @mock_master.should_receive(:get_tickets).with("Open Tickets").and_return([])
     
-    scene.find("title_header").mouse_clicked(@nil)
+    sort_by_title
   end
   
   it "should list the tickets by title" do
     scene.ticket_lister.should_receive(:show_these_tickets).with([@first, @second, @third])
     
-    scene.find("title_header").mouse_clicked(@nil)
+    sort_by_title
+  end
+  
+  it "should ignore case while searching" do
+    @first = ticket("a")
+    @second = ticket("B")
+    @tickets = [@second, @first]
+    @mock_master.stub!(:get_tickets).and_return(@tickets)
+    
+    scene.ticket_lister.should_receive(:show_these_tickets).with([@first, @second])
+    
+    sort_by_title
   end
   
   def ticket(title)
-    return mock("ticket", :title => title)
+    return mock("ticket #{title}", :title => title)
+  end
+  
+  def sort_by_title
+    scene.find("title_header").mouse_clicked(@nil)
   end
 end
