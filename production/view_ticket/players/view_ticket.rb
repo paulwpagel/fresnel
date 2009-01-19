@@ -5,6 +5,7 @@ module ViewTicket
   end
   
   def load_current_ticket
+    # TODO - EWM - Move more props into props.rb and style.rb since the editable areas are now going to be fixed with the version after
     scene.find("ticket_title").text = current_ticket.title
     scene.find("ticket_state").choices = current_project.all_states
     scene.find("ticket_state").value = current_ticket.state
