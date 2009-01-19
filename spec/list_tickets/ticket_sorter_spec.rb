@@ -84,6 +84,19 @@ describe TicketSorter do
     end
   end
   
+  describe "sort by age" do
+    it "should call ticket lister with the appropriate tickets" do
+      @first = ticket(:age => Time.now - 500)
+      @second = ticket(:age => Time.now + 500)
+      @tickets = [@second, @first]
+      @mock_master.stub!(:get_tickets).and_return(@tickets)
+      
+      scene.ticket_lister.should_receive(:show_these_tickets).with([@first, @second])
+      
+      scene.find("age_header").mouse_clicked(nil)
+    end
+  end
+
   def ticket(options)
     return mock("ticket #{options}", options)
   end

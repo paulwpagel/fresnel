@@ -12,7 +12,14 @@ module TicketSorter
   
   def sorted_tickets
     tickets = scene.ticket_master.get_tickets(type)
-    ascending_tickets = tickets.sort_by { |ticket| ticket.send(attribute).downcase }
+    ascending_tickets = []
+    if self.id == "title_header"
+      ascending_tickets = tickets.sort_by { |ticket| ticket.title.downcase }
+    elsif self.id == "state_header"
+      ascending_tickets = tickets.sort_by { |ticket| ticket.state.downcase }
+    else
+      ascending_tickets = tickets.sort_by { |ticket| ticket.age }
+    end
     return ascending_tickets.reverse if production.current_sort_order == "ascending"
     return ascending_tickets
   end
@@ -30,8 +37,10 @@ module TicketSorter
   def attribute
     if self.id == "title_header"
       return :title
-    else
+    elsif self.id == "state_header"
       return :state
+    else
+      return :age
     end
   end
 end
