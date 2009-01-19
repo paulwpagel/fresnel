@@ -8,8 +8,6 @@ describe TicketMaster do
     @tickets = [mock('ticket')]
     @project = mock("project", :all_tickets => @tickets, :open_tickets => nil)
     @scene = mock("scene", :ticket_lister => @ticket_lister, :production => mock("production", :current_project => @project))
-
-    
     
     @ticket_master = TicketMaster.new(@scene)
   end
@@ -32,4 +30,32 @@ describe TicketMaster do
     @ticket_master.show_tickets("All Tickets")
   end
   
+end
+
+describe TicketMaster, "get_tickets" do
+  before(:each) do
+    @tickets = [mock('ticket')]
+    @project = mock("project", :all_tickets => nil, :open_tickets => nil)
+    @scene = mock("scene", :production => mock("production", :current_project => @project))
+    
+    @ticket_master = TicketMaster.new(@scene)
+  end
+    
+  it "should get all_tickets from the project if All Tickets" do
+    @project.should_receive(:all_tickets)
+    
+    @ticket_master.get_tickets("All Tickets")
+  end
+  
+  it "should get open_tickets from the project if Open Tickets" do
+    @project.should_receive(:open_tickets)
+    
+    @ticket_master.get_tickets("Open Tickets")    
+  end
+  
+  it "should return the found tickets" do
+    @project.stub!(:open_tickets).and_return(@tickets)
+    
+    @ticket_master.get_tickets("Open Tickets").should == @tickets
+  end
 end

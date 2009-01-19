@@ -3,14 +3,19 @@ class TicketMaster
     @scene = scene
   end
   
-  def show_tickets(type)
-    project = @scene.production.current_project
-    
+  def show_tickets(type)    
+    @scene.ticket_lister.show_these_tickets(get_tickets(type))
+  end
+  
+  def get_tickets(type)
     if type == "Open Tickets"
-      tickets = project.open_tickets
+      return project.open_tickets
     else
-      tickets = project.all_tickets
+      return project.all_tickets
     end
-    @scene.ticket_lister.show_these_tickets(tickets)
+  end
+  
+  def project
+    return @scene.production.current_project
   end
 end
