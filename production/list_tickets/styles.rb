@@ -5,15 +5,25 @@ row {
 
 title_header {
   padding 7
-  width "90%"
+  font_size 24
+  width 550
+  hover {
+    text_color "CCCCCC"
+  }
+}
+
+state_header {
+  padding 7
   font_size 24
   hover {
     text_color "CCCCCC"
   }
 }
+
 ticket_title {
   width 550
 }
+
 ticket_in_list {
   padding 10
   width "90%"
