@@ -33,4 +33,10 @@ describe "Props" do
     prop.name.should == "state_header"
     prop.players.should == "ticket_sorter"
   end
+  
+  it "should have a header for the ticket's last activity" do
+    prop = scene.find("age_header")
+    prop.name.should == "age_header"
+    prop.players.should == "ticket_sorter"
+  end
 end

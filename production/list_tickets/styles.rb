@@ -17,6 +17,7 @@ ticket_title {
 state_header {
   padding 7
   font_size 24
+  width 150
   hover {
     text_color "CCCCCC"
   }
@@ -26,6 +27,14 @@ ticket_state {
 }
 ticket_formatted_age {
   width 200
+}
+age_header {
+  padding 7
+  font_size 24
+  width 150
+  hover {
+    text_color "CCCCCC"
+  }
 }
 ticket_in_list {
   padding 10
