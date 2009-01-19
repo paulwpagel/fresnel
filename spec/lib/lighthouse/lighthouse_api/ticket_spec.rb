@@ -111,7 +111,7 @@ describe Lighthouse::LighthouseApi::Ticket, "find" do
   end
   
   it "should make fresnel tickets for the first ticket found" do
-    Lighthouse::LighthouseApi::Ticket.should_receive(:new).with(@ticket_one, "project_id")
+    Lighthouse::LighthouseApi::Ticket.should_receive(:new).with(@ticket_one, @project)
     
     Lighthouse::LighthouseApi::Ticket.find_tickets(@project, "query")
   end 
@@ -119,7 +119,7 @@ describe Lighthouse::LighthouseApi::Ticket, "find" do
   it "should make fresnel tickets for the second ticket found" do
     @ticket_two = mock("Lighthouse::Ticket")
     @tickets << @ticket_two
-    Lighthouse::LighthouseApi::Ticket.should_receive(:new).with(@ticket_two, "project_id")
+    Lighthouse::LighthouseApi::Ticket.should_receive(:new).with(@ticket_two, @project)
   
     Lighthouse::LighthouseApi::Ticket.find_tickets(@project, "query")
   end
