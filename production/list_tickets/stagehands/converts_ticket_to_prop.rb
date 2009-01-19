@@ -4,9 +4,9 @@ require 'limelight/prop'
 class ConvertsTicketToProp
   def self.convert(ticket)
     wrapper = main_prop(ticket)
-    wrapper.add(title_prop(ticket))
-    wrapper.add(state_prop(ticket))
-    wrapper.add(age_prop(ticket))
+    [:title, :state, :formatted_age, :assigned_user_name].each do |attribute|
+      wrapper.add(attribute_prop(ticket, attribute))
+    end
     return wrapper
   end
   
@@ -18,15 +18,7 @@ class ConvertsTicketToProp
                                :on_mouse_clicked => "view(#{ticket.id})")
   end
   
-  def self.title_prop(ticket)
-    return Limelight::Prop.new(:text => ticket.title, :name => "ticket_title")
-  end
-  
-  def self.state_prop(ticket)
-    return Limelight::Prop.new(:text => ticket.state, :name => "ticket_state")
-  end
-  
-  def self.age_prop(ticket)
-    return Limelight::Prop.new(:text => ticket.formatted_age, :name => "ticket_formatted_age")
+  def self.attribute_prop(ticket, attribute)
+    return Limelight::Prop.new(:text => ticket.send(attribute), :name => "ticket_#{attribute}")
   end
 end

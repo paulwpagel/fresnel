@@ -6,7 +6,8 @@ describe ConvertsTicketToProp, "when converting a ticket to a prop" do
     @ticket = mock('ticket', :id => 123, 
                               :title => 'great hokey bug',
                               :state => 'extremely unhappy',
-                              :formatted_age => "some time")
+                              :formatted_age => "some time",
+                              :assigned_user_name => "Somebody")
     @prop = mock("prop", :add => nil)
     Limelight::Prop.stub!(:new).and_return(@prop)
   end
@@ -89,6 +90,26 @@ describe ConvertsTicketToProp, "when converting a ticket to a prop" do
     it "should add it to the first prop" do
       prop = mock("title prop")
       Limelight::Prop.should_receive(:new).with(hash_including(:text => "some time")).and_return(prop)
+      @prop.should_receive(:add).with(prop)
+      
+      ConvertsTicketToProp.convert(@ticket)
+    end
+  end
+
+  describe "assigned_user_name prop" do    
+    it "should have text" do
+      Limelight::Prop.should_receive(:new).with(hash_including(:text => "Somebody"))
+      ConvertsTicketToProp.convert(@ticket)
+    end
+    
+    it "should have a name" do
+      Limelight::Prop.should_receive(:new).with(hash_including(:name => "ticket_assigned_user_name"))
+      ConvertsTicketToProp.convert(@ticket)
+    end
+    
+    it "should add it to the first prop" do
+      prop = mock("title prop")
+      Limelight::Prop.should_receive(:new).with(hash_including(:text => "Somebody")).and_return(prop)
       @prop.should_receive(:add).with(prop)
       
       ConvertsTicketToProp.convert(@ticket)
