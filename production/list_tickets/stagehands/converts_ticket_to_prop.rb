@@ -6,6 +6,7 @@ class ConvertsTicketToProp
     wrapper = main_prop(ticket)
     wrapper.add(title_prop(ticket))
     wrapper.add(state_prop(ticket))
+    wrapper.add(age_prop(ticket))
     return wrapper
   end
   
@@ -23,5 +24,9 @@ class ConvertsTicketToProp
   
   def self.state_prop(ticket)
     return Limelight::Prop.new(:text => ticket.state, :name => "ticket_state")
+  end
+  
+  def self.age_prop(ticket)
+    return Limelight::Prop.new(:text => ticket.formatted_age, :name => "ticket_formatted_age")
   end
 end

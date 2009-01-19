@@ -6,12 +6,14 @@ row {
 title_header {
   padding 7
   font_size 24
-  width 550
+  width 300
   hover {
     text_color "CCCCCC"
   }
 }
-
+ticket_title {
+  width 300
+}
 state_header {
   padding 7
   font_size 24
@@ -19,11 +21,12 @@ state_header {
     text_color "CCCCCC"
   }
 }
-
-ticket_title {
-  width 550
+ticket_state {
+  width 150
 }
-
+ticket_formatted_age {
+  width 200
+}
 ticket_in_list {
   padding 10
   width "90%"

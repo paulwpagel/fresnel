@@ -5,7 +5,8 @@ describe ConvertsTicketToProp, "when converting a ticket to a prop" do
   before(:each) do
     @ticket = mock('ticket', :id => 123, 
                               :title => 'great hokey bug',
-                              :state => 'extremely unhappy')
+                              :state => 'extremely unhappy',
+                              :formatted_age => "some time")
     @prop = mock("prop", :add => nil)
     Limelight::Prop.stub!(:new).and_return(@prop)
   end
@@ -66,9 +67,29 @@ describe ConvertsTicketToProp, "when converting a ticket to a prop" do
     end
     
     it "should add it to the first prop" do
-      title_prop = mock("title prop")
-      Limelight::Prop.should_receive(:new).with(hash_including(:text => "extremely unhappy")).and_return(title_prop)
-      @prop.should_receive(:add).with(title_prop)
+      state_prop = mock("title prop")
+      Limelight::Prop.should_receive(:new).with(hash_including(:text => "extremely unhappy")).and_return(state_prop)
+      @prop.should_receive(:add).with(state_prop)
+      
+      ConvertsTicketToProp.convert(@ticket)
+    end
+  end
+  
+  describe "formatted age prop" do    
+    it "should have text" do
+      Limelight::Prop.should_receive(:new).with(hash_including(:text => "some time"))
+      ConvertsTicketToProp.convert(@ticket)
+    end
+    
+    it "should have a name" do
+      Limelight::Prop.should_receive(:new).with(hash_including(:name => "ticket_formatted_age"))
+      ConvertsTicketToProp.convert(@ticket)
+    end
+    
+    it "should add it to the first prop" do
+      prop = mock("title prop")
+      Limelight::Prop.should_receive(:new).with(hash_including(:text => "some time")).and_return(prop)
+      @prop.should_receive(:add).with(prop)
       
       ConvertsTicketToProp.convert(@ticket)
     end
