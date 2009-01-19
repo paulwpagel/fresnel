@@ -25,6 +25,7 @@ describe "Props" do
   it "should have a header for the ticket title column" do
     prop = scene.find("title_header")
     prop.name.should == "title_header"
+    prop.players.should == "ticket_sorter"
     prop.text.should == "Title"
   end
 end
