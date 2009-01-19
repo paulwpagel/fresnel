@@ -3,6 +3,14 @@ row {
   padding 15
 }
 
+title_header {
+  padding 7
+  width "90%"
+  font_size 24
+  hover {
+    text_color "CCCCCC"
+  }
+}
 ticket_in_list {
   padding 10
   width "90%"
