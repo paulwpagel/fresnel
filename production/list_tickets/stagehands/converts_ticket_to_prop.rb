@@ -3,7 +3,6 @@ require 'limelight/prop'
 
 class ConvertsTicketToProp
   def self.convert(ticket)
-    puts "ticket.class.name: #{ticket.class.name}"
     wrapper = main_prop(ticket)
     [:title, :state, :formatted_age, :assigned_user_name].each do |attribute|
       wrapper.add(attribute_prop(ticket, attribute))

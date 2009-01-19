@@ -39,4 +39,10 @@ describe "Props" do
     prop.name.should == "age_header"
     prop.players.should == "ticket_sorter"
   end
+
+  it "should have a header for the ticket's assigned user" do
+    prop = scene.find("assigned_user_header")
+    prop.name.should == "assigned_user_header"
+    prop.players.should == "ticket_sorter"
+  end
 end

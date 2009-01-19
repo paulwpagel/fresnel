@@ -96,6 +96,19 @@ describe TicketSorter do
       scene.find("age_header").mouse_clicked(nil)
     end
   end
+  
+  describe "sort by assigned_user_name" do
+    it "should call ticket lister with the appropriate tickets" do
+      @first = ticket(:assigned_user_name => "a")
+      @second = ticket(:assigned_user_name => "B")
+      @tickets = [@second, @first]
+      @mock_master.stub!(:get_tickets).and_return(@tickets)
+      
+      scene.ticket_lister.should_receive(:show_these_tickets).with([@first, @second])
+      
+      scene.find("assigned_user_header").mouse_clicked(nil)
+    end
+  end
 
   def ticket(options)
     return mock("ticket #{options}", options)

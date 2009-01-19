@@ -31,7 +31,15 @@ ticket_formatted_age {
 age_header {
   padding 7
   font_size 24
-  width 150
+  width 200
+  hover {
+    text_color "CCCCCC"
+  }
+}
+
+assigned_user_header {
+  padding 7
+  font_size 24
   hover {
     text_color "CCCCCC"
   }

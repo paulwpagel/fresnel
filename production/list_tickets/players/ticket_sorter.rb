@@ -17,6 +17,8 @@ module TicketSorter
       ascending_tickets = tickets.sort_by { |ticket| ticket.title.downcase }
     elsif self.id == "state_header"
       ascending_tickets = tickets.sort_by { |ticket| ticket.state.downcase }
+    elsif self.id == "assigned_user_header"
+      ascending_tickets = tickets.sort_by { |ticket| ticket.assigned_user_name.to_s.downcase }
     else
       ascending_tickets = tickets.sort_by { |ticket| ticket.age }
     end
@@ -29,18 +31,6 @@ module TicketSorter
       production.current_sort_order = "descending"
     else
       production.current_sort_order = "ascending"
-    end
-  end
-  
-  private
-  
-  def attribute
-    if self.id == "title_header"
-      return :title
-    elsif self.id == "state_header"
-      return :state
-    else
-      return :age
     end
   end
 end
