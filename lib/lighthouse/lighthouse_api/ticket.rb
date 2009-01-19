@@ -62,6 +62,14 @@ module Lighthouse
         @lighthouse_ticket.body = comment
       end
       
+      def age
+        return @lighthouse_ticket.updated_at
+      end
+      
+      def formatted_age
+        return @lighthouse_ticket.updated_at.strftime("%B %d, %Y @ %I:%M %p")
+      end
+      
       private
       
       def api_version(version)

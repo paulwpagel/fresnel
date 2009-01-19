@@ -26,13 +26,11 @@ describe "Props" do
     prop = scene.find("title_header")
     prop.name.should == "title_header"
     prop.players.should == "ticket_sorter"
-    prop.text.should == "Title"
   end
 
   it "should have a header for the ticket state column" do
     prop = scene.find("state_header")
     prop.name.should == "state_header"
     prop.players.should == "ticket_sorter"
-    prop.text.should == "State"
   end
 end

@@ -136,7 +136,8 @@ end
 describe Lighthouse::LighthouseApi::Ticket, "lighthouse ticket attributes" do
   before(:each) do
     @project = mock("project", :id => "project_id")
-    @lighthouse_ticket = mock("Lighthouse::Ticket", :versions => [], :assigned_user_id => nil,
+    @now = Time.now
+    @lighthouse_ticket = mock("Lighthouse::Ticket", :versions => [], :assigned_user_id => nil, :updated_at => @now,
                                     :id => "ticket_id", :state => "Open", :title => "Some Title", :milestone_id => "Milestone ID")
     @fresnel_ticket = Lighthouse::LighthouseApi::Ticket.new(@lighthouse_ticket, @project)
   end
@@ -175,6 +176,14 @@ describe Lighthouse::LighthouseApi::Ticket, "lighthouse ticket attributes" do
     @lighthouse_ticket.should_receive(:assigned_user_id=).with("new assigned user id")
     
     @fresnel_ticket.assigned_user_id = "new assigned user id"
+  end
+  
+  it "should have an age" do
+    @fresnel_ticket.age.should == @now
+  end
+  
+  it "should have a formatted age" do
+    @fresnel_ticket.formatted_age.should == @now.strftime("%B %d, %Y @ %I:%M %p")
   end
 end
 

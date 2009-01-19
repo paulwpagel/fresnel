@@ -83,6 +83,7 @@ describe TicketSorter do
       scene.find("state_header").mouse_clicked(nil)
     end
   end
+  
   def ticket(options)
     return mock("ticket #{options}", options)
   end
