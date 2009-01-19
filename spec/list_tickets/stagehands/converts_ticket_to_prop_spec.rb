@@ -6,30 +6,56 @@ describe ConvertsTicketToProp, "when converting a ticket to a prop" do
     @ticket = mock('ticket', :id => 123, 
                               :title => 'great hokey bug',
                               :state => 'extremely unhappy')
+    @prop = mock("prop", :add => nil)
+    Limelight::Prop.stub!(:new).and_return(@prop)
   end
   
   it "should give it an appropriate id" do
-    Limelight::Prop.should_receive(:new).with(hash_including(:id => "ticket_123"))
+    Limelight::Prop.should_receive(:new).with(hash_including(:id => "ticket_123")).and_return(@prop)
     ConvertsTicketToProp.convert(@ticket)
   end
 
   it "should give it a name" do
-    Limelight::Prop.should_receive(:new).with(hash_including(:name => "ticket_in_list"))
-    ConvertsTicketToProp.convert(@ticket)
-  end
-  
-  it "should give it text" do
-    Limelight::Prop.should_receive(:new).with(hash_including(:text => "great hokey bug, State: extremely unhappy"))
+    Limelight::Prop.should_receive(:new).with(hash_including(:name => "ticket_in_list")).and_return(@prop)
     ConvertsTicketToProp.convert(@ticket)
   end
   
   it "should set the player" do
-    Limelight::Prop.should_receive(:new).with(hash_including(:players => "list_tickets"))
+    Limelight::Prop.should_receive(:new).with(hash_including(:players => "list_tickets")).and_return(@prop)
     ConvertsTicketToProp.convert(@ticket)
   end
   
   it "should set on_mouse_clicked" do
-    Limelight::Prop.should_receive(:new).with(hash_including(:on_mouse_clicked => "view(123)"))
+    Limelight::Prop.should_receive(:new).with(hash_including(:on_mouse_clicked => "view(123)")).and_return(@prop)
     ConvertsTicketToProp.convert(@ticket)
+  end
+  
+  it "should return the main prop" do
+    ConvertsTicketToProp.convert(@ticket).should == @prop
+  end
+  
+  describe "title prop" do
+    it "should have an id" do
+      Limelight::Prop.should_receive(:new).with(hash_including(:id => "ticket_title_123"))
+      ConvertsTicketToProp.convert(@ticket)
+    end
+    
+    it "should have text" do
+      Limelight::Prop.should_receive(:new).with(hash_including(:text => "great hokey bug"))
+      ConvertsTicketToProp.convert(@ticket)
+    end
+    
+    it "should have a name" do
+      Limelight::Prop.should_receive(:new).with(hash_including(:name => "ticket_title"))
+      ConvertsTicketToProp.convert(@ticket)
+    end
+    
+    it "should add it to the first prop" do
+      title_prop = mock("title prop")
+      Limelight::Prop.should_receive(:new).with(hash_including(:id => "ticket_title_123")).and_return(title_prop)
+      @prop.should_receive(:add).with(title_prop)
+      
+      ConvertsTicketToProp.convert(@ticket)
+    end
   end
 end
