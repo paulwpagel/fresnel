@@ -52,6 +52,11 @@ describe "title_bar" do
     press("logout")
   end
   
+  it "should have a link to the website" do
+    website_link = scene.find("website_link")
+    website_link.name.should == "website"
+  end
+  
   def press(id)
     scene.find(id).button_pressed(@event)
   end
