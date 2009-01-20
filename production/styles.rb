@@ -18,3 +18,8 @@ title_bar {
   width "100%"
   background_color "5A9ECF"
 }
+
+website {
+  font_size 16
+  padding 7
+}

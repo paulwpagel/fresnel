@@ -54,7 +54,7 @@ describe "title_bar" do
   
   it "should have a link to the website" do
     website_link = scene.find("website_link")
-    website_link.name.should == "website"
+    website_link.players.should == "website"
   end
   
   def press(id)

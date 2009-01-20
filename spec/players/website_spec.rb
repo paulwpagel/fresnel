@@ -10,11 +10,11 @@
 #   
 #   uses_scene :list_tickets
 #   
-#   it "should respond to mouse_clicked" do
+#   it "should respond to button_pressed" do
 #     click_link
 #   end
 #   
 #   def click_link
-#     scene.find("website_link").mouse_clicked(nil)
+#     scene.find("website_link").button_pressed(nil)
 #   end
 # end

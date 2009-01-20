@@ -1,7 +1,7 @@
 import "src.Browser"
 
 module Website
-  def mouse_clicked(event)
+  def button_pressed(event)
     Browser.new.showInBrowser("http://lighthouseapp.com")
   end
 end
