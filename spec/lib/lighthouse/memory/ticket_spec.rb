@@ -12,6 +12,8 @@ end
 
 describe Lighthouse::Ticket do
   before(:each) do
+    @now = Time.now
+    Time.stub!(:now).and_return(@now)
     Lighthouse::Project.destroy_all
     Lighthouse::Ticket.destroy_all
     @project = create_project    
@@ -33,7 +35,7 @@ describe Lighthouse::Ticket do
   it "should have tags" do
     @ticket.tags = "new tags"
   end
-  
+    
   it "should have read/writable basic informatioin" do
     [:state, :title, :body, :body_html, :assigned_user_id, :milestone_id].each do |attribute|
       @ticket.send("#{attribute}=", "value")
@@ -122,6 +124,10 @@ describe Lighthouse::Ticket do
       
       tickets.size.should == 1
       tickets[0].title.should == "New Title"
+    end
+    
+    it "should save the time it was updated at" do
+      @ticket.updated_at.should == @now
     end
   end
 end

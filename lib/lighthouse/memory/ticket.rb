@@ -25,7 +25,7 @@ module Lighthouse
       end
     end
     
-    attr_reader :id, :project_id, :versions
+    attr_reader :id, :project_id, :versions, :updated_at
     attr_accessor :state, :title, :body, :body_html, :assigned_user_id, :milestone_id, :tags
     
     def initialize(options={})
@@ -37,6 +37,7 @@ module Lighthouse
     def save
       unless @id
         @id = rand 10000
+        @updated_at = Time.now
         @versions << TicketVersion.new(:body => body)
         @@tickets << self
       end
