@@ -71,3 +71,7 @@ ticket_in_list {
       background_color "FFFFFF"
     }
 }
+
+search_bar {
+  padding 10
+}

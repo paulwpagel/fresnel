@@ -185,6 +185,18 @@ describe Lighthouse::LighthouseApi::Ticket, "lighthouse ticket attributes" do
   it "should have a formatted age" do
     @fresnel_ticket.formatted_age.should == @now.strftime("%B %d, %Y @ %I:%M %p")
   end
+  
+  it "should have a created_at date" do
+    @lighthouse_ticket.should_receive(:created_at).and_return("12/12/2001")
+
+    @fresnel_ticket.created_at.should == "12/12/2001"
+  end
+  
+  it "should have a tag" do
+    @lighthouse_ticket.should_receive(:tag).and_return("one")
+    
+    @fresnel_ticket.tag.should == "one"
+  end
 end
 
 describe Lighthouse::LighthouseApi::Ticket, "editing" do
@@ -256,4 +268,39 @@ describe Lighthouse::LighthouseApi::Ticket, "milestone_title" do
 
     @fresnel_ticket.milestone_title.should == "Milestone Title"
   end  
+end
+
+describe "matches criteria" do
+  before(:each) do
+    @project = mock("project", :id => "project_id", :milestone_title => nil)
+    @lighthouse_ticket = mock("Lighthouse::Ticket", :versions => [], :assigned_user_id => nil, :milestone_id => "Milestone ID")
+    @fresnel_ticket = Lighthouse::LighthouseApi::Ticket.new(@lighthouse_ticket, @project)
+  end
+  
+  it "should call ticket matcher" do
+    matcher = mock(Lighthouse::LighthouseApi::TicketMatcher)
+    matcher.should_receive(:match?).with("whatever")
+    attributes = [:title, :description, :assigned_user_name, :created_at, :milestone_title, :state, :tag]
+    Lighthouse::LighthouseApi::TicketMatcher.should_receive(:new).with(@fresnel_ticket, attributes).and_return(matcher)
+    @fresnel_ticket.matches_criteria?("whatever")
+  end
+end
+
+
+describe Lighthouse::LighthouseApi::TicketMatcher do
+  it "should not match anything if it is empty" do
+    ticket_matcher = Lighthouse::LighthouseApi::TicketMatcher.new(nil, [])
+    ticket_matcher.match?("one").should == false    
+  end
+  
+  it "should match any attributes" do
+    attributes = [:one, :two]
+    ticket = mock('ticket')
+    
+    ticket.should_receive(:one).and_return("one")
+    ticket.should_receive(:two).and_return("two")
+    
+    ticket_matcher = Lighthouse::LighthouseApi::TicketMatcher.new(ticket, attributes)
+    ticket_matcher.match?("two").should == true
+  end
 end

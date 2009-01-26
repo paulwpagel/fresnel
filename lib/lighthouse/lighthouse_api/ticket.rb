@@ -17,6 +17,8 @@ module Lighthouse
       ticket_accessor :state
       ticket_accessor :title
       ticket_accessor :milestone_id
+      ticket_accessor :created_at
+      ticket_accessor :tag
     
       def initialize(lighthouse_ticket, project)
         @lighthouse_ticket = lighthouse_ticket
@@ -70,7 +72,13 @@ module Lighthouse
         return @lighthouse_ticket.updated_at.strftime("%B %d, %Y @ %I:%M %p")
       end
       
-      private
+      def matches_criteria?(criteria)
+        attributes = [:title, :description, :assigned_user_name, :created_at, :milestone_title, :state, :tag]
+        matcher = TicketMatcher.new(self, attributes)
+        return matcher.match?(criteria)
+      end
+      
+      private #############################################
       
       def api_version(version)
         return Lighthouse::LighthouseApi::TicketVersion.new(version, @project)
@@ -81,5 +89,20 @@ module Lighthouse
         return []
       end
     end
+    
+    class TicketMatcher
+      def initialize(ticket, attributes)
+        @ticket = ticket
+        @attributes = attributes
+      end
+      
+      def match?(criteria)
+        @attributes.each do |attribute|
+          return true if @ticket.send(attribute) =~ /#{criteria}/
+        end
+        return false
+      end
+    end
+    
   end
 end

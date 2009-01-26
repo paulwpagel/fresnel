@@ -45,4 +45,15 @@ describe "Props" do
     prop.name.should == "assigned_user_header"
     prop.players.should == "ticket_sorter"
   end
+  
+  it "should have a search bar" do
+    prop = scene.find("search_box")
+    prop.name.should == "search_box"
+    prop.players.should == "text_box"
+  end
+  
+  it "should have a search button" do
+    prop = scene.find("search_button")
+    prop.players.should == "search"
+  end
 end
