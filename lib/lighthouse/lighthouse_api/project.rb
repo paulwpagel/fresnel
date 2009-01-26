@@ -4,13 +4,14 @@ require "lighthouse/lighthouse_api/project_membership"
 module Lighthouse
   module LighthouseApi
     class Project
-      attr_reader :milestones, :id, :users
+      attr_reader :milestones, :id, :users, :all_tickets
           
       def initialize(lighthouse_project)
         @lighthouse_project = lighthouse_project
         @id = lighthouse_project.id
         @milestones = lighthouse_project.milestones
         @users = ProjectMembership.all_users_for_project(@id)
+        @all_tickets = Lighthouse::LighthouseApi::Ticket.find_tickets(self, "all")
       end
       
       def user_names
@@ -28,13 +29,9 @@ module Lighthouse
       end
       
       def open_tickets
-        return Lighthouse::LighthouseApi::Ticket.find_tickets(self, "state:open")
+        return @all_tickets.find_all { |ticket| ticket.state == "open" }
       end
-    
-      def all_tickets
-        return Lighthouse::LighthouseApi::Ticket.find_tickets(self, "all")
-      end
-    
+        
       def milestone_titles
         return @milestones.collect { |milestone| milestone.title }
       end

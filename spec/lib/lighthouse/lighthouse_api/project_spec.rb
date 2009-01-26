@@ -42,45 +42,45 @@ describe Lighthouse::LighthouseApi::Project, "users" do
   it "should return nil if the given user id doesn't exist" do
     @fresnel_project.user_id("bad id").should be_nil
   end
-  
 end
 
 describe Lighthouse::LighthouseApi::Project, "tickets" do
   before(:each) do
     Lighthouse::LighthouseApi::ProjectMembership.stub!(:all_users_for_project).and_return([])
-    @lighthouse_project = mock("Lighthouse::Project", :id => 12345, :milestones => [])
-    @fresnel_project = Lighthouse::LighthouseApi::Project.new(@lighthouse_project)
-    @tickets = [mock("ticket")]
-    Lighthouse::LighthouseApi::Ticket.stub!(:find_tickets).and_return(@tickets)
-    @fresnel_tickets = [mock(Lighthouse::LighthouseApi::Ticket)]
+    @lighthouse_project = mock("Lighthouse::Project", :milestones => [], :id => 12345)
   end
   
-  it "should accept a project on init" do
+  it "should find all tickets on init" do
+    Lighthouse::LighthouseApi::Ticket.should_receive(:find_tickets).with(anything(), "all")
+    
     @fresnel_project = Lighthouse::LighthouseApi::Project.new(@lighthouse_project)
   end
   
-  it "should find all open tickets for a project" do
-    Lighthouse::LighthouseApi::Ticket.should_receive(:find_tickets).with(@fresnel_project, "state:open")
+  describe Lighthouse::LighthouseApi::Project, "all tickets" do
+    before(:each) do
+      @ticket_one = ticket("open")
+      @ticket_two = ticket("resolved")
+      @ticket_three = ticket("open")
+      @tickets = [@ticket_one, @ticket_two, @ticket_three]
+      Lighthouse::LighthouseApi::Ticket.stub!(:find_tickets).and_return(@tickets)
+      @fresnel_project = Lighthouse::LighthouseApi::Project.new(@lighthouse_project)
+    end
+  
+    it "should return all tickets" do
+      @fresnel_project.all_tickets.should == @tickets    
+    end
+  
+    it "should return open tickets" do
+      @fresnel_project.open_tickets.should == [@ticket_one, @ticket_three]    
+    end
     
-    @fresnel_project.open_tickets
-  end
-  
-  it "should return the tickets" do
-    @fresnel_project.open_tickets.should == @tickets    
-  end
-  
-  it "should find all tickets for a project" do
-    Lighthouse::LighthouseApi::Ticket.should_receive(:find_tickets).with(@fresnel_project, "all")
+    it "should have an id" do
+      @fresnel_project.id.should == 12345
+    end
     
-    @fresnel_project.all_tickets
-  end
-  
-  it "should return the tickets" do
-    @fresnel_project.all_tickets.should == @tickets    
-  end
-  
-  it "should have an id" do
-    @fresnel_project.id.should == 12345
+    def ticket(state)
+      return mock("ticket", :state => state)
+    end
   end
 end
 
