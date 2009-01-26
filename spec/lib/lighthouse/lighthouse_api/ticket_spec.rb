@@ -303,4 +303,15 @@ describe Lighthouse::LighthouseApi::TicketMatcher do
     ticket_matcher = Lighthouse::LighthouseApi::TicketMatcher.new(ticket, attributes)
     ticket_matcher.match?("two").should == true
   end
+  
+  it "should match all criteria downcased" do
+    attributes = [:one, :two]
+    ticket = mock('ticket')
+    
+    ticket.should_receive(:one).and_return("one")
+    ticket.should_receive(:two).and_return("TWO")
+    
+    ticket_matcher = Lighthouse::LighthouseApi::TicketMatcher.new(ticket, attributes)
+    ticket_matcher.match?("two").should == true
+  end
 end

@@ -98,7 +98,7 @@ module Lighthouse
       
       def match?(criteria)
         @attributes.each do |attribute|
-          return true if @ticket.send(attribute) =~ /#{criteria}/
+          return true if @ticket.send(attribute).to_s.downcase =~ /#{criteria.downcase.to_s}/
         end
         return false
       end
