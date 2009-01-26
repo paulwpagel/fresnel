@@ -20,7 +20,7 @@ main {
     }
     
     input_group {
-      label :text => "Remember my info:"
+      label :text => "Remember Me:"
       input :players => "check_box", :id => "save_credentials"
     }
     
