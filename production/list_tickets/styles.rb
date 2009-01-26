@@ -1,3 +1,10 @@
+sort_image {
+  # background_image "images/desc.png"
+  background_image_fill_strategy "static"
+  top_margin 9
+  width 20
+  height 23
+}
 ticket_table {
   width "100%"
   margin 15
@@ -10,12 +17,12 @@ header_row {
 }
 header_cell {
   top_padding 7
-  bottom_padding 7  
+  bottom_padding 7
 }
 title_header {
   left_padding 12
   font_size 24
-  width 300
+  width 280
   hover {
     text_color "CCCCCC"
   }
@@ -26,7 +33,7 @@ ticket_title {
 state_header {
   left_padding 12
   font_size 24
-  width 150
+  width 130
   hover {
     text_color "CCCCCC"
   }
@@ -40,7 +47,7 @@ ticket_formatted_age {
 age_header {
   left_padding 12
   font_size 24
-  width 200
+  width 180
   hover {
     text_color "CCCCCC"
   }

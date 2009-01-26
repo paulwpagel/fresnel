@@ -5,8 +5,10 @@ describe ListTickets do
   before(:each) do
     @player_under_test = Object.new
     @player_under_test.extend(ListTickets)
-    @ticket_master = mock('ticket_master')
+    @ticket_master = mock('ticket_master', :show_tickets => nil)
     TicketMaster.stub!(:new).and_return(@ticket_master)
+    @scene = mock('scene')
+    @player_under_test.stub!(:scene).and_return(@scene)
   end
   
   it "should have a ticket_master" do
@@ -16,18 +18,40 @@ describe ListTickets do
   end
   
   it "should have a ticket_lister" do
-    scene = mock('scene')
-    @player_under_test.stub!(:scene).and_return(scene)
     lister = mock('lister')
-    scene.should_receive(:find).with("ticket_lister").and_return(lister)
+    @scene.should_receive(:find).with("ticket_lister").and_return(lister)
     
     @player_under_test.ticket_lister.should == lister
   end
   
-  it "should show the open tickets" do
-    @ticket_master.should_receive(:show_tickets).with("Open Tickets")
+  describe "scene_opened" do
+    before(:each) do
+      @style = mock("style", :background_image= => nil)
+      @age_image = mock("prop", :style => @style)
+      @scene.stub!(:find).and_return(@age_image)
+    end
     
-    @player_under_test.scene_opened(nil)
+    it "should show the open tickets" do
+      @ticket_master.should_receive(:show_tickets).with("Open Tickets")
+    
+      open_scene
+    end
+  
+    it "should find the age image" do
+      @scene.should_receive(:find).with("age_image").and_return(@age_image)
+      
+      open_scene
+    end
+    
+    it "should set the background image of the age image" do
+      @style.should_receive(:background_image=).with("images/descending.png")
+      
+      open_scene
+    end
+    
+    def open_scene
+      @player_under_test.scene_opened(nil)
+    end
   end
 end
 

@@ -11,15 +11,19 @@ main {
     header_row {
       header_cell {
         label :id => "title_header", :text => "Title", :name => "title_header", :players => "ticket_sorter"
+        sort_image :id => "title_image"
       }
       header_cell {
         label :id => "state_header", :text => "State", :name => "state_header", :players => "ticket_sorter"
+        sort_image :id => "state_image"
       }
       header_cell {
         label :id => "age_header", :text => "Last Activity", :name => "age_header", :players => "ticket_sorter"
+        sort_image :id => "age_image"
       }
       header_cell {
         label :id => "assigned_user_header", :text => "Assigned User", :name => "assigned_user_header", :players => "ticket_sorter"
+        sort_image :id => "user_image"
       }
     }
     ticket_lister :id => "ticket_lister"
