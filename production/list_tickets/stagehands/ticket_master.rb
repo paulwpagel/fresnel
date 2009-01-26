@@ -4,7 +4,7 @@ class TicketMaster
   end
   
   def show_tickets(type)    
-    @scene.ticket_lister.show_these_tickets(get_tickets(type))
+    @scene.ticket_lister.show_these_tickets(get_tickets(type)) if @scene.ticket_lister
   end
   
   def get_tickets(type)

@@ -15,6 +15,10 @@ module ListTickets
   stage_hand :ticket_master  
   prop_reader :ticket_lister
   
+  def scene_opened(event)
+    ticket_master.show_tickets("Open Tickets")
+  end
+  
   def view(ticket_id)
     production.current_ticket = production.lighthouse_client.ticket(ticket_id, project)
     scene.load('view_ticket')

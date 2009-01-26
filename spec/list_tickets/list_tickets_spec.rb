@@ -5,13 +5,14 @@ describe ListTickets do
   before(:each) do
     @player_under_test = Object.new
     @player_under_test.extend(ListTickets)
+    @ticket_master = mock('ticket_master')
+    TicketMaster.stub!(:new).and_return(@ticket_master)
   end
   
   it "should have a ticket_master" do
-    ticket_master = mock('ticket_master')
-    TicketMaster.should_receive(:new).with(@player_under_test).and_return(ticket_master)
+    TicketMaster.should_receive(:new).with(@player_under_test).and_return(@ticket_master)
     
-    @player_under_test.ticket_master.should == ticket_master
+    @player_under_test.ticket_master.should == @ticket_master
   end
   
   it "should have a ticket_lister" do
@@ -21,6 +22,12 @@ describe ListTickets do
     scene.should_receive(:find).with("ticket_lister").and_return(lister)
     
     @player_under_test.ticket_lister.should == lister
+  end
+  
+  it "should show the open tickets" do
+    @ticket_master.should_receive(:show_tickets).with("Open Tickets")
+    
+    @player_under_test.scene_opened(nil)
   end
 end
 

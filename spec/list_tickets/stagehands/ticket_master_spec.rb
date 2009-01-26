@@ -30,6 +30,11 @@ describe TicketMaster do
     @ticket_master.show_tickets("All Tickets")
   end
   
+  it "should not crash if the ticket_lister is not on screen" do
+    @scene.stub!(:ticket_lister).and_return(nil)
+    
+    lambda{@ticket_master.show_tickets("Some Tickets")}.should_not raise_error
+  end
 end
 
 describe TicketMaster, "get_tickets" do
