@@ -2,6 +2,7 @@ module TicketSorter
   def mouse_clicked(event)
     scene.ticket_lister.show_these_tickets(sorted_tickets)
     toggle_sort_order
+    clear_sort_images
   end
   
   private
@@ -32,5 +33,12 @@ module TicketSorter
     else
       production.current_sort_order = "ascending"
     end
+  end
+  
+  def clear_sort_images
+    scene.find("title_image").style.background_image = ""
+    scene.find("state_image").style.background_image = ""
+    scene.find("age_image").style.background_image = ""
+    scene.find("user_image").style.background_image = ""
   end
 end

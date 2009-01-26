@@ -18,6 +18,10 @@ describe TicketSorter do
   before(:each) do
     scene.production.current_sort_order = nil
     scene.ticket_lister.stub!(:show_these_tickets)
+    title_image.style.stub!(:background_image=)
+    state_image.style.stub!(:background_image=)
+    age_image.style.stub!(:background_image=)
+    user_image.style.stub!(:background_image=)
   end
   
   describe "sort by title" do
@@ -110,6 +114,31 @@ describe TicketSorter do
     end
   end
 
+  it "should clear the sort background_images of all the columns" do
+    title_image.style.should_receive(:background_image=).with("")
+    state_image.style.should_receive(:background_image=).with("")
+    age_image.style.should_receive(:background_image=).with("")
+    user_image.style.should_receive(:background_image=).with("")
+    
+    sort_by_title
+  end
+  
+  def title_image
+    return scene.find("title_image")
+  end
+  
+  def state_image
+    return scene.find("state_image")
+  end
+  
+  def age_image
+    return scene.find("age_image")
+  end
+  
+  def user_image
+    return scene.find("user_image")
+  end
+  
   def ticket(options)
     return mock("ticket #{options}", options)
   end
