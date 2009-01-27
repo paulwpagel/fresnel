@@ -30,6 +30,10 @@ module Lighthouse
         end
       end
       
+      def tags
+        return @lighthouse_ticket.tag.split(" ")
+      end
+      
       def project_id
         return @project.id
       end
