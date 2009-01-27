@@ -29,7 +29,7 @@ module Lighthouse
       end
       
       def open_tickets
-        return @all_tickets.find_all { |ticket| ticket.state == "open" }
+        return @all_tickets.find_all { |ticket| open_states.include?(ticket.state) }
       end
         
       def milestone_titles

@@ -47,7 +47,7 @@ end
 describe Lighthouse::LighthouseApi::Project, "tickets" do
   before(:each) do
     Lighthouse::LighthouseApi::ProjectMembership.stub!(:all_users_for_project).and_return([])
-    @lighthouse_project = mock("Lighthouse::Project", :milestones => [], :id => 12345)
+    @lighthouse_project = mock("Lighthouse::Project", :milestones => [], :id => 12345, :open_states_list => "new,open")
   end
   
   it "should find all tickets on init" do
@@ -61,7 +61,8 @@ describe Lighthouse::LighthouseApi::Project, "tickets" do
       @ticket_one = ticket("open")
       @ticket_two = ticket("resolved")
       @ticket_three = ticket("open")
-      @tickets = [@ticket_one, @ticket_two, @ticket_three]
+      @ticket_four = ticket("new")
+      @tickets = [@ticket_one, @ticket_two, @ticket_three, @ticket_four]
       Lighthouse::LighthouseApi::Ticket.stub!(:find_tickets).and_return(@tickets)
       @fresnel_project = Lighthouse::LighthouseApi::Project.new(@lighthouse_project)
     end
@@ -71,7 +72,12 @@ describe Lighthouse::LighthouseApi::Project, "tickets" do
     end
   
     it "should return open tickets" do
-      @fresnel_project.open_tickets.should == [@ticket_one, @ticket_three]    
+      @fresnel_project.open_tickets.should include(@ticket_one)
+      @fresnel_project.open_tickets.should include(@ticket_three)    
+    end
+    
+    it "should include all states in the open_states_list for open tickets" do
+      @fresnel_project.open_tickets.should include(@ticket_four)
     end
     
     it "should have an id" do
