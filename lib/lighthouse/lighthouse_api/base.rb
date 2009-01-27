@@ -21,6 +21,10 @@ module Lighthouse
       return true
     end
     
+    def self.account
+      return Lighthouse.account
+    end
+    
     def self.projects
       return Lighthouse::Project.find(:all) 
     end
