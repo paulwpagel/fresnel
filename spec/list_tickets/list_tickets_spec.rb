@@ -9,6 +9,8 @@ describe ListTickets do
     TicketMaster.stub!(:new).and_return(@ticket_master)
     @scene = mock('scene')
     @player_under_test.stub!(:scene).and_return(@scene)
+    @lighthouse_client = mock("lighthouse_client", :projects => [])
+    @player_under_test.stub!(:production).and_return(mock("production", :lighthouse_client => @lighthouse_client))
   end
   
   it "should have a ticket_master" do
@@ -27,7 +29,7 @@ describe ListTickets do
   describe "scene_opened" do
     before(:each) do
       @style = mock("style", :background_image= => nil)
-      @age_image = mock("prop", :style => @style)
+      @age_image = mock("prop", :style => @style, :choices= => nil)
       @scene.stub!(:find).and_return(@age_image)
     end
     
@@ -97,3 +99,25 @@ describe ListTickets, "view_ticket" do
   end
   
 end
+
+
+describe ListTickets, "ProjectSelector" do  
+  
+  before(:each) do
+    mock_lighthouse
+    @project1 = mock('Project', :name => "One", :open_tickets => [])
+    @projects = [@project1, mock('Project 2', :name => "Two", :open_tickets => [])]
+    producer.production.current_project = @project1
+    @lighthouse_client.stub!(:projects).and_return(@projects)
+  end
+
+  uses_scene :list_tickets
+
+  it "should have list of projects" do
+    project_selector = scene.find("project_selector")    
+    project_selector.choices.should include("One")
+    project_selector.choices.should include("Two")
+  end
+  
+end
+

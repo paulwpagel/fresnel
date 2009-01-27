@@ -5,8 +5,7 @@ describe Website do
   before(:each) do
     mock_lighthouse
     producer.production.current_project = mock('Project', :open_tickets => [], :hyphenated_name => "some-project", :id => 12345)
-    @client = mock("Lighthouse", :account => "8thlight")
-    producer.production.lighthouse_client = @client
+    @lighthouse_client.stub!(:account).and_return("8thlight")
   end
   
   uses_scene :list_tickets
@@ -15,5 +14,3 @@ describe Website do
     scene.find("website_link").url.should == "http://8thlight.lighthouseapp.com/projects/12345-some-project/overview"
   end
 end
-
-# http://8thlight.lighthouseapp.com/projects/22835-test-project/overview

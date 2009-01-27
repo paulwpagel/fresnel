@@ -1,23 +1,18 @@
 require 'ticket_lister'
+require 'ticket_master'
 
 module ListTickets
   
-  class << self
-    def stage_hand(name)
-      require name.to_s
-      define_method(name) do
-        return TicketMaster.new(self) #TODO - PWP - solve why this needs to be instantiated rather than the eval working
-        # eval(name.to_s.camelize).new(self)
-      end
-    end
-  end
-    
-  stage_hand :ticket_master  
   prop_reader :ticket_lister
+  
+  def ticket_master
+    TicketMaster.new(self)
+  end
   
   def scene_opened(event)
     ticket_master.show_tickets("Open Tickets")
     scene.find("age_image").style.background_image = "images/descending.png"
+    scene.find("project_selector").choices = project_names
   end
   
   def view(ticket_id)
@@ -29,5 +24,10 @@ module ListTickets
     
   def project
     production.current_project
+  end
+
+  #TODO - move this method into model
+  def project_names
+    return production.lighthouse_client.projects.collect {|project| project.name}
   end
 end

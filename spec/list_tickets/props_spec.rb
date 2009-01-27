@@ -16,6 +16,13 @@ describe "Props" do
     prop.players.should == "type_selector"
   end
   
+  it "should have select project with populated " do
+    prop = scene.find("project_selector")
+    prop.should_not be_nil
+
+    prop.players.should include("project_selector")
+  end
+  
   it "should have a ticket_list" do
     prop = scene.find("ticket_lister")
 

@@ -1,7 +1,9 @@
 main {
   __install "common/title_bar.rb"
+  
   search_bar {
     combo_box :id => "ticket_type", :players => "type_selector", :choices => ["Open Tickets", "All Tickets"], :width => 350, :right_margin => 200
+    combo_box :id => "project_selector", :players => "project_selector"
     label :text => "Search", :font_size => 14, :width => 70
     search_box :players => "text_box", :name => "search_box",  :id => "search_box"
     button :players => "search", :id => "search_button", :text => "Search"

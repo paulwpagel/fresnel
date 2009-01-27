@@ -5,6 +5,7 @@ require "ticket_sorter"
 describe TicketSorter do
 
   before(:each) do
+    mock_lighthouse
     @first = ticket(:title => "a")
     @second = ticket(:title => "b")
     @third = ticket(:title => "c")

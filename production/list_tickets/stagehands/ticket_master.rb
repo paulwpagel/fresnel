@@ -1,4 +1,5 @@
 class TicketMaster
+
   def initialize(scene)
     @scene = scene
   end
@@ -18,4 +19,5 @@ class TicketMaster
   def project
     return @scene.production.current_project
   end
+  
 end
