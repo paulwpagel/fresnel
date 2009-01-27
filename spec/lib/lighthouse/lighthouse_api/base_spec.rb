@@ -63,6 +63,11 @@ describe Lighthouse::LighthouseApi do
     Lighthouse::LighthouseApi::add_ticket(options, @project)
   end
   
+  it "should return the account" do
+    Lighthouse.should_receive(:account).and_return("Some Account")
+    
+    Lighthouse::LighthouseApi.account.should == "Some Account"
+  end
 end
 
 describe "ticket" do

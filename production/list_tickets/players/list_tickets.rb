@@ -17,6 +17,7 @@ module ListTickets
   
   def scene_opened(event)
     ticket_master.show_tickets("Open Tickets")
+    scene.find("age_image").style.background_image = "images/descending.png"
   end
   
   def view(ticket_id)

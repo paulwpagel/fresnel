@@ -47,7 +47,7 @@ end
 describe Lighthouse::LighthouseApi::Project, "tickets" do
   before(:each) do
     Lighthouse::LighthouseApi::ProjectMembership.stub!(:all_users_for_project).and_return([])
-    @lighthouse_project = mock("Lighthouse::Project", :milestones => [], :id => 12345)
+    @lighthouse_project = mock("Lighthouse::Project", :milestones => [], :id => 12345, :open_states_list => "new,open")
   end
   
   it "should find all tickets on init" do
@@ -61,7 +61,8 @@ describe Lighthouse::LighthouseApi::Project, "tickets" do
       @ticket_one = ticket("open")
       @ticket_two = ticket("resolved")
       @ticket_three = ticket("open")
-      @tickets = [@ticket_one, @ticket_two, @ticket_three]
+      @ticket_four = ticket("new")
+      @tickets = [@ticket_one, @ticket_two, @ticket_three, @ticket_four]
       Lighthouse::LighthouseApi::Ticket.stub!(:find_tickets).and_return(@tickets)
       @fresnel_project = Lighthouse::LighthouseApi::Project.new(@lighthouse_project)
     end
@@ -71,7 +72,12 @@ describe Lighthouse::LighthouseApi::Project, "tickets" do
     end
   
     it "should return open tickets" do
-      @fresnel_project.open_tickets.should == [@ticket_one, @ticket_three]    
+      @fresnel_project.open_tickets.should include(@ticket_one)
+      @fresnel_project.open_tickets.should include(@ticket_three)    
+    end
+    
+    it "should include all states in the open_states_list for open tickets" do
+      @fresnel_project.open_tickets.should include(@ticket_four)
     end
     
     it "should have an id" do
@@ -158,5 +164,30 @@ describe Lighthouse::LighthouseApi::Project, "states" do
   
   it "should get all the states" do
     @fresnel_project.all_states.should == ["one", "two", "three", "closed_one", "closed_two", "closed_three"]
+  end
+end
+
+describe Lighthouse::LighthouseApi::Project, "hyphenated_name" do
+  before(:each) do
+    @lighthouse_project = mock("Lighthouse::Project", :id => nil, :milestones => [])
+    @fresnel_project = Lighthouse::LighthouseApi::Project.new(@lighthouse_project)
+  end
+  
+  it "should return the name if it is a single lowercase word" do
+    @lighthouse_project.stub!(:name).and_return("lowercase")
+    
+    @fresnel_project.hyphenated_name.should == "lowercase"
+  end
+  
+  it "should downcase the name" do
+    @lighthouse_project.stub!(:name).and_return("UPPERCASE")
+    
+    @fresnel_project.hyphenated_name.should == "uppercase"
+  end
+  
+  it "should replace spaces with hyphens" do
+    @lighthouse_project.stub!(:name).and_return("Test Project One")
+    
+    @fresnel_project.hyphenated_name.should == "test-project-one"
   end
 end

@@ -56,4 +56,24 @@ describe "Props" do
     prop = scene.find("search_button")
     prop.players.should == "search"
   end
+  
+  it "should have images for asc and desc for the age column" do
+    prop = scene.find("age_image")
+    prop.name.should == "sort_image"
+  end
+
+  it "should have images for asc and desc for the state column" do
+    prop = scene.find("state_image")
+    prop.name.should == "sort_image"
+  end
+
+  it "should have images for asc and desc for the user column" do
+    prop = scene.find("assigned_user_image")
+    prop.name.should == "sort_image"
+  end
+
+  it "should have images for asc and desc for the title column" do
+    prop = scene.find("title_image")
+    prop.name.should == "sort_image"
+  end
 end

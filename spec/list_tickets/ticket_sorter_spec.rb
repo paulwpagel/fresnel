@@ -18,6 +18,10 @@ describe TicketSorter do
   before(:each) do
     scene.production.current_sort_order = nil
     scene.ticket_lister.stub!(:show_these_tickets)
+    title_image.style.stub!(:background_image=)
+    state_image.style.stub!(:background_image=)
+    age_image.style.stub!(:background_image=)
+    assigned_user_image.style.stub!(:background_image=)
   end
   
   describe "sort by title" do
@@ -52,6 +56,12 @@ describe TicketSorter do
       scene.production.current_sort_order.should == "ascending"
     end
   
+    it "should set the image to ascending" do
+      title_image.style.should_receive(:background_image=).with("images/ascending.png")
+      
+      sort_by_title        
+    end
+    
     describe "current_sort_order is ascending" do
       before(:each) do
         scene.production.current_sort_order = "ascending"
@@ -62,16 +72,26 @@ describe TicketSorter do
     
         sort_by_title
       end
-  
+        
       it "should toggle the current_sort_order" do
         sort_by_title
     
         scene.production.current_sort_order.should == "descending"
       end
+      
+      it "should set the image to descending" do
+        title_image.style.should_receive(:background_image=).with("images/descending.png")
+        
+        sort_by_title        
+      end
     end  
   end
   
   describe "sort by state" do
+    before(:each) do
+      @mock_master.stub!(:get_tickets).and_return([])
+    end
+    
     it "should call ticket lister with the appropriate tickets" do
       @first = ticket(:state => "a")
       @second = ticket(:state => "B")
@@ -79,6 +99,12 @@ describe TicketSorter do
       @mock_master.stub!(:get_tickets).and_return(@tickets)
       
       scene.ticket_lister.should_receive(:show_these_tickets).with([@first, @second])
+      
+      scene.find("state_header").mouse_clicked(nil)
+    end
+    
+    it "should set the state image" do
+      state_image.style.should_receive(:background_image=).with("images/ascending.png")
       
       scene.find("state_header").mouse_clicked(nil)
     end
@@ -110,6 +136,31 @@ describe TicketSorter do
     end
   end
 
+  it "should clear the sort background_images of all the columns" do
+    title_image.style.should_receive(:background_image=).with("")
+    state_image.style.should_receive(:background_image=).with("")
+    age_image.style.should_receive(:background_image=).with("")
+    assigned_user_image.style.should_receive(:background_image=).with("")
+    
+    sort_by_title
+  end
+  
+  def title_image
+    return scene.find("title_image")
+  end
+  
+  def state_image
+    return scene.find("state_image")
+  end
+  
+  def age_image
+    return scene.find("age_image")
+  end
+  
+  def assigned_user_image
+    return scene.find("assigned_user_image")
+  end
+  
   def ticket(options)
     return mock("ticket #{options}", options)
   end

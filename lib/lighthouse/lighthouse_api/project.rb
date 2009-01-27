@@ -29,7 +29,7 @@ module Lighthouse
       end
       
       def open_tickets
-        return @all_tickets.find_all { |ticket| ticket.state == "open" }
+        return @all_tickets.find_all { |ticket| open_states.include?(ticket.state) }
       end
         
       def milestone_titles
@@ -57,7 +57,11 @@ module Lighthouse
       def all_states
         return open_states + closed_states
       end
-                  
+      
+      def hyphenated_name
+        return @lighthouse_project.name.downcase.gsub(" ", "-")
+      end
+      
       private ######################
       
       def user_from_name(user_name)
