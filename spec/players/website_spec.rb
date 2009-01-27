@@ -14,6 +14,8 @@ describe Website do
   it "should include the account in the url" do
     @client.should_receive(:account).and_return("8thlight")
     
-    scene.find("website_link").url.should == "http://8thlight.lighthouseapp.com"
+    scene.find("website_link").url.should match(/http:\/\/8thlight.lighthouseapp.com/)
   end
 end
+
+# http://8thlight.lighthouseapp.com/projects/22835-test-project/overview
