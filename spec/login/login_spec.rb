@@ -12,6 +12,7 @@ describe Login do
   uses_scene :login
   
   before(:each) do
+    scene.stub!(:load)
     scene.find("username").text = "Paul Pagel"
     scene.find("password").text = "wouldntyaouliketoknow"
     scene.find("account").text = "checking"
@@ -32,7 +33,7 @@ describe Login do
   it "should take the name, password, and account name and send it to be authenticated" do
     @lighthouse_client.should_receive(:login_to).with("checking", "Paul Pagel", "wouldntyaouliketoknow").and_return(true)
     
-    scene.should_receive(:load).with("project")
+    scene.should_receive(:load).with("list_tickets")
     
     scene.load_inputs
     scene.log_in

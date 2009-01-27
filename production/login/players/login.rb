@@ -30,13 +30,13 @@ module Login
     return production.lighthouse_client.login_to(@account.text, @username.text, @password.text)
   end
   
-  private
+  private #####################
   
   def handle_successful_login
     if scene.find("save_credentials").checked?
       credential = Credential.new(:account => @account.text, :login => @username.text, :password => @password.text)
       credential.save
     end
-    scene.load('project')
+    scene.load('list_tickets')
   end
 end

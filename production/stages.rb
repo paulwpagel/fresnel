@@ -1,10 +1,11 @@
 # TODO - EWM - pull this logic out of here so it be better tested?
 credential = Credential.load_saved
 if credential
-  first_scene = 'project'
+  first_scene = 'list_tickets'
 else
   first_scene = 'login'
 end
+
 stage "default" do
   default_scene first_scene
   title "Fresnel"
