@@ -68,7 +68,7 @@ describe "Props" do
   end
 
   it "should have images for asc and desc for the user column" do
-    prop = scene.find("user_image")
+    prop = scene.find("assigned_user_image")
     prop.name.should == "sort_image"
   end
 

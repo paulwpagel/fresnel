@@ -3,6 +3,7 @@ module TicketSorter
     scene.ticket_lister.show_these_tickets(sorted_tickets)
     toggle_sort_order
     clear_sort_images
+    set_new_image
   end
   
   private
@@ -39,6 +40,11 @@ module TicketSorter
     scene.find("title_image").style.background_image = ""
     scene.find("state_image").style.background_image = ""
     scene.find("age_image").style.background_image = ""
-    scene.find("user_image").style.background_image = ""
+    scene.find("assigned_user_image").style.background_image = ""
+  end
+  
+  def set_new_image
+    image_name = self.id.sub(/header/, "image")
+    scene.find(image_name).style.background_image = "images/#{production.current_sort_order}.png"
   end
 end

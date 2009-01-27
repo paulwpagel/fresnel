@@ -23,7 +23,7 @@ main {
       }
       header_cell {
         label :id => "assigned_user_header", :text => "Assigned User", :name => "assigned_user_header", :players => "ticket_sorter"
-        sort_image :id => "user_image"
+        sort_image :id => "assigned_user_image"
       }
     }
     ticket_lister :id => "ticket_lister"
