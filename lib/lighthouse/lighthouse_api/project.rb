@@ -57,7 +57,11 @@ module Lighthouse
       def all_states
         return open_states + closed_states
       end
-                  
+      
+      def hyphenated_name
+        return @lighthouse_project.name.downcase.gsub(" ", "-")
+      end
+      
       private ######################
       
       def user_from_name(user_name)

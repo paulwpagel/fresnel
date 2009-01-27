@@ -160,3 +160,28 @@ describe Lighthouse::LighthouseApi::Project, "states" do
     @fresnel_project.all_states.should == ["one", "two", "three", "closed_one", "closed_two", "closed_three"]
   end
 end
+
+describe Lighthouse::LighthouseApi::Project, "hyphenated_name" do
+  before(:each) do
+    @lighthouse_project = mock("Lighthouse::Project", :id => nil, :milestones => [])
+    @fresnel_project = Lighthouse::LighthouseApi::Project.new(@lighthouse_project)
+  end
+  
+  it "should return the name if it is a single lowercase word" do
+    @lighthouse_project.stub!(:name).and_return("lowercase")
+    
+    @fresnel_project.hyphenated_name.should == "lowercase"
+  end
+  
+  it "should downcase the name" do
+    @lighthouse_project.stub!(:name).and_return("UPPERCASE")
+    
+    @fresnel_project.hyphenated_name.should == "uppercase"
+  end
+  
+  it "should replace spaces with hyphens" do
+    @lighthouse_project.stub!(:name).and_return("Test Project One")
+    
+    @fresnel_project.hyphenated_name.should == "test-project-one"
+  end
+end
