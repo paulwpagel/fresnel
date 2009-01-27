@@ -11,6 +11,7 @@ module SaveTicket
     current_ticket.milestone_id = new_milestone_id
     current_ticket.new_comment = new_comment
     current_ticket.assigned_user_id = new_assigned_user_id
+    current_ticket.tag = new_tag
     current_ticket.save
   end
   
@@ -52,5 +53,9 @@ module SaveTicket
   
   def new_state
     return scene.find("ticket_state").value
+  end
+  
+  def new_tag
+    return scene.find("ticket_tag").text
   end
 end

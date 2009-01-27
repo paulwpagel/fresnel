@@ -11,7 +11,7 @@ describe ViewTicket, "load_current_ticket" do
 
     attribute_one = mock("changed_attribute", :name => "Name", :old_value => "Old Value", :new_value => "New Value")    
     current_ticket = mock("ticket", :title => 'title', :assigned_user_name => "Roger", :state => "open",
-          :milestone_id => 12345, :description => "Some Description", :versions => versions, :changed_attributes_for_version => [attribute_one])
+          :milestone_id => 12345, :description => "Some Description", :versions => versions, :changed_attributes_for_version => [attribute_one], :tag => "one two three")
     producer.production.current_ticket = current_ticket
     @current_project = mock("project", :all_states => ["new", "open", "resolved", "hold", "invalid"], :milestone_title => "Goal Two",
                                        :milestone_titles => ["Goal One", "Goal Two"], :user_names => ["Some User", "Roger", "Eric"])
@@ -107,4 +107,9 @@ describe ViewTicket, "load_current_ticket" do
     prop.players.should == "save_ticket"
   end
   
+  it "should display a ticket's tags" do
+    prop = scene.find('ticket_tag')
+    prop.name.should == "text_box"
+    prop.text.should include("one two three")
+  end
 end

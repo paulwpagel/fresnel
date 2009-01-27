@@ -9,7 +9,8 @@ module ViewTicket
     scene.find("ticket_title").text = current_ticket.title
     scene.find("ticket_state").choices = current_project.all_states
     scene.find("ticket_state").value = current_ticket.state
-
+    scene.find("ticket_tag").text = current_ticket.tag
+    
     new_row do |row|
       row.add(make_prop("Assigned User:", "assigned_user_header"))
       row.add(make_combo_box(user_names, "ticket_assigned_user", current_ticket.assigned_user_name))
