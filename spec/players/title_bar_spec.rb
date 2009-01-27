@@ -21,12 +21,6 @@ describe "title_bar" do
 
     press("add_ticket")
   end
-
-  it "should go to the project scene when the list projects button is clicked" do
-    scene.should_receive(:load).with("project")
-
-    press("project")
-  end
   
   it "should go to the list ticket scene when the list tickets button is clicked" do
     scene.should_receive(:load).with("list_tickets")

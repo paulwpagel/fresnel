@@ -74,3 +74,9 @@ ticket_in_list {
 search_bar {
   padding 10
 }
+
+title_bar {
+  width "100%"
+  background_color "5A9ECF"
+}
+
