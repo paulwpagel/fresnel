@@ -15,29 +15,11 @@ describe "title_bar" do
     scene.stub!(:load)
     Credential.stub!(:clear_saved)
   end
-  
-  it "should redirect to the add ticket scene" do
-    scene.should_receive(:load).with("add_ticket")
-
-    press("add_ticket")
-  end
-  
-  it "should go to the list ticket scene when the list tickets button is clicked" do
-    scene.should_receive(:load).with("list_tickets")
-
-    press("list_tickets")
-  end
-  
+      
   it "should log the user out when the logout button is clicked" do
     Credential.should_receive(:clear_saved)
 
     press("logout")
-  end
-
-  it "should not clear the credentials if a different button is pressed" do
-    Credential.should_not_receive(:clear_saved)
-    
-    press("list_tickets")
   end
 
   it "should go back to the login page on logout" do

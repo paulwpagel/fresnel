@@ -1,3 +1,4 @@
+
 module AddTicket
   
   def scene_opened(e)

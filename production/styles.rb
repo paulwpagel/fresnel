@@ -1,7 +1,7 @@
 main {
 	width 1000
 	height 756
-	background_color "#34689b"
+	background_color "#cfe2ee"
 	horizontal_alignment "center"
 	vertical_scrollbar "on"
 }

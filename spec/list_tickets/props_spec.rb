@@ -83,4 +83,9 @@ describe "Props" do
     prop = scene.find("title_image")
     prop.name.should == "sort_image"
   end
+  
+  it "should have add ticket button" do
+    prop = scene.find("add_ticket_button")
+    prop.players.should include("create_ticket")
+  end
 end

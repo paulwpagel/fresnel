@@ -1,7 +1,7 @@
 main {
   title_bar {
     combo_box :id => "project_selector", :players => "project_selector"
-    button :text => "Add Ticket", :width => 150, :id => "add_ticket", :players => "title_bar"
+    button :text => "Add Ticket", :width => 150, :id => "add_ticket_button", :players => "create_ticket"
     button :text => "Go to Website", :width => 150, :id => "website_link", :players => "website"
     button :text => "Logout", :width => 150, :id => "logout", :players => "title_bar"
   }
