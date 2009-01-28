@@ -31,6 +31,10 @@ module Lighthouse
       def open_tickets
         return @all_tickets.find_all { |ticket| open_states.include?(ticket.state) }
       end
+      
+      def tickets_for_tag(tag)
+        return @all_tickets.find_all { |ticket| ticket.tags.include?(tag) }
+      end
         
       def milestone_titles
         return @milestones.collect { |milestone| milestone.title }
