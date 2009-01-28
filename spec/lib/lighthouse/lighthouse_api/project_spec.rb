@@ -44,6 +44,32 @@ describe Lighthouse::LighthouseApi::Project, "users" do
   end
 end
 
+describe Lighthouse::LighthouseApi::Project, "tags" do
+  before(:each) do
+    Lighthouse::LighthouseApi::ProjectMembership.stub!(:all_users_for_project).and_return([])
+    @lighthouse_project = mock("Lighthouse::Project", :milestones => [], :id => 12345)
+    @fresnel_project = Lighthouse::LighthouseApi::Project.new(@lighthouse_project)
+  end
+  
+  it "should get zero tag names" do
+    @lighthouse_project.stub!(:tags).and_return([])
+    
+    @fresnel_project.tag_names.should == []
+  end
+  
+  it "should get one tag name" do
+    @lighthouse_project.stub!(:tags).and_return([mock("tag", :name => "Tag One")])
+    
+    @fresnel_project.tag_names.should == ["Tag One"]
+  end
+  
+  it "should get two tag names" do
+    @lighthouse_project.stub!(:tags).and_return([mock("tag", :name => "Tag One"), mock("tag", :name => "Tag Two")])
+    
+    @fresnel_project.tag_names.should == ["Tag One", "Tag Two"]
+  end
+end
+
 describe Lighthouse::LighthouseApi::Project, "tickets" do
   before(:each) do
     Lighthouse::LighthouseApi::ProjectMembership.stub!(:all_users_for_project).and_return([])
