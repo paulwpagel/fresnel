@@ -31,7 +31,11 @@ module Lighthouse
       end
       
       def tags
-        return @lighthouse_ticket.tag.split(" ")
+        if @lighthouse_ticket.tag
+          return @lighthouse_ticket.tag.split(" ")
+        else
+          return []
+        end
       end
       
       def project_id

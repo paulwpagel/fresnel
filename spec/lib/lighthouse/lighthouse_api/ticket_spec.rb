@@ -34,6 +34,12 @@ describe Lighthouse::LighthouseApi::Ticket, "tags" do
     
     @fresnel_ticket.tags.should == ["one", "two"]
   end
+  
+  it "should return no tags if the tag is nil" do
+    @lighthouse_ticket.stub!(:tag).and_return(nil)
+    
+    @fresnel_ticket.tags.should == []
+  end
 end
 
 describe Lighthouse::LighthouseApi::Ticket, "assigned_user" do
