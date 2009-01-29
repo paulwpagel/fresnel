@@ -20,7 +20,8 @@ require "lighthouse/adapter"
 $PRODUCTION_PATH = File.expand_path(File.dirname(__FILE__) + "/../production")
 
 def mock_lighthouse
-  @project = mock(Lighthouse::Project, :open_tickets => [], :milestone_titles => [""], :hyphenated_name => nil, :tag_names => [], :id => nil)
+  @project = mock(Lighthouse::Project, :open_tickets => [], :milestone_titles => [""], :hyphenated_name => nil, :tag_names => [],
+                                       :id => nil, :tickets_for_tag => [])
   @lighthouse_client = mock("lighthouse module", :authenticate => nil, :add_ticket => nil, :milestones => [], :milestone_title => "",
                                                  :find_project => @project, :projects => [])
   producer.production.lighthouse_client = @lighthouse_client
