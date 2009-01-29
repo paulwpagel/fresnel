@@ -18,6 +18,7 @@ module ListTickets
   def scene_opened(event)
     ticket_master.show_tickets("Open Tickets")
     scene.find("age_image").style.background_image = "images/descending.png"
+    populate_tags
   end
   
   def view(ticket_id)
@@ -26,7 +27,14 @@ module ListTickets
   end
   
   private #######################
-    
+  
+  def populate_tags
+    tags = scene.find("tags")
+    project.tag_names.each_with_index do |tag, index|
+      tags.add(Limelight::Prop.new(:name => "tag", :text => tag, :id => "tag_#{index + 1}"))
+    end
+  end
+  
   def project
     production.current_project
   end

@@ -7,7 +7,8 @@ describe Search do
     mock_lighthouse
     @ticket1 = mock(Lighthouse::LighthouseApi::Ticket)
     @ticket2 = mock(Lighthouse::LighthouseApi::Ticket)
-    producer.production.current_project = mock('Project', :all_tickets => [@ticket1, @ticket2], :open_tickets => [])
+    @project.stub!(:all_tickets).and_return([@ticket1, @ticket2])
+    producer.production.current_project = @project
   end
   
   uses_scene :list_tickets

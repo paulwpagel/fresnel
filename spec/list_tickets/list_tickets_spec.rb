@@ -29,6 +29,9 @@ describe ListTickets do
       @style = mock("style", :background_image= => nil)
       @age_image = mock("prop", :style => @style)
       @scene.stub!(:find).and_return(@age_image)
+      project = mock("project", :tag_names => [])
+      production = mock("production", :current_project => project)
+      @player_under_test.stub!(:production).and_return(production)
     end
     
     it "should show the open tickets" do
