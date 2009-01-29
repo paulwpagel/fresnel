@@ -8,12 +8,8 @@ module TicketSorter
   
   private
   
-  def type
-    scene.find("ticket_type").value
-  end
-  
   def sorted_tickets
-    tickets = scene.ticket_master.get_tickets(type)
+    tickets = scene.ticket_lister.last_tickets
     ascending_tickets = []
     if self.id == "title_header"
       ascending_tickets = tickets.sort_by { |ticket| ticket.title.downcase }

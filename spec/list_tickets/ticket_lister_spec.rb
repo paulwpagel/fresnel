@@ -45,4 +45,9 @@ describe TicketLister, "when being told to show tickets" do
     call_it
   end
   
+  it "should keep track of the last tickets shown" do
+    call_it
+    
+    @player_under_test.last_tickets.should == @tickets
+  end
 end
