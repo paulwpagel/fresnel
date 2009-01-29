@@ -74,3 +74,8 @@ ticket_in_list {
 search_bar {
   padding 10
 }
+tag{
+  padding 10
+  border_width 2
+  border_color "#000000"
+}

@@ -27,6 +27,6 @@ main {
       }
     }
     ticket_lister :id => "ticket_lister"
-    tags(:id => "tags") {}
   }
+  tags(:id => "tags") {}
 }
