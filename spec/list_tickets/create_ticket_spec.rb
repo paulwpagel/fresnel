@@ -6,7 +6,9 @@ describe CreateTicket do
 
   before(:each) do
     mock_lighthouse
-    producer.production.current_project = mock('Project', :open_tickets => [], :milestone_titles => ["Milestone One", "Milestone Two"])
+    producer.production.current_project = mock('Project', :open_tickets => [], 
+                                                          :milestone_titles => ["Milestone One", "Milestone Two"],
+                                                          :user_names => ["Name"])
   end
 
   uses_scene :list_tickets
@@ -42,4 +44,38 @@ describe CreateTicket do
     milestones.choices.should == ["None", "Milestone One", "Milestone Two"]
   end
   
+  it "should have a combo box for who is responsible" do
+    scene.find('add_ticket_button').button_pressed(nil)
+    
+    responsible = scene.find("add_ticket_responsible_person")
+    responsible.should_not be_nil
+    responsible.name.should == "combo_box"
+    responsible.choices.should == ["None", "Name"]
+  end
+  
+  it "should have tags" do
+    scene.find('add_ticket_button').button_pressed(nil)
+    
+    tags = scene.find("add_ticket_tags")
+    tags.should_not be_nil
+    tags.name.should == "text_box"
+  end
+  
+  it "should have an add button" do
+    scene.find("add_ticket_button").button_pressed(nil)
+    
+    button = scene.find("submit_add_ticket_button")
+    button.should_not be_nil
+    button.name.should == "button"
+    button.players.should include("add_ticket")
+  end
+  
+  it "should have a cancel button" do
+    scene.find("add_ticket_button").button_pressed(nil)
+    
+    button = scene.find("cancel_add_ticket_button")
+    button.should_not be_nil
+    button.name.should == "button"
+    button.players.should include("cancel_add_ticket")
+  end
 end
