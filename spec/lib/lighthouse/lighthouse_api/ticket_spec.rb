@@ -4,7 +4,7 @@ require "lighthouse/lighthouse_api/ticket"
 describe Lighthouse::LighthouseApi::Ticket, "initialize" do
   before(:each) do
     @project = mock("project", :id => "project_id")
-    @lighthouse_ticket = mock("Lighthouse::Ticket", :assigned_user_id => 123, :id => "ticket_id")
+    @lighthouse_ticket = mock("Lighthouse::Ticket", :assigned_user_id => "user id", :id => "ticket_id")
   end
   
   it "should have no versions if the given ticket has none" do
@@ -13,6 +13,39 @@ describe Lighthouse::LighthouseApi::Ticket, "initialize" do
     @fresnel_ticket = Lighthouse::LighthouseApi::Ticket.new(@lighthouse_ticket, @project)
     
     @fresnel_ticket.versions.should == []
+  end
+end
+
+describe Lighthouse::LighthouseApi::Ticket, "tags" do
+  before(:each) do
+    @project = mock("project", :id => "project_id", :tag_names => ["one", "two", "multi word"])
+    @lighthouse_ticket = mock("Lighthouse::Ticket", :assigned_user_id => "user id", :id => "ticket_id", :versions => [])
+    @fresnel_ticket = Lighthouse::LighthouseApi::Ticket.new(@lighthouse_ticket, @project)
+  end
+
+  it "should have one tag" do
+    @lighthouse_ticket.stub!(:tag).and_return("one")
+    
+    @fresnel_ticket.tags.should == ["one"]
+  end
+  
+  it "should have two tags" do
+    @lighthouse_ticket.stub!(:tag).and_return("one two")
+    
+    @fresnel_ticket.tags.should == ["one", "two"]
+  end
+  
+  it "should have multi word tags" do
+    @lighthouse_ticket.stub!(:tag).and_return("\"multi word\" one")
+    
+    @fresnel_ticket.tags.should include("multi word")
+    @fresnel_ticket.tags.should include("one")
+  end
+  
+  it "should return no tags if the tag is nil" do
+    @lighthouse_ticket.stub!(:tag).and_return(nil)
+    
+    @fresnel_ticket.tags.should == []
   end
 end
 

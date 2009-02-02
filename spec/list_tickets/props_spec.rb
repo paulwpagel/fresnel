@@ -4,7 +4,8 @@ require 'limelight/specs/spec_helper'
 describe "Props" do
   before(:each) do
     mock_lighthouse
-    producer.production.current_project = mock('Project', :open_tickets => [])
+    @project.stub!(:tag_names).and_return(["Tag One", "Tag Two"])
+    producer.production.current_project = @project
   end
   
   uses_scene :list_tickets
@@ -87,5 +88,28 @@ describe "Props" do
   it "should have add ticket button" do
     prop = scene.find("add_ticket_button")
     prop.players.should include("create_ticket")
+  end
+  
+  it "should have a prop to hold all the tag names" do
+    prop = tags
+    prop.should_not be_nil
+  end
+  
+  it "should make a prop for one tag" do
+    tag_one = scene.find("tag_1")
+    tag_one.name.should == "tag"
+    tag_one.text.should == "Tag One"
+    tags.children.should include(tag_one)
+  end
+  
+  it "should make a prop for the second tag" do
+    tag_two = scene.find("tag_2")
+    tag_two.name.should == "tag"
+    tag_two.text.should == "Tag Two"
+    tags.children.should include(tag_two)
+  end
+  
+  def tags
+    scene.find("tags")
   end
 end

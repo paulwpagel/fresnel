@@ -4,8 +4,10 @@ require 'website'
 describe Website do
   before(:each) do
     mock_lighthouse
-    producer.production.current_project = mock('Project', :open_tickets => [], :hyphenated_name => "some-project", :id => 12345)
+    @project.stub!(:hyphenated_name).and_return("some-project")
+    @project.stub!(:id).and_return(12345)
     @lighthouse_client.stub!(:account).and_return("8thlight")
+    producer.production.current_project = @project
   end
   
   uses_scene :list_tickets

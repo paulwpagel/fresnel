@@ -67,7 +67,7 @@ ticket_in_list {
   border_color "006699"
   background_color "5A9ECF"
   hover {
-      background_color "FFFFFF"
+      background_color "DDDDDD"
     }
 }
 
@@ -81,11 +81,22 @@ title_bar {
 }
 
 add_ticket_group {
+  width 500
+  height 200
+}
+
+tag {
+  font_size 16
   padding 10
   rounded_corner_radius "10"
   border_width 4
   border_color "006699"
   background_color "5A9ECF"
-  width 500
-  height 200
+  font_style :bold
+  horizontal_alignment :center
+  width "20%"  
+  hover {
+    border_width 4
+    border_color "A63101"
+  }
 }

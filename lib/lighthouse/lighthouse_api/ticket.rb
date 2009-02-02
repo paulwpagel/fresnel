@@ -30,6 +30,14 @@ module Lighthouse
         end
       end
       
+      def tags
+        if @lighthouse_ticket.tag
+          return @project.tag_names.find_all { |tag_name| @lighthouse_ticket.tag.match(tag_name) }
+        else
+          return []
+        end
+      end
+      
       def project_id
         return @project.id
       end

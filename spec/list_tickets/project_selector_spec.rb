@@ -6,7 +6,7 @@ describe ProjectSelector do
   
   before(:each) do
     mock_lighthouse
-    @project2 = mock('Project 2', :name => "Two", :open_tickets => [])
+    @project2 = create_mock_project("Two")
     @projects = [@project, @project2]
     producer.production.current_project = @project
     @lighthouse_client.stub!(:projects).and_return(@projects)

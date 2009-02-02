@@ -44,6 +44,32 @@ describe Lighthouse::LighthouseApi::Project, "users" do
   end
 end
 
+describe Lighthouse::LighthouseApi::Project, "tags" do
+  before(:each) do
+    Lighthouse::LighthouseApi::ProjectMembership.stub!(:all_users_for_project).and_return([])
+    @lighthouse_project = mock("Lighthouse::Project", :milestones => [], :id => 12345)
+    @fresnel_project = Lighthouse::LighthouseApi::Project.new(@lighthouse_project)
+  end
+  
+  it "should get zero tag names" do
+    @lighthouse_project.stub!(:tags).and_return([])
+    
+    @fresnel_project.tag_names.should == []
+  end
+  
+  it "should get one tag name" do
+    @lighthouse_project.stub!(:tags).and_return([mock("tag", :name => "Tag One")])
+    
+    @fresnel_project.tag_names.should == ["Tag One"]
+  end
+  
+  it "should get two tag names" do
+    @lighthouse_project.stub!(:tags).and_return([mock("tag", :name => "Tag One"), mock("tag", :name => "Tag Two")])
+    
+    @fresnel_project.tag_names.should == ["Tag One", "Tag Two"]
+  end
+end
+
 describe Lighthouse::LighthouseApi::Project, "tickets" do
   before(:each) do
     Lighthouse::LighthouseApi::ProjectMembership.stub!(:all_users_for_project).and_return([])
@@ -56,12 +82,12 @@ describe Lighthouse::LighthouseApi::Project, "tickets" do
     @fresnel_project = Lighthouse::LighthouseApi::Project.new(@lighthouse_project)
   end
   
-  describe Lighthouse::LighthouseApi::Project, "all tickets" do
+  describe Lighthouse::LighthouseApi::Project, "filtering tickets" do
     before(:each) do
-      @ticket_one = ticket("open")
-      @ticket_two = ticket("resolved")
-      @ticket_three = ticket("open")
-      @ticket_four = ticket("new")
+      @ticket_one = ticket(:state => "open", :tags => ["one"])
+      @ticket_two = ticket(:state => "resolved", :tags => ["one", "two"])
+      @ticket_three = ticket(:state => "open", :tags => [])
+      @ticket_four = ticket(:state => "new", :tags => ["two"])
       @tickets = [@ticket_one, @ticket_two, @ticket_three, @ticket_four]
       Lighthouse::LighthouseApi::Ticket.stub!(:find_tickets).and_return(@tickets)
       @fresnel_project = Lighthouse::LighthouseApi::Project.new(@lighthouse_project)
@@ -72,12 +98,12 @@ describe Lighthouse::LighthouseApi::Project, "tickets" do
     end
   
     it "should return open tickets" do
-      @fresnel_project.open_tickets.should include(@ticket_one)
-      @fresnel_project.open_tickets.should include(@ticket_three)    
+      @fresnel_project.open_tickets.should == [@ticket_one, @ticket_three, @ticket_four]
     end
     
-    it "should include all states in the open_states_list for open tickets" do
-      @fresnel_project.open_tickets.should include(@ticket_four)
+    it "should get tickets for a certain tag" do
+      tickets = @fresnel_project.tickets_for_tag("one")
+      tickets.should == [@ticket_one, @ticket_two]
     end
     
     it "should update the cached tickets" do
@@ -91,9 +117,9 @@ describe Lighthouse::LighthouseApi::Project, "tickets" do
     it "should have an id" do
       @fresnel_project.id.should == 12345
     end
-    
-    def ticket(state)
-      return mock("ticket", :state => state)
+        
+    def ticket(options)
+      return mock("ticket", options)
     end
   end
 end

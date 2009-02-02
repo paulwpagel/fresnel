@@ -18,6 +18,10 @@ module Lighthouse
         @users.collect {|user| user.name }
       end
       
+      def tag_names
+        return @lighthouse_project.tags.collect { |tag| tag.name }
+      end
+      
       def user_id(user_name)
         return user_from_name(user_name).id if user_from_name(user_name)
         return nil
@@ -30,6 +34,10 @@ module Lighthouse
       
       def open_tickets
         return @all_tickets.find_all { |ticket| open_states.include?(ticket.state) }
+      end
+      
+      def tickets_for_tag(tag)
+        return @all_tickets.find_all { |ticket| ticket.tags.include?(tag) }
       end
         
       def milestone_titles

@@ -4,6 +4,7 @@ require 'list_tickets'
 describe ListTickets do
   before(:each) do
     mock_lighthouse
+    producer.production.current_project = @project
     @ticket_master = mock('ticket_master', :show_tickets => nil)
     TicketMaster.stub!(:new).and_return(@ticket_master)
     @scene = mock('scene')
@@ -32,8 +33,8 @@ describe ListTickets, "view_ticket" do
     TicketMaster.stub!(:new).and_return(@ticket_master)
     @ticket = mock("ticket")    
     @lighthouse_client.stub!(:ticket).and_return(@ticket)
-    @current_project = mock("project", :id => "project_id")
-    producer.production.current_project = @current_project
+    # @current_project = mock("project", :id => "project_id")
+    producer.production.current_project = @project
   end
   
   uses_scene :list_tickets
@@ -60,9 +61,9 @@ describe ListTickets, "ProjectSelector" do
   
   before(:each) do
     mock_lighthouse
-    @project1 = mock('Project', :name => "One", :open_tickets => [])
-    @projects = [@project1, mock('Project 2', :name => "Two", :open_tickets => [])]
-    producer.production.current_project = @project1
+    @project.stub!(:name).and_return("One")
+    @projects = [@project, mock('Project 2', :name => "Two", :open_tickets => [])]
+    producer.production.current_project = @project
     @lighthouse_client.stub!(:projects).and_return(@projects)
   end
 

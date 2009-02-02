@@ -10,4 +10,8 @@ main {
       combo_box :id => "ticket_state"
     }
   }
+  row {
+    label :text => "Tags:"
+    text_box :id => "ticket_tag", :width => 350
+  }
 }

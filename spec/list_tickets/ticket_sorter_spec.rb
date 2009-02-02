@@ -6,12 +6,11 @@ describe TicketSorter do
 
   before(:each) do
     mock_lighthouse
+    producer.production.current_project = @project
     @first = ticket(:title => "a")
     @second = ticket(:title => "b")
     @third = ticket(:title => "c")
     @tickets = [@second, @third, @first]
-    @mock_master = mock(TicketMaster, :show_tickets => nil, :get_tickets => @tickets)
-    TicketMaster.stub!(:new).and_return(@mock_master)
   end
   
   uses_scene :list_tickets
@@ -19,6 +18,7 @@ describe TicketSorter do
   before(:each) do
     scene.production.current_sort_order = nil
     scene.ticket_lister.stub!(:show_these_tickets)
+    scene.ticket_lister.stub!(:last_tickets).and_return(@tickets)
     title_image.style.stub!(:background_image=)
     state_image.style.stub!(:background_image=)
     age_image.style.stub!(:background_image=)
@@ -26,11 +26,9 @@ describe TicketSorter do
   end
   
   describe "sort by title" do
-    it "should get the appropriate tickets from the ticket master" do
-      scene.find("ticket_type").value = "Open Tickets"
-    
-      @mock_master.should_receive(:get_tickets).with("Open Tickets").and_return([])
-    
+    it "should get the appropriate tickets from the ticket lister" do
+      scene.ticket_lister.should_receive(:last_tickets).and_return([])
+          
       sort_by_title
     end
   
@@ -44,7 +42,7 @@ describe TicketSorter do
       @first = ticket(:title => "a")
       @second = ticket(:title => "B")
       @tickets = [@second, @first]
-      @mock_master.stub!(:get_tickets).and_return(@tickets)
+      scene.ticket_lister.stub!(:last_tickets).and_return(@tickets)
     
       scene.ticket_lister.should_receive(:show_these_tickets).with([@first, @second])
     
@@ -90,14 +88,14 @@ describe TicketSorter do
   
   describe "sort by state" do
     before(:each) do
-      @mock_master.stub!(:get_tickets).and_return([])
+      scene.ticket_lister.stub!(:last_tickets).and_return([])
     end
     
     it "should call ticket lister with the appropriate tickets" do
       @first = ticket(:state => "a")
       @second = ticket(:state => "B")
       @tickets = [@second, @first]
-      @mock_master.stub!(:get_tickets).and_return(@tickets)
+      scene.ticket_lister.stub!(:last_tickets).and_return(@tickets)
       
       scene.ticket_lister.should_receive(:show_these_tickets).with([@first, @second])
       
@@ -116,7 +114,7 @@ describe TicketSorter do
       @first = ticket(:age => Time.now - 500)
       @second = ticket(:age => Time.now + 500)
       @tickets = [@second, @first]
-      @mock_master.stub!(:get_tickets).and_return(@tickets)
+      scene.ticket_lister.stub!(:last_tickets).and_return(@tickets)
       
       scene.ticket_lister.should_receive(:show_these_tickets).with([@first, @second])
       
@@ -129,7 +127,7 @@ describe TicketSorter do
       @first = ticket(:assigned_user_name => "a")
       @second = ticket(:assigned_user_name => "B")
       @tickets = [@second, @first]
-      @mock_master.stub!(:get_tickets).and_return(@tickets)
+      scene.ticket_lister.stub!(:last_tickets).and_return(@tickets)
       
       scene.ticket_lister.should_receive(:show_these_tickets).with([@first, @second])
       

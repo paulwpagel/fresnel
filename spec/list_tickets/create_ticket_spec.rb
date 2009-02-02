@@ -6,9 +6,9 @@ describe CreateTicket do
 
   before(:each) do
     mock_lighthouse
-    producer.production.current_project = mock('Project', :open_tickets => [], 
-                                                          :milestone_titles => ["Milestone One", "Milestone Two"],
-                                                          :user_names => ["Name"])
+    @project.stub!(:milestone_titles).and_return(["Milestone One", "Milestone Two"])
+    @project.stub!(:user_names).and_return(["Name"])
+    producer.production.current_project = @project
   end
 
   uses_scene :list_tickets

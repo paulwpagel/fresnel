@@ -129,5 +129,9 @@ describe Lighthouse::Ticket do
     it "should save the time it was updated at" do
       @ticket.updated_at.should == @now
     end
+    
+    it "should have a list of tags" do
+      @ticket.tag.should == ""
+    end
   end
 end

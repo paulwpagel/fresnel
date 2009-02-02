@@ -25,13 +25,14 @@ module Lighthouse
       end
     end
     
-    attr_reader :id, :project_id, :versions, :updated_at
+    attr_reader :id, :project_id, :versions, :updated_at, :tag
     attr_accessor :state, :title, :body, :body_html, :assigned_user_id, :milestone_id, :tags
     
     def initialize(options={})
       @project_id = options[:project_id]
       @state = "new"
       @versions = []
+      @tag = ""
     end
         
     def save
