@@ -32,7 +32,7 @@ module Lighthouse
       
       def tags
         if @lighthouse_ticket.tag
-          return @lighthouse_ticket.tag.split(" ")
+          return @project.tag_names.find_all { |tag_name| @lighthouse_ticket.tag.match(tag_name) }
         else
           return []
         end
