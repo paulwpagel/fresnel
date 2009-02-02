@@ -67,15 +67,26 @@ ticket_in_list {
   border_color "006699"
   background_color "5A9ECF"
   hover {
-      background_color "FFFFFF"
+      background_color "DDDDDD"
     }
 }
 
 search_bar {
   padding 10
 }
-tag{
+tag {
+  font_size 16
   padding 10
-  border_width 2
-  border_color "#000000"
+  rounded_corner_radius "10"
+  border_width 4
+  border_color "006699"
+  background_color "5A9ECF"
+  font_style :bold
+  horizontal_alignment :center
+  width "20%"  
+  hover {
+    border_width 4
+    border_color "A63101"
+  }
+  
 }
