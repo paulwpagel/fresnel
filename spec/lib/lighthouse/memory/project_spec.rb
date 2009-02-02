@@ -65,4 +65,8 @@ describe Lighthouse::Project do
     @project.users.size.should == 1
   end
   
+  it "should have tags" do
+    @project.tags.should == []
+  end
+  
 end

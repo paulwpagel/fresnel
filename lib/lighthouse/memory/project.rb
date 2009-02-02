@@ -10,12 +10,13 @@ module Lighthouse
       return @@projects
     end
   
-    attr_reader :name, :id, :users
+    attr_reader :name, :id, :users, :tags
   
     def initialize(options = {})
       @name = options[:name]
       @id = nil
       @users = []
+      @tags = []
     end
   
     def milestones
