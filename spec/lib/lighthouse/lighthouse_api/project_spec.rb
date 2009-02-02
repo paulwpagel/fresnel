@@ -80,6 +80,14 @@ describe Lighthouse::LighthouseApi::Project, "tickets" do
       @fresnel_project.open_tickets.should include(@ticket_four)
     end
     
+    it "should update the cached tickets" do
+      Lighthouse::LighthouseApi::Ticket.should_receive(:find_tickets).with(@fresnel_project, "all").and_return(@tickets)
+      
+      @fresnel_project.update_tickets
+      
+      @fresnel_project.all_tickets.should == @tickets
+    end
+    
     it "should have an id" do
       @fresnel_project.id.should == 12345
     end

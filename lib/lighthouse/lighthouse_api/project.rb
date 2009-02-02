@@ -11,7 +11,7 @@ module Lighthouse
         @id = lighthouse_project.id
         @milestones = lighthouse_project.milestones
         @users = ProjectMembership.all_users_for_project(@id)
-        @all_tickets = Lighthouse::LighthouseApi::Ticket.find_tickets(self, "all")
+        reload_tickets
       end
       
       def user_names
@@ -62,7 +62,15 @@ module Lighthouse
         return @lighthouse_project.name.downcase.gsub(" ", "-")
       end
       
+      def update_tickets
+        reload_tickets
+      end
+      
       private ######################
+      
+      def reload_tickets
+        @all_tickets = Lighthouse::LighthouseApi::Ticket.find_tickets(self, "all")
+      end
       
       def user_from_name(user_name)
         return @users.find { |user| user.name == user_name }
