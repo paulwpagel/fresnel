@@ -36,7 +36,7 @@ module ListTickets
     production.current_project
   end
 
-  #TODO - move this method into model
+  #TODO - pwp - move this method into model
   def project_names
     return production.lighthouse_client.projects.collect {|project| project.name}
   end

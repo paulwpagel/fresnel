@@ -10,12 +10,10 @@ class ConvertsTicketToProp
     return wrapper
   end
   
-  private
+  private #######################################
   
   def self.main_prop(ticket)
-    return Limelight::Prop.new(:id => "ticket_#{ticket.id}", :name => "ticket_in_list",
-                               :players => "list_tickets",
-                               :on_mouse_clicked => "view(#{ticket.id})")
+    return Limelight::Prop.new(:id => "ticket_#{ticket.id}", :name => "ticket_in_list", :players => "edit_ticket")
   end
   
   def self.attribute_prop(ticket, attribute)

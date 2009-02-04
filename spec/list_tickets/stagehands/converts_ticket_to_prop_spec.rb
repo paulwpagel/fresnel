@@ -23,12 +23,7 @@ describe ConvertsTicketToProp, "when converting a ticket to a prop" do
   end
   
   it "should set the player" do
-    Limelight::Prop.should_receive(:new).with(hash_including(:players => "list_tickets")).and_return(@prop)
-    ConvertsTicketToProp.convert(@ticket)
-  end
-  
-  it "should set on_mouse_clicked" do
-    Limelight::Prop.should_receive(:new).with(hash_including(:on_mouse_clicked => "view(123)")).and_return(@prop)
+    Limelight::Prop.should_receive(:new).with(hash_including(:players => "edit_ticket")).and_return(@prop)
     ConvertsTicketToProp.convert(@ticket)
   end
   

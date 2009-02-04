@@ -99,3 +99,8 @@ tag {
     border_color "A63101"
   }
 }
+
+ticket_comment {
+  width 500
+  height 80
+}
