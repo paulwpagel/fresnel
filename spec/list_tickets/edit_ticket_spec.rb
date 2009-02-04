@@ -32,6 +32,16 @@ describe EditTicket do
     ticket.should_not be_nil
   end
   
+  it "should remove all other props" do
+    scene.find("ticket_12345").build do 
+      button :text => "Save Ticket", :id => "asdfasdf", :players => "save_ticket"
+    end
+    
+    click_ticket
+    
+    scene.find("asdfasdf").should be_nil
+  end
+  
   it "should set the current ticket on the production" do
     @lighthouse_client.should_receive(:ticket).with(12345, @project).and_return(@ticket)
     
@@ -115,7 +125,6 @@ describe EditTicket do
     prop.name.should == "combo_box"
   end
   
-  
   it "should have a place to enter a comment" do
     click_ticket
     
@@ -137,6 +146,16 @@ describe EditTicket do
     prop = scene.find('ticket_tag')
     prop.name.should == "text_box"
     prop.text.should include("one two three")
+  end
+  
+  it "should not try to open an open edit ticket that is already open" do
+    scene.build do 
+      button :text => "Save Ticket", :id => "save_button", :players => "save_ticket"
+    end
+    
+    click_ticket
+    
+    scene.production.should_not_receive(:lighthouse_client)
   end
   
   def click_ticket
