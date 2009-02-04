@@ -12,14 +12,6 @@ describe CreateTicket do
   end
 
   uses_scene :list_tickets
-
-  it "should add a blank row with the information for adding a ticket" do
-    scene.find('add_ticket_button').button_pressed(nil)
-    
-    add_ticket_group = scene.find('add_ticket_group')
-    add_ticket_group.should_not be_nil
-    scene.ticket_lister.children.should include(add_ticket_group)    
-  end
   
   it "should have an input for the ticket title" do
     scene.find('add_ticket_button').button_pressed(nil)

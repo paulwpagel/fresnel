@@ -33,6 +33,7 @@ main {
         sort_image :id => "assigned_user_image"
       }
     }
+    add_ticket_group :id => "add_ticket_group"
     ticket_lister :id => "ticket_lister"
   }
   tags(:id => "tags") {}

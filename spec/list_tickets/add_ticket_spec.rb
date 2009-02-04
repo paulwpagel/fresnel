@@ -30,7 +30,7 @@ describe AddTicket do
    scene.find("submit_add_ticket_button").button_pressed(nil)                                                          
   end
   
-  it "should remove add_ticket_group_prop when adding the ticket" do
+  it "should remove add_ticket_group's children when adding the ticket" do
     scene.find("add_ticket_button").button_pressed(nil) #TODO - PWP - Remove this tests dependency on the create_button player
     scene.find("add_ticket_title").text = "some title"
     scene.find("add_ticket_description").text = "some description"
@@ -42,10 +42,7 @@ describe AddTicket do
     
     scene.find("submit_add_ticket_button").button_pressed(nil)
     
-    scene.find("add_ticket_group").should be_nil
-    scene.find("add_ticket_milestone").should be_nil
-    scene.find("add_ticket_tags").should be_nil
-    scene.find("submit_add_ticket_button").should be_nil
+    scene.find("add_ticket_group").children.should be_empty
   end
   
   it "should update project list" do 

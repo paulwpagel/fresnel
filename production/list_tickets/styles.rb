@@ -82,7 +82,6 @@ title_bar {
 
 add_ticket_group {
   width 500
-  height 200
 }
 
 tag {

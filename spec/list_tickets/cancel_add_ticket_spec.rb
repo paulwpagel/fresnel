@@ -12,9 +12,8 @@ describe CancelAddTicket do
   
   it "should get rid of the add ticket group when clicked" do
     scene.find("add_ticket_button").button_pressed(nil)
-    
     scene.find("cancel_add_ticket_button").button_pressed(nil)
     
-    scene.find("add_ticket_group").should be_nil
+    scene.find("add_ticket_group").children.should be_empty
   end
 end

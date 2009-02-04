@@ -4,8 +4,7 @@ require 'limelight/prop'
 module CreateTicket
 
   def button_pressed(event)
-    add_ticket_group = Limelight::Prop.new(:id => "add_ticket_group")
-    scene.ticket_lister.add(add_ticket_group)
+    add_ticket_group = scene.find("add_ticket_group")
     build_prop add_ticket_group
     scene.find("add_ticket_milestone").choices = ["None"] + production.current_project.milestone_titles
     scene.find("add_ticket_responsible_person").choices = ["None"] + production.current_project.user_names

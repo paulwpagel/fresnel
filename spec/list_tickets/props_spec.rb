@@ -109,6 +109,11 @@ describe "Props" do
     tags.children.should include(tag_two)
   end
   
+  it "should have add_ticket_group" do
+    prop = scene.find("add_ticket_group")
+    prop.should_not be_nil
+  end
+  
   def tags
     scene.find("tags")
   end

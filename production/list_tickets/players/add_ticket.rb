@@ -16,7 +16,7 @@ module AddTicket
   
     production.lighthouse_client.add_ticket(ticket_options, production.current_project)
     
-    scene.ticket_lister.remove(scene.find("add_ticket_group"))
+    scene.find("add_ticket_group").remove_all
     
     production.current_project.update_tickets
     scene.ticket_lister.show_these_tickets(production.current_project.open_tickets)
