@@ -59,11 +59,6 @@ module Lighthouse
         return tail_versions.collect { |version| api_version(version) }        
       end      
     
-      #TODO - EWM should this method be on TicketVersion instead of Ticket?
-      def changed_attributes_for_version(number)
-        return Lighthouse::LighthouseApi::ChangedAttributes.new(versions[number..versions.length], self).list
-      end
-    
       def description
         return @lighthouse_versions[0].body if @lighthouse_versions[0]
         return ""

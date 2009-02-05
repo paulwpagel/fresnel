@@ -9,12 +9,10 @@ end
 describe Lighthouse::LighthouseApi::ChangedAttributes, "with no changed_attributes" do
   before(:each) do
     @version = mock_version(:title => nil, :state => nil, :assigned_user_name_has_changed? => false, :milestone_title_has_changed? => false)
-    @versions = [@version]
-    @ticket = mock("ticket")
   end
 
   it "should have no changed attributes" do
-    @changed_attributes = Lighthouse::LighthouseApi::ChangedAttributes.new(@versions, @ticket)
+    @changed_attributes = Lighthouse::LighthouseApi::ChangedAttributes.new(@version)
 
     @changed_attributes.list.should == []
   end
@@ -23,14 +21,12 @@ end
 describe Lighthouse::LighthouseApi::ChangedAttributes, "title changed" do
   before(:each) do
     @version = mock_version(:title => "Old Title", :state => nil, :assigned_user_name_has_changed? => false, :milestone_title_has_changed? => false)
-    @versions = [@version]
-    @ticket = mock("ticket", :title => "Current Title")
   end
   
   it "should add a new changed attribute for title" do
-    @changed_attributes = Lighthouse::LighthouseApi::ChangedAttributes.new(@versions, @ticket)
+    @changed_attributes = Lighthouse::LighthouseApi::ChangedAttributes.new(@version)
     changed_attribute = mock("changed_attribute")
-    Lighthouse::LighthouseApi::ChangedAttribute.should_receive(:new).with(@versions, :title, "Current Title").and_return(changed_attribute)
+    Lighthouse::LighthouseApi::ChangedAttribute.should_receive(:new).with(@version, :title).and_return(changed_attribute)
     
     list = @changed_attributes.list
     list.size.should == 1
@@ -41,14 +37,12 @@ end
 describe Lighthouse::LighthouseApi::ChangedAttributes, "state changed" do
   before(:each) do
     @version = mock_version(:state => "Old State", :title => nil, :assigned_user_name_has_changed? => false, :milestone_title_has_changed? => false)
-    @versions = [@version]
-    @ticket = mock("ticket", :state => "Current State")
   end
   
   it "should add a new changed attribute for title" do
-    @changed_attributes = Lighthouse::LighthouseApi::ChangedAttributes.new(@versions, @ticket)
+    @changed_attributes = Lighthouse::LighthouseApi::ChangedAttributes.new(@version)
     changed_attribute = mock("changed_attribute")
-    Lighthouse::LighthouseApi::ChangedAttribute.should_receive(:new).with(@versions, :state, "Current State").and_return(changed_attribute)
+    Lighthouse::LighthouseApi::ChangedAttribute.should_receive(:new).with(@version, :state).and_return(changed_attribute)
     
     list = @changed_attributes.list
     list.size.should == 1
@@ -60,14 +54,12 @@ describe Lighthouse::LighthouseApi::ChangedAttributes, "assigned user changed" d
   before(:each) do
     @version = mock_version(:state => nil, :title => nil, :assigned_user_name_has_changed? => true,
                             :assigned_user_name => "Old Assigned User Name", :milestone_title_has_changed? => false)
-    @versions = [@version]
-    @ticket = mock("ticket", :assigned_user_name => "Current Assigned User Name")
   end
   
   it "should add a new changed attribute for title" do
-    @changed_attributes = Lighthouse::LighthouseApi::ChangedAttributes.new(@versions, @ticket)
+    @changed_attributes = Lighthouse::LighthouseApi::ChangedAttributes.new(@version)
     changed_attribute = mock("changed_attribute")
-    Lighthouse::LighthouseApi::ChangedAttribute.should_receive(:new).with(@versions, :assigned_user_name, "Current Assigned User Name").and_return(changed_attribute)
+    Lighthouse::LighthouseApi::ChangedAttribute.should_receive(:new).with(@version, :assigned_user_name).and_return(changed_attribute)
     
     list = @changed_attributes.list
     list.size.should == 1
@@ -79,14 +71,12 @@ describe Lighthouse::LighthouseApi::ChangedAttributes, "milestone title changed"
   before(:each) do
     @version = mock_version(:state => nil, :title => nil, :milestone_title_has_changed? => true,
                             :milestone_title => "Old Milestone Title", :assigned_user_name_has_changed? => false)
-    @versions = [@version]
-    @ticket = mock("ticket", :milestone_title => "Current Milestone Title")
   end
   
   it "should add a new changed attribute for title" do
-    @changed_attributes = Lighthouse::LighthouseApi::ChangedAttributes.new(@versions, @ticket)
+    @changed_attributes = Lighthouse::LighthouseApi::ChangedAttributes.new(@version)
     changed_attribute = mock("changed_attribute")
-    Lighthouse::LighthouseApi::ChangedAttribute.should_receive(:new).with(@versions, :milestone_title, "Current Milestone Title").and_return(changed_attribute)
+    Lighthouse::LighthouseApi::ChangedAttribute.should_receive(:new).with(@version, :milestone_title).and_return(changed_attribute)
     
     list = @changed_attributes.list
     list.size.should == 1

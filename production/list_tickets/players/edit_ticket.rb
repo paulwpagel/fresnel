@@ -36,11 +36,10 @@ module EditTicket
         text_area :id => "ticket_comment", :name => "ticket_comment"
       }
       
-      #TODO - EWM - push some of the logic back onto the model      
       @ticket.versions.each_with_index do |version, index|
         row {
           change_message = ""
-          @ticket.changed_attributes_for_version(index).each do |attribute|
+          version.changed_attributes.each do |attribute|
             change_message << "#{attribute.name} changed from \"#{attribute.old_value}\" to \"#{attribute.new_value}\"\n"
           end
           text =  "#{version.created_by}\n#{version.timestamp}\n#{change_message}\n#{version.comment}"
