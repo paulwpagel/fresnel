@@ -11,7 +11,8 @@ describe SaveTicket, "on_click" do
     producer.production.current_ticket = @mock_ticket
     @project.stub!(:user_id).and_return("User ID")
     @project.stub!(:milestone_id).and_return("Milestone ID")
-    @project.stub!(:open_tickets).and_return([@mock_ticket])
+    @open_tickets = [@mock_ticket]
+    @project.stub!(:open_tickets).and_return(@open_tickets)
     @project.stub!(:user_names).and_return(["User One", "User Two", "User Three"])
     producer.production.current_project = @project
     @lighthouse_client.stub!(:ticket).and_return(@mock_ticket)
@@ -101,7 +102,21 @@ describe SaveTicket, "on_click" do
     
     press_save_button
   end
+  
+  it "should refresh the list of tickets after it saves the ticket" do
+    @mock_ticket.should_receive(:save).ordered
+    @project.should_receive(:update_tickets).ordered
+    scene.ticket_lister.should_receive(:show_these_tickets).with(@open_tickets).ordered
     
+    press_save_button
+  end
+  
+  it "should not have a save button after it is clicked" do
+    press_save_button
+    
+    scene.find("save_button").should be_nil
+  end
+  
   def press_save_button
     scene.find("save_button").button_pressed(nil)
   end

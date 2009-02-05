@@ -1,7 +1,9 @@
 module SaveTicket
   def button_pressed(event)
     update_ticket
-    refresh_ticket
+    save_current_ticket_in_production
+    current_project.update_tickets
+    scene.ticket_lister.show_these_tickets(current_project.open_tickets)
   end
   
   def update_ticket
@@ -14,7 +16,7 @@ module SaveTicket
     current_ticket.save
   end
   
-  def refresh_ticket
+  def save_current_ticket_in_production
     production.current_ticket = production.lighthouse_client.ticket(current_ticket.id, current_project)
   end
   
