@@ -48,6 +48,7 @@ module Lighthouse
     
       def save
         @lighthouse_ticket.save
+        @project.update_tickets
       end
 
       def assigned_user_name

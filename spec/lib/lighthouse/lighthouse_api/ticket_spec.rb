@@ -239,8 +239,9 @@ describe Lighthouse::LighthouseApi::Ticket, "editing" do
     @fresnel_ticket = Lighthouse::LighthouseApi::Ticket.new(@lighthouse_ticket, @project)
   end
   
-  it "should have a save method" do
-    @lighthouse_ticket.should_receive(:save)
+  it "should have a save method that updates the project's tickets after saving" do
+    @lighthouse_ticket.should_receive(:save).ordered
+    @project.should_receive(:update_tickets).ordered
     
     @fresnel_ticket.save
   end

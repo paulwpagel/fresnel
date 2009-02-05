@@ -105,7 +105,6 @@ describe SaveTicket, "on_click" do
   
   it "should refresh the list of tickets after it saves the ticket" do
     @mock_ticket.should_receive(:save).ordered
-    @project.should_receive(:update_tickets).ordered
     scene.ticket_lister.should_receive(:show_these_tickets).with(@open_tickets).ordered
     
     press_save_button
