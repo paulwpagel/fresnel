@@ -2,7 +2,6 @@ module SaveTicket
   def button_pressed(event)
     update_ticket
     refresh_ticket
-    scene.load('view_ticket')
   end
   
   def update_ticket
