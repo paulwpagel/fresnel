@@ -9,6 +9,9 @@ describe Lighthouse::LighthouseApi::TicketVersion do
                                 :updated_at => @time, :diffable_attributes => @diffable_attributes)
     @project = mock("project", :id => "project_id", :user_name => nil)
     @ticket_version = Lighthouse::LighthouseApi::TicketVersion.new(@lighthouse_version, @project)
+    @attribute_list = [mock("attribute")]
+    changed_attributes = mock("changed_attributes", :list => @attribute_list)
+    Lighthouse::LighthouseApi::ChangedAttributes.stub!(:new).and_return(changed_attributes)
   end
   
   it "should have a comment" do
@@ -47,5 +50,35 @@ describe Lighthouse::LighthouseApi::TicketVersion do
     Lighthouse::LighthouseApi::DiffableAttributes.stub!(:new).and_return(fresnel_attributes)
     
     @ticket_version.diffable_attributes.should == fresnel_attributes
+  end
+  
+  it "should have a title" do
+    @lighthouse_version.stub!(:title).and_return("Current Title")
+    
+    @ticket_version.title.should == "Current Title"
+  end
+  
+  it "should have state" do
+    @lighthouse_version.stub!(:state).and_return("Current State")
+    
+    @ticket_version.state.should == "Current State"
+  end
+  
+  it "should have a milestone_title" do
+    @lighthouse_version.stub!(:milestone_id).and_return(12345)
+    @project.should_receive(:milestone_title).with(12345).and_return("Milestone Title")
+    
+    @ticket_version.milestone_title.should == "Milestone Title"
+  end
+  
+  it "should have an assigned user name" do
+    @lighthouse_version.stub!(:assigned_user_id).and_return(67890)
+    @project.should_receive(:user_name).with(67890).and_return("User Name")
+    
+    @ticket_version.assigned_user_name.should == "User Name"
+  end
+  
+  it "should return the list of changed attributes" do
+    @ticket_version.changed_attributes.should == @attribute_list
   end
 end

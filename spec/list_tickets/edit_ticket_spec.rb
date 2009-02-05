@@ -11,14 +11,13 @@ describe EditTicket do
     @project.stub!(:milestone_titles).and_return(["Goal One", "Goal Two"])
     @project.stub!(:milestone_title).and_return("Goal Two")
 
-    version_one = mock("version", :comment => "Comment One", :created_by => "Version User One", :timestamp => "Time One")
-    version_two = mock("version", :comment => "Comment Two", :created_by => "Version User Two", :timestamp => "Time Two")
+    attribute_one = mock("changed_attribute", :name => "Name", :old_value => "Old Value", :new_value => "New Value")    
+    version_one = mock("version", :comment => "Comment One", :created_by => "Version User One", :timestamp => "Time One", :changed_attributes => [attribute_one])
+    version_two = mock("version", :comment => "Comment Two", :created_by => "Version User Two", :timestamp => "Time Two", :changed_attributes => [attribute_one])
     versions = [version_one, version_two]
 
-    attribute_one = mock("changed_attribute", :name => "Name", :old_value => "Old Value", :new_value => "New Value")    
     @ticket = mock("ticket", :id => 12345, :title => "Title", :null_object => true, :assigned_user_name => "Roger", :state => "open",
-                             :description => "Some Description", :versions => versions, :changed_attributes_for_version => [attribute_one], 
-                             :milestone_id => 12345, :tag => "one two three")
+                             :description => "Some Description", :versions => versions, :milestone_id => 12345, :tag => "one two three")
     @lighthouse_client.stub!(:ticket).and_return(@ticket)
     @project.stub!(:open_tickets).and_return([@ticket])
     producer.production.current_project = @project

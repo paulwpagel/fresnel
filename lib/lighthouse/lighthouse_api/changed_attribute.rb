@@ -1,10 +1,9 @@
 module Lighthouse
   module LighthouseApi
     class ChangedAttribute
-      def initialize(versions, name, current_value)
+      def initialize(version, name)
         @name = name
-        @versions = versions
-        @current_value = current_value
+        @version = version
       end
     
       def name
@@ -12,14 +11,11 @@ module Lighthouse
       end
 
       def old_value
-        return @versions.first.diffable_attributes.send(@name)
+        return @version.diffable_attributes.send(@name)
       end
     
       def new_value
-        @versions[1..@versions.length].each do |version|
-          return version.diffable_attributes.send(@name) if version.diffable_attributes.send(@name)
-        end
-        return @current_value
+        return @version.send(@name)
       end
     
     end

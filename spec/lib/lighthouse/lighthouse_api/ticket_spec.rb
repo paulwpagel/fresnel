@@ -259,31 +259,6 @@ describe Lighthouse::LighthouseApi::Ticket, "editing" do
   end
 end
 
-describe Lighthouse::LighthouseApi::Ticket, "changed attributes" do
-  before(:each) do
-    @project = mock("project", :id => "project_id")
-    lighthouse_version = mock("lighthouse_version")
-    @versions = [lighthouse_version, lighthouse_version, lighthouse_version, lighthouse_version]
-    @fresnel_version = mock('fresnel_version')
-    Lighthouse::LighthouseApi::TicketVersion.stub!(:new).and_return(@fresnel_version)
-    @lighthouse_ticket = mock("Lighthouse::Ticket", :versions => @versions, :assigned_user_id => nil)
-    @fresnel_ticket = Lighthouse::LighthouseApi::Ticket.new(@lighthouse_ticket, @project)    
-    @changed_attributes_list = mock('changed_attributes_list')
-    @changed_attributes = mock("changed_attributes", :list => @changed_attributes_list)
-    Lighthouse::LighthouseApi::ChangedAttributes.stub!(:new).and_return(@changed_attributes)
-  end
-  
-  it "should create a changed attributes with the versions from the given one" do
-    Lighthouse::LighthouseApi::ChangedAttributes.should_receive(:new).with([@fresnel_version, @fresnel_version], @fresnel_ticket).and_return(@changed_attributes)
-    
-    @fresnel_ticket.changed_attributes_for_version(1)
-  end
-  
-  it "should return the list ofchanged_attributes" do    
-    @fresnel_ticket.changed_attributes_for_version(1).should == @changed_attributes_list
-  end
-end
-
 describe Lighthouse::LighthouseApi::Ticket, "milestone_title" do
   before(:each) do
     @project = mock("project", :id => "project_id", :milestone_title => nil)
