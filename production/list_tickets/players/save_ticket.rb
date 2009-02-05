@@ -3,7 +3,6 @@ module SaveTicket
   def button_pressed(event)
     update_ticket
     save_current_ticket_in_production
-    current_project.update_tickets
     scene.ticket_lister.show_these_tickets(current_project.open_tickets)
   end
   
