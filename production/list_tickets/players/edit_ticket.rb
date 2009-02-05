@@ -35,7 +35,8 @@ module EditTicket
         comment_header :text => "Add Comment:"
         text_area :id => "ticket_comment", :name => "ticket_comment"
       }
-            
+      
+      #TODO - EWM - push some of the logic back onto the model      
       @ticket.versions.each_with_index do |version, index|
         row {
           change_message = ""
