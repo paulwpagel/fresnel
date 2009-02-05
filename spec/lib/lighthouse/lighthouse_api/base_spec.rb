@@ -134,4 +134,12 @@ describe Lighthouse::LighthouseApi, "find_project" do
     
     Lighthouse::LighthouseApi.projects.should == projects
   end
+  
+  it "should get project_names" do
+    Lighthouse::Project.stub!(:find).and_return([@project1, @project2])
+    
+    Lighthouse::LighthouseApi.project_names.size.should == 2
+    Lighthouse::LighthouseApi.project_names.should include("one")
+    Lighthouse::LighthouseApi.project_names.should include("two")
+  end
 end

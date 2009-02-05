@@ -2,7 +2,6 @@ require 'ticket_lister'
 require 'ticket_master'
 
 module ListTickets
-  
   prop_reader :ticket_lister
   
   def ticket_master
@@ -14,7 +13,7 @@ module ListTickets
 
     ticket_master.show_tickets("Open Tickets")
     scene.find("age_image").style.background_image = "images/descending.png"
-    scene.find("project_selector").choices = project_names
+    scene.find("project_selector").choices = production.lighthouse_client.project_names
     populate_tags
   end
   
@@ -36,8 +35,4 @@ module ListTickets
     production.current_project
   end
 
-  #TODO - pwp - move this method into model
-  def project_names
-    return production.lighthouse_client.projects.collect {|project| project.name}
-  end
 end

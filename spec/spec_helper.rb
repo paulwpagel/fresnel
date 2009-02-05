@@ -29,6 +29,6 @@ def mock_lighthouse
   @project = create_mock_project
                                        
   @lighthouse_client = mock("lighthouse module", :authenticate => nil, :add_ticket => nil, :milestones => [], :milestone_title => "",
-                                                 :find_project => @project, :projects => [], :ticket => nil)
+                                                 :find_project => @project, :projects => [], :ticket => nil, :project_names => ["one"])
   producer.production.lighthouse_client = @lighthouse_client
 end

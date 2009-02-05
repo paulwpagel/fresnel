@@ -60,7 +60,6 @@ module EditTicket
     end
   end
   
-  
   def ticket_id
     return id.split("_")[1].to_i
   end

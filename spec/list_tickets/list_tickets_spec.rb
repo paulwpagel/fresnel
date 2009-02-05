@@ -12,12 +12,12 @@ describe ListTickets do
   
   uses_scene :list_tickets
   
-  it "should have a ticket_lister" do
-    lister = mock('lister')
-    @scene.should_receive(:find).with("ticket_lister").and_return(lister)
-    
-    @scene.ticket_lister.should == lister
-  end
+  # it "should have a ticket_lister" do
+  #   lister = mock('lister')
+  #   @scene.should_receive(:find).with("ticket_lister").and_return(lister)
+  #   
+  #   @scene.ticket_lister.should == lister
+  # end
   
   it "should find the age image" do
     scene.find("age_image").style.background_image.should == "images/descending.png"
@@ -33,7 +33,6 @@ describe ListTickets, "view_ticket" do
     TicketMaster.stub!(:new).and_return(@ticket_master)
     @ticket = mock("ticket")    
     @lighthouse_client.stub!(:ticket).and_return(@ticket)
-    # @current_project = mock("project", :id => "project_id")
     producer.production.current_project = @project
   end
   
@@ -61,10 +60,8 @@ describe ListTickets, "ProjectSelector" do
   
   before(:each) do
     mock_lighthouse
-    @project.stub!(:name).and_return("One")
-    @projects = [@project, mock('Project 2', :name => "Two", :open_tickets => [])]
     producer.production.current_project = @project
-    @lighthouse_client.stub!(:projects).and_return(@projects)
+    @lighthouse_client.stub!(:project_names).and_return(["One", "Two"])
   end
 
   uses_scene :list_tickets

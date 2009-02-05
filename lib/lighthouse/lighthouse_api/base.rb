@@ -35,6 +35,10 @@ module Lighthouse
       return nil
     end
     
+    def self.project_names
+      return projects.collect {|project| project.name}
+    end
+    
     def self.add_ticket(options, project)
       ticket = Lighthouse::Ticket.new(:project_id => project.id)
       ticket.title = options[:title]
