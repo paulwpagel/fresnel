@@ -162,3 +162,4 @@ describe EditTicket do
     scene.find("ticket_12345").mouse_clicked(nil)
   end
 end
+

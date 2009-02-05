@@ -121,3 +121,12 @@ describe SaveTicket, "on_click" do
     scene.find("save_button").button_pressed(nil)
   end
 end
+
+describe SaveTicket, "stub event calls" do
+  class TestSaveTicket
+    include SaveTicket
+  end
+  it "should capture mouse_clicked" do
+    TestSaveTicket.new.respond_to?(:mouse_clicked).should be(true)
+  end
+end
