@@ -14,6 +14,10 @@ module Lighthouse
         reload_tickets
       end
       
+      def name
+        return @lighthouse_project.name
+      end
+      
       def user_names
         @users.collect {|user| user.name }
       end

@@ -16,18 +16,13 @@ describe "Add Ticket Integration Test" do
     
     scene = current_scene(producer)
     
-    scene.name.should == "project"
-    scene.find("fresnel").mouse_clicked(nil)
+    scene.name.should == "list_tickets"
     
     add_ticket(producer)
     
     scene = current_scene(producer)
     
     scene.find("ticket_type").text = "All Tickets"
-  end
-  
-  it "should add multiple tickets" do
-
   end
   
 end

@@ -84,7 +84,6 @@ describe ListTickets, "tag lister" do
     @player_under_test.stub!(:production).and_return(@production)
   end
     
-  #TODO - EWM - figure out a better way to test this
   it "should show the projects tags when the scene is opened" do
     tag_lister = mock("tag_lister")
     @scene.stub!(:tag_lister).and_return(tag_lister)

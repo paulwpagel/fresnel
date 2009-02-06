@@ -135,11 +135,27 @@ describe Lighthouse::LighthouseApi, "find_project" do
     Lighthouse::LighthouseApi.projects.should == projects
   end
   
+  it "should return the first project as a LighthouseApi project" do
+    Lighthouse::LighthouseApi::Project.should_receive(:new).with(@project1).and_return(@fresnel_project)
+    
+    Lighthouse::LighthouseApi.first_project.should == @fresnel_project
+  end
+  
   it "should get project_names" do
     Lighthouse::Project.stub!(:find).and_return([@project1, @project2])
     
     Lighthouse::LighthouseApi.project_names.size.should == 2
     Lighthouse::LighthouseApi.project_names.should include("one")
     Lighthouse::LighthouseApi.project_names.should include("two")
+  end
+end
+
+describe Lighthouse::LighthouseApi, "get starting project" do
+  it "should get the starting project" do
+    chooser = mock("FirstProjectChooser")
+    Lighthouse::LighthouseApi::FirstProjectChooser.stub!(:new).and_return(chooser)
+    chooser.should_receive(:get_project_name).and_return("Project One")
+    
+    Lighthouse::LighthouseApi.get_starting_project_name.should == "Project One"
   end
 end
