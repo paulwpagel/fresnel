@@ -5,9 +5,9 @@ main {
 	horizontal_alignment "center"
 	vertical_scrollbar "on"
   secondary_background_color "f7f7f7"
+  gradient :on
   gradient_angle 270
   gradient_penetration 100
-  gradient :on
 }
 
 input_group {

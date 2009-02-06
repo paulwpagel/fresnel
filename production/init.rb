@@ -19,4 +19,5 @@ end
 require "lighthouse/adapter"
 require 'lighthouse/lighthouse_api/base'
 require "credential"
+require 'scene_chooser'
 production.lighthouse_client = Lighthouse::LighthouseApi
