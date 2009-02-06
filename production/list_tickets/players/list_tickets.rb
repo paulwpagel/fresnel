@@ -10,6 +10,9 @@ module ListTickets
   end
   
   def scene_opened(event)
+    # TODO - EWM fix how we are testing this method
+    # This order is important.  Setting the choices on the project selector will update the project name in the credentials
+    #     This will cause the first project to be loaded as the default project regardless of what was saved before
     project_name = production.lighthouse_client.get_starting_project_name
     scene.find("project_selector").choices = production.lighthouse_client.project_names
     scene.find("project_selector").value = project_name
