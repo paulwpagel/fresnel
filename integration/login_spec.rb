@@ -11,7 +11,7 @@ describe "Login Integration Test" do
     login_with_credentials(scene)
     
     scene = producer.production.theater['default'].current_scene
-    scene.name.should == "project"
+    scene.name.should == "list_tickets"
   end
     
 end
