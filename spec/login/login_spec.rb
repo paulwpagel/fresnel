@@ -39,22 +39,20 @@ describe Login do
     scene.log_in
   end
   
-  it "should create an object to save the user's credentials if the check box is checked and authentication is successful" do
+  it "should save the user's credentials if the check box is checked and authentication is successful" do
     @lighthouse_client.stub!(:login_to).and_return(true)
     scene.find("save_credentials").checked = true
     credential = mock(Credential)
-    Credential.stub!(:new).and_return(credential)
-    credential.should_receive(:save)
+    Credential.should_receive(:set).with(:account => "checking", :login => "Paul Pagel", :password => "wouldntyaouliketoknow", :save_credentials => true)
+    Credential.should_receive(:save)
     
     scene.load_inputs
     scene.log_in
   end
   
-  it "should not save the credentials if the check box is not checked" do
+  it "should set the credentials to nothing if the check box is not checked" do
     @lighthouse_client.stub!(:login_to).and_return(true)
-    credential = mock(Credential)
-    Credential.stub!(:new).and_return(credential)
-    credential.should_not_receive(:save)
+    Credential.should_receive(:set).with()
     
     scene.load_inputs
     scene.log_in
