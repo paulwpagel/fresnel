@@ -6,7 +6,7 @@ describe Credential do
     Encrypter.stub!(:encrypt).and_return("encrypted data")
     @file = mock(File, :write => nil)
     File.stub!(:open).and_yield(@file)
-    Credential.set(:account => "AFlight", :login => "paul", :password => "guessingwontwork", :project_name => "Project")
+    Credential.set(:account => "AFlight", :login => "paul", :password => "guessingwontwork", :project_name => "Project", :save_credentials => true)
   end
   
   it "should have account, login, password and project_name" do
@@ -14,6 +14,22 @@ describe Credential do
     Credential.login.should == "paul"
     Credential.password.should == "guessingwontwork"
     Credential.project_name.should == "Project"
+  end
+  
+  it "should know if the user wants to save credentials" do
+    Credential.save_credentials?.should == true
+  end
+  
+  it "should know if the user does not want to save credentials" do
+    Credential.set(:save_credentials => false)
+    
+    Credential.save_credentials?.should == false
+  end
+  
+  it "should return false if save_credentials is nil" do
+    Credential.set
+    
+    Credential.save_credentials?.should == false
   end
   
   it "should respond to save" do

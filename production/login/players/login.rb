@@ -34,8 +34,10 @@ module Login
   
   def handle_successful_login
     if scene.find("save_credentials").checked?
-      Credential.set(:account => @account.text, :login => @username.text, :password => @password.text)
+      Credential.set(:account => @account.text, :login => @username.text, :password => @password.text, :save_credentials => true)
       Credential.save
+    else
+      Credential.set
     end
     scene.load('list_tickets')
   end

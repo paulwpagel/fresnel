@@ -15,6 +15,11 @@ class Credential
     end
   end
   
+  def self.save_credentials?
+    return true if @@save_credentials
+    return false
+  end
+  
   def self.clear_saved
     File.delete(@@filename) if File.exist?(@@filename)
   end
@@ -24,6 +29,7 @@ class Credential
     Credential.login = options[:login]
     Credential.password = options[:password]
     Credential.project_name = options[:project_name]
+    @@save_credentials = options[:save_credentials]
   end
 
   def self.save

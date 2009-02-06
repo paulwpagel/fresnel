@@ -43,16 +43,16 @@ describe Login do
     @lighthouse_client.stub!(:login_to).and_return(true)
     scene.find("save_credentials").checked = true
     credential = mock(Credential)
-    Credential.should_receive(:set).with(:account => "checking", :login => "Paul Pagel", :password => "wouldntyaouliketoknow")
+    Credential.should_receive(:set).with(:account => "checking", :login => "Paul Pagel", :password => "wouldntyaouliketoknow", :save_credentials => true)
     Credential.should_receive(:save)
     
     scene.load_inputs
     scene.log_in
   end
   
-  it "should not set the credentials if the check box is not checked" do
+  it "should set the credentials to nothing if the check box is not checked" do
     @lighthouse_client.stub!(:login_to).and_return(true)
-    Credential.should_not_receive(:set)
+    Credential.should_receive(:set).with()
     
     scene.load_inputs
     scene.log_in
