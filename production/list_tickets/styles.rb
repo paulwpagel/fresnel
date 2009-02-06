@@ -1,5 +1,15 @@
+ticket_content {
+  width "85%"
+}
+
+side_column {
+  width "15%"
+  right_border_width 6
+  right_border_color "5A9ECF"
+  height "96%"
+}
+
 sort_image {
-  # background_image "images/desc.png"
   background_image_fill_strategy "static"
   top_margin 9
   width 20
