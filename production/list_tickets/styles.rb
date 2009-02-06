@@ -103,7 +103,7 @@ tag {
   background_color "5A9ECF"
   font_style :bold
   horizontal_alignment :center
-  width "20%"  
+  width "100%"  
   hover {
     border_width 4
     border_color "A63101"

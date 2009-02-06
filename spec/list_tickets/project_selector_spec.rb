@@ -34,4 +34,10 @@ describe ProjectSelector do
     scene.find("project_selector").value_changed(nil)
   end
   
+  it "should show the project's tags" do
+    @lighthouse_client.should_receive(:find_project).ordered.and_return(@project2)
+    scene.tag_lister.should_receive(:show_project_tags).ordered
+    
+    scene.find("project_selector").value_changed(nil)
+  end
 end

@@ -74,3 +74,24 @@ describe ListTickets, "ProjectSelector" do
   
 end
 
+describe ListTickets, "tag lister" do
+  before(:each) do
+    @player_under_test = Object.new
+    @player_under_test.extend(ListTickets)
+    @scene = mock("scene", :null_object => true)
+    @player_under_test.stub!(:scene).and_return(@scene)
+    @production = mock("production", :null_object => true)
+    @player_under_test.stub!(:production).and_return(@production)
+  end
+    
+  #TODO - EWM - figure out a better way to test this
+  it "should show the projects tags when the scene is opened" do
+    tag_lister = mock("tag_lister")
+    @scene.stub!(:tag_lister).and_return(tag_lister)
+    
+    tag_lister.should_receive(:show_project_tags)
+    
+    @player_under_test.scene_opened(nil)
+  end
+    
+end

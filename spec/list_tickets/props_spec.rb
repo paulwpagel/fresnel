@@ -89,32 +89,14 @@ describe "Props" do
     prop = scene.find("add_ticket_button")
     prop.players.should include("create_ticket")
   end
-  
-  it "should have a prop to hold all the tag names" do
-    prop = tags
-    prop.should_not be_nil
+
+  it "should have a tag_lister" do
+    tag_lister = scene.find("tag_lister")
+    tag_lister.name.should == "tag_lister"
   end
-  
-  it "should make a prop for one tag" do
-    tag_one = scene.find("tag_1")
-    tag_one.name.should == "tag"
-    tag_one.text.should == "Tag One"
-    tags.children.should include(tag_one)
-  end
-  
-  it "should make a prop for the second tag" do
-    tag_two = scene.find("tag_2")
-    tag_two.name.should == "tag"
-    tag_two.text.should == "Tag Two"
-    tags.children.should include(tag_two)
-  end
-  
+
   it "should have add_ticket_group" do
     prop = scene.find("add_ticket_group")
     prop.should_not be_nil
-  end
-  
-  def tags
-    scene.find("tags")
   end
 end

@@ -7,7 +7,7 @@ main {
   }
 
   side_column {
-    tags(:id => "tags") {}
+    tag_lister :id => "tag_lister"
   }
   
   ticket_content {
