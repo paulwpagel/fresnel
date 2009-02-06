@@ -2,7 +2,7 @@ require "encrypter"
 require "lighthouse/lighthouse_api/base"
 
 class Credential
-  attr_reader :account, :login, :password
+  attr_reader :account, :login, :password, :project_name
 
   @@filename = File.expand_path("~/.fresnel_credentials")
   
@@ -19,9 +19,10 @@ class Credential
   end
   
   def initialize(options = {})
-    @account ||= options[:account]
-    @login ||= options[:login]
-    @password ||= options[:password]
+    @account = options[:account]
+    @login = options[:login]
+    @password = options[:password]
+    @project_name = options[:project_name]
   end
   
   def save
@@ -29,6 +30,7 @@ class Credential
       file.write("#{Encrypter.encrypt(@account)}\n")
       file.write("#{Encrypter.encrypt(@login)}\n")
       file.write("#{Encrypter.encrypt(@password)}\n")
+      file.write("#{Encrypter.encrypt(@project_name)}\n")
     end
   end
   
@@ -49,7 +51,7 @@ class Credential
     lines = file.read.split("\n")
     if lines.size >= 3
       decrypted_data = lines.collect{ |line| Encrypter.decrypt(line) }
-      return Credential.new(:account => decrypted_data[0], :login => decrypted_data[1], :password => decrypted_data[2])
+      return Credential.new(:account => decrypted_data[0], :login => decrypted_data[1], :password => decrypted_data[2], :project_name => decrypted_data[3])
     else
       return nil
     end

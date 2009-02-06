@@ -6,13 +6,14 @@ describe Credential do
     Encrypter.stub!(:encrypt).and_return("encrypted data")
     @file = mock(File, :write => nil)
     File.stub!(:open).and_yield(@file)
-    @credential = Credential.new(:account => "AFlight", :login => "paul", :password => "guessingwontwork")
+    @credential = Credential.new(:account => "AFlight", :login => "paul", :password => "guessingwontwork", :project_name => "Project")
   end
   
-  it "should have account, login, and password" do
+  it "should have account, login, password and project_name" do
     @credential.account.should == "AFlight"
     @credential.login.should == "paul"
     @credential.password.should == "guessingwontwork"
+    @credential.project_name.should == "Project"
   end
   
   it "should respond to save" do
@@ -37,6 +38,12 @@ describe Credential do
     @credential.save
   end
   
+  it "should encrypt the project_name on save" do
+    Encrypter.should_receive(:encrypt).with("Project")
+    
+    @credential.save
+  end
+  
   it "should make a file to save the encrypted data" do
     File.should_receive(:open).with(anything(), "w+")
     
@@ -44,7 +51,7 @@ describe Credential do
   end
   
   it "should write the encrypted data" do
-    @file.should_receive(:write).with("encrypted data\n").exactly(3).times
+    @file.should_receive(:write).with("encrypted data\n").exactly(4).times
     
     @credential.save
   end
@@ -52,10 +59,10 @@ end
 
 describe Credential, "load_saved" do
   before(:each) do
-    Encrypter.stub!(:decrypt).and_return("account", "login", "password")
-    @file = StringIO.new("encrypted account\nencrypted login\nencrypted password\n")
+    Encrypter.stub!(:decrypt).and_return("account", "login", "password", "project_name")
+    @file = StringIO.new("encrypted account\nencrypted login\nencrypted password\nencrypted project_name\n")
     File.stub!(:open).and_yield(@file)
-    @credential = Credential.new(:account => "AFlight", :login => "paul", :password => "guessingwontwork")
+    @credential = Credential.new(:account => "AFlight", :login => "paul", :password => "guessingwontwork", :project_name => "Project")
     Lighthouse::LighthouseApi.stub!(:login_to).and_return(true)
     File.stub!(:exist?).and_return(true)
   end
@@ -83,6 +90,7 @@ describe Credential, "load_saved" do
     Encrypter.should_receive(:decrypt).with("encrypted account")
     Encrypter.should_receive(:decrypt).with("encrypted login")
     Encrypter.should_receive(:decrypt).with("encrypted password")
+    Encrypter.should_receive(:decrypt).with("encrypted project_name")
     
     Credential.load_saved
   end
@@ -101,7 +109,7 @@ describe Credential, "load_saved" do
   
   it "should create a valid credential if the login was successful" do
     Lighthouse::LighthouseApi.stub!(:login_to).and_return(false)
-    Credential.should_receive(:new).with(:account => "account", :login => "login", :password => "password").and_return(@credential)
+    Credential.should_receive(:new).with(:account => "account", :login => "login", :password => "password", :project_name => "project_name").and_return(@credential)
     
     Credential.load_saved
   end
