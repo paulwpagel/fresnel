@@ -17,12 +17,21 @@ module EditTicket
       }
       row {
         cell {
+          edit_ticket_label :text => "Title:"
           text_box :id => "ticket_title", :width => 250, :text => @ticket.title
         }
         cell {
           combo_box :id => "ticket_state", :choices => @project.all_states, :value => @ticket.state
         }
       }
+      row {
+        assigned_user_header :text => "Assigned User:"
+        combo_box :id => "ticket_assigned_user", :choices => [""] + @project.user_names, :value => @ticket.assigned_user_name
+      }
+      row {
+        description_header :text => "Description:"
+        ticket_description :id => "ticket_description", :text => @ticket.description
+      }      
       row {
         label :text => "Tags:"
         text_box :id => "ticket_tag", :width => 350, :text => @ticket.tag
@@ -48,14 +57,7 @@ module EditTicket
 
       end
 
-      row {
-        assigned_user_header :text => "Assigned User:"
-        combo_box :id => "ticket_assigned_user", :choices => [""] + @project.user_names, :value => @ticket.assigned_user_name
-      }
-      row {
-        description_header :text => "Description:"
-        ticket_description :id => "ticket_description", :text => @ticket.description
-      }      
+     
     end
   end
   
