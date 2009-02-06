@@ -16,7 +16,7 @@ require 'spec'
 
 $PRODUCTION_PATH = File.expand_path(File.dirname(__FILE__) + "/../production")
 
-$visual = true
+$visual = false
 
 def press_button(button_prop_name, scene)
   sleep 2 if $visual
