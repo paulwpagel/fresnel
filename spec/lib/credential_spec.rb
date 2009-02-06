@@ -6,55 +6,64 @@ describe Credential do
     Encrypter.stub!(:encrypt).and_return("encrypted data")
     @file = mock(File, :write => nil)
     File.stub!(:open).and_yield(@file)
-    @credential = Credential.new(:account => "AFlight", :login => "paul", :password => "guessingwontwork", :project_name => "Project")
+    Credential.set(:account => "AFlight", :login => "paul", :password => "guessingwontwork", :project_name => "Project")
   end
   
   it "should have account, login, password and project_name" do
-    @credential.account.should == "AFlight"
-    @credential.login.should == "paul"
-    @credential.password.should == "guessingwontwork"
-    @credential.project_name.should == "Project"
+    Credential.account.should == "AFlight"
+    Credential.login.should == "paul"
+    Credential.password.should == "guessingwontwork"
+    Credential.project_name.should == "Project"
   end
   
   it "should respond to save" do
-    lambda{@credential.save}.should_not raise_error
+    lambda{Credential.save}.should_not raise_error
   end
   
   it "should encrypt the password on save" do
     Encrypter.should_receive(:encrypt).with("guessingwontwork")
     
-    @credential.save
+    Credential.save
   end
   
   it "should encrypt the username on save" do
     Encrypter.should_receive(:encrypt).with("paul")
     
-    @credential.save
+    Credential.save
   end
   
   it "should encrypt the account on save" do
     Encrypter.should_receive(:encrypt).with("AFlight")
     
-    @credential.save
+    Credential.save
   end
   
   it "should encrypt the project_name on save" do
     Encrypter.should_receive(:encrypt).with("Project")
     
-    @credential.save
+    Credential.save
   end
   
   it "should make a file to save the encrypted data" do
     File.should_receive(:open).with(anything(), "w+")
     
-    @credential.save
+    Credential.save
   end
   
   it "should write the encrypted data" do
     @file.should_receive(:write).with("encrypted data\n").exactly(4).times
     
-    @credential.save
+    Credential.save
   end
+  
+  it "should delete the old file before writing the new one" do
+    File.stub!(:exist?).and_return(true)
+    File.should_receive(:delete).with(anything()).ordered
+    File.should_receive(:open).ordered
+    
+    Credential.save
+  end
+  
 end
 
 describe Credential, "load_saved" do
@@ -62,9 +71,10 @@ describe Credential, "load_saved" do
     Encrypter.stub!(:decrypt).and_return("account", "login", "password", "project_name")
     @file = StringIO.new("encrypted account\nencrypted login\nencrypted password\nencrypted project_name\n")
     File.stub!(:open).and_yield(@file)
-    @credential = Credential.new(:account => "AFlight", :login => "paul", :password => "guessingwontwork", :project_name => "Project")
     Lighthouse::LighthouseApi.stub!(:login_to).and_return(true)
     File.stub!(:exist?).and_return(true)
+    File.stub!(:delete)
+    Credential.stub!(:set)
   end
   
   it "should open the file containing the save credentials" do
@@ -73,17 +83,18 @@ describe Credential, "load_saved" do
     Credential.load_saved
   end
   
-  it "should return nil if the file does not exist" do
+  it "should set the credential to nil if the file does not exist" do
     File.should_receive(:exist?).and_return(false)
+    Credential.should_receive(:set)
     
-    Credential.load_saved.should be_nil
+    Credential.load_saved
   end
   
   it "should return nil if the file contents are bad" do
     bad_file = StringIO.new("")
     File.stub!(:open).and_yield(bad_file)
     
-    Credential.load_saved.should be_nil
+    Credential.load_saved
   end
 
   it "should decrypt the contents of the file" do
@@ -96,29 +107,25 @@ describe Credential, "load_saved" do
   end
 
   it "should login using the contents of the file" do
-    Lighthouse::LighthouseApi.should_receive(:login_to).with("account", "login", "password")
+    Lighthouse::LighthouseApi.should_receive(:login_to)
     
     Credential.load_saved
   end
   
-  it "should return nil if the login was unsuccessful" do
+  it "should set the credentials to nil if the login was unsuccessful" do
     Lighthouse::LighthouseApi.stub!(:login_to).and_return(false)
-    
-    Credential.load_saved.should be_nil
-  end
-  
-  it "should create a valid credential if the login was successful" do
-    Lighthouse::LighthouseApi.stub!(:login_to).and_return(false)
-    Credential.should_receive(:new).with(:account => "account", :login => "login", :password => "password", :project_name => "project_name").and_return(@credential)
+    Credential.should_receive(:set).with()
     
     Credential.load_saved
   end
   
-  it "should return the created credential" do
-    Credential.stub!(:new).and_return(@credential)
+  it "should save the credential if the login was successful" do
+    Lighthouse::LighthouseApi.stub!(:login_to).and_return(true)
+    Credential.should_receive(:save)
     
-    Credential.load_saved.should == @credential
+    Credential.load_saved
   end
+  
 end
 
 describe Credential, "clear_saved" do

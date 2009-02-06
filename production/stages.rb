@@ -1,6 +1,6 @@
 # TODO - EWM - pull this logic out of here so it be better tested?
-credential = Credential.load_saved
-if credential
+Credential.load_saved
+if Credential.account
   first_scene = 'list_tickets'
 else
   first_scene = 'login'
