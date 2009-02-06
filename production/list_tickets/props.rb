@@ -1,9 +1,13 @@
 main {
   title_bar {
-    combo_box :id => "project_selector", :players => "project_selector"
-    button :text => "Add Ticket", :width => 150, :id => "add_ticket_button", :players => "create_ticket"
-    button :text => "Go to Website", :width => 150, :id => "website_link", :players => "website"
-    button :text => "Logout", :width => 150, :id => "logout", :players => "title_bar"
+    left_title{
+      combo_box :id => "project_selector", :players => "project_selector"
+    }
+    right_title{
+      button :text => "Add Ticket", :width => 150, :id => "add_ticket_button", :players => "create_ticket"
+      button :text => "Go to Website", :width => 150, :id => "website_link", :players => "website"
+      button :text => "Logout", :width => 150, :id => "logout", :players => "title_bar"
+    }
   }
 
   side_column {
@@ -18,7 +22,7 @@ main {
       search_box :players => "text_box", :name => "search_box",  :id => "search_box"
       button :players => "search", :id => "search_button", :text => "Search"
     }  
-  
+
     ticket_table {
       header_row {
         header_cell {

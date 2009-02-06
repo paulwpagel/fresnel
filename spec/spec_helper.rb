@@ -5,9 +5,8 @@ end
 [
   "production/list_tickets/players",
   "production/list_tickets/stagehands",
-  "production/view_ticket/players",
   "production/login/players",
-  "production/add_ticket/players",
+  "production/no_internet/players",
   "production/players",
   "lib"
 ].each {|path| add_to_search_path path}

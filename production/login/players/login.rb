@@ -7,12 +7,15 @@ module Login
     log_in
   end
   
-  def log_in
+  def log_in  
     if attempt_login
       handle_successful_login
     else
       error_with "Authentication Failed, please try again"
     end
+    
+  rescue SocketError
+      error_with"You must be connected to the internet to use Fresnel."
   end
   
   def error_with(message)

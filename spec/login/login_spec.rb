@@ -69,5 +69,21 @@ describe Login do
     scene.find("error_message").text.should == "Authentication Failed, please try again"
     scene.find("password").text.should == ""
   end  
+  
+  it "should display an error if there is no internet" do
+    @lighthouse_client.should_receive(:login_to).and_raise(SocketError)
+    
+    scene.find("login_button").button_pressed(nil)
+    
+    scene.find("error_message").text.should == "You must be connected to the internet to use Fresnel."
+  end
+  
+  it "should not load list_tickets if there is no internet" do
+    @lighthouse_client.should_receive(:login_to).and_raise(SocketError)
+
+    scene.should_not_receive(:load).with("list_tickets")
+    
+    scene.find("login_button").button_pressed(nil)
+  end
     
 end
