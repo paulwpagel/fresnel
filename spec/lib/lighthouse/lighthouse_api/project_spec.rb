@@ -224,4 +224,10 @@ describe Lighthouse::LighthouseApi::Project, "hyphenated_name" do
     
     @fresnel_project.hyphenated_name.should == "test-project-one"
   end
+  
+  it "should return the unformatted name" do
+    @lighthouse_project.stub!(:name).and_return("Test Project")
+    
+    @fresnel_project.name.should == "Test Project"
+  end
 end

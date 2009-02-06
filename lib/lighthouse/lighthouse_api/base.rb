@@ -1,4 +1,5 @@
 require "lighthouse/lighthouse_api/project"
+require "lighthouse/lighthouse_api/first_project_chooser"
 
 module Lighthouse
   module LighthouseApi
@@ -35,8 +36,16 @@ module Lighthouse
       return nil
     end
     
+    def self.first_project
+      return (Lighthouse::LighthouseApi::Project.new(projects.first))
+    end
+    
     def self.project_names
       return projects.collect {|project| project.name}
+    end
+    
+    def self.get_starting_project_name
+      return Lighthouse::LighthouseApi::FirstProjectChooser.new.get_project_name
     end
     
     def self.add_ticket(options, project)

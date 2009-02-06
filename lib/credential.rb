@@ -59,7 +59,7 @@ class Credential
     lines = file.read.split("\n")
     if lines.size >= 3
       decrypted_data = lines.collect{ |line| Encrypter.decrypt(line) }
-      Credential.set(:account => decrypted_data[0], :login => decrypted_data[1], :password => decrypted_data[2], :project_name => decrypted_data[3])
+      Credential.set(:account => decrypted_data[0], :login => decrypted_data[1], :password => decrypted_data[2], :project_name => decrypted_data[3], :save_credentials => true)
     end
   end
   
