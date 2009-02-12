@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../../../spec_helper'
+require File.dirname(__FILE__) + '/../../spec_helper'
 require "lighthouse/lighthouse_api/diffable_attributes"
 
 describe Lighthouse::LighthouseApi::DiffableAttributes do
