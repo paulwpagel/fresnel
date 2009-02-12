@@ -10,6 +10,7 @@ end
   "production/login/players",
   "production/no_internet/players",
   "production/players",
+  "production",
   "lib"
 ].each {|path| add_to_search_path path}
 
