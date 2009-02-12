@@ -1,5 +1,3 @@
-gem 'limelight'
-require 'limelight/prop'
 
 module CreateTicket
 

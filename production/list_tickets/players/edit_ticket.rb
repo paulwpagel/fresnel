@@ -5,6 +5,7 @@ module EditTicket
       production.current_ticket = production.lighthouse_client.ticket(ticket_id, production.current_project)
       remove_all
       build_edit_ticket
+      hover_style.background_color = "5A9ECF"
     end
   end
   
@@ -13,36 +14,38 @@ module EditTicket
   def build_edit_ticket
     build(:ticket => production.current_ticket, :project => production.current_project) do
       row {
-        button :text => "Save Ticket", :id => "save_button", :players => "save_ticket"
+        button :text => "Save Ticket", :id => "save_button", :players => "save_ticket", :width => 200
       }
       row {
-        cell {
+        cell(:horizontal_alignment => :left, :width => "100%") {
           edit_ticket_label :text => "Title:"
-          text_box :id => "ticket_title", :width => 250, :text => @ticket.title
+          text_box :id => "ticket_title", :width => 350, :text => @ticket.title
         }
-        cell {
+      }
+      row {
+        cell(:horizontal_alignment => :left, :width => "60%", :border_width => 2, :border_color => "black", :rounded_corner_radius => "10") {
+          edit_ticket_label :text => "Description:"
+          ticket_description :id => "ticket_description", :text => @ticket.description
+        }
+        cell(:horizontal_alignment => :right, :width => "40%") {
+          
+          edit_ticket_label :text => "State:"
           combo_box :id => "ticket_state", :choices => @project.all_states, :value => @ticket.state
+          
+          edit_ticket_label :text => "Assigned User:"
+          combo_box :id => "ticket_assigned_user", :choices => [""] + @project.user_names, :value => @ticket.assigned_user_name
+          
+          edit_ticket_label :text => "Milestone:"
+          combo_box :id => "ticket_milestone", :choices => [""] + @project.milestone_titles, :value => @project.milestone_title(@ticket.milestone_id)
         }
       }
       row {
-        assigned_user_header :text => "Assigned User:"
-        combo_box :id => "ticket_assigned_user", :choices => [""] + @project.user_names, :value => @ticket.assigned_user_name
-      }
-      row {
-        description_header :text => "Description:"
-        ticket_description :id => "ticket_description", :text => @ticket.description
-      }      
-      row {
-        label :text => "Tags:"
-        text_box :id => "ticket_tag", :width => 350, :text => @ticket.tag
-      }
-      row {
-        milestone_header :text => "Milestone:"
-        combo_box :id => "ticket_milestone", :choices => [""] + @project.milestone_titles, :value => @project.milestone_title(@ticket.milestone_id)
+        edit_ticket_label :text => "Tags:", :width => "30%"
+        text_box :id => "ticket_tag", :width => 350, :text => @ticket.tag, :width => "70%"
       }
       row{
-        comment_header :text => "Add Comment:"
-        text_area :id => "ticket_comment", :name => "ticket_comment"
+        edit_ticket_label :text => "Add Comment:", :width => "30%"
+        text_area :id => "ticket_comment", :width => "70%"
       }
       
       @ticket.versions.each_with_index do |version, index|
@@ -57,7 +60,6 @@ module EditTicket
 
       end
 
-     
     end
   end
   

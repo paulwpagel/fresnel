@@ -26,9 +26,11 @@ header_row {
   background_color "#FFFFFF"
 }
 header_cell {
+  width "25%"
   top_padding 7
   bottom_padding 7
 }
+
 title_header {
   left_padding 12
   font_size 24
@@ -123,7 +125,7 @@ cell {
 
 row {
   width "100%"
-  padding 10
+  padding 3
 }
 
 version_cell {
@@ -146,6 +148,5 @@ left_title {
 
 edit_ticket_label {
   font_size 20
-  border_color "006699"
-  border_width 2
 }
+

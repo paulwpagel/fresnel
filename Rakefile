@@ -14,3 +14,30 @@ task :integration do
   load 'spec'
 end
 
+require 'rake/gempackagetask'
+
+PKG_NAME = "fresnel_lib"
+PKG_VERSION   = "0.0.1"
+PKG_FILE_NAME = "#{PKG_NAME}-#{PKG_VERSION}"
+PKG_FILES = FileList[
+  'lib/**/*', 
+  'spec/**/*.rb'
+]
+
+spec = Gem::Specification.new do |s|
+  s.name = PKG_NAME
+  s.version = PKG_VERSION
+  s.summary = "A library wrapping the ruby lighthouse-api"
+  s.description = "A library wrapping the ruby lighthouse-api"
+  s.files = PKG_FILES.to_a
+  s.require_path = 'lib'
+  s.test_files = Dir.glob('spec/*_spec.rb')
+  s.author = "Eric Meyer and Paul Pagel, 8th Light"
+  s.email = "emeyer@8thlight.com"
+  s.homepage = "http://github.com/paulwpagel/fresnel"
+end
+
+Rake::GemPackageTask.new(spec) do |pkg|
+  pkg.need_zip = false
+  pkg.need_tar = false
+end

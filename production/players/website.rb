@@ -1,4 +1,3 @@
-import "src.Browser"
 
 module Website
   def button_pressed(event)
@@ -9,7 +8,7 @@ module Website
     return "http://#{account}.lighthouseapp.com/projects/#{project_id}-#{project_name}/overview"
   end
   
-  private
+  private #############
   
   def account
     return production.lighthouse_client.account

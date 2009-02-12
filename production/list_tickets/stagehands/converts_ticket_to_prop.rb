@@ -1,5 +1,3 @@
-gem 'limelight'
-require 'limelight/prop'
 
 class ConvertsTicketToProp
   def self.convert(ticket)
@@ -17,6 +15,6 @@ class ConvertsTicketToProp
   end
   
   def self.attribute_prop(ticket, attribute)
-    return Limelight::Prop.new(:text => ticket.send(attribute), :name => "ticket_#{attribute}")
+    return Limelight::Prop.new(:text => ticket.send(attribute), :name => "ticket_#{attribute}", :width => "25%")
   end
 end

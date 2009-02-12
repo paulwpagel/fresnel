@@ -12,5 +12,4 @@ retry_group {
   rounded_corner_radius "10"
   border_width 4
   border_color "006699"
-  
 }
