@@ -9,12 +9,14 @@ end
   "production/view_ticket/players",
   "production/login/players",
   "production/add_ticket/players",
-  "lib"
+  "production",
+  "production/__resources/gems/fresnel_lib-0.0.1/lib"
 ].each {|path| add_to_search_path path}
 
 require 'rubygems'
 require 'spec'
-
+require 'limelight/specs/spec_helper'
+require 'lighthouse/adapter'
 $PRODUCTION_PATH = File.expand_path(File.dirname(__FILE__) + "/../production")
 
 $visual = false

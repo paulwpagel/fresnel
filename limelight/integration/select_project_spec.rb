@@ -1,5 +1,4 @@
 require File.expand_path(File.dirname(__FILE__) + "/spec_helper")
-require 'limelight/specs/spec_helper'
 
 describe "Select Project Integration" do
   
