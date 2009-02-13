@@ -11,7 +11,7 @@ end
   "production/no_internet/players",
   "production/players",
   "production",
-  "production/__resources/gems/fresnel_lib-0.0.1/lib"
+  "production/__resources/gems/fresnel_lib-0.0.2/lib"
 ].each {|path| add_to_search_path path}
 
 require 'rubygems'

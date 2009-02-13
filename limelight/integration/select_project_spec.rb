@@ -15,6 +15,7 @@ describe "Select Project Integration" do
     scene.name.should == "list_tickets"
     
     scene.find('project_selector').value = "Project Two"
+    producer.production.current_project.name.should == "Project Two"
     scene.ticket_lister.children.size.should == lighthouse_client.find_project("Project Two").open_tickets.size
   end
   

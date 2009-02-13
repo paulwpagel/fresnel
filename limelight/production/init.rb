@@ -7,6 +7,7 @@
 
 $: << File.expand_path(File.dirname(__FILE__) + "/list_tickets/players")
 $: << File.expand_path(File.dirname(__FILE__) + "/list_tickets/stagehands")
+$: << File.expand_path(File.dirname(__FILE__))
 $: << File.expand_path(File.dirname(__FILE__) + "/__resources/jars")
 require "OpenWebsite.jar"
 import "Browser"
