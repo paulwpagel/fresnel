@@ -10,7 +10,7 @@ end
 
 
 PKG_NAME = "fresnel_lib"
-PKG_VERSION   = "0.0.2"
+PKG_VERSION   = "0.0.3"
 PKG_FILE_NAME = "#{PKG_NAME}-#{PKG_VERSION}"
 PKG_FILES = FileList[
   'lib/**/*', 

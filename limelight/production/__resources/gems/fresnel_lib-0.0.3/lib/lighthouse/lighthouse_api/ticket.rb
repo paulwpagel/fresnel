@@ -1,3 +1,4 @@
+require "lighthouse/adapter"
 require "lighthouse/lighthouse_api/ticket_version"
 require "lighthouse/lighthouse_api/changed_attributes"
 require "lighthouse/lighthouse_api/user"
@@ -49,6 +50,10 @@ module Lighthouse
       def save
         @lighthouse_ticket.save
         @project.update_tickets
+      end
+      
+      def destroy
+        @lighthouse_ticket.destroy
       end
 
       def assigned_user_name

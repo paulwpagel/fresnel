@@ -144,5 +144,12 @@ describe Lighthouse::Ticket do
     it "should have a list of tags" do
       @ticket.tag.should == ""
     end
+    
+    it "should know how to destory itself" do
+      @ticket.destroy
+      
+      tickets = Lighthouse::Ticket.find(:all, :params => {:project_id => @project.id, :q => "all"})
+      tickets.should be_empty
+    end
   end
 end
