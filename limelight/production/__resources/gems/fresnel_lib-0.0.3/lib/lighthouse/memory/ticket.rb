@@ -49,6 +49,10 @@ module Lighthouse
       return @updated_at
     end
     
+    def destroy
+      @@tickets.delete_if {|ticket| ticket.id == self.id }
+    end
+    
     private #################################
     
     def set_initial_state(state)

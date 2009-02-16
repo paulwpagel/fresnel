@@ -10,7 +10,7 @@ end
   "production/login/players",
   "production/add_ticket/players",
   "production",
-  "production/__resources/gems/fresnel_lib-0.0.2/lib"
+  "production/__resources/gems/fresnel_lib-0.0.3/lib"
 ].each {|path| add_to_search_path path}
 
 require 'rubygems'
