@@ -150,3 +150,9 @@ edit_ticket_label {
   font_size 20
 }
 
+heading {
+  width "100%"
+  horizontal_alignment :center
+  font_style :bold
+  font_size 24
+}

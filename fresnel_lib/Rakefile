@@ -8,9 +8,8 @@ task :spec do
   load 'spec'
 end
 
-
 PKG_NAME = "fresnel_lib"
-PKG_VERSION   = "0.0.2"
+PKG_VERSION   = "0.0.3"
 PKG_FILE_NAME = "#{PKG_NAME}-#{PKG_VERSION}"
 PKG_FILES = FileList[
   'lib/**/*', 
@@ -26,7 +25,7 @@ spec = Gem::Specification.new do |s|
   s.require_path = 'lib'
   s.test_files = Dir.glob('spec/*_spec.rb')
   s.author = "Eric Meyer and Paul Pagel, 8th Light"
-  s.email = "emeyer@8thlight.com"
+  s.email = "paul@8thlight.com"
   s.homepage = "http://github.com/paulwpagel/fresnel"
 end
 

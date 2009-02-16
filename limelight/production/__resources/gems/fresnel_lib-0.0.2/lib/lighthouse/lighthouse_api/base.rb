@@ -54,7 +54,7 @@ module Lighthouse
       ticket.body = options[:description]
       ticket.body_html = options[:description]
       ticket.assigned_user_id = options[:assigned_user_id]
-      ticket.tags = options[:tags]
+      ticket.tag = options[:tags]
       ticket.milestone_id = options[:milestone_id]
       ticket.save
       return nil

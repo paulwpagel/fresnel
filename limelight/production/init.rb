@@ -21,6 +21,7 @@ if ARGV[1] and ARGV[1].downcase == "memory"
 else
   $adapter = "net"
 end
+
 require "lighthouse/adapter"
 require 'lighthouse/lighthouse_api/base'
 require "credential"
