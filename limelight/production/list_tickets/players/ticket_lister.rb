@@ -9,5 +9,10 @@ module TicketLister
     mapped_tickets = tickets.map {|ticket| ConvertsTicketToProp.convert(ticket) }
     mapped_tickets.each { |prop| self.add(prop) }
   end
-
+  
+  def remove_ticket(ticket_id)
+    children.each do |ticket_row|
+      remove(ticket_row) if ticket_row.id == "ticket_#{ticket_id}"
+    end
+  end
 end

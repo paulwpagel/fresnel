@@ -52,10 +52,6 @@ module Lighthouse
         @lighthouse_ticket.save
         @project.update_tickets
       end
-      
-      def destroy
-        @lighthouse_ticket.destroy
-      end
 
       def assigned_user_name
         return @project.user_name(assigned_user_id)
