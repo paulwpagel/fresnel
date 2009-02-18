@@ -2,17 +2,17 @@
 class ConvertsTicketToProp
   def self.convert(ticket)
     wrapper = main_prop(ticket)
+    wrapper.add(delete_prop(ticket))
     [:title, :state, :formatted_age, :assigned_user_name].each do |attribute|
       wrapper.add(attribute_prop(ticket, attribute))
     end
-    wrapper.add(delete_prop(ticket))
     return wrapper
   end
   
   private #######################################
   
   def self.delete_prop(ticket)
-    return Limelight::Prop.new(:id => "delete_ticket_#{ticket.id}", :name => "delete_ticket", :text => "delete")
+    return Limelight::Prop.new(:id => "delete_ticket_#{ticket.id}", :name => "delete_ticket")
   end
   
   def self.main_prop(ticket)

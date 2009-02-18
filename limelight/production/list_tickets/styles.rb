@@ -32,37 +32,40 @@ header_cell {
 }
 
 title_header {
-  left_padding 12
+  left_padding 39
   font_size 24
-  width 280
   hover {
     text_color "CCCCCC"
   }
 }
 ticket_title {
-  width 300
+  left_padding 7
+  height 20
+  width "24%"
 }
+
 state_header {
   left_padding 12
   font_size 24
-  width 130
   hover {
     text_color "CCCCCC"
   }
 }
 ticket_state {
-  width 150
+  height 20
+  width "20%"
 }
-ticket_formatted_age {
-  width 200
-}
+
 age_header {
   left_padding 12
   font_size 24
-  width 180
   hover {
     text_color "CCCCCC"
   }
+}
+ticket_formatted_age {
+  height 20
+  width "20%"
 }
 
 assigned_user_header {
@@ -72,6 +75,18 @@ assigned_user_header {
     text_color "CCCCCC"
   }
 }
+ticket_assigned_user_name {
+  height 20
+  width "20%"
+}
+
+delete_ticket {
+  background_image_fill_strategy "static"
+  background_image "images/delete.png"
+  height 20
+  width "3%"
+}
+
 ticket_in_list {
   padding 12
   width "100%"

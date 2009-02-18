@@ -14,10 +14,6 @@ input_group {
   width "100%"
 }
 
-label {
-  width 200
-}
-
 website {
   font_size 16
   padding 7
