@@ -56,7 +56,7 @@ describe Lighthouse::LighthouseApi do
     ticket.should_receive(:body=).with("description")
     ticket.should_receive(:body_html=).with("description")
     ticket.should_receive(:assigned_user_id=).with(456)
-    ticket.should_receive(:tags=).with("fake tag")
+    ticket.should_receive(:tag=).with("fake tag")
     ticket.should_receive(:milestone_id=).with(12345)
     ticket.should_receive(:save)
     

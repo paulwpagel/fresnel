@@ -37,7 +37,7 @@ module Lighthouse
       end
       
       def destroy_ticket(ticket_id)
-        ticket = @all_tickets.find{ |ticket| ticket.id == ticket_id }
+        ticket = Lighthouse::Ticket.find(ticket_id, :params => {:project_id => @id})
         ticket.destroy
         update_tickets
       end

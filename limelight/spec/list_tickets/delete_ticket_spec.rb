@@ -45,6 +45,14 @@ describe DeleteTicket do
     click_delete
   end
   
+  it "should check if the current_ticket is already nil" do
+    producer.production.current_ticket = nil
+    
+    click_delete
+    
+    scene.ticket_lister.should_not_receive(:remove_ticket)
+  end
+  
   def click_delete
     scene.find("delete_ticket_12345").mouse_clicked(nil)
   end
