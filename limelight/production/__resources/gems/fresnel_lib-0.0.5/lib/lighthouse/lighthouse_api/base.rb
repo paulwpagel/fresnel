@@ -61,6 +61,13 @@ module Lighthouse
       return nil
     end
     
+    def self.add_project(project_name)
+      project = Lighthouse::Project.new
+      project.name = project_name
+      project.save
+      return nil
+    end
+    
     def self.ticket(ticket_id, project)
       found_ticket = Lighthouse::Ticket.find(ticket_id, :params => {:project_id => project.id})
       return Lighthouse::LighthouseApi::Ticket.new(found_ticket, project) if found_ticket

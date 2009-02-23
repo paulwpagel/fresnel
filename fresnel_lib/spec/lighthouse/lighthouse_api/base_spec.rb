@@ -50,13 +50,13 @@ describe Lighthouse::LighthouseApi do
   it "should add a ticket to the project" do
     @project = mock(Lighthouse::Project, :id => 2)
     ticket = mock(Lighthouse::Ticket)
-    options = {:title => "Test title", :description => "description", :assigned_user_id => 456, :tags => "fake tag", :milestone_id => 12345}
+    options = {:title => "Test title", :description => "description", :assigned_user_id => 456, :tag => "fake tag", :milestone_id => 12345}
     Lighthouse::Ticket.should_receive(:new).with(:project_id => 2).and_return(ticket)
     ticket.should_receive(:title=).with("Test title")
     ticket.should_receive(:body=).with("description")
     ticket.should_receive(:body_html=).with("description")
     ticket.should_receive(:assigned_user_id=).with(456)
-    ticket.should_receive(:tags=).with("fake tag")
+    ticket.should_receive(:tag=).with("fake tag")
     ticket.should_receive(:milestone_id=).with(12345)
     ticket.should_receive(:save)
     
@@ -133,6 +133,15 @@ describe Lighthouse::LighthouseApi, "find_project" do
     Lighthouse::Project.should_receive(:find).with(:all).and_return(projects)
     
     Lighthouse::LighthouseApi.projects.should == projects
+  end
+  
+  it "should add a project" do
+    @project = mock(Lighthouse::Project)
+    Lighthouse::Project.should_receive(:new).and_return(@project)
+    @project.should_receive(:name=).with("project_name")
+    @project.should_receive(:save)
+    
+    Lighthouse::LighthouseApi::add_project("project_name")
   end
   
   it "should return the first project as a LighthouseApi project" do
