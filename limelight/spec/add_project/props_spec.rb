@@ -10,16 +10,7 @@ describe "Props" do
     prop.should_not be_nil
     prop.name.should == "text_box"
   end
-  
-  it "should have a box to enter the archived " do
-    prop = scene.find('archived')
-    
-    prop.should_not be_nil
-    prop.name.should == "combo_box"
-    prop.choices.should include("True")
-    prop.choices.should include("False")
-  end
-  
+
   it "should have a box for public" do
     prop = scene.find("public")
 

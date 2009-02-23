@@ -12,7 +12,8 @@ describe AddProject do
 
   it "should add_project" do
     scene.find("project_name").text = "test project"
-    @lighthouse_client.should_receive(:add_project).with("test project")
+    scene.find("public").text = "True"
+    @lighthouse_client.should_receive(:add_project).with({:name => "test project", :public => "True"})
 
     scene.find("add_project_button").button_pressed(nil)
   end
