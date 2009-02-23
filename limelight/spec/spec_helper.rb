@@ -11,13 +11,14 @@ end
   "production/no_internet/players",
   "production/players",
   "production",
-  "production/__resources/gems/fresnel_lib-0.0.6/lib"
+  "production/__resources/gems/fresnel_lib-0.0.7/lib"
 ].each {|path| add_to_search_path path}
 
 require 'rubygems'
 require 'spec'
 # require 'limelight/specs/spec_helper'
 require 'lighthouse/adapter'
+
 $PRODUCTION_PATH = File.expand_path(File.dirname(__FILE__) + "/../production")
 
 def create_mock_project(name = "One")
@@ -31,6 +32,6 @@ def mock_lighthouse
   @project = create_mock_project
                                        
   @lighthouse_client = mock("lighthouse module", :authenticate => nil, :add_ticket => nil, :milestones => [], :milestone_title => "", :get_starting_project_name => "One",
-                                                 :find_project => @project, :projects => [], :ticket => nil, :project_names => ["one"])
+                                                 :find_project => @project, :projects => [], :ticket => nil, :project_names => ["one"], :add_project => nil)
   producer.production.lighthouse_client = @lighthouse_client
 end

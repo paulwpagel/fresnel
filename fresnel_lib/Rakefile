@@ -9,7 +9,7 @@ task :spec do
 end
 
 PKG_NAME = "fresnel_lib"
-PKG_VERSION   = "0.0.6"
+PKG_VERSION   = "0.0.7"
 PKG_FILE_NAME = "#{PKG_NAME}-#{PKG_VERSION}"
 PKG_FILES = FileList[
   'lib/**/*', 

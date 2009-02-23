@@ -99,4 +99,11 @@ describe "Props" do
     prop = scene.find("add_ticket_group")
     prop.should_not be_nil
   end
+  
+  it "should have an add_project prop" do
+    prop = scene.find("add_project")
+    prop.should_not be_nil
+    prop.image.should == "images/add.png"
+    prop.players.should == "add_project"
+  end
 end
