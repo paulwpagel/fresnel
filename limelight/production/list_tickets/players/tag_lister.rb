@@ -1,4 +1,5 @@
 module TagLister
+
   def show_project_tags
     remove_all
     tag_names = project.tag_names

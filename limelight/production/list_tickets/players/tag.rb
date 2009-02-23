@@ -1,4 +1,4 @@
-module Tag
+module Tag  
   def mouse_clicked(event)
     scene.ticket_lister.show_these_tickets(tickets)
   end

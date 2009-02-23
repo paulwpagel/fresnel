@@ -1,5 +1,4 @@
-module SaveTicket
-  
+module SaveTicket  
   def button_pressed(event)
     update_ticket
     save_current_ticket_in_production

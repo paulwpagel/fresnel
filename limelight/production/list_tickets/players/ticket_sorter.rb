@@ -1,4 +1,9 @@
+require "spinner"
+
 module TicketSorter
+  include Spinner
+  Spinner.spins_on :mouse_clicked
+
   def mouse_clicked(event)
     scene.ticket_lister.show_these_tickets(sorted_tickets)
     toggle_sort_order
