@@ -19,8 +19,17 @@ describe AddProject do
   end
   
   it "should load list tickets" do
+    scene.find("project_name").text = "test project"
     scene.should_receive(:load).with("list_tickets")
 
     scene.find("add_project_button").button_pressed(nil)    
+  end
+  
+  it "should not allow a blank project to be added" do
+    scene.find("project_name").text = ""
+    
+    scene.find("add_project_button").button_pressed(nil)
+    
+    scene.find("error_message").text.should == "Please enter a project name"
   end
 end
