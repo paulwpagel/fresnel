@@ -1,9 +1,4 @@
-require "spinner"
-
 module Search
-  include Spinner
-  Spinner.spins_on :button_pressed
-  
   def button_pressed(event)
     tickets = []
     criteria = scene.find("search_box").text
