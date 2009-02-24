@@ -43,7 +43,7 @@ describe Lighthouse::Ticket do
   end
   
   it "should have tags" do
-    @ticket.tags = "new tags"
+    @ticket.tag = "new tags"
   end
     
   it "should have read/writable basic informatioin" do

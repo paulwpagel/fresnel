@@ -14,11 +14,32 @@ input_group {
   width "100%"
 }
 
-label {
-  width 200
-}
-
 website {
   font_size 16
   padding 7
+}
+
+spinner {
+  float "on"
+  x 0
+  y 0
+  width "100%"
+  height "100%"
+  background_color "black"
+  transparency "50"
+  horizontal_alignment "center"
+  vertical_alignment "center"
+}
+
+spinner_message {
+  transparency "0"
+  font_size 24
+  height 75
+  width 200
+  background_color "#CCCCCC"
+  rounded_corner_radius "10"
+  border_width 2
+  border_color "black"
+  horizontal_alignment "center"
+  vertical_alignment "center"
 }

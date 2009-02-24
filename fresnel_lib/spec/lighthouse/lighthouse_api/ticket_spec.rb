@@ -205,12 +205,6 @@ describe Lighthouse::LighthouseApi::Ticket, "lighthouse ticket attributes" do
     @fresnel_ticket.new_comment = "new comment"
   end
   
-  it "should call destroy on the lighthouse_ticket" do
-    @lighthouse_ticket.should_receive(:destroy)
-    
-    @fresnel_ticket.destroy
-  end
-  
   it "should have a writable assigned_user_id" do
     @lighthouse_ticket.should_receive(:assigned_user_id=).with("new assigned user id")
     

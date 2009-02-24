@@ -1,5 +1,9 @@
-module ProjectSelector
-  
+require "spinner"
+
+module ProjectSelector  
+  include Spinner
+  Spinner.spins_on :value_changed
+
   def value_changed(event)
     production.current_project = production.lighthouse_client.find_project(project_name)
     scene.ticket_lister.show_these_tickets(production.current_project.open_tickets)

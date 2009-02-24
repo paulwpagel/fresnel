@@ -11,7 +11,7 @@ module Lighthouse
         @id = lighthouse_project.id
         @milestones = lighthouse_project.milestones
         @users = ProjectMembership.all_users_for_project(@id)
-        reload_tickets
+        load_tickets
       end
       
       def name
@@ -36,6 +36,12 @@ module Lighthouse
         return nil
       end
       
+      def destroy_ticket(ticket_id)
+        ticket = Lighthouse::Ticket.find(ticket_id, :params => {:project_id => @id})
+        ticket.destroy
+        update_tickets
+      end
+        
       def open_tickets
         return @all_tickets.find_all { |ticket| open_states.include?(ticket.state) }
       end
@@ -75,12 +81,12 @@ module Lighthouse
       end
       
       def update_tickets
-        reload_tickets
+        load_tickets
       end
       
       private ######################
       
-      def reload_tickets
+      def load_tickets
         @all_tickets = Lighthouse::LighthouseApi::Ticket.find_tickets(self, "all")
       end
       

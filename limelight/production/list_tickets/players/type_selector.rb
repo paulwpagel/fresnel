@@ -1,5 +1,4 @@
-module TypeSelector
-
+module TypeSelector  
   def value_changed(event)
     notify_ticket_master
   end

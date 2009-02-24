@@ -51,3 +51,22 @@ describe TicketLister, "when being told to show tickets" do
     @player_under_test.last_tickets.should == @tickets
   end
 end
+
+describe TicketLister, "remove_ticket with real props" do
+  before(:each) do
+    mock_lighthouse
+    @ticket = mock("ticket", :id => 12345, :null_object => true)
+    @open_tickets = [@ticket]
+    @project.stub!(:open_tickets).and_return(@open_tickets)
+    producer.production.current_project = @project
+  end
+  
+  uses_scene :list_tickets
+  
+  it "should remove the prop" do
+    scene.ticket_lister.remove_ticket(12345)
+    
+    scene.ticket_lister.children.should be_empty
+    scene.find("ticket_12345").should be_nil
+  end
+end

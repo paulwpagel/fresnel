@@ -81,14 +81,15 @@ describe Lighthouse::LighthouseApi::Project, "tickets" do
     
     @fresnel_project = Lighthouse::LighthouseApi::Project.new(@lighthouse_project)
   end
-  
-  describe Lighthouse::LighthouseApi::Project, "filtering tickets" do
+
+  describe Lighthouse::LighthouseApi::Project, "with tickets" do
     before(:each) do
-      @ticket_one = ticket(:state => "open", :tags => ["one"])
-      @ticket_two = ticket(:state => "resolved", :tags => ["one", "two"])
-      @ticket_three = ticket(:state => "open", :tags => [])
-      @ticket_four = ticket(:state => "new", :tags => ["two"])
+      @ticket_one = ticket(:state => "open", :tags => ["one"], :id => 1, :destroy => nil)
+      @ticket_two = ticket(:state => "resolved", :tags => ["one", "two"], :id => 2)
+      @ticket_three = ticket(:state => "open", :tags => [], :id => 3)
+      @ticket_four = ticket(:state => "new", :tags => ["two"], :id => 4)
       @tickets = [@ticket_one, @ticket_two, @ticket_three, @ticket_four]
+      Lighthouse::Ticket.stub!(:find).and_return(@ticket_one)
       Lighthouse::LighthouseApi::Ticket.stub!(:find_tickets).and_return(@tickets)
       @fresnel_project = Lighthouse::LighthouseApi::Project.new(@lighthouse_project)
     end
@@ -117,7 +118,26 @@ describe Lighthouse::LighthouseApi::Project, "tickets" do
     it "should have an id" do
       @fresnel_project.id.should == 12345
     end
-        
+    
+    it "should find the ticket to delete by its id and the project id" do
+      Lighthouse::Ticket.should_receive(:find).with(1, :params => {:project_id => 12345}).and_return(@ticket_one)
+
+      @fresnel_project.destroy_ticket(1)
+    end
+
+    it "should delete the found ticket" do
+      @ticket_one.should_receive(:destroy)
+      
+      @fresnel_project.destroy_ticket(1)
+    end
+    
+    it "should update the tickets on destroy_ticket after deleting the ticket" do
+      @ticket_one.should_receive(:destroy).ordered
+      Lighthouse::LighthouseApi::Ticket.should_receive(:find_tickets).with(@fresnel_project, "all").ordered.and_return(@tickets)
+      
+      @fresnel_project.destroy_ticket(1)
+    end
+    
     def ticket(options)
       return mock("ticket", options)
     end

@@ -1,5 +1,8 @@
+require "spinner"
 
 module CreateTicket
+  include Spinner
+  Spinner.spins_on :button_pressed
 
   def button_pressed(event)
     add_ticket_group = scene.find("add_ticket_group")

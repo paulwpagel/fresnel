@@ -25,37 +25,6 @@ describe ListTickets do
 
 end
 
-describe ListTickets, "view_ticket" do
-  
-  before(:each) do
-    mock_lighthouse
-    @ticket_master = mock('ticket_master', :show_tickets => nil)
-    TicketMaster.stub!(:new).and_return(@ticket_master)
-    @ticket = mock("ticket")    
-    @lighthouse_client.stub!(:ticket).and_return(@ticket)
-    producer.production.current_project = @project
-  end
-  
-  uses_scene :list_tickets
-  
-  before(:each) do
-    scene.stub!(:load)
-  end
-    
-  it "should have a view method shows a ticket" do
-    scene.should_receive(:load).with("view_ticket")
-    
-    scene.view(4)
-  end
-  
-  it "should get the ticket with the proper id from the project" do
-    scene.view("ticket_id")
-    
-    scene.production.current_ticket.should == @ticket
-  end
-  
-end
-
 describe ListTickets, "ProjectSelector" do  
   
   before(:each) do

@@ -1,5 +1,4 @@
 module EditTicket
-
   def mouse_clicked(event)
     if(scene.find("save_button").nil?)
       production.current_ticket = production.lighthouse_client.ticket(ticket_id, production.current_project)
