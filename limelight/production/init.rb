@@ -27,3 +27,15 @@ require 'lighthouse/lighthouse_api/base'
 require "credential"
 require 'scene_chooser'
 production.lighthouse_client = Lighthouse::LighthouseApi
+
+module Limelight
+  class Prop
+    def show_spinner(&block)
+      spinner = Limelight::Prop.new(:name => "spinner", :id => "spinner")
+      spinner.add(Limelight::Prop.new(:name => "spinner_message", :text => "Loading..."))
+      scene.add(spinner) unless scene.find("spinner")
+      yield
+      scene.remove(scene.find("spinner")) if scene.find("spinner")
+    end
+  end
+end

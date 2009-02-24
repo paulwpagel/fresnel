@@ -1,10 +1,12 @@
 module EditTicket
   def mouse_clicked(event)
     if(scene.find("save_button").nil?)
-      production.current_ticket = production.lighthouse_client.ticket(ticket_id, production.current_project)
-      remove_all
-      build_edit_ticket
-      hover_style.background_color = "5A9ECF"
+      show_spinner do
+        production.current_ticket = production.lighthouse_client.ticket(ticket_id, production.current_project)
+        remove_all
+        build_edit_ticket
+        hover_style.background_color = "5A9ECF"
+      end
     end
   end
   

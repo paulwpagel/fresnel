@@ -26,15 +26,7 @@ module ListTickets
   end
     
   private #######################
-  
-  def show_spinner(&block)
-    spinner = Limelight::Prop.new(:name => "spinner", :id => "spinner")
-    spinner.add(Limelight::Prop.new(:name => "spinner_message", :text => "Loading..."))
-    scene.add(spinner) unless scene.find("spinner")
-    yield
-    scene.remove(scene.find("spinner"))
-  end
-  
+    
   def project
     production.current_project
   end

@@ -3,8 +3,10 @@ require "credential"
 module Login
   
   def button_pressed(e)    
-    load_inputs
-    log_in
+    show_spinner do
+      load_inputs
+      log_in
+    end
   end
   
   def log_in  

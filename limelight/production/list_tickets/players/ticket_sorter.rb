@@ -1,9 +1,11 @@
 module TicketSorter
   def mouse_clicked(event)
-    scene.ticket_lister.show_these_tickets(sorted_tickets)
-    toggle_sort_order
-    clear_sort_images
-    set_new_image
+    show_spinner do
+      scene.ticket_lister.show_these_tickets(sorted_tickets)
+      toggle_sort_order
+      clear_sort_images
+      set_new_image
+    end
   end
   
   private

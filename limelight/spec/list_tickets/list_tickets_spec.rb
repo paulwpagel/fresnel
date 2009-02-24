@@ -48,6 +48,7 @@ describe ListTickets, "tag lister" do
     @player_under_test = Object.new
     @player_under_test.extend(ListTickets)
     @scene = mock("scene", :null_object => true)
+    @player_under_test.stub!(:show_spinner).and_yield
     @player_under_test.stub!(:scene).and_return(@scene)
     @production = mock("production", :null_object => true)
     @player_under_test.stub!(:production).and_return(@production)

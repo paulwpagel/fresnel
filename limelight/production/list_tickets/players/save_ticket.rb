@@ -1,8 +1,10 @@
 module SaveTicket  
   def button_pressed(event)
-    update_ticket
-    save_current_ticket_in_production
-    scene.ticket_lister.show_these_tickets(current_project.open_tickets)
+    show_spinner do
+      update_ticket
+      save_current_ticket_in_production
+      scene.ticket_lister.show_these_tickets(current_project.open_tickets)
+    end
   end
   
   def mouse_clicked(event)    

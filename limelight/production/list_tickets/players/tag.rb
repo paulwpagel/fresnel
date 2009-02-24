@@ -1,6 +1,8 @@
 module Tag  
   def mouse_clicked(event)
-    scene.ticket_lister.show_these_tickets(tickets)
+    show_spinner do
+      scene.ticket_lister.show_these_tickets(tickets)
+    end
   end
   
   private ##################

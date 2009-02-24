@@ -1,6 +1,8 @@
 module TypeSelector  
   def value_changed(event)
-    notify_ticket_master
+    show_spinner do
+      notify_ticket_master
+    end
   end
   
   def notify_ticket_master

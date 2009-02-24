@@ -1,7 +1,9 @@
 
 module Website
   def button_pressed(event)
-    Browser.new.showInBrowser(url)
+    show_spinner do
+      Browser.new.showInBrowser(url)
+    end
   end
   
   def url
