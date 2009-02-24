@@ -139,9 +139,10 @@ describe Lighthouse::LighthouseApi, "find_project" do
     @project = mock(Lighthouse::Project)
     Lighthouse::Project.should_receive(:new).and_return(@project)
     @project.should_receive(:name=).with("project_name")
+    @project.should_receive(:public=).with("true")
     @project.should_receive(:save)
     
-    Lighthouse::LighthouseApi::add_project("project_name")
+    Lighthouse::LighthouseApi::add_project({:name => "project_name", :public => "true"})
   end
   
   it "should return the first project as a LighthouseApi project" do

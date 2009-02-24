@@ -61,9 +61,10 @@ module Lighthouse
       return nil
     end
     
-    def self.add_project(project_name)
+    def self.add_project(options)
       project = Lighthouse::Project.new
-      project.name = project_name
+      project.name = options[:name]
+      project.public = options[:public]
       project.save
       return nil
     end
