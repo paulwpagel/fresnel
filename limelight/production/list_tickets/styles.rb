@@ -83,7 +83,7 @@ ticket_assigned_user_name {
 delete_ticket {
   background_image_fill_strategy "static"
   background_image "images/delete.png"
-  height 20
+  height 24
   width "3%"
 }
 
