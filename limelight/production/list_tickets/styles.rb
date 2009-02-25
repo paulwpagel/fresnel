@@ -178,35 +178,40 @@ delete_ticket_confirmation_main {
   y 0
   width "100%"
   height "100%"
-  background_color "blue"
+  background_color "black"
   transparency "50"
   horizontal_alignment "center"
   vertical_alignment "center"
 }
-
-delete_ticket_confirmation_box {
-  # transparency "0"
-
-  height 200
-  width 300
-  background_color "#CCCCCC"
-  rounded_corner_radius "10"
-  border_width 2
-  border_color "black"
+delete_ticket_confirmation_message {
+  font_size 20
+  width 500
   horizontal_alignment "center"
   vertical_alignment "center"
+  padding 7
+}
+delete_ticket_confirmation_box {
+  border_color "006699"
+	background_color "cfe2ee"
+  rounded_corner_radius "10"
+  border_width 2
+  horizontal_alignment "center"
+  vertical_alignment "center"
+  width 500
 }
 
 delete_ticket_button {
-  # transparency "0"
   font_size 24
-  height 70
-  width 200
-  background_color "green"
+  width "50%"
+  border_color "006699"
+  background_color "5A9ECF"
   rounded_corner_radius "10"
   border_width 2
-  border_color "red"
   horizontal_alignment "center"
   vertical_alignment "center"
   margin 10
+  padding 5
+  hover {
+    background_color "#CCCCCC"
+  }
 }
