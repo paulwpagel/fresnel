@@ -12,7 +12,7 @@ class ConvertsTicketToProp
   private #######################################
   
   def self.delete_prop(ticket)
-    return Limelight::Prop.new(:id => "delete_ticket_#{ticket.id}", :name => "delete_ticket")
+    return Limelight::Prop.new(:id => "confirm_delete_ticket_#{ticket.id}", :name => "confirm_delete_ticket")
   end
   
   def self.main_prop(ticket)

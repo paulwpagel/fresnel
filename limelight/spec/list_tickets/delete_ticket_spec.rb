@@ -1,8 +1,8 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 require 'limelight/specs/spec_helper'
-require "delete_ticket"
+require "confirm_delete_ticket"
 
-describe DeleteTicket do
+describe ConfirmDeleteTicket do
   before(:each) do
     mock_lighthouse
     @ticket = mock("ticket", :id => 12345, :null_object => true)
@@ -54,6 +54,6 @@ describe DeleteTicket do
   end
   
   def click_delete
-    scene.find("delete_ticket_12345").mouse_clicked(nil)
+    scene.find("confirm_delete_ticket_12345").mouse_clicked(nil)
   end
 end

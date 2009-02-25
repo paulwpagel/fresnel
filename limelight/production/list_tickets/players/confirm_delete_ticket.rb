@@ -1,4 +1,4 @@
-module DeleteTicket
+module ConfirmDeleteTicket
   
   def mouse_clicked(event)
     show_spinner do
@@ -19,6 +19,6 @@ module DeleteTicket
   end
   
   def ticket_id
-    return id.sub("delete_ticket_", "").to_i
+    return id.sub("confirm_delete_ticket_", "").to_i
   end
 end
