@@ -200,7 +200,7 @@ delete_ticket_confirmation_box {
 delete_ticket_button {
   # transparency "0"
   font_size 24
-  height 50
+  height 70
   width 200
   background_color "green"
   rounded_corner_radius "10"
@@ -208,4 +208,5 @@ delete_ticket_button {
   border_color "red"
   horizontal_alignment "center"
   vertical_alignment "center"
+  margin 10
 }
