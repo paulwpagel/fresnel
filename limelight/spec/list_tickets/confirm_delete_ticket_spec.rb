@@ -21,11 +21,11 @@ describe ConfirmDeleteTicket do
   it "should destroy the ticket on mouse_clicked" do
     @project.should_receive(:destroy_ticket).with(12345)
     
-    click_delete
+    confirm_delete
   end
   
   it "should clear the ticket from the production if the current_ticket is the deleted ticket" do    
-    click_delete
+    confirm_delete
     
     producer.production.current_ticket.should be_nil
   end
@@ -34,7 +34,7 @@ describe ConfirmDeleteTicket do
     different_ticket = mock("ticket", :id => 67890)
     producer.production.current_ticket = different_ticket
     
-    click_delete
+    confirm_delete
     
     producer.production.current_ticket.should == different_ticket
   end
@@ -42,18 +42,25 @@ describe ConfirmDeleteTicket do
   it "should tell the ticket_lister to remove the ticket from the list" do
     scene.ticket_lister.should_receive(:remove_ticket).with(12345)
     
-    click_delete
+    confirm_delete
   end
   
   it "should check if the current_ticket is already nil" do
     producer.production.current_ticket = nil
     
-    click_delete
+    confirm_delete
     
     scene.ticket_lister.should_not_receive(:remove_ticket)
   end
   
-  def click_delete
+  it "should get rid of the confirmation box" do
+    confirm_delete
+    
+    scene.find("delete_ticket_confirmation_box").should be_nil
+  end
+  
+  def confirm_delete
+    scene.find("delete_ticket_12345").mouse_clicked(nil)
     scene.find("confirm_delete_ticket_12345").mouse_clicked(nil)
   end
 end

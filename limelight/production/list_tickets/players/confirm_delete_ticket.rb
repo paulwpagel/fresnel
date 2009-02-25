@@ -5,6 +5,7 @@ module ConfirmDeleteTicket
       production.current_project.destroy_ticket(ticket_id)
       production.current_ticket = nil if current_ticket?(ticket_id)
       scene.ticket_lister.remove_ticket(ticket_id)
+      scene.remove(scene.find("delete_ticket_confirmation_main"))
     end
   end
   

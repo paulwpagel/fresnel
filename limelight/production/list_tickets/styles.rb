@@ -171,3 +171,41 @@ heading {
   font_style :bold
   font_size 24
 }
+
+delete_ticket_confirmation_main {
+  float "on"
+  x 0
+  y 0
+  width "100%"
+  height "100%"
+  background_color "blue"
+  transparency "50"
+  horizontal_alignment "center"
+  vertical_alignment "center"
+}
+
+delete_ticket_confirmation_box {
+  # transparency "0"
+
+  height 200
+  width 300
+  background_color "#CCCCCC"
+  rounded_corner_radius "10"
+  border_width 2
+  border_color "black"
+  horizontal_alignment "center"
+  vertical_alignment "center"
+}
+
+delete_ticket_button {
+  # transparency "0"
+  font_size 24
+  height 50
+  width 200
+  background_color "green"
+  rounded_corner_radius "10"
+  border_width 2
+  border_color "red"
+  horizontal_alignment "center"
+  vertical_alignment "center"
+}

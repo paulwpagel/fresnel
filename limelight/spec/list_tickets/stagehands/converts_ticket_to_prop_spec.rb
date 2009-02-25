@@ -113,18 +113,18 @@ describe ConvertsTicketToProp, "when converting a ticket to a prop" do
   
   describe "delete ticket prop" do
     it "should have the ticket id in the prop id" do
-      Limelight::Prop.should_receive(:new).with(hash_including(:id => "confirm_delete_ticket_123"))
+      Limelight::Prop.should_receive(:new).with(hash_including(:id => "delete_ticket_123"))
       ConvertsTicketToProp.convert(@ticket)
     end
     
     it "should have a name" do
-      Limelight::Prop.should_receive(:new).with(hash_including(:name => "confirm_delete_ticket"))
+      Limelight::Prop.should_receive(:new).with(hash_including(:name => "delete_ticket"))
       ConvertsTicketToProp.convert(@ticket)
     end
     
     it "should add it to the first prop" do
       prop = mock("title prop")
-      Limelight::Prop.should_receive(:new).with(hash_including(:id => "confirm_delete_ticket_123")).and_return(prop)
+      Limelight::Prop.should_receive(:new).with(hash_including(:id => "delete_ticket_123")).and_return(prop)
       @prop.should_receive(:add).with(prop)
       
       ConvertsTicketToProp.convert(@ticket)
