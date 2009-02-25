@@ -10,16 +10,7 @@ describe "Props" do
     prop.should_not be_nil
     prop.name.should == "text_box"
   end
-  
-  it "should have a box to enter the archived " do
-    prop = scene.find('archived')
-    
-    prop.should_not be_nil
-    prop.name.should == "combo_box"
-    prop.choices.should include("True")
-    prop.choices.should include("False")
-  end
-  
+
   it "should have a box for public" do
     prop = scene.find("public")
 
@@ -36,6 +27,23 @@ describe "Props" do
     prop.name.should == "button"
     prop.players.should include("add_project")
     prop.text.should == "Add Project"
+  end
+  
+  it "should have cancel button" do
+    prop = scene.find("cancel_add_project_button")
+
+    prop.should_not be_nil
+    prop.name.should == "button"
+    prop.players.should include("cancel_add_project")
+    prop.text.should == "Cancel"    
+  end
+  
+  it "should have an error message prop" do
+    prop = scene.find("error_message")
+    
+    prop.should_not be_nil
+    prop.name.should == "error_message"
+    prop.text.should == ""
   end
 
 end

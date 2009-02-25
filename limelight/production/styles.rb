@@ -43,3 +43,8 @@ spinner_message {
   horizontal_alignment "center"
   vertical_alignment "center"
 }
+
+
+label {
+  width 200
+}
