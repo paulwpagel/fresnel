@@ -2,7 +2,7 @@ require "credential"
 
 module Login
   
-  def button_pressed(e)    
+  def button_pressed(e)
     show_spinner do
       load_inputs
       log_in

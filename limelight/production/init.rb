@@ -7,6 +7,7 @@
 
 $: << File.expand_path(File.dirname(__FILE__) + "/list_tickets/players")
 $: << File.expand_path(File.dirname(__FILE__) + "/list_tickets/stagehands")
+$: << File.expand_path(File.dirname(__FILE__) + "/lib")
 $: << File.expand_path(File.dirname(__FILE__))
 $: << File.expand_path(File.dirname(__FILE__) + "/__resources/jars")
 require "OpenWebsite.jar"
@@ -27,15 +28,4 @@ require 'lighthouse/lighthouse_api/base'
 require "credential"
 require 'scene_chooser'
 production.lighthouse_client = Lighthouse::LighthouseApi
-
-module Limelight
-  class Prop
-    def show_spinner(&block)
-      spinner = Limelight::Prop.new(:name => "spinner", :id => "spinner")
-      spinner.add(Limelight::Prop.new(:name => "spinner_message", :text => "Loading..."))
-      scene.add(spinner) unless scene.find("spinner")
-      yield
-      scene.remove(scene.find("spinner")) if scene.find("spinner")
-    end
-  end
-end
+require "prop"

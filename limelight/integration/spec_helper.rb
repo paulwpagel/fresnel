@@ -19,7 +19,7 @@ require 'limelight/specs/spec_helper'
 require 'lighthouse/adapter'
 $PRODUCTION_PATH = File.expand_path(File.dirname(__FILE__) + "/../production")
 
-$visual = false
+$visual = true
 
 def press_button(button_prop_name, scene)
   sleep 2 if $visual
