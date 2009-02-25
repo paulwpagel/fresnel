@@ -50,6 +50,12 @@ module Lighthouse
         return @all_tickets.find_all { |ticket| ticket.tags.include?(tag) }
       end
         
+      def ticket_title(id)
+        ticket = @all_tickets.find { |ticket| ticket.id == id.to_i }
+        return ticket.title if ticket
+        return nil
+      end
+      
       def milestone_titles
         return @milestones.collect { |milestone| milestone.title }
       end

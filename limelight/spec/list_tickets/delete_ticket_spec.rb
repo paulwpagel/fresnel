@@ -9,6 +9,7 @@ describe DeleteTicket do
     producer.production.current_ticket = @ticket
     @open_tickets = [@ticket]
     @project.stub!(:open_tickets).and_return(@open_tickets)
+    @project.stub!(:ticket_title).and_return(nil)
     producer.production.current_project = @project
   end
   
@@ -28,6 +29,14 @@ describe DeleteTicket do
     confirm_delete_ticket_prop = scene.find("cancel_delete_ticket_12345")
     confirm_delete_ticket_prop.name.should == "delete_ticket_button"
     confirm_delete_ticket_prop.players.should == "cancel_delete_ticket"
+  end
+  
+  it "should include the ticket's title" do
+    @project.should_receive(:ticket_title).with(12345).and_return("Ticket Title")
+    
+    click_delete
+    
+    scene.find("delete_ticket_confirmation_message").text.should include("Ticket Title")
   end
   
   it "should put the confirmation inside of a wrapper prop" do

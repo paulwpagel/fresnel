@@ -84,10 +84,10 @@ describe Lighthouse::LighthouseApi::Project, "tickets" do
 
   describe Lighthouse::LighthouseApi::Project, "with tickets" do
     before(:each) do
-      @ticket_one = ticket(:state => "open", :tags => ["one"], :id => 1, :destroy => nil)
-      @ticket_two = ticket(:state => "resolved", :tags => ["one", "two"], :id => 2)
-      @ticket_three = ticket(:state => "open", :tags => [], :id => 3)
-      @ticket_four = ticket(:state => "new", :tags => ["two"], :id => 4)
+      @ticket_one = ticket(:state => "open", :tags => ["one"], :id => 1, :destroy => nil, :title => "Ticket One")
+      @ticket_two = ticket(:state => "resolved", :tags => ["one", "two"], :id => 2, :title => "Ticket Two")
+      @ticket_three = ticket(:state => "open", :tags => [], :id => 3, :title => "Ticket Three")
+      @ticket_four = ticket(:state => "new", :tags => ["two"], :id => 4, :title => "Ticket Four")
       @tickets = [@ticket_one, @ticket_two, @ticket_three, @ticket_four]
       Lighthouse::Ticket.stub!(:find).and_return(@ticket_one)
       Lighthouse::LighthouseApi::Ticket.stub!(:find_tickets).and_return(@tickets)
@@ -136,6 +136,22 @@ describe Lighthouse::LighthouseApi::Project, "tickets" do
       Lighthouse::LighthouseApi::Ticket.should_receive(:find_tickets).with(@fresnel_project, "all").ordered.and_return(@tickets)
       
       @fresnel_project.destroy_ticket(1)
+    end
+    
+    it "should return the title of the first ticket given its id" do
+      @fresnel_project.ticket_title(1).should == "Ticket One"
+    end
+    
+    it "should the title of the second ticket" do
+      @fresnel_project.ticket_title(2).should == "Ticket Two"
+    end
+    
+    it "should find the title if the id is passed in as a string" do
+      @fresnel_project.ticket_title("1").should == "Ticket One"
+    end
+    
+    it "should return nothing if the ticket is not found" do
+      @fresnel_project.ticket_title("bad id").should be_nil
     end
     
     def ticket(options)

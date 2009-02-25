@@ -11,7 +11,7 @@ end
   "production/add_ticket/players",
   "production",
   "production/lib",
-  "production/__resources/gems/fresnel_lib-0.0.8/lib"
+  "production/__resources/gems/fresnel_lib-0.0.9/lib"
 ].each {|path| add_to_search_path path}
 
 require 'rubygems'
@@ -20,7 +20,7 @@ require 'limelight/specs/spec_helper'
 require 'lighthouse/adapter'
 $PRODUCTION_PATH = File.expand_path(File.dirname(__FILE__) + "/../production")
 
-$visual = true
+$visual = false
 
 def press_button(button_prop_name, scene)
   sleep 2 if $visual
