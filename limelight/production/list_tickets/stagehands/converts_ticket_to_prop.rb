@@ -3,7 +3,13 @@ class ConvertsTicketToProp
   def self.convert(ticket)
     wrapper = main_prop(ticket)
     wrapper.add(delete_prop(ticket))
-    [:title, :state, :formatted_age, :assigned_user_name].each do |attribute|
+    title = ticket.title
+
+    if title.size > 25
+      title = "#{title[0..24]}..."
+    end
+    wrapper.add(Limelight::Prop.new(:text => title, :name => "ticket_title", :width => "25%"))
+    [:state, :formatted_age, :assigned_user_name].each do |attribute|
       wrapper.add(attribute_prop(ticket, attribute))
     end
     return wrapper
