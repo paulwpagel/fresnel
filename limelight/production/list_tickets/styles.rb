@@ -21,43 +21,46 @@ ticket_table {
   border_width 1
   border_color "#000000"
 }
+
 header_row {
   width "100%"
   background_color "#FFFFFF"
+  height 50
 }
-header_cell {
-  width "25%"
+
+icon_cell {
+  height "100%"
+  width "4%"
+}
+
+header_cell {  
+  width "24%"
   top_padding 7
   bottom_padding 7
+  height "100%"
 }
 
 title_header {
-  left_padding 39
   font_size 24
   hover {
     text_color "CCCCCC"
   }
 }
-ticket_title {
-  left_padding 7
+ticket_title {  
   height 20
-  width "24%"
 }
 
 state_header {
-  left_padding 12
   font_size 24
   hover {
     text_color "CCCCCC"
   }
 }
-ticket_state {
+ticket_state {  
   height 20
-  width "20%"
 }
 
 age_header {
-  left_padding 12
   font_size 24
   hover {
     text_color "CCCCCC"
@@ -65,11 +68,9 @@ age_header {
 }
 ticket_formatted_age {
   height 20
-  width "20%"
 }
 
 assigned_user_header {
-  left_padding 12
   font_size 24
   hover {
     text_color "CCCCCC"
@@ -77,18 +78,18 @@ assigned_user_header {
 }
 ticket_assigned_user_name {
   height 20
-  width "20%"
 }
 
-delete_ticket {
+delete_ticket {  
   background_image_fill_strategy "static"
   background_image "images/remove.png"
-  height 16
+  height 20
   width "3%"
 }
 
 ticket_in_list {
-  padding 12
+  top_padding 12
+  bottom_padding 12
   width "100%"
   top_border_width 2
   border_color "006699"
