@@ -145,6 +145,14 @@ describe EditTicket do
     prop.players.should == "save_ticket"
   end
   
+  it "should have a button to cancel editting ticket" do
+    click_ticket
+    
+    prop = scene.find('cancel_save_button')
+    prop.name.should == "button"
+    prop.players.should == "cancel_save_ticket"
+  end
+  
   it "should display a ticket's tags" do
     click_ticket
     

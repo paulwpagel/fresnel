@@ -15,7 +15,8 @@ module EditTicket
   def build_edit_ticket
     build(:ticket => production.current_ticket, :project => production.current_project) do
       row {
-        button :text => "Save Ticket", :id => "save_button", :players => "save_ticket", :width => 200
+        button :text => "Save Ticket", :id => "save_button", :players => "save_ticket", :width => 170
+        button :text => "Cancel", :id => "cancel_save_button", :players => "cancel_save_ticket", :width => 170
       }
       row {
         cell(:horizontal_alignment => :left, :width => "100%") {

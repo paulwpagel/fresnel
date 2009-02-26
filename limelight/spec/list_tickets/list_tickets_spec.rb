@@ -12,13 +12,6 @@ describe ListTickets do
   
   uses_scene :list_tickets
   
-  # it "should have a ticket_lister" do
-  #   lister = mock('lister')
-  #   @scene.should_receive(:find).with("ticket_lister").and_return(lister)
-  #   
-  #   @scene.ticket_lister.should == lister
-  # end
-  
   it "should find the age image" do
     scene.find("age_image").style.background_image.should == "images/descending.png"
   end
