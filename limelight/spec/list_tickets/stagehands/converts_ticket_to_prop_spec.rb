@@ -42,6 +42,12 @@ describe ConvertsTicketToProp, "when converting a ticket to a prop" do
       ConvertsTicketToProp.convert(@ticket)
     end
     
+    it "should truncate name to first 25 characters" do
+      @ticket.should_receive(:title).and_return("123456789012345678901234567890")
+      Limelight::Prop.should_receive(:new).with(hash_including(:text => "1234567890123456789012345..."))
+      ConvertsTicketToProp.convert(@ticket)
+    end
+    
     it "should add it to the first prop" do
       title_prop = mock("title prop")
       Limelight::Prop.should_receive(:new).with(hash_including(:text => "great hokey bug")).and_return(title_prop)

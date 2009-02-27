@@ -26,6 +26,7 @@ main {
 
     ticket_table {
       header_row {
+        icon_cell {}
         header_cell {
           label :id => "title_header", :text => "Title", :name => "title_header", :players => "ticket_sorter"
           sort_image :id => "title_image"

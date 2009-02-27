@@ -145,12 +145,21 @@ describe EditTicket do
     prop.players.should == "save_ticket"
   end
   
+<<<<<<< HEAD:limelight/spec/list_tickets/edit_ticket_spec.rb
   it "should have a button to cancel changes" do
     click_ticket
     
     prop = scene.find('cancel_edit_button')
     prop.name.should == "button"
     prop.players.should == "cancel_edit_ticket"
+=======
+  it "should have a button to cancel editting ticket" do
+    click_ticket
+    
+    prop = scene.find('cancel_save_button')
+    prop.name.should == "button"
+    prop.players.should == "cancel_save_ticket"
+>>>>>>> c03da462af779228c9fed248a7cdda8e8f1b4334:limelight/spec/list_tickets/edit_ticket_spec.rb
   end
   
   it "should display a ticket's tags" do
