@@ -15,13 +15,8 @@ module EditTicket
   def build_edit_ticket
     build(:ticket => production.current_ticket, :project => production.current_project) do
       row {
-<<<<<<< HEAD:limelight/production/list_tickets/players/edit_ticket.rb
         button :text => "Save Ticket", :id => "save_button", :players => "save_ticket", :width => 200
         button :text => "Cancel", :id => "cancel_edit_button", :players => "cancel_edit_ticket", :width => 200
-=======
-        button :text => "Save Ticket", :id => "save_button", :players => "save_ticket", :width => 170
-        button :text => "Cancel", :id => "cancel_save_button", :players => "cancel_save_ticket", :width => 170
->>>>>>> c03da462af779228c9fed248a7cdda8e8f1b4334:limelight/production/list_tickets/players/edit_ticket.rb
       }
       row {
         cell(:horizontal_alignment => :left, :width => "100%") {
