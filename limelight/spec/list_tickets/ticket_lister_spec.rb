@@ -70,3 +70,43 @@ describe TicketLister, "remove_ticket with real props" do
     scene.find("ticket_12345").should be_nil
   end
 end
+
+describe TicketLister, "cancel_edit_ticket" do
+  before(:each) do
+    mock_lighthouse
+    @ticket = mock("ticket", :id => 12345, :null_object => true)
+    @open_tickets = [@ticket]
+    @project.stub!(:open_tickets).and_return(@open_tickets)
+    producer.production.current_project = @project
+    @lighthouse_client.stub!(:ticket).and_return(@ticket)
+  end
+
+  uses_scene :list_tickets
+
+  before(:each) do
+    edit_ticket
+    scene.ticket_lister.cancel_edit_ticket
+  end
+  
+  it "should get rid of the edit form" do    
+    scene.find("save_button").should be_nil
+    scene.find("cancel_edit_button").should be_nil
+  end
+  
+  it "should re-add the ticket to the list" do
+    edit_ticket
+    scene.ticket_lister.cancel_edit_ticket
+
+    ticket_prop = scene.find("ticket_12345")
+    ticket_prop.players.should == "edit_ticket"
+    scene.find("delete_ticket_12345").should_not be_nil
+  end
+  
+  it "should clear the current_ticket" do
+    producer.production.current_ticket.should be_nil
+  end
+  
+  def edit_ticket
+    scene.find("ticket_12345").mouse_clicked(nil)
+  end
+end
