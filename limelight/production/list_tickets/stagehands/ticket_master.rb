@@ -8,6 +8,10 @@ class TicketMaster
     @scene.ticket_lister.show_these_tickets(get_tickets(type)) if @scene.ticket_lister
   end
   
+  def filter_by_tag(tag)
+    @scene.ticket_lister.show_these_tickets(project.tickets_for_tag(tag)) if @scene.ticket_lister
+  end
+  
   def get_tickets(type)
     if type == "Open Tickets"
       return project.open_tickets
