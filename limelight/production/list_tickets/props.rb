@@ -13,6 +13,7 @@ main {
 
   side_column {
     tag_lister :id => "tag_lister"
+    all_tags :id => "all_tags", :text => "All Tags"
   }
   
   ticket_content {
