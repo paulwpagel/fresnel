@@ -6,6 +6,6 @@ module TypeSelector
   end
   
   def notify_ticket_master
-    scene.ticket_master.show_tickets(value)
+    scene.ticket_master.filter_by_type(value)
   end
 end

@@ -4,7 +4,7 @@ class TicketMaster
     @scene = scene
   end
   
-  def show_tickets(type)    
+  def filter_by_type(type)    
     @scene.ticket_lister.show_these_tickets(get_tickets(type)) if @scene.ticket_lister
   end
   

@@ -5,7 +5,7 @@ describe ListTickets do
   before(:each) do
     mock_lighthouse
     producer.production.current_project = @project
-    @ticket_master = mock('ticket_master', :show_tickets => nil)
+    @ticket_master = mock('ticket_master', :filter_by_type => nil)
     TicketMaster.stub!(:new).and_return(@ticket_master)
     @scene = mock('scene')
   end

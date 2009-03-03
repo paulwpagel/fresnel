@@ -15,25 +15,25 @@ describe TicketMaster do
   it "should get all_tickets from the project if All Tickets" do
     @project.should_receive(:all_tickets)
     
-    @ticket_master.show_tickets("All Tickets")
+    @ticket_master.filter_by_type("All Tickets")
   end
   
   it "should get open_tickets from the project if Open Tickets" do
     @project.should_receive(:open_tickets)
     
-    @ticket_master.show_tickets("Open Tickets")    
+    @ticket_master.filter_by_type("Open Tickets")    
   end
 
   it "should use the ticket lister to show the tickets" do
     @ticket_lister.should_receive(:show_these_tickets).with(@tickets)
 
-    @ticket_master.show_tickets("All Tickets")
+    @ticket_master.filter_by_type("All Tickets")
   end
   
   it "should not crash if the ticket_lister is not on screen" do
     @scene.stub!(:ticket_lister).and_return(nil)
     
-    lambda{@ticket_master.show_tickets("Some Tickets")}.should_not raise_error
+    lambda{@ticket_master.filter_by_type("Some Tickets")}.should_not raise_error
   end
 end
 

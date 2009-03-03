@@ -19,7 +19,7 @@ module ListTickets
       scene.find("project_selector").value = project_name
 
       #TODO - EWM - should ticket_lister know the default tickets?
-      ticket_master.show_tickets("Open Tickets")
+      ticket_master.filter_by_type("Open Tickets")
       scene.find("age_image").style.background_image = "images/descending.png"
       scene.tag_lister.show_project_tags
     end
