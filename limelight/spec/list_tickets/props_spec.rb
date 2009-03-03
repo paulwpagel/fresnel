@@ -111,4 +111,12 @@ describe "Props" do
     prop = scene.find("all_tags")
     prop.name.should == "all_tags"
   end
+  
+  it "should have a prop for the heading" do
+    prop = scene.find("tag_heading")
+    prop.should_not be_nil
+    prop.name.should == "heading"
+    prop.text.should == "Tags"
+  end
+  
 end
