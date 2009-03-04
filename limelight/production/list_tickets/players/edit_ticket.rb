@@ -74,13 +74,18 @@ module EditTicket
       }
       secondary_ticket_group {
         @ticket.versions.each_with_index do |version, index|
+          version_spacer if index != 0
           row {
-            change_message = ""
-            version.changed_attributes.each do |attribute|
-              change_message << "#{attribute.name} changed from \"#{attribute.old_value}\" to \"#{attribute.new_value}\"\n"
-            end
-            text =  "#{version.created_by}\n#{version.timestamp}\n#{change_message}\n#{version.comment}"
-            label :name => "ticket_version_#{index + 1}", :id => "ticket_version_#{index + 1}", :text => text
+            version_created_by :text => version.created_by
+          }
+          row {
+            version_timestamp :text => version.timestamp
+          }
+          version.changed_attributes.each do |attribute|
+            version_changed_attribute :text => "#{attribute.name} changed from \"#{attribute.old_value}\" to \"#{attribute.new_value}\"\n"
+          end
+          row {
+            version_comment :text => version.comment
           }
         end
       }

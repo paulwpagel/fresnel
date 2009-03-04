@@ -28,6 +28,37 @@ edit_ticket_label {
   font_size 20
 }
 
+version_spacer {
+  width "100%"
+  border_color "006699"
+  bottom_border_width 2
+  top_padding 8
+  bottom_margin 8
+}
+
+version_created_by {
+  font_style :bold
+  font_size 16
+}
+
+version_timestamp {
+  font_size 12
+  text_color "444444"
+  bottom_padding 3
+}
+
+version_changed_attribute {
+  font_size 12
+  width "100%"
+  left_padding 7
+}
+
+version_comment {
+  left_padding 5
+  top_padding 5
+  font_size 14
+}
+
 ticket_content {
   width "85%"
 }

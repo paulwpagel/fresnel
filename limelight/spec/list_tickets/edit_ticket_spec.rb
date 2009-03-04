@@ -13,7 +13,7 @@ describe EditTicket do
 
     attribute_one = mock("changed_attribute", :name => "Name", :old_value => "Old Value", :new_value => "New Value")    
     version_one = mock("version", :comment => "Comment One", :created_by => "Version User One", :timestamp => "Time One", :changed_attributes => [attribute_one])
-    version_two = mock("version", :comment => "Comment Two", :created_by => "Version User Two", :timestamp => "Time Two", :changed_attributes => [attribute_one])
+    version_two = mock("version", :comment => "Comment Two", :created_by => "Version User Two", :timestamp => "Time Two", :changed_attributes => [])
     versions = [version_one, version_two]
 
     @ticket = mock("ticket", :id => 12345, :title => "Title", :null_object => true, :assigned_user_name => "Roger", :state => "open",
@@ -92,28 +92,26 @@ describe EditTicket do
     prop.name.should == "ticket_description"
   end
   
-  it "should make props for one version" do
+  it "should make props for one version's basic information" do
     click_ticket
-    
-    prop = scene.find('ticket_version_1')
-    prop.text.should include("Comment One")
-    prop.text.should include("Version User One")
-    prop.text.should include("Time One")
+
+    scene.find_by_name("version_created_by")[0].text.should == "Version User One"
+    scene.find_by_name("version_timestamp")[0].text.should == "Time One"
+    scene.find_by_name("version_comment")[0].text.should == "Comment One"
   end
   
   it "should make props for a second version" do
     click_ticket
     
-    prop = scene.find('ticket_version_2')
-    prop.text.should include("Comment Two")
-    prop.text.should include("Version User Two")
-    prop.text.should include("Time Two")
+    scene.find_by_name("version_created_by")[1].text.should == "Version User Two"
+    scene.find_by_name("version_timestamp")[1].text.should == "Time Two"
+    scene.find_by_name("version_comment")[1].text.should == "Comment Two"
   end
   
   it "should include the change message for a version" do
     click_ticket
     
-    prop = scene.find("ticket_version_1")
+    prop = scene.find_by_name("version_changed_attribute")[0]
     prop.text.should include("Name")
     prop.text.should include("Old Value")
     prop.text.should include("New Value")
