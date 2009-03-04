@@ -148,16 +148,19 @@ delete_ticket {
   width "3%"
 }
 
-ticket_in_list {
+add_ticket_group {
   top_padding 12
   bottom_padding 12
+  background_color "5A9ECF"
+}
+ticket_in_list {
+  extends :add_ticket_group
   width "100%"
   top_border_width 2
   border_color "006699"
-  background_color "5A9ECF"
   hover {
-      background_color "DDDDDD"
-    }
+    background_color "DDDDDD"
+  }
 }
 
 search_bar {
@@ -167,10 +170,6 @@ search_bar {
 title_bar {
   width "100%"
   background_color "5A9ECF"
-}
-
-add_ticket_group {
-  width 500
 }
 
 tag {
