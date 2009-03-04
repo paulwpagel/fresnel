@@ -37,6 +37,10 @@ describe "Display Tickets Integration Test" do
     ticket_states.should == ["new", "new"]
   end
   
+  it "should filter on tag then type" do
+    
+  end
+  
   def ticket_states
     ticket_rows.collect do |ticket_row|
       state_prop = ticket_row.children.find { |child| child.name == "ticket_state" }

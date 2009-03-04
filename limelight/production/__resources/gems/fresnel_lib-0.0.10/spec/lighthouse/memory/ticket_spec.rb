@@ -17,7 +17,7 @@ describe Lighthouse::Ticket do
     Lighthouse::Project.destroy_all
     Lighthouse::Ticket.destroy_all
     @project = create_project    
-    @ticket = Lighthouse::Ticket.new(:project_id => @project.id, :title => "Some Project")
+    @ticket = Lighthouse::Ticket.new(:project_id => @project.id, :title => "Some Project", :tag => "old tags")
   end
   
   it "should have a title" do
@@ -44,6 +44,15 @@ describe Lighthouse::Ticket do
   
   it "should have tags" do
     @ticket.tag = "new tags"
+  end
+  
+  it "should accept tags on init" do
+    @ticket.tag.should == "old tags"
+  end
+  
+  it "should default to empty string for tag" do
+    new_ticket = Lighthouse::Ticket.new
+    new_ticket.tag.should == ""
   end
     
   it "should have read/writable basic informatioin" do
@@ -139,10 +148,6 @@ describe Lighthouse::Ticket do
     it "should save the time it was updated at" do
       @ticket.updated_at.should == @now
       @ticket.created_at.should == @now
-    end
-    
-    it "should have a list of tags" do
-      @ticket.tag.should == ""
     end
     
     it "should know how to destory itself" do
