@@ -57,3 +57,15 @@ describe ListTickets, "tag lister" do
   end
     
 end
+
+describe ListTickets, "ticket_master" do
+  before(:each) do
+    mock_lighthouse
+  end
+  
+  uses_scene :list_tickets
+  
+  it "should return the same ticket_master each time" do
+    scene.ticket_master.should == scene.ticket_master
+  end
+end

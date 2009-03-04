@@ -8,11 +8,14 @@ describe AllTags do
   
   uses_scene :list_tickets
   
-  it "should show the tickets from the drop down" do
+  before(:each) do
+    @ticket_master = mock("ticket_master")
+    scene.stub!(:ticket_master).and_return(@ticket_master)
+  end
+  
+  it "should tell the ticket_master to clear the tags" do
     all_tags = scene.find("all_tags")
-    ticket_type = mock("type_selector")
-    scene.should_receive(:find).with("ticket_type").and_return(ticket_type)
-    ticket_type.should_receive(:notify_ticket_master)
+    @ticket_master.should_receive(:clear_tag_filter)
     
     all_tags.mouse_clicked(nil)
   end

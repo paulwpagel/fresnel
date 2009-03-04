@@ -6,7 +6,8 @@ module ListTickets
   prop_reader :tag_lister
     
   def ticket_master
-    TicketMaster.new(self)
+    @ticket_master = TicketMaster.new(self) unless @ticket_master
+    return @ticket_master
   end
   
   def scene_opened(event)
