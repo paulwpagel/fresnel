@@ -1,4 +1,8 @@
 module Lighthouse
+  class TagResource
+    attr_accessor :name
+  end
+  
   class Project
     @@projects = []
   
@@ -10,15 +14,20 @@ module Lighthouse
       return @@projects
     end
   
-    attr_reader :name, :id, :users, :tags
+    attr_reader :name, :id, :users
   
     def initialize(options = {})
       @name = options[:name]
       @id = nil
       @users = []
-      @tags = []
     end
-  
+    
+    def tags
+      tag_one = TagResource.new
+      tag_one.name = "bug"
+      return [tag_one]
+    end
+    
     def milestones
       return Lighthouse::Milestone.find(:all, :params => {:project_id => @id})
     end
@@ -34,6 +43,10 @@ module Lighthouse
 
      def closed_states_list
        return "resolved,hold,invalid"
+     end
+     
+     def tickets
+       Lighthouse::Ticket.find(:all, :params => {:project_id => @id, :q => "all"})
      end
   end
 end

@@ -42,7 +42,7 @@ describe Lighthouse::Project do
 
     @project.milestones.should == [milestone]
   end
-
+  
   it "should have two milestones" do
     @project.save
     milestone_one = create_milestone(:project_id => @project.id, :title => "Milestone One")
@@ -50,7 +50,7 @@ describe Lighthouse::Project do
 
     @project.milestones.should == [milestone_one, milestone_two]
   end
-  
+
   it "should have an open_states_list" do
     @project.open_states_list.should == "new,open"
   end
@@ -65,8 +65,22 @@ describe Lighthouse::Project do
     @project.users.size.should == 1
   end
   
-  it "should have tags" do
-    @project.tags.should == []
+  describe "with tickets" do
+    before(:each) do
+      @project.save      
+      @ticket_one = Lighthouse::Ticket.new(:project_id => @project.id, :tag => "bug")
+      @ticket_one.save
+      @ticket_two = Lighthouse::Ticket.new(:project_id => @project.id)
+      @ticket_two.save
+    end
+    
+    it "should return the tickets" do
+      @project.tickets.should == [@ticket_one, @ticket_two]
+    end
+    
+    it "should have a tags" do
+      @project.tags.size.should == 1
+      @project.tags[0].name.should == "bug"
+    end
   end
-  
 end

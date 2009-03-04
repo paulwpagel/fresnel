@@ -5,6 +5,13 @@ describe "Display Tickets Integration Test" do
   include LoginHelper
   
   before(:each) do
+    Lighthouse::Ticket.destroy_all
+    create_ticket(:project_id => current_project.id, :title => "Ticket on Project One", :tag => "bug")
+    create_ticket(:project_id => current_project.id, :title => "A Ticket", :state => "open")
+    create_ticket(:project_id => current_project.id, :title => "B Ticket", :state => "resolved", :tag => "bug")
+    create_ticket(:project_id => current_project.id, :title => "Test Title One")
+    create_ticket(:project_id => current_project.id, :title => "C Ticket", :state => "hold")
+    
     view_tickets
   end
   
@@ -25,9 +32,9 @@ describe "Display Tickets Integration Test" do
     @scene.find("title_header").mouse_clicked(nil)
     ticket_titles.should == ["A Ticket", "B Ticket", "C Ticket", "Test Title One", "Ticket on Project One"]
     @scene.find("state_header").mouse_clicked(nil)
-    ticket_states.should == ["resolved", "open", "new", "new", "holding"]
+    ticket_states.should == ["resolved", "open", "new", "new", "hold"]
     @scene.find("state_header").mouse_clicked(nil)
-    ticket_states.should == ["holding", "new", "new", "open", "resolved"]
+    ticket_states.should == ["hold", "new", "new", "open", "resolved"]
   end
   
   it "should display the results of a search" do
@@ -38,7 +45,15 @@ describe "Display Tickets Integration Test" do
   end
   
   it "should filter on tag then type" do
+    @scene.find("tag_1").mouse_clicked(nil)
+    ticket_titles.should == ["Ticket on Project One"]
+    @scene.find("ticket_type").value = ["All Tickets"]
+    ticket_titles.should == ["Ticket on Project One", "B Ticket"]
+    @scene.find("ticket_type").value = "Open Tickets"
+    ticket_titles.should == ["Ticket on Project One"]
     
+    @scene.find("all_tags").mouse_clicked(nil)
+    ticket_titles.should == ["Ticket on Project One", "A Ticket", "Test Title One"]
   end
   
   def ticket_states
@@ -68,4 +83,11 @@ describe "Display Tickets Integration Test" do
     login_with_credentials(@scene)
     @scene = producer.production.theater['default'].current_scene
   end
+  
+  def create_ticket(options={})
+    ticket = Lighthouse::Ticket.new(options)
+    ticket.save
+    return ticket
+  end
+  
 end
