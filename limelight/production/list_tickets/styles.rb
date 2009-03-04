@@ -1,3 +1,33 @@
+main_ticket_group {
+  background_color "cfe2ee"
+  padding 10
+  left_margin 12
+  right_margin 12
+  rounded_corner_radius 10
+  border_width 2
+  border_color "006699"
+}
+
+secondary_ticket_group {
+  extends :main_ticket_group
+  top_margin 7
+}
+
+cell {
+  font_size 20
+  right_padding 15
+  horizontal_alignment :left 
+}
+
+row {
+  width "100%"
+  padding 3
+}
+
+edit_ticket_label {
+  font_size 20
+}
+
 ticket_content {
   width "85%"
 }
@@ -133,17 +163,6 @@ ticket_comment {
   height 80
 }
 
-cell {
-  font_size 20
-  padding 15
-  horizontal_alignment :left 
-}
-
-row {
-  width "100%"
-  padding 3
-}
-
 version_cell {
   padding 15
   rounded_corner_radius "10"
@@ -160,10 +179,6 @@ right_title{
 left_title {
   horizontal_alignment :left
   width "30%"
-}
-
-edit_ticket_label {
-  font_size 20
 }
 
 heading {
