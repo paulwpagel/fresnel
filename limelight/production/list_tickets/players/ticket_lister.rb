@@ -3,15 +3,19 @@ require File.expand_path(File.dirname(__FILE__) + "/../stagehands/converts_ticke
 module TicketLister
   attr_reader :last_tickets
 
+  def filter_by_type(type)
+    show_these_tickets scene.ticket_master.tickets_for_type(type)
+  end
+
+  def search_on(criteria)
+    show_these_tickets @last_tickets.find_all { |ticket| ticket.matches_criteria?(criteria) }
+  end
+  
   def show_these_tickets(tickets)
     @last_tickets = tickets
     remove_all
     mapped_tickets = tickets.map {|ticket| ConvertsTicketToProp.convert(ticket) }
     mapped_tickets.each { |prop| self.add(prop) }
-  end
-  
-  def search_on(criteria)
-    show_these_tickets @last_tickets.find_all { |ticket| ticket.matches_criteria?(criteria) }
   end
   
   def remove_ticket(ticket_id)

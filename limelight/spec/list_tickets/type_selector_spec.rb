@@ -6,27 +6,17 @@ describe TypeSelector, "when changing desired type" do
     @player_under_test = Object.new
     @player_under_test.extend(TypeSelector)
 
-    @mock_master = mock("ticket_master", :filter_by_type => nil)
-    @mock_scene = mock('scene', :ticket_master => @mock_master)
+    @mock_lister = mock("ticket_lister", :filter_by_type => nil)
+    @mock_scene = mock('scene', :ticket_lister => @mock_lister)
     @player_under_test.stub!(:scene).and_return(@mock_scene)
     @player_under_test.stub!(:value)
   end
   
-  def do_call
-    @player_under_test.notify_ticket_master
-  end
-
-  it "should ask the scene for ticket_master" do
-    @mock_scene.should_receive(:ticket_master).and_return(@mock_master)
-    
-    do_call
-  end
-  
-  it "should tell the ticket_master to show tickets based on value of prop" do
+  it "should tell the ticket_lister to show tickets based on value of prop" do
     expected_type = "These Tickets #{rand}"
     @player_under_test.stub!(:value).and_return(expected_type)
-    @mock_master.should_receive(:filter_by_type).with(expected_type)
+    @mock_lister.should_receive(:filter_by_type).with(expected_type)
     
-    do_call
+    @player_under_test.notify_ticket_lister
   end
 end
