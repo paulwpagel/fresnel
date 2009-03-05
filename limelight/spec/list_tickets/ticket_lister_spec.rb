@@ -138,6 +138,9 @@ describe TicketLister, "search_on" do
 
 end
 
+
+
+
 describe TicketLister, "filter_by_type" do
   before(:each) do
     mock_lighthouse
@@ -152,8 +155,7 @@ describe TicketLister, "filter_by_type" do
   end
   
   it "asks ticketmaster for the tickets for given type" do
-    @ticket_master.should_receive(:tickets_for_type_and_tag).with("Some Tickets", nil).and_return([])
-    
+    @ticket_master.should_receive(:tickets_for_type_and_tag).with("Some Tickets", anything()).and_return([])
     scene.ticket_lister.filter_by_type("Some Tickets")
   end
   
@@ -161,5 +163,44 @@ describe TicketLister, "filter_by_type" do
     scene.ticket_lister.filter_by_type("Some Tickets")
     scene.find("ticket_1234").should_not be_nil
   end
+  context "already filtered_by_tag" do
+    it "should keep track of the tag filter" do
+      scene.ticket_lister.filter_by_tag("A cool tag")
+      @ticket_master.should_receive(:tickets_for_type_and_tag).with("Some Tickets", "A cool tag").and_return([])
+      scene.ticket_lister.filter_by_type("Some Tickets")
+    end
+  end
   
+end
+
+describe TicketLister, "filter_by_tag" do
+  before(:each) do
+    mock_lighthouse
+    @tickets = [mock("ticket", :id => 1234, :null_object => true)]
+  end
+  
+  uses_scene :list_tickets
+  
+  before(:each) do
+    @ticket_master = mock("ticket_master", :tickets_for_type_and_tag => @tickets)
+    scene.stub!(:ticket_master).and_return(@ticket_master)
+  end
+  
+  it "asks ticketmaster for the tickets for given tag" do
+    @ticket_master.should_receive(:tickets_for_type_and_tag).with(anything(), "A cool tag").and_return([])
+    scene.ticket_lister.filter_by_tag("A cool tag")
+  end
+  
+  it "shows the tickets returned from ticketmaster" do
+    scene.ticket_lister.filter_by_tag("Another cool tag")
+    scene.find("ticket_1234").should_not be_nil
+  end
+  
+  context "already filtered_by_type" do
+    it "should keep track of the type filter" do
+      scene.ticket_lister.filter_by_type("Some Tickets")
+      @ticket_master.should_receive(:tickets_for_type_and_tag).with("Some Tickets", "A cool tag").and_return([])
+      scene.ticket_lister.filter_by_tag("A cool tag")
+    end
+  end
 end

@@ -4,7 +4,13 @@ module TicketLister
   attr_reader :last_tickets
 
   def filter_by_type(type)
-    show_these_tickets scene.ticket_master.tickets_for_type_and_tag(type, nil)
+    @current_type_filter = type
+    show_current_type_and_tag
+  end
+
+  def filter_by_tag(tag)
+    @current_tag_filter = tag
+    show_current_type_and_tag
   end
 
   def search_on(criteria)
@@ -32,5 +38,11 @@ module TicketLister
       ticket_prop.add(child)
     end
     production.current_ticket = nil
+  end
+  
+  private ##############################################
+  
+  def show_current_type_and_tag
+    show_these_tickets scene.ticket_master.tickets_for_type_and_tag(@current_type_filter, @current_tag_filter)
   end
 end

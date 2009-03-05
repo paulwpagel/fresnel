@@ -12,12 +12,17 @@ class TicketMaster
       @scene.ticket_lister.show_these_tickets(tickets_for_type(type)) if @scene.ticket_lister
     end
   end
-  
-  def filter_by_tag(tag)
-    @current_tag_filter = tag
-    filter_by_type_and_tag
-  end
+  # 
+  # def filter_by_tag(tag)
+  #   @current_tag_filter = tag
+  #   filter_by_type_and_tag
+  # end
 
+  def tickets_for_type_and_tag(type, tag)
+    return tickets_for_type(type) unless tag
+    return project.tickets_for_tag(tag)
+  end
+  
   def filter_by_type_and_tag
     tickets = project.tickets_for_tag(@current_tag_filter) & tickets_for_type(@current_type_filter)
     @scene.ticket_lister.show_these_tickets(tickets) if @scene.ticket_lister
