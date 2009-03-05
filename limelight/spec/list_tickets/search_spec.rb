@@ -18,7 +18,7 @@ describe Search do
   it "should search tickets" do
     expected_criteria = "criteria"
     scene.find("search_box").text = expected_criteria
-    @ticket_lister.should_receive(:search_by).with(expected_criteria)
+    @ticket_lister.should_receive(:search_on).with(expected_criteria)
     scene.find("search_button").button_pressed(nil)
   end
 end

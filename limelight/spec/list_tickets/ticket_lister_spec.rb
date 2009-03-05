@@ -138,8 +138,33 @@ describe TicketLister, "search_on" do
 
 end
 
-
-
+describe TicketLister, "clear_tag_filter" do
+  before(:each) do
+    mock_lighthouse
+    @tickets = [mock("ticket", :id => 1234, :null_object => true)]
+  end
+  
+  uses_scene :list_tickets
+  
+  before(:each) do
+    @ticket_master = mock("ticket_master", :tickets_for_type_and_tag => @tickets)
+    scene.stub!(:ticket_master).and_return(@ticket_master)
+  end
+  
+  it "asks ticket_master for just the type" do
+    scene.ticket_lister.filter_by_type("A type")
+    scene.ticket_lister.filter_by_tag("A tag")
+    
+    @ticket_master.should_receive(:tickets_for_type_and_tag).with("A type", nil).and_return([])
+    
+    scene.ticket_lister.clear_tag_filter
+  end
+  
+  it "should show the tickets returned from the ticket_master" do
+    scene.ticket_lister.clear_tag_filter
+    scene.find("ticket_1234").should_not be_nil
+  end
+end
 
 describe TicketLister, "filter_by_type" do
   before(:each) do

@@ -1,7 +1,7 @@
 module Search
   def button_pressed(event)
     show_spinner do
-      scene.ticket_lister.search_by(search_criteria)
+      scene.ticket_lister.search_on(search_criteria)
     end
   end
   

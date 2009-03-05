@@ -3,6 +3,10 @@ require File.expand_path(File.dirname(__FILE__) + "/../stagehands/converts_ticke
 module TicketLister
   attr_reader :last_tickets
 
+  def clear_tag_filter
+    filter_by_tag(nil)
+  end
+  
   def filter_by_type(type)
     @current_type_filter = type
     show_current_type_and_tag
