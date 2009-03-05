@@ -188,6 +188,18 @@ tag {
   }
 }
 
+active_tag {
+  font_size 16
+  padding 10
+  rounded_corner_radius "10"
+  border_width 4
+  border_color "red"
+  background_color "5A9ECF"
+  font_style :bold
+  horizontal_alignment :center
+  width "100%"  
+}
+
 ticket_comment {
   width 500
   height 80

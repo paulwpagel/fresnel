@@ -28,5 +28,31 @@ describe TagLister do
     tag_two.text.should == "Tag Two"
     scene.tag_lister.children.should include(tag_two)
   end
+
+  
+  context "#activate_tag" do
+    before(:each) do
+      scene.tag_lister.activate("tag_1")
+    end
+
+    it "sets a tag to be active" do
+      tag = scene.find("tag_1")
+      tag.name.should == "active_tag"
+    end
+    
+    it "keeps the same text for the tag" do
+      tag = scene.find("tag_1")
+      tag.text.should == "Tag One"
+    end
+    
+    it "keeps inactive tags" do
+      inactive_tag = scene.find("tag_2")
+      inactive_tag.name.should == "tag"
+      inactive_tag.text.should == "Tag Two"
+    end
+    
+  end
+  
+  
   
 end
