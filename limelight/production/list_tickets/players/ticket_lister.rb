@@ -10,6 +10,10 @@ module TicketLister
     mapped_tickets.each { |prop| self.add(prop) }
   end
   
+  def search_on(criteria)
+    show_these_tickets @last_tickets.find_all { |ticket| ticket.matches_criteria?(criteria) }
+  end
+  
   def remove_ticket(ticket_id)
     children.each do |ticket_row|
       remove(ticket_row) if ticket_row.id == "ticket_#{ticket_id}"

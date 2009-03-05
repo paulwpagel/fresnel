@@ -1,4 +1,5 @@
 require File.expand_path(File.dirname(__FILE__) + "/../spec_helper")
+require 'limelight/specs/spec_helper'
 require "ticket_lister"
 
 describe TicketLister, "when being told to show tickets" do
@@ -109,4 +110,30 @@ describe TicketLister, "cancel_edit_ticket" do
   def edit_ticket
     scene.find("ticket_12345").mouse_clicked(nil)
   end
+end
+
+describe TicketLister, "search_on" do
+  before(:each) do
+    mock_lighthouse
+    @matching_ticket = mock("ticket", :id => 12345, :matches_criteria? => true, :null_object => true)
+    @non_matching_ticket = mock("ticket", :id => 12346, :matches_criteria? => false, :null_object => true)
+    @tickets = [@non_matching_ticket, @matching_ticket]
+  end
+  
+  uses_scene :list_tickets
+  
+  before(:each) do
+    scene.ticket_lister.show_these_tickets(@tickets)
+  end
+
+  it "adds a ticket that matches criteria" do
+    scene.ticket_lister.search_on("does not matter")
+    scene.find("ticket_#{@matching_ticket.id}").should_not be_nil
+  end
+  
+  it "doesn't a ticket that doesn't match criteria" do
+    scene.ticket_lister.search_on("does not matter")
+    scene.find("ticket_#{@non_matching_ticket.id}").should be_nil
+  end
+
 end
