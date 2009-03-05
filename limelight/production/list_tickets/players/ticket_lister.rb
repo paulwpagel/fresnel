@@ -4,7 +4,7 @@ module TicketLister
   attr_reader :last_tickets
 
   def filter_by_type(type)
-    show_these_tickets scene.ticket_master.tickets_for_type(type)
+    show_these_tickets scene.ticket_master.tickets_for_type_and_tag(type, nil)
   end
 
   def search_on(criteria)

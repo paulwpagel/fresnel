@@ -147,12 +147,12 @@ describe TicketLister, "filter_by_type" do
   uses_scene :list_tickets
   
   before(:each) do
-    @ticket_master = mock("ticket_master", :tickets_for_type => @tickets)
+    @ticket_master = mock("ticket_master", :tickets_for_type_and_tag => @tickets)
     scene.stub!(:ticket_master).and_return(@ticket_master)
   end
   
   it "asks ticketmaster for the tickets for given type" do
-    @ticket_master.should_receive(:tickets_for_type).with("Some Tickets").and_return([])
+    @ticket_master.should_receive(:tickets_for_type_and_tag).with("Some Tickets", nil).and_return([])
     
     scene.ticket_lister.filter_by_type("Some Tickets")
   end
