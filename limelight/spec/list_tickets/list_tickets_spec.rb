@@ -5,7 +5,7 @@ describe ListTickets do
   before(:each) do
     mock_lighthouse
     producer.production.current_project = @project
-    @ticket_master = mock('ticket_master', :show_tickets => nil)
+    @ticket_master = mock('ticket_master', :filter_by_type => nil)
     TicketMaster.stub!(:new).and_return(@ticket_master)
     @scene = mock('scene')
   end
@@ -56,4 +56,16 @@ describe ListTickets, "tag lister" do
     @player_under_test.scene_opened(nil)
   end
     
+end
+
+describe ListTickets, "ticket_master" do
+  before(:each) do
+    mock_lighthouse
+  end
+  
+  uses_scene :list_tickets
+  
+  it "should return the same ticket_master each time" do
+    scene.ticket_master.should == scene.ticket_master
+  end
 end

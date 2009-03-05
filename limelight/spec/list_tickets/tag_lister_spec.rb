@@ -15,13 +15,6 @@ describe TagLister do
     scene.tag_lister.show_project_tags
   end
   
-  it "should have a prop for the heading" do
-    heading = scene.find("tag_heading")
-    heading.should_not be_nil
-    heading.name.should == "heading"
-    heading.text.should == "Tags"
-  end
-
   it "should make a prop for one tag" do
     tag_one = scene.find("tag_1")
     tag_one.name.should == "tag"
@@ -35,24 +28,31 @@ describe TagLister do
     tag_two.text.should == "Tag Two"
     scene.tag_lister.children.should include(tag_two)
   end
-  
-end
 
-describe TagLister, "No tags" do
-  before(:each) do
-    mock_lighthouse
-    @project.stub!(:tag_names).and_return([])
-    producer.production.current_project = @project
+  
+  context "#activate_tag" do
+    before(:each) do
+      scene.tag_lister.activate("tag_1")
+    end
+
+    it "sets a tag to be active" do
+      tag = scene.find("tag_1")
+      tag.name.should == "active_tag"
+    end
+    
+    it "keeps the same text for the tag" do
+      tag = scene.find("tag_1")
+      tag.text.should == "Tag One"
+    end
+    
+    it "keeps inactive tags" do
+      inactive_tag = scene.find("tag_2")
+      inactive_tag.name.should == "tag"
+      inactive_tag.text.should == "Tag Two"
+    end
+    
   end
   
-  uses_scene :list_tickets
   
-  before(:each) do
-    scene.tag_lister.show_project_tags
-  end
   
-  it "should not have a prop for the heading" do
-    heading = scene.find("tag_heading")
-    heading.should be_nil
-  end
 end

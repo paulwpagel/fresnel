@@ -23,9 +23,9 @@ def create_ticket(options={})
   ticket.save
   return ticket
 end
-create_ticket(:project_id => project.id, :title => "Ticket on Project One")
+create_ticket(:project_id => project.id, :title => "Ticket on Project One", :tag => "bug")
 create_ticket(:project_id => project.id, :title => "A Ticket", :state => "open")
-create_ticket(:project_id => project.id, :title => "B Ticket", :state => "resolved")
-create_ticket(:project_id => project.id, :title => "C Ticket", :state => "holding")
+create_ticket(:project_id => project.id, :title => "B Ticket", :state => "resolved", :tag => "bug")
+create_ticket(:project_id => project.id, :title => "C Ticket", :state => "hold")
 
 create_ticket(:project_id => project_two.id, :title => "Ticket on Project Two")

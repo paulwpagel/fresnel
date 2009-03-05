@@ -1,3 +1,64 @@
+main_ticket_group {
+  background_color "cfe2ee"
+  padding 10
+  left_margin 12
+  right_margin 12
+  rounded_corner_radius 10
+  border_width 2
+  border_color "006699"
+}
+
+secondary_ticket_group {
+  extends :main_ticket_group
+  top_margin 7
+}
+
+cell {
+  font_size 20
+  right_padding 15
+  horizontal_alignment :left 
+}
+
+row {
+  width "100%"
+  padding 3
+}
+
+edit_ticket_label {
+  font_size 20
+}
+
+version_spacer {
+  width "100%"
+  border_color "006699"
+  bottom_border_width 2
+  top_padding 8
+  bottom_margin 8
+}
+
+version_created_by {
+  font_style :bold
+  font_size 16
+}
+
+version_timestamp {
+  font_size 12
+  text_color "444444"
+  bottom_padding 3
+}
+
+version_changed_attribute {
+  font_size 12
+  width "100%"
+  left_padding 7
+}
+
+version_comment {
+  left_padding 5
+  top_padding 5
+  font_size 14
+}
+
 ticket_content {
   width "85%"
 }
@@ -87,16 +148,19 @@ delete_ticket {
   width "3%"
 }
 
-ticket_in_list {
+add_ticket_group {
   top_padding 12
   bottom_padding 12
+  background_color "5A9ECF"
+}
+ticket_in_list {
+  extends :add_ticket_group
   width "100%"
   top_border_width 2
   border_color "006699"
-  background_color "5A9ECF"
   hover {
-      background_color "DDDDDD"
-    }
+    background_color "DDDDDD"
+  }
 }
 
 search_bar {
@@ -106,10 +170,6 @@ search_bar {
 title_bar {
   width "100%"
   background_color "5A9ECF"
-}
-
-add_ticket_group {
-  width 500
 }
 
 tag {
@@ -128,20 +188,21 @@ tag {
   }
 }
 
+active_tag {
+  font_size 16
+  padding 10
+  rounded_corner_radius "10"
+  border_width 4
+  border_color "red"
+  background_color "5A9ECF"
+  font_style :bold
+  horizontal_alignment :center
+  width "100%"  
+}
+
 ticket_comment {
   width 500
   height 80
-}
-
-cell {
-  font_size 20
-  padding 15
-  horizontal_alignment :left 
-}
-
-row {
-  width "100%"
-  padding 3
 }
 
 version_cell {
@@ -160,10 +221,6 @@ right_title{
 left_title {
   horizontal_alignment :left
   width "30%"
-}
-
-edit_ticket_label {
-  font_size 20
 }
 
 heading {

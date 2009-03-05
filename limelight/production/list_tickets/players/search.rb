@@ -4,7 +4,7 @@ module Search
       tickets = []
       criteria = scene.find("search_box").text
 
-      production.current_project.all_tickets.each do |ticket|
+      scene.ticket_lister.last_tickets.each do |ticket|
         tickets << ticket if ticket.matches_criteria?(criteria)
       end
     

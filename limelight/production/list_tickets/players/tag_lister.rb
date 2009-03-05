@@ -1,16 +1,25 @@
 module TagLister
 
   def show_project_tags
-    remove_all
-    tag_names = project.tag_names
-    scene.tag_lister.add(Limelight::Prop.new(:name => "heading", :text => "Tags", :id => "tag_heading")) unless tag_names.empty?
+    build_tags
+  end
   
-    tag_names.each_with_index do |tag, index|
-      scene.tag_lister.add(Limelight::Prop.new(:name => "tag", :text => tag, :id => "tag_#{index + 1}"))
-    end
+  def activate(id)
+    tag = scene.find(id)
+    build_tags tag.text
   end
   
   private ####################################
+  
+  def build_tags(active_tag_text=nil)
+    remove_all
+    project.tag_names.each_with_index do |tag_text, index|
+      name = (active_tag_text == tag_text) ? 
+                              "active_tag" :
+                              "tag"
+      scene.tag_lister.add(Limelight::Prop.new(:name => name, :text => tag_text, :id => "tag_#{index + 1}"))
+    end
+  end
   
   def project
     production.current_project

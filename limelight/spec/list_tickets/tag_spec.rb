@@ -11,25 +11,22 @@ describe Tag do
   
   uses_scene :list_tickets
   
-  it "should have a mouse_clicked event" do
-    click_tag
+  before(:each) do
+    @ticket_master = mock("ticket_master", :filter_by_tag => nil)
+    scene.stub!(:ticket_master).and_return(@ticket_master)
+    @tag_lister = mock("tag_lister", :activate => nil)
+    scene.stub!(:tag_lister).and_return(@tag_lister)
   end
   
-  it "should get the tickets to show from the current_project" do
-    @project.should_receive(:tickets_for_tag).with("Tag One").and_return([])
+  it "should tell the ticket_master to filter by tag" do
+    @ticket_master.should_receive(:filter_by_tag).with("Tag One")
     
-    click_tag
+    scene.find("tag_1").mouse_clicked(nil)
   end
   
-  it "should show the found tickets" do
-    tickets = [mock("ticket")]
-    @project.stub!(:tickets_for_tag).and_return(tickets)
-    scene.ticket_lister.should_receive(:show_these_tickets).with(tickets)
+  it "should tell the tag lister to activate itself" do
+    @tag_lister.should_receive(:activate).with("tag_1")
     
-    click_tag
-  end
-  
-  def click_tag
     scene.find("tag_1").mouse_clicked(nil)
   end
 end

@@ -12,6 +12,8 @@ main {
   }
 
   side_column {
+    heading :id => "tag_heading", :text => "Tags"
+    all_tags :id => "all_tags", :text => "All Tags", :styles => "tag"
     tag_lister :id => "tag_lister"
   }
   

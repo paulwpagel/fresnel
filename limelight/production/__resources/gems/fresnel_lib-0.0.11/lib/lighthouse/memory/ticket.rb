@@ -32,7 +32,11 @@ module Lighthouse
       @project_id = options[:project_id]
       set_initial_state(options[:state])
       @versions = []
-      @tag = ""
+      if options[:tag]
+        @tag = options[:tag]
+      else
+        @tag = ""
+      end
       @title = options[:title]
     end
         

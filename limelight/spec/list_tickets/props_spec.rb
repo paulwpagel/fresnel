@@ -106,4 +106,17 @@ describe "Props" do
     prop.image.should == "images/add.png"
     prop.players.should == "add_project"
   end
+  
+  it "should have an all_tags prop" do
+    prop = scene.find("all_tags")
+    prop.name.should == "all_tags"
+  end
+  
+  it "should have a prop for the heading" do
+    prop = scene.find("tag_heading")
+    prop.should_not be_nil
+    prop.name.should == "heading"
+    prop.text.should == "Tags"
+  end
+  
 end
