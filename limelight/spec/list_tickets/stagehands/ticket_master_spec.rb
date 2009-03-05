@@ -114,6 +114,44 @@ describe TicketMaster, "tickets_for_type_and_tag" do
       @ticket_master.tickets_for_type_and_tag(nil, "Some Tag").should == [@tagged_ticket]
     end
   end
+  
+  context "both tag and type" do
+    context "Open Tickets" do
+      before(:each) do
+        @matching_tag_ticket = mock('matching_tag_ticket')
+        @not_matching_tag_ticket = mock('not_matching_tag_ticket')
+        @closed_matching_tag_ticket = mock('closed_matching_tag_ticket')
+        @open_tickets << @matching_tag_ticket << @not_matching_tag_ticket
+        @all_tickets << @closed_matching_tag_ticket
+        @project.stub!(:tickets_for_tag).and_return([@matching_tag_ticket, @closed_matching_tag_ticket])
+      end
+      it "returns tickets that match the tag" do
+        @ticket_master.tickets_for_type_and_tag("Open Tickets", "A tag to match").should include(@matching_tag_ticket)
+      end
+      it "does not return tickets that do not match the tag" do
+        @ticket_master.tickets_for_type_and_tag("Open Tickets", "A tag to match").should_not include(@not_matching_tag_ticket)
+      end
+      it "does not return closed tagged tickets" do
+        @ticket_master.tickets_for_type_and_tag("Open Tickets", "A tag to match").should_not include(@closed_matching_tag_ticket)
+      end
+    end
+    
+    context "All Tickets" do 
+      before(:each) do
+        @matching_tag_ticket = mock('matching_tag_ticket')
+        @not_matching_tag_ticket = mock('not_matching_tag_ticket')
+        @all_tickets << @matching_tag_ticket << @not_matching_tag_ticket
+        
+        @project.stub!(:tickets_for_tag).and_return([@matching_tag_ticket])
+      end
+      it "returns tickets that match the tag" do
+        @ticket_master.tickets_for_type_and_tag("All Tickets", "A tag to match").should include(@matching_tag_ticket)
+      end
+      it "does not return tickets that do not match the tag" do
+        @ticket_master.tickets_for_type_and_tag("All Tickets", "A tag to match").should_not include(@not_matching_tag_ticket)
+      end
+    end
+  end
 end
 
 describe TicketMaster, "tickets_for_type" do

@@ -12,15 +12,11 @@ class TicketMaster
       @scene.ticket_lister.show_these_tickets(tickets_for_type(type)) if @scene.ticket_lister
     end
   end
-  # 
-  # def filter_by_tag(tag)
-  #   @current_tag_filter = tag
-  #   filter_by_type_and_tag
-  # end
 
   def tickets_for_type_and_tag(type, tag)
-    return tickets_for_type(type) unless tag
-    return project.tickets_for_tag(tag)
+    return tickets_for_type(type) if tag.nil?
+    return project.tickets_for_tag(tag) if type.nil?
+    return project.tickets_for_tag(tag) & tickets_for_type(type)
   end
   
   def filter_by_type_and_tag
@@ -32,7 +28,8 @@ class TicketMaster
     @current_tag_filter = nil
     filter_by_type(@current_type_filter)
   end
-  
+
+  #TODO - EWM pull this method out
   def tickets_for_type(type)
     if type == "Open Tickets"
       return project.open_tickets
