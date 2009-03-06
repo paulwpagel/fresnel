@@ -22,7 +22,6 @@ module AddTicket
 
       project.update_tickets
       scene.ticket_lister.filter_by_type("Open Tickets")
-    
   end
   
 end
