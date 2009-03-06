@@ -6,7 +6,6 @@ describe AddTicket do
 
   before(:each) do
     mock_lighthouse
-    # Spinner.mock()
     producer.production.current_project = @project
   end
 

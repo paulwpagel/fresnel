@@ -1,6 +1,5 @@
 module ProjectSelector  
   def value_changed(event)
-    puts "Project Selector"
     show_spinner do
       production.current_project = production.lighthouse_client.find_project(project_name)
       scene.ticket_lister.show_these_tickets(production.current_project.open_tickets)

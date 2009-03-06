@@ -2,18 +2,12 @@ module AddTicket
 
   def button_pressed(event)
     show_spinner do
-      title = scene.find("add_ticket_title")
-      description = scene.find("add_ticket_description")
-      responsible_person = scene.find("add_ticket_responsible_person")
-      tags = scene.find("add_ticket_tags")
-      milestone = scene.find("add_ticket_milestone")
-    
       ticket_options = {}
-      ticket_options[:title] = title.text 
-      ticket_options[:description] = description.text
-      ticket_options[:assigned_user_id] = production.current_project.user_id(responsible_person.text)
-      ticket_options[:tags] = tags.text
-      ticket_options[:milestone_id] = production.current_project.milestone_id(milestone.text)
+      ticket_options[:title] = scene.text_for("add_ticket_title")
+      ticket_options[:description] = scene.text_for("add_ticket_description")
+      ticket_options[:assigned_user_id] = production.current_project.user_id(scene.text_for("add_ticket_responsible_person"))
+      ticket_options[:tags] = scene.text_for("add_ticket_tags")
+      ticket_options[:milestone_id] = production.current_project.milestone_id(scene.text_for("add_ticket_milestone"))
   
       production.lighthouse_client.add_ticket(ticket_options, production.current_project)
     
