@@ -16,16 +16,13 @@ describe AddTicket do
     scene.find("add_ticket_title").text = "some title"
     scene.find("add_ticket_description").text = "some description"
     scene.find("add_ticket_tags").text = "One Two"
-    
-    @project.should_receive(:user_id).with("None").and_return(234)    
-    @project.should_receive(:milestone_id).with("None").and_return(998)
 
     @lighthouse_client.should_receive(:add_ticket).with(
                                                         { :title => "some title", 
                                                           :description => "some description", 
-                                                          :assigned_user_id => 234, 
+                                                          :assigned_user => "None", 
                                                           :tags => "One Two",
-                                                          :milestone_id => 998
+                                                          :milestone => "None"
                                                           }, @project)
    scene.find("submit_add_ticket_button").button_pressed(nil)                                                          
   end
