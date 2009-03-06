@@ -10,14 +10,14 @@ describe AllTags do
   uses_scene :list_tickets
   
   before(:each) do
-    @ticket_master = mock("ticket_master", :clear_tag_filter => nil)
-    scene.stub!(:ticket_master).and_return(@ticket_master)
+    @ticket_lister = mock("ticket_lister", :clear_tag_filter => nil)
+    scene.stub!(:ticket_lister).and_return(@ticket_lister)
     @tag_lister = mock("tag_lister", :show_project_tags => nil)
     scene.stub!(:tag_lister).and_return(@tag_lister)
   end
   
-  it "should tell the ticket_master to clear the tags" do
-    @ticket_master.should_receive(:clear_tag_filter)
+  it "should tell the ticket_lister to clear the tags" do
+    @ticket_lister.should_receive(:clear_tag_filter)
     
     all_tags.mouse_clicked(nil)
   end

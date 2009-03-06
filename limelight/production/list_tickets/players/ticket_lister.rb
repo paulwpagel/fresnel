@@ -3,6 +3,24 @@ require File.expand_path(File.dirname(__FILE__) + "/../stagehands/converts_ticke
 module TicketLister
   attr_reader :last_tickets
 
+  def clear_tag_filter
+    filter_by_tag(nil)
+  end
+  
+  def filter_by_type(type)
+    @current_type_filter = type
+    show_current_type_and_tag
+  end
+
+  def filter_by_tag(tag)
+    @current_tag_filter = tag
+    show_current_type_and_tag
+  end
+
+  def search_on(criteria)
+    show_these_tickets @last_tickets.find_all { |ticket| ticket.matches_criteria?(criteria) }
+  end
+  
   def show_these_tickets(tickets)
     @last_tickets = tickets
     remove_all
@@ -24,5 +42,11 @@ module TicketLister
       ticket_prop.add(child)
     end
     production.current_ticket = nil
+  end
+  
+  private ##############################################
+  
+  def show_current_type_and_tag
+    show_these_tickets scene.ticket_master.tickets_for_type_and_tag(@current_type_filter, @current_tag_filter)
   end
 end

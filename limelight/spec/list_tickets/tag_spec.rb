@@ -12,14 +12,14 @@ describe Tag do
   uses_scene :list_tickets
   
   before(:each) do
-    @ticket_master = mock("ticket_master", :filter_by_tag => nil)
-    scene.stub!(:ticket_master).and_return(@ticket_master)
+    @ticket_lister = mock("ticket_lister", :filter_by_tag => nil)
+    scene.stub!(:ticket_lister).and_return(@ticket_lister)
     @tag_lister = mock("tag_lister", :activate => nil)
     scene.stub!(:tag_lister).and_return(@tag_lister)
   end
   
-  it "should tell the ticket_master to filter by tag" do
-    @ticket_master.should_receive(:filter_by_tag).with("Tag One")
+  it "should tell the ticket_lister to filter by tag" do
+    @ticket_lister.should_receive(:filter_by_tag).with("Tag One")
     
     scene.find("tag_1").mouse_clicked(nil)
   end

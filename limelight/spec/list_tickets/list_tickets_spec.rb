@@ -1,11 +1,12 @@
 require File.dirname(__FILE__) + '/../spec_helper'
+require 'limelight/specs/spec_helper'
 require 'list_tickets'
 
 describe ListTickets do
   before(:each) do
     mock_lighthouse
     producer.production.current_project = @project
-    @ticket_master = mock('ticket_master', :filter_by_type => nil)
+    @ticket_master = mock('ticket_master', :tickets_for_type_and_tag => [])
     TicketMaster.stub!(:new).and_return(@ticket_master)
     @scene = mock('scene')
   end

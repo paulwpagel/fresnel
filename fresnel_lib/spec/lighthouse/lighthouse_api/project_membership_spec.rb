@@ -31,4 +31,10 @@ describe Lighthouse::LighthouseApi::ProjectMembership do
     
     Lighthouse::LighthouseApi::ProjectMembership.all_users_for_project(123).should == [user_one, user_two]
   end
+  
+  it "should return no users if ActiveResource::UnauthorizedAccess" do
+    Lighthouse::ProjectMembership.should_receive(:find).and_raise(ActiveResource::UnauthorizedAccess.new(mock('unauthorized', :code => "401 Not Authorized")))
+    
+    Lighthouse::LighthouseApi::ProjectMembership.all_users_for_project(nil).should be_empty
+  end
 end
