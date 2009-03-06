@@ -17,7 +17,7 @@ describe "View Ticket Integration Test" do
     scene.find("ticket_state").value.should == "new"
     scene.find("ticket_description").text.should == "Test Description One"
 
-    scene.find("ticket_milestone").text.should == "None"
+    scene.find("ticket_milestone").text.should == "First Milestone"
   end
   
   def go_to_ticket

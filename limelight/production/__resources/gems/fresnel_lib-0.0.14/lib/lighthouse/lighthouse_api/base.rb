@@ -53,7 +53,7 @@ module Lighthouse
       ticket.title = options[:title]
       ticket.body = options[:description]
       ticket.body_html = options[:description]
-      ticket.assigned_user_id = project.assigned_user_id(options[:assigned_user])
+      ticket.assigned_user_id = project.user_id(options[:assigned_user])
       ticket.tag = options[:tags]
       
       ticket.milestone_id = project.milestone_id(options[:milestone])

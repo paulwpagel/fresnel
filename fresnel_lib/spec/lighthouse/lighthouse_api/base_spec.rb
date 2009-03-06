@@ -60,7 +60,7 @@ describe Lighthouse::LighthouseApi do
     ticket.should_receive(:milestone_id=).with(12345)
     ticket.should_receive(:save)
 
-    @project.should_receive(:assigned_user_id).with("my name").and_return(456)
+    @project.should_receive(:user_id).with("my name").and_return(456)
     @project.should_receive(:milestone_id).with("milestone_name").and_return(12345)
     
     Lighthouse::LighthouseApi::add_ticket(options, @project)
