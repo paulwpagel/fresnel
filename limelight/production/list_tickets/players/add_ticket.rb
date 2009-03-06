@@ -17,8 +17,8 @@ module AddTicket
       scene.remove_children_of("add_ticket_group")
     
       project.update_tickets
-      #scene.ticket_lister.filter_by_type("Open Tickets")
-      scene.ticket_lister.show_these_tickets(project.open_tickets)
+      scene.ticket_lister.filter_by_type("Open Tickets")
+      #scene.ticket_lister.show_these_tickets(project.open_tickets)
     end
   end
   
