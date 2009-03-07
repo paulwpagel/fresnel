@@ -36,3 +36,18 @@ def mock_lighthouse
                                                  :find_project => @project, :projects => [], :ticket => nil, :project_names => ["one"], :add_project => nil)
   producer.production.lighthouse_client = @lighthouse_client
 end
+
+def create_player(player_name, stubbed_mocks)
+  player = Object.new.extend(player_name)
+  
+  stubs = stubbed_mocks.map do |mock_name, mocked_options|
+    stub = mock(mock_name.to_s)
+    player.stub!(mock_name).and_return(stub)
+    mocked_options.each_pair do |method, return_value|
+      stub.stub!(method).and_return(return_value)
+    end
+    stub
+  end
+  return player, *stubs
+end
+

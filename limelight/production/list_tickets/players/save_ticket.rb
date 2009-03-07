@@ -1,4 +1,5 @@
 module SaveTicket  
+
   def button_pressed(event)
     show_spinner do
       update_ticket
@@ -13,12 +14,12 @@ module SaveTicket
   private #***********************
   
   def update_ticket
-    current_ticket.title = new_title
-    current_ticket.state = new_state
-    current_ticket.milestone_id = new_milestone_id
-    current_ticket.new_comment = new_comment
+    current_ticket.title = scene.text_for("ticket_title")
+    current_ticket.state = value_for("ticket_state")
+    current_ticket.milestone_id = production.current_project.milestone_id(value_for("ticket_milestone"))
+    current_ticket.new_comment = scene.text_for("ticket_comment")
     current_ticket.assigned_user_id = new_assigned_user_id
-    current_ticket.tag = new_tag
+    current_ticket.tag = scene.text_for("ticket_tag")
     current_ticket.save
   end
   
@@ -35,34 +36,10 @@ module SaveTicket
   end
   
   def new_assigned_user_id
-    return current_project.user_id(new_assigned_user_name)
+    return current_project.user_id(value_for("ticket_assigned_user"))
   end
   
-  def new_assigned_user_name
-    return scene.find("ticket_assigned_user").value
-  end
-  
-  def new_comment
-    return scene.find("ticket_comment").text
-  end
-  
-  def new_milestone_id
-    return production.current_project.milestone_id(new_milestone_title)
-  end
-  
-  def new_milestone_title
-    return scene.find("ticket_milestone").value
-  end
-  
-  def new_title
-    return scene.find("ticket_title").text
-  end
-  
-  def new_state
-    return scene.find("ticket_state").value
-  end
-  
-  def new_tag
-    return scene.find("ticket_tag").text
+  def value_for(id)
+    return scene.find(id).value
   end
 end
