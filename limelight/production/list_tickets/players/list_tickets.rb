@@ -4,6 +4,7 @@ require 'ticket_master'
 module ListTickets
   prop_reader :ticket_lister
   prop_reader :tag_lister
+  prop_reader :search_box
     
   def ticket_master
     @ticket_master = TicketMaster.new(self) unless @ticket_master

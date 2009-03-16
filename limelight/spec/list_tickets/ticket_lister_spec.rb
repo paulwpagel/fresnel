@@ -1,7 +1,7 @@
 require File.expand_path(File.dirname(__FILE__) + "/../spec_helper")
 require 'limelight/specs/spec_helper'
 require "ticket_lister"
-
+  
 describe TicketLister, "when being told to show tickets" do
 
   before(:each) do
@@ -164,6 +164,14 @@ describe TicketLister, "clear_tag_filter" do
     scene.ticket_lister.clear_tag_filter
     scene.find("ticket_1234").should_not be_nil
   end
+  
+  it "should clear the search text box" do
+    scene.search_box.text = "123"
+    
+    scene.ticket_lister.clear_tag_filter
+    
+    scene.search_box.text.should be_empty
+  end
 end
 
 describe TicketLister, "filter_by_type" do
@@ -194,6 +202,14 @@ describe TicketLister, "filter_by_type" do
       @ticket_master.should_receive(:tickets_for_type_and_tag).with("Some Tickets", "A cool tag").and_return([])
       scene.ticket_lister.filter_by_type("Some Tickets")
     end
+  end
+  
+  it "should clear the search text box" do
+    scene.search_box.text = "123"
+    
+    scene.ticket_lister.filter_by_type("Some Tickets")
+    
+    scene.search_box.text.should be_empty
   end
   
 end
@@ -228,4 +244,13 @@ describe TicketLister, "filter_by_tag" do
       scene.ticket_lister.filter_by_tag("A cool tag")
     end
   end
+  
+  it "should clear the search text box" do
+    scene.search_box.text = "123"
+    
+    scene.ticket_lister.filter_by_tag("A cool tag")
+    
+    scene.search_box.text.should be_empty
+  end
+  
 end

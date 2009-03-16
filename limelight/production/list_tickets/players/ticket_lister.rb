@@ -47,6 +47,7 @@ module TicketLister
   private ##############################################
   
   def show_current_type_and_tag
+    scene.search_box.text = ""
     show_these_tickets scene.ticket_master.tickets_for_type_and_tag(@current_type_filter, @current_tag_filter)
   end
 end
