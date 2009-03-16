@@ -2,6 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + "/../stagehands/converts_ticke
 
 module TicketLister
   attr_accessor :last_tickets, :current_type_filter, :current_tag_filter
+  prop_reader :search_box
   
   def clear_tag_filter
     filter_by_tag(nil)
@@ -48,6 +49,7 @@ module TicketLister
   private ##############################################
   
   def show_current_type_and_tag
+    search_box.text = ""
     show_these_tickets scene.ticket_master.tickets_for_type_and_tag(@current_type_filter, @current_tag_filter)
   end
 end
