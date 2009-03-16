@@ -50,7 +50,7 @@ describe Lighthouse::LighthouseApi do
   it "should add a ticket to the project" do
     @project = mock(Lighthouse::Project, :id => 2)
     ticket = mock(Lighthouse::Ticket)
-    options = {:title => "Test title", :description => "description", :assigned_user_id => 456, :tags => "fake tag", :milestone_id => 12345}
+    options = {:title => "Test title", :description => "description", :assigned_user => "my name", :tags => "fake tag", :milestone => "milestone_name"}
     Lighthouse::Ticket.should_receive(:new).with(:project_id => 2).and_return(ticket)
     ticket.should_receive(:title=).with("Test title")
     ticket.should_receive(:body=).with("description")
@@ -59,6 +59,9 @@ describe Lighthouse::LighthouseApi do
     ticket.should_receive(:tag=).with("fake tag")
     ticket.should_receive(:milestone_id=).with(12345)
     ticket.should_receive(:save)
+
+    @project.should_receive(:assigned_user_id).with("my name").and_return(456)
+    @project.should_receive(:milestone_id).with("milestone_name").and_return(12345)
     
     Lighthouse::LighthouseApi::add_ticket(options, @project)
   end
