@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../spec_helper'
+require File.dirname(__FILE__) + '/spec_helper'
 require 'limelight/specs/spec_helper'
 
 describe "Props" do  

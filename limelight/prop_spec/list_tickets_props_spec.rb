@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../spec_helper'
+require File.dirname(__FILE__) + '/spec_helper'
 require 'limelight/specs/spec_helper'
 
 describe "Props" do
@@ -104,7 +104,7 @@ describe "Props" do
     prop = scene.find("add_project")
     prop.should_not be_nil
     prop.image.should == "images/add.png"
-    prop.players.should == "add_project"
+    prop.players.should == "load_add_project"
   end
   
   it "should have an all_tags prop" do

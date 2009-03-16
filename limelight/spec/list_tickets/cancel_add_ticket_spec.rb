@@ -8,6 +8,7 @@ describe CancelAddTicket do
     @scene = mock('scene')
     cancel_add_ticket.stub!(:scene).and_return(@scene)
     @scene.should_receive(:remove_children_of).with("add_ticket_group")
+
     cancel_add_ticket.cancel
   end
 end

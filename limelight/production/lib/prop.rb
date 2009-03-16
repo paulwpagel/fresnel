@@ -1,4 +1,3 @@
-require "limelight/prop"
 
 module Limelight
   class Prop

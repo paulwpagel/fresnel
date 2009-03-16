@@ -1,18 +1,25 @@
 require File.expand_path(File.dirname(__FILE__) + "/../spec_helper")
 require 'website'
-
+class Browser
+end
 describe Website do
   before(:each) do
-    mock_lighthouse
-    @project.stub!(:hyphenated_name).and_return("some-project")
-    @project.stub!(:id).and_return(12345)
-    @lighthouse_client.stub!(:account).and_return("8thlight")
-    producer.production.current_project = @project
+    @project = mock("project", :id => 12345, :hyphenated_name => "some-project")
+    @lighthouse_client = mock("lighthouse_client", :account => "8thlight")
+    @website, @scene, @production = create_player(Website, 
+                                                :scene => {}, 
+                                                :production => {:current_project => @project, :lighthouse_client => @lighthouse_client})
   end
   
-  uses_scene :list_tickets
+  it "should show url" do
+    @browser = mock('browser')
+    @browser.should_receive(:showInBrowser).with(@website.url)
+    Browser.should_receive(:new).and_return(@browser)
+    
+    @website.show_url
+  end
   
   it "should build the url" do    
-    scene.find("website_link").url.should == "http://8thlight.lighthouseapp.com/projects/12345-some-project/overview"
+    @website.url.should == "http://8thlight.lighthouseapp.com/projects/12345-some-project/overview"
   end
 end

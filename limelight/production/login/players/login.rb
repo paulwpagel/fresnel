@@ -2,17 +2,22 @@ require "credential"
 
 module Login
   
+  prop_reader :username
+  prop_reader :account
+  prop_reader :password
+  prop_reader :error_message
+  
   def button_pressed(e)
     show_spinner { login}
   end
 
   def login
-    account = scene.text_for("account")
-    username = scene.text_for("username")
-    password = scene.text_for("password")
-
-    if production.lighthouse_client.login_to(account, username, password)
-      set_credentials(account, username, password)
+    account_text = account.text
+    username_text = username.text
+    password_text = password.text
+    
+    if production.lighthouse_client.login_to(account_text, username_text, password_text)
+      set_credentials(account_text, username_text, password_text)
       scene.load('list_tickets')
     else
       set_error "Authentication Failed, please try again"
@@ -24,8 +29,8 @@ module Login
   
 private
   def set_error(message)
-    scene.set_text_for("error_message", message)
-    scene.set_text_for("password", '')
+    error_message.text = message
+    password.text = ''
   end
 
   def set_credentials(account, username, password)

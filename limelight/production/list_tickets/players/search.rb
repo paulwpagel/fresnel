@@ -1,13 +1,12 @@
 module Search
+  prop_reader :search_box, :ticket_lister
+
   def button_pressed(event)
-    show_spinner do
-      scene.ticket_lister.search_on(search_criteria)
-    end
+    show_spinner {search}
   end
   
-  private ####################
-  
-  def search_criteria
-    return scene.find("search_box").text
+  def search
+    ticket_lister.search_on(search_box.text)
   end
+  
 end

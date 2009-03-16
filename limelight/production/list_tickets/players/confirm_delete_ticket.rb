@@ -1,12 +1,20 @@
 module ConfirmDeleteTicket
-  
+
+  attr_accessor :id
+  prop_reader :delete_ticket_confirmation_main, :ticket_lister
+
   def mouse_clicked(event)
     show_spinner do
-      scene.remove(scene.find("delete_ticket_confirmation_main"))
-      production.current_project.destroy_ticket(ticket_id)
-      production.current_ticket = nil if current_ticket?(ticket_id)
-      scene.ticket_lister.remove_ticket(ticket_id)
+      confirm_delete
     end
+  end
+
+  
+  def confirm_delete
+    scene.remove(delete_ticket_confirmation_main)
+    production.current_project.destroy_ticket(ticket_id)
+    production.current_ticket = nil if current_ticket?(ticket_id)
+    ticket_lister.remove_ticket(ticket_id)
   end
   
   private ##############################

@@ -1,8 +1,8 @@
 require File.expand_path(File.dirname(__FILE__) + "/../stagehands/converts_ticket_to_prop")
 
 module TicketLister
-  attr_reader :last_tickets
-
+  attr_accessor :last_tickets, :current_type_filter, :current_tag_filter
+  
   def clear_tag_filter
     filter_by_tag(nil)
   end
@@ -37,6 +37,7 @@ module TicketLister
   def cancel_edit_ticket
     ticket_prop = scene.find("ticket_#{production.current_ticket.id}")
     ticket_prop.remove_all
+
     new_ticket_prop = ConvertsTicketToProp.convert(production.current_ticket)
     new_ticket_prop.children.each do |child|
       ticket_prop.add(child)

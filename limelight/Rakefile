@@ -1,10 +1,19 @@
 require 'rubygems'
+# task :spec do
+#   ARGV.clear
+#   ARGV << "spec"
+#   gem 'rspec'
+#   load 'spec'
+# end
+
 task :spec do
-  ARGV.clear
-  ARGV << "spec"
   gem 'rspec'
-  load 'spec'
+  require 'spec/rake/spectask'
+
+  Spec::Rake::SpecTask.new(:spec){|t| t.spec_files = FileList['spec/**/*.rb', 'prop_spec/**/*.rb']}
+  Rake::Task[:spec].invoke
 end
+
 
 task :integration do
   ARGV.clear

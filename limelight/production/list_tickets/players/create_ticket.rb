@@ -1,46 +1,20 @@
 module CreateTicket
+  
+  prop_reader :add_ticket_group, :add_ticket_milestone, :add_ticket_responsible_person
+  
   def button_pressed(event)
     show_spinner do
-      add_ticket_group = scene.find("add_ticket_group")
-      build_prop add_ticket_group
-      scene.find("add_ticket_milestone").choices = ["None"] + production.current_project.milestone_titles
-      scene.find("add_ticket_responsible_person").choices = ["None"] + production.current_project.user_names
+      create_ticket
     end
   end
   
-  private #############################
-  
-  def build_prop add_ticket_group
+  def create_ticket
     add_ticket_group.build do
-      main_ticket_group {
-        input_group {
-          label :text => "Title:"
-          input :players => "text_box", :id => "add_ticket_title", :width => 200
-        }
-        input_group {
-          label :text => "Description:"
-          input :players => "text_box", :id => "add_ticket_description", :width => 200
-        }
-      
-        input_group{
-          label :text => "Milestone:"
-          combo_box :id => 'add_ticket_milestone'
-        }
-      
-        input_group{
-          label :text => "Who's Responsible:"
-          combo_box :id => 'add_ticket_responsible_person'
-        }
-      
-        input_group{
-          label :text => "Tags"
-          text_box :id => 'add_ticket_tags'
-        }
-      
-        button :text => "Add", :players => "add_ticket", :width => 125, :id => "submit_add_ticket_button"
-        button :text => "Cancel", :players => "cancel_add_ticket", :width => 125, :id => "cancel_add_ticket_button"
-      }
+      __install "list_tickets/create_ticket_props.rb"
     end
-    
+
+    add_ticket_milestone.choices = ["None"] + production.current_project.milestone_titles
+    add_ticket_responsible_person.choices = ["None"] + production.current_project.user_names
   end
+  
 end

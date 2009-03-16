@@ -5,6 +5,7 @@ class Credential
   class << self
     attr_accessor :account, :login, :password, :project_name
   end
+  @@save_credentials = nil
   @@filename = File.expand_path("~/.fresnel_credentials")
   
   def self.load_saved
