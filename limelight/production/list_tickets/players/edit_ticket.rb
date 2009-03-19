@@ -2,9 +2,7 @@ module EditTicket
   attr_accessor :id
   
   def mouse_clicked(event)
-    show_spinner do
-      edit
-    end
+    show_spinner(scene.stage.name) { edit }
   end
   
   def edit

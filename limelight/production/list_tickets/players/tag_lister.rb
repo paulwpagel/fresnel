@@ -23,6 +23,10 @@ module TagLister
   private ####################################
   
   def project
-    production.current_project
+    return production.stage_manager[stage_name].current_project
+  end
+  
+  def stage_name
+    return scene.stage.name
   end
 end

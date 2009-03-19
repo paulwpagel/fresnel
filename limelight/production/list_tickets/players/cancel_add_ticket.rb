@@ -1,6 +1,6 @@
 module CancelAddTicket  
   def button_pressed event
-    show_spinner {cancel}
+    show_spinner(scene.stage.name) {cancel}
   end
   
   def cancel

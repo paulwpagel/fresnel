@@ -9,11 +9,20 @@ end
 describe TagLister do
   
   before(:each) do
-    @project = mock('project')
+    @project = mock('project', :tag_names => [])
+    @stage = mock("stage", :name => "stage name")
+    @stage_info = mock("stage_info", :current_project => @project)
+    @stage_manager = mock("stage_manager", :[] => @stage_info)
     @tag_lister, @scene, @production = create_player(TagLister, 
-                                                :scene => {:load => nil, :find => nil}, 
-                                                :production => {:current_project => @project})
+                                                :scene => {:load => nil, :find => nil, :stage => @stage}, 
+                                                :production => {:stage_manager => @stage_manager})
     @tag_lister.stub!(:remove_all)
+  end
+  
+  it "should get the current_project from the stage_manager" do
+    @stage_manager.should_receive(:[]).with("stage name").and_return(@stage_info)
+    
+    @tag_lister.list_tags
   end
   
   it "should make a prop for one tag" do

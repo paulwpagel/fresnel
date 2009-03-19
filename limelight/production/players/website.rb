@@ -1,7 +1,7 @@
 
 module Website
   def button_pressed(event)
-    show_spinner { show_url }
+    show_spinner(scene.stage.name) { show_url }
   end
   
   def show_url

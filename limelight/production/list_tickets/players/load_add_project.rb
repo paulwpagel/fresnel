@@ -2,7 +2,7 @@
 module LoadAddProject
   
   def mouse_clicked(event)
-    show_spinner do
+    show_spinner(scene.stage.name) do
       load_add_project
     end
   end

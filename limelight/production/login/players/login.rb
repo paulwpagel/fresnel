@@ -9,7 +9,7 @@ module Login
   prop_reader :error_message
   
   def button_pressed(e)
-    show_spinner { login}
+    show_spinner(scene.stage.name) { login}
   end
 
   def login

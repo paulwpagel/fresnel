@@ -2,7 +2,7 @@ require "credential"
 module TitleBar
   
   def button_pressed(event)
-    show_spinner { title_bar }
+    show_spinner(scene.stage.name) { title_bar }
   end
   
   def title_bar
