@@ -1,7 +1,7 @@
 module AddTicket
   
   def button_pressed(event)
-    show_spinner(scene.stage.name) {add}
+    show_spinner {add}
   end
   
   def add

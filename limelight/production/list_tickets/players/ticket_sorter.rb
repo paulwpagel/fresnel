@@ -1,6 +1,6 @@
 module TicketSorter
   def mouse_clicked(event)
-    show_spinner(scene.stage.name) do
+    show_spinner do
       scene.ticket_lister.show_these_tickets(sorted_tickets)
       toggle_sort_order
       clear_sort_images

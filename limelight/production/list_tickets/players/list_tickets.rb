@@ -10,7 +10,7 @@ module ListTickets
   end
   
   def scene_opened(event)
-    show_spinner(scene.stage.name) {list}
+    show_spinner {list}
   end
   
   def list

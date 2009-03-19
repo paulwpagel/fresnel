@@ -3,7 +3,7 @@ module CancelEditTicket
   
   prop_reader :ticket_lister
   def button_pressed(event)
-    show_spinner(scene.stage.name) { cancel }
+    show_spinner { cancel }
   end
   
   def mouse_clicked(event)

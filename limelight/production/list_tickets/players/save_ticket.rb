@@ -2,7 +2,7 @@ module SaveTicket
   prop_reader :ticket_lister, :ticket_title, :ticket_state, :ticket_tag, :ticket_milestone, :ticket_comment, :ticket_assigned_user
   
   def button_pressed(event)
-    show_spinner(scene.stage.name) {save_ticket}
+    show_spinner {save_ticket}
   end
   
   def mouse_clicked(event)    

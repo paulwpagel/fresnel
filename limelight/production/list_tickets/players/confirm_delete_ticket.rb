@@ -4,7 +4,7 @@ module ConfirmDeleteTicket
   prop_reader :delete_ticket_confirmation_main, :ticket_lister
 
   def mouse_clicked(event)
-    show_spinner(scene.stage.name) { confirm_delete }
+    show_spinner { confirm_delete }
   end
 
   

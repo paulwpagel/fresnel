@@ -1,6 +1,6 @@
 module TypeSelector  
   def value_changed(event)
-    show_spinner(scene.stage.name) do
+    show_spinner do
       notify_ticket_lister if scene.ticket_lister
     end
   end

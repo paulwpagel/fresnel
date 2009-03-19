@@ -2,7 +2,7 @@ module Search
   prop_reader :search_box, :ticket_lister
 
   def button_pressed(event)
-    show_spinner(scene.stage.name) {search}
+    show_spinner {search}
   end
   
   def search
