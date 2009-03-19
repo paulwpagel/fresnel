@@ -16,6 +16,10 @@ describe Credential do
     credential.remember_me?.should be_false
   end
   
+  it "should allow you to set the project name" do
+    @credential.project_name = "new project_name"
+  end
+  
   it "should have account, login, password and project_name" do    # 
     @credential.account.should == "AFlight"
     @credential.login.should == "paul"

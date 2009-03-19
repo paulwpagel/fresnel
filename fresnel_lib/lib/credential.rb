@@ -13,7 +13,8 @@ class Credential
     end
   end
   
-  attr_reader :account, :login, :password, :project_name
+  attr_reader :account, :login, :password
+  attr_accessor :project_name
   
   def initialize(account, login, password, project_name, remember_me)
     @account = account

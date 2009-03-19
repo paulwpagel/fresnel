@@ -6,7 +6,8 @@ describe ProjectSelector do
   before(:each) do
     @project = mock('project', :open_tickets => [])
     @lighthouse_client = mock('lighthouse', :find_project => @project)
-    @stage_manager = mock("stage_manager", :lighthouse_client => @lighthouse_client, :notify_of_project_change => nil, :current_project => @project)
+    @stage_info = mock("stage_info", :current_project => @project)
+    @stage_manager = mock("stage_manager", :lighthouse_client => @lighthouse_client, :notify_of_project_change => nil, :[] => @stage_info)
     @stage = mock("stage", :name => "stage name")
     @project_selector, @scene, @production = create_player(ProjectSelector, 
                                                 :scene => {:load => nil, :find => nil, :stage => @stage}, 
@@ -28,7 +29,7 @@ describe ProjectSelector do
     ticket1 = mock('ticket1')
     ticket2 = mock('ticket2')
     @project.should_receive(:open_tickets).and_return([ticket1, ticket2])
-    @stage_manager.should_receive(:current_project).with("stage name").and_return(@project)
+    @stage_manager.should_receive(:[]).with("stage name").and_return(@stage_info)
     @project_selector.ticket_lister.should_receive(:show_these_tickets).with([ticket1, ticket2])
 
     @project_selector.select_project

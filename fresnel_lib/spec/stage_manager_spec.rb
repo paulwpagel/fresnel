@@ -44,6 +44,10 @@ describe StageManager, "each_name" do
   end
 end
 
+def attempt_login(number=1)
+  @stage_manager.attempt_login("account #{number}", "username #{number}", "password #{number}", true, "stage name #{number}")
+end
+
 describe StageManager, "attempt_login" do
   before(:each) do
     @credential = mock("credential", :account => "account 1", :login => "username 1", :password => "password 1")
@@ -122,7 +126,43 @@ describe StageManager, "attempt_login" do
       attempt_login
     end
   end
-  def attempt_login(number=1)
-    @stage_manager.attempt_login("account #{number}", "username #{number}", "password #{number}", true, "stage name #{number}")
+  
+end
+
+describe StageManager, "notify_of_project_change" do
+  before(:each) do
+    @project = mock("project")
+    @credential = mock("credential", :account => "account 1", :login => "username 1", :password => "password 1", :remember_me? => nil, :project_name= => nil)
+    Credential.stub!(:new).and_return(@credential)
+    
+    Lighthouse::LighthouseApi.stub!(:login_to).and_return(true)
+    Lighthouse::LighthouseApi.stub!(:find_project).and_return(@project)
+    @stage_manager = StageManager.new
   end
+  
+  it "should set the credential's project to the given project name" do
+    attempt_login
+    
+    @credential.should_receive(:project_name=).with("project_name")
+    @stage_manager.notify_of_project_change("project_name", "stage name 1")
+  end
+  
+  it "should save the credentials" do
+    attempt_login
+    
+    CredentialSaver.should_receive(:save).with([@credential])
+    
+    @stage_manager.notify_of_project_change("project_name", "stage name 1")
+  end
+  
+  describe "updating the current project" do
+    it "should get it from the client" do
+      attempt_login
+      
+      Lighthouse::LighthouseApi.should_receive(:find_project).with("project_name").and_return(@project)
+      @stage_manager.notify_of_project_change("project_name", "stage name 1")
+      @stage_manager["stage name 1"].current_project.should == @project
+    end
+  end
+  
 end
