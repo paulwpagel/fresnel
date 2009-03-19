@@ -36,7 +36,7 @@ def mock_lighthouse
                                                  :find_project => @project, :projects => [], :ticket => nil, :project_names => ["one"], :add_project => nil)
   producer.production.lighthouse_client = @lighthouse_client
   @stage_info = mock("stage_info", :credential => nil, :client => @lighthouse_client, :current_project => @project)
-  @stage_manager = mock("stage_manager", :[] => @stage_info, :notify_of_project_change => nil, :current_project => @project)
+  @stage_manager = mock("stage_manager", :[] => @stage_info, :notify_of_project_change => nil)
   producer.production.stage_manager = @stage_manager
 end
 

@@ -25,18 +25,31 @@ require 'lighthouse/adapter'
 $PRODUCTION_PATH = File.expand_path(File.dirname(__FILE__) + "/../production")
 
 def create_mock_project(name = "One")
-  return mock(Lighthouse::Project, :open_tickets => [], :milestone_titles => [""], :hyphenated_name => nil, :tag_names => [""], :destroy_ticket => nil,
+  return mock(Lighthouse::Project, :open_tickets => [], :all_tickets => [], :milestone_titles => [""], :hyphenated_name => nil, :tag_names => [""], :destroy_ticket => nil,
                                        :id => nil, :tickets_for_tag => [], :user_names => [""], :update_tickets => nil, :user_id => nil, :ticket_title => nil,
                                        :milestone_id => nil, :name => name, :all_states => ["new", "open", "resolved", "hold", "invalid"], :milestone_title => nil)
                                        
 end
 
+def mock_client
+  return mock("lighthouse module", :authenticate => nil, :add_ticket => nil, :milestones => [], :milestone_title => "",
+                                                 :find_project => @project, :projects => [], :ticket => nil, :project_names => ["one"], :add_project => nil)
+end
+
+def mock_stage_manager
+  @project = create_mock_project
+  @lighthouse_client = mock_client
+  @stage_info = mock("stage_info", :credential => nil, :client => @lighthouse_client, :current_project => @project)
+  @stage_manager = mock("stage_manager", :[] => @stage_info, :notify_of_project_change => nil, :notify_of_logout => nil)
+  @stage = mock("stage", :name => "stage name")
+end
+
 def mock_lighthouse
   @project = create_mock_project
                                        
-  @lighthouse_client = mock("lighthouse module", :authenticate => nil, :add_ticket => nil, :milestones => [], :milestone_title => "",
-                                                 :find_project => @project, :projects => [], :ticket => nil, :project_names => ["one"], :add_project => nil)
+  @lighthouse_client = mock_client
   producer.production.lighthouse_client = @lighthouse_client
+  mock_stage_manager
 end
 
 require 'spec/mocks/framework'

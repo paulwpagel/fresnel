@@ -4,11 +4,7 @@ require "project_selector"
 describe ProjectSelector do
 
   before(:each) do
-    @project = mock('project', :open_tickets => [])
-    @lighthouse_client = mock('lighthouse', :find_project => @project)
-    @stage_info = mock("stage_info", :current_project => @project)
-    @stage_manager = mock("stage_manager", :lighthouse_client => @lighthouse_client, :notify_of_project_change => nil, :[] => @stage_info)
-    @stage = mock("stage", :name => "stage name")
+    mock_stage_manager
     @project_selector, @scene, @production = create_player(ProjectSelector, 
                                                 :scene => {:load => nil, :find => nil, :stage => @stage}, 
                                                 :production => {:stage_manager => @stage_manager})

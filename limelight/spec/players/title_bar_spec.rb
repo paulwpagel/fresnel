@@ -5,8 +5,7 @@ describe "title_bar" do
 
   before(:each) do
     Credential.stub!(:clear_saved)
-    @stage_manager = mock("stage_manager", :notify_of_logout => nil)
-    @stage = mock("stage", :name => "stage name")
+    mock_stage_manager
     @title_bar, @scene, @production = create_player(TitleBar, 
                                                 :scene => {:load => nil, :stage => @stage}, 
                                                 :production => {:stage_manager => @stage_manager})

@@ -4,10 +4,8 @@ require 'list_tickets'
 describe ListTickets do
 
   before(:each) do
-    @lighthouse_client = mock('lighthouse', :project_names => ["One", "Two"], :first_project => mock('project', :name => nil))
-    @stage_info = mock("stage_info", :client => @lighthouse_client)
-    @stage_manager = mock('stage_manager', :[] => @stage_info, :project_for_stage => nil)
-    @stage = mock("stage", :name => "stage name")
+    mock_stage_manager
+    @lighthouse_client.stub!(:project_names).and_return(["One", "Two"])
     @style = mock('style', :background_image= => nil)
     @list_tickets, @scene, @production = create_player(ListTickets, 
                                                 :scene => {:load => nil, :find => nil, :stage => @stage}, 

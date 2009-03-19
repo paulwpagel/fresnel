@@ -9,10 +9,8 @@ end
 describe TagLister do
   
   before(:each) do
-    @project = mock('project', :tag_names => [])
-    @stage = mock("stage", :name => "stage name")
-    @stage_info = mock("stage_info", :current_project => @project)
-    @stage_manager = mock("stage_manager", :[] => @stage_info)
+    mock_stage_manager
+    @project.stub!(:tag_names).and_return([])
     @tag_lister, @scene, @production = create_player(TagLister, 
                                                 :scene => {:load => nil, :find => nil, :stage => @stage}, 
                                                 :production => {:stage_manager => @stage_manager})

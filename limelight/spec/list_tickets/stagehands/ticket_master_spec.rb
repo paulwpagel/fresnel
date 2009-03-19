@@ -7,10 +7,9 @@ describe TicketMaster, "tickets_for_type_and_tag" do
     @open_ticket = mock("open_ticket")
     @all_tickets = [@closed_ticket, @open_ticket]
     @open_tickets = [@open_ticket]
-    @project = mock("project", :all_tickets => @all_tickets, :open_tickets => @open_tickets)
-    @stage_info = mock("stage_info", :current_project => @project)
-    @stage_manager = mock('stage_manager', :[] => @stage_info)
-    @stage = mock("stage", :name => "stage name")
+    mock_stage_manager
+    @project.stub!(:all_tickets).and_return(@all_tickets)
+    @project.stub!(:open_tickets).and_return(@open_tickets)
     @scene = mock("scene", :production => mock("production", :stage_manager => @stage_manager), :stage => @stage)
     
     @ticket_master = TicketMaster.new(@scene)
@@ -97,10 +96,7 @@ end
 describe TicketMaster, "tickets_for_type" do
   before(:each) do
     @tickets = [mock('ticket')]
-    @project = mock("project", :all_tickets => nil, :open_tickets => nil)
-    @stage_info = mock("stage_info", :current_project => @project)
-    @stage_manager = mock('stage_manager', :[] => @stage_info)
-    @stage = mock("stage", :name => "stage name")
+    mock_stage_manager
     @scene = mock("scene", :production => mock("production", :stage_manager => @stage_manager), :stage => @stage)
     
     @ticket_master = TicketMaster.new(@scene)

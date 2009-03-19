@@ -5,8 +5,7 @@ require "login"
 describe "Login" do
   
   before(:each) do
-    @stage_manager = mock('stage_manager', :notify_of_login => nil)
-    @stage = mock("stage", :name => "stage name", :attempt_login => true)
+    mock_stage_manager
     @login, @scene, @production = create_player(Login, 
                                                 :scene => {:load => nil, :find => @mock_prop, :stage => @stage}, 
                                                 :production => {:stage_manager => @stage_manager})                                    
