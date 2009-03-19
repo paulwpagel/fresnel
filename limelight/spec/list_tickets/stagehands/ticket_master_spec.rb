@@ -8,9 +8,18 @@ describe TicketMaster, "tickets_for_type_and_tag" do
     @all_tickets = [@closed_ticket, @open_ticket]
     @open_tickets = [@open_ticket]
     @project = mock("project", :all_tickets => @all_tickets, :open_tickets => @open_tickets)
-    @scene = mock("scene", :production => mock("production", :current_project => @project))
+    @stage_info = mock("stage_info", :current_project => @project)
+    @stage_manager = mock('stage_manager', :[] => @stage_info)
+    @stage = mock("stage", :name => "stage name")
+    @scene = mock("scene", :production => mock("production", :stage_manager => @stage_manager), :stage => @stage)
     
     @ticket_master = TicketMaster.new(@scene)
+  end
+  
+  it "should get the project based on the stage" do
+    @stage_manager.should_receive(:[]).with("stage name").and_return(@stage_info)
+    
+    @ticket_master.tickets_for_type_and_tag(nil, nil)
   end
   
   it "should return all tickets if both values are nil" do
@@ -89,7 +98,10 @@ describe TicketMaster, "tickets_for_type" do
   before(:each) do
     @tickets = [mock('ticket')]
     @project = mock("project", :all_tickets => nil, :open_tickets => nil)
-    @scene = mock("scene", :production => mock("production", :current_project => @project))
+    @stage_info = mock("stage_info", :current_project => @project)
+    @stage_manager = mock('stage_manager', :[] => @stage_info)
+    @stage = mock("stage", :name => "stage name")
+    @scene = mock("scene", :production => mock("production", :stage_manager => @stage_manager), :stage => @stage)
     
     @ticket_master = TicketMaster.new(@scene)
   end

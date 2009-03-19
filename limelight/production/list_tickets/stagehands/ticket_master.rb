@@ -24,8 +24,10 @@ class TicketMaster
     end
   end
   
+  private ##############################
+  
   def project
-    return @scene.production.current_project
+    return @scene.production.stage_manager[@scene.stage.name].current_project
   end
   
 end
