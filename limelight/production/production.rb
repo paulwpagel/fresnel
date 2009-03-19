@@ -10,3 +10,5 @@ attribute :current_ticket
 attribute :current_project
 attribute :lighthouse_client
 attribute :current_sort_order
+
+attribute :stage_manager

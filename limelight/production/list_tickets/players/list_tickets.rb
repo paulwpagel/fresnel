@@ -14,16 +14,9 @@ module ListTickets
   end
   
   def list
-    # TODO - EWM fix how we are testing this method
-    # This order is important.  Setting the choices on the project selector will update the project name in the credentials
-    # This will cause the first project to be loaded as the default project regardless of what was saved before
-
-    #TODO - EWM - should ticket_lister know the default tickets?
-    
-    project_name = production.lighthouse_client.get_starting_project_name
-    project_selector.choices = production.lighthouse_client.project_names
-    project_selector.value = project_name
-    
+    project_selector.choices = all_project_names
+    project_selector.value = starting_project_name
+        
     age_image.style.background_image = "images/descending.png"
     
     tag_lister.show_project_tags
@@ -33,7 +26,19 @@ module ListTickets
   private #######################
     
   def project
-    production.current_project
+    return production.current_project
   end
-
+  
+  def all_project_names
+    client = production.stage_manager[stage_name].client
+    return client.project_names
+  end
+  
+  def starting_project_name
+    return all_project_names[0]
+  end
+  
+  def stage_name
+    return scene.stage.name
+  end
 end

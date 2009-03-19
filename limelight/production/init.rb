@@ -25,7 +25,7 @@ end
 
 require "lighthouse/adapter"
 require 'lighthouse/lighthouse_api/base'
-require "credential"
-require 'scene_chooser'
+require "stage_manager"
+production.stage_manager = StageManager.new
 production.lighthouse_client = Lighthouse::LighthouseApi
 require "prop"

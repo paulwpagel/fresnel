@@ -5,11 +5,14 @@ require "login"
 describe "Login" do
   
   before(:each) do
-    @lighthouse_client = mock('lighthouse', :login_to => true)
-    @mock_prop = mock('prop', :checked? => false)
+    @stage_manager = mock('stage_manager', :notify_of_login => nil)
+    @stage = mock("stage", :name => "stage name", :attempt_login => true)
     @login, @scene, @production = create_player(Login, 
-                                                :scene => {:load => nil, :find => @mock_prop}, 
-                                                :production => {:lighthouse_client => @lighthouse_client})                                    
+                                                :scene => {:load => nil, :find => @mock_prop, :stage => @stage}, 
+                                                :production => {:stage_manager => @stage_manager})                                    
+    @login.save_credentials.stub!(:checked?).and_return(false)
+    @credential = mock("credential")
+    Credential.stub!(:new).and_return(@credential)
   end
 
   it "should mock out correctly" do
@@ -22,20 +25,22 @@ describe "Login" do
     @login.username.should_receive(:text).and_return("Paul Pagel")
     @login.password.should_receive(:text).and_return("wouldntyaouliketoknow")
     @login.account.should_receive(:text).and_return("checking")
+    @login.save_credentials.stub!(:checked?).and_return(true)
     
-    @lighthouse_client.should_receive(:login_to).with("checking", "Paul Pagel", "wouldntyaouliketoknow").and_return(true)
+    @stage_manager.should_receive(:attempt_login).with("checking", "Paul Pagel", "wouldntyaouliketoknow", true, "stage name").and_return(true)
     
     @login.login
   end
   
-  it "loads list tickets" do
+  it "should load list tickets on a successful login" do
+    @stage_manager.stub!(:attempt_login).and_return(true)
     @scene.should_receive(:load).with("list_tickets")
     
     @login.login
   end
 
   it "errors when authentication fails " do
-    @lighthouse_client.stub!(:login_to).and_return(false)
+    @stage_manager.stub!(:attempt_login).and_return(false)
     @login.error_message.should_receive(:text=).with("Authentication Failed, please try again")
     @login.password.should_receive(:text=).with('')
 
@@ -43,7 +48,7 @@ describe "Login" do
   end
 
   it "wont error when authentication passes " do
-    @lighthouse_client.stub!(:login_to).and_return(true)
+    @stage_manager.stub!(:attempt_login).and_return(true)
     @login.error_message.should_not_receive(:text=).with('error_message', "Authentication Failed, please try again")
     @login.password.should_not_receive(:text=).with('password', '')
 
@@ -52,7 +57,7 @@ describe "Login" do
 
 
   it "should display an error if there is no internet" do
-    @lighthouse_client.stub!(:login_to).and_raise(SocketError)
+    @stage_manager.stub!(:attempt_login).and_raise(SocketError)
     @login.error_message.should_receive(:text=).with("You must be connected to the internet to use Fresnel.")
     @login.password.should_receive(:text=).with( '')
     
@@ -60,30 +65,9 @@ describe "Login" do
   end
   
   it "should not load list tickets if there is no interweb" do
-    @lighthouse_client.should_receive(:login_to).and_raise(SocketError)
+    @stage_manager.should_receive(:attempt_login).and_raise(SocketError)
 
     @scene.should_not_receive(:load).with("list_tickets")
-    
-    @login.login
-  end
-  
-  it "should save the user's credentials if the check box is checked and authentication is successful" do
-    @login.username.should_receive(:text).and_return("Paul Pagel")
-    @login.password.should_receive(:text).and_return("wouldntyaouliketoknow")
-    @login.account.should_receive(:text).and_return("checking")
-
-    @mock_prop.stub!(:checked?).and_return(true)
-    
-    Credential.should_receive(:set).with(:account => "checking", :login => "Paul Pagel", :password => "wouldntyaouliketoknow", :save_credentials => true)
-    Credential.should_receive(:save)
-
-    @login.login
-  end
-  
-  it "should set the credentials to nothing if the check box is not checked and authenticated is successful" do
-    @mock_prop.stub!(:checked?).and_return(false)
-
-    Credential.should_receive(:set).with()
     
     @login.login
   end

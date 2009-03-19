@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/spec_helper'
 require 'limelight/specs/spec_helper'
 
-describe "Props" do
+describe "List Ticket Props" do
   before(:each) do
     mock_lighthouse
     @project.stub!(:tag_names).and_return(["Tag One", "Tag Two"])

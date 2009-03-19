@@ -6,6 +6,7 @@ main {
     }
     right_title{
       button :text => "Add Ticket", :width => 150, :id => "add_ticket_button", :players => "create_ticket"
+      button :text => "Second Account", :width => 150, :id => "extra_account", :players => "extra_account"
       button :text => "Go to Website", :width => 150, :id => "website_link", :players => "website"
       button :text => "Logout", :width => 150, :id => "logout", :players => "title_bar"
     }

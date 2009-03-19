@@ -31,7 +31,7 @@ describe Lighthouse::LighthouseApi do
     Lighthouse.should_receive(:authenticate).with("paul", "nottelling")
     
     Lighthouse::Project.should_receive(:find).with(:all).and_raise(ActiveResource::ResourceNotFound.new(mock('not found', :code => "Not Found")))
-
+  
     Lighthouse::LighthouseApi::login_to("AFlight", "paul", "nottelling").should be(false)  
   end
   
@@ -43,7 +43,7 @@ describe Lighthouse::LighthouseApi do
   
   it "should return nil if there is no project" do    
     Lighthouse::Project.should_receive(:find).with(:all).and_return([])
-
+  
     Lighthouse::LighthouseApi::find_project("one").should be(nil)
   end
   
@@ -59,8 +59,8 @@ describe Lighthouse::LighthouseApi do
     ticket.should_receive(:tag=).with("fake tag")
     ticket.should_receive(:milestone_id=).with(12345)
     ticket.should_receive(:save)
-
-    @project.should_receive(:assigned_user_id).with("my name").and_return(456)
+  
+    @project.should_receive(:user_id).with("my name").and_return(456)
     @project.should_receive(:milestone_id).with("milestone_name").and_return(12345)
     
     Lighthouse::LighthouseApi::add_ticket(options, @project)
@@ -148,27 +148,11 @@ describe Lighthouse::LighthouseApi, "find_project" do
     Lighthouse::LighthouseApi::add_project({:name => "project_name", :public => "true"})
   end
   
-  it "should return the first project as a LighthouseApi project" do
-    Lighthouse::LighthouseApi::Project.should_receive(:new).with(@project1).and_return(@fresnel_project)
-    
-    Lighthouse::LighthouseApi.first_project.should == @fresnel_project
-  end
-  
   it "should get project_names" do
     Lighthouse::Project.stub!(:find).and_return([@project1, @project2])
     
     Lighthouse::LighthouseApi.project_names.size.should == 2
     Lighthouse::LighthouseApi.project_names.should include("one")
     Lighthouse::LighthouseApi.project_names.should include("two")
-  end
-end
-
-describe Lighthouse::LighthouseApi, "get starting project" do
-  it "should get the starting project" do
-    chooser = mock("FirstProjectChooser")
-    Lighthouse::LighthouseApi::FirstProjectChooser.stub!(:new).and_return(chooser)
-    chooser.should_receive(:get_project_name).and_return("Project One")
-    
-    Lighthouse::LighthouseApi.get_starting_project_name.should == "Project One"
   end
 end

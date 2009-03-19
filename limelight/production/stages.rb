@@ -1,8 +1,8 @@
-
-
-stage "default" do
-  default_scene SceneChooser.new.first_scene
-  title "Fresnel"
-  location [200, 25]
-  size [1000, 800]
+StageManager.each_name do |name|
+  stage name do
+    default_scene "login"
+    title "Fresnel"
+    location [200, 25]
+    size [1000, 800]
+  end
 end

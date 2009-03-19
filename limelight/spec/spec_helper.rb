@@ -15,7 +15,7 @@ end
   "production/add_project/players",
   "production",
   "production/lib",
-  "production/__resources/gems/fresnel_lib-0.0.14/lib"
+  "production/__resources/gems/fresnel_lib-0.0.15/lib"
 ].each {|path| add_to_search_path path}
 
 require 'rubygems'
@@ -34,7 +34,7 @@ end
 def mock_lighthouse
   @project = create_mock_project
                                        
-  @lighthouse_client = mock("lighthouse module", :authenticate => nil, :add_ticket => nil, :milestones => [], :milestone_title => "", :get_starting_project_name => "One",
+  @lighthouse_client = mock("lighthouse module", :authenticate => nil, :add_ticket => nil, :milestones => [], :milestone_title => "",
                                                  :find_project => @project, :projects => [], :ticket => nil, :project_names => ["one"], :add_project => nil)
   producer.production.lighthouse_client = @lighthouse_client
 end

@@ -4,14 +4,17 @@ require 'title_bar'
 describe "title_bar" do
 
   before(:each) do
+    Credential.stub!(:clear_saved)
+    @stage_manager = mock("stage_manager", :notify_of_logout => nil)
+    @stage = mock("stage", :name => "stage name")
     @title_bar, @scene, @production = create_player(TitleBar, 
-                                                :scene => {:load => nil}, 
-                                                :production => {})
+                                                :scene => {:load => nil, :stage => @stage}, 
+                                                :production => {:stage_manager => @stage_manager})
   end
       
-  it "should log the user out when the logout button is clicked" do
+  it "should notify the stage manager of a logout" do
     @title_bar.stub!(:id).and_return("logout")
-    Credential.should_receive(:clear_saved)
+    @stage_manager.should_receive(:notify_of_logout).with("stage name")
     
     @title_bar.title_bar
   end

@@ -7,12 +7,16 @@ module TitleBar
   
   def title_bar
     if id == "logout"
-      Credential.clear_saved
+      production.stage_manager.notify_of_logout(stage_name)
       scene.load("login")
     else
       scene.load(id)
     end
-    
   end
   
+  private ####################
+  
+  def stage_name
+    return scene.stage.name
+  end
 end

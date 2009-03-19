@@ -21,4 +21,8 @@ describe "title bar props" do
     website_link.players.should == "website"
   end
   
+  it "should have a button to login into a second account" do
+    extra_account = scene.find("extra_account")
+    extra_account.players.should == "extra_account"
+  end
 end

@@ -8,19 +8,15 @@ module ProjectSelector
   end
   
   def select_project
-    production.current_project = production.lighthouse_client.find_project(text)
-    ticket_lister.show_these_tickets(production.current_project.open_tickets)
+    production.stage_manager.notify_of_project_change(text, stage_name)
+    ticket_lister.show_these_tickets(production.stage_manager.current_project(stage_name).open_tickets)
     tag_lister.show_project_tags
-    update_credentials
   end
   
-  private ############################
+  private ###########################
   
-  def update_credentials
-    if Credential.save_credentials?
-      Credential.project_name = text
-      Credential.save
-    end
+  def stage_name
+    return scene.stage.name
   end
-  
+    
 end
