@@ -26,8 +26,8 @@ class StageManager
   
   def notify_of_project_change(project_name, stage_name)
     #TODO - EWM this should probably just delegate to the stageinfo object, but we do want the current project to be cached.  do not find every time
-    @stage_info_list[stage_name].credential.project_name = project_name
-    @stage_info_list[stage_name].current_project = @stage_info_list[stage_name].client.find_project(project_name)
+    self[stage_name].credential.project_name = project_name
+    self[stage_name].current_project = self[stage_name].client.find_project(project_name)
     CredentialSaver.save(all_credentials)
   end
   
@@ -37,7 +37,7 @@ class StageManager
     stage_info.client.login_to(credential.account, credential.login, credential.password)
     return stage_info
   end
-  
+
   private ##################
   
   def all_credentials
