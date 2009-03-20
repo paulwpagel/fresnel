@@ -7,7 +7,6 @@ name "Fresnel"
 # Create attributes for any model objects or resources that need to accessible to props or players within the production
 
 attribute :current_ticket
-attribute :current_project
 attribute :current_sort_order
 
 attribute :stage_manager
