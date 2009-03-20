@@ -3,7 +3,7 @@ require "stage_info"
 
 describe StageInfo do
   before(:each) do
-    @credential = mock('credential')
+    @credential = mock('credential', :project_name => "some project")
     @stage_info = StageInfo.new(:credential => @credential)
   end
 
@@ -39,4 +39,11 @@ describe StageInfo do
     @stage_info.current_sort_order.should == current_sort_order
   end
   
+  it "should find the current_project on the client if it is nil" do
+    @project = mock("project")
+    @stage_info.current_project = nil
+    
+    @stage_info.client.should_receive(:find_project).with("some project").and_return(@project)
+    @stage_info.current_project.should == @project
+  end
 end

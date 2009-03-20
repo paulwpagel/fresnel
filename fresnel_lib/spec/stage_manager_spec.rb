@@ -1,7 +1,34 @@
 require File.dirname(__FILE__) + '/spec_helper'
 require "stage_manager"
 
-describe StageManager, "each_name" do
+describe StageManager, "initialization" do
+  before(:each) do
+    @credential = mock("credential", :account => "some account", :null_object => true)
+    CredentialSaver.stub!(:load_saved).and_return([@credential])
+    @client = mock("client", :null_object => true)
+    @stage_info = mock("stage_info", :credential => @credential, :client => @client)
+    StageInfo.stub!(:new).and_return(@stage_info)
+  end
+  
+  it "should load the stored credentials" do
+    CredentialSaver.should_receive(:load_saved).and_return([])
+    StageManager.new
+  end
+  
+  it "should create a stage info item for a loaded credential" do
+    StageInfo.should_receive(:new).with(:credential => @credential).and_return(@stage_info)
+
+    StageManager.new
+  end
+  
+  it "should put the stage info item in the stage info list" do
+    stage_manager = StageManager.new
+    
+    stage_manager["some account"].should == @stage_info
+  end
+end
+
+describe StageManager, "each_stage" do
   before(:each) do
     CredentialSaver.stub!(:load_account_names).and_return([])
   end
@@ -9,38 +36,47 @@ describe StageManager, "each_name" do
   it "get the credentials from the credential saver" do
     CredentialSaver.should_receive(:load_account_names).at_least(1).times.and_return([])
     
-    StageManager.each_name do |name|
+    StageManager.each_stage do |stage_name, scene_name|
     end
   end
   
   it "should return a scene even if there are no accounts for one account" do
     CredentialSaver.stub!(:load_account_names).and_return([])
     
-    accounts = []
-    StageManager.each_name do |name|
-      accounts << name
+    stage_names = []
+    scene_names = []
+    StageManager.each_stage do |stage_name, scene_name|
+      stage_names << stage_name
+      scene_names << scene_name
     end
-    accounts.should == ["default"]
+    stage_names.should == ["default"]
+    scene_names.should == ["login"]
   end
   
   it "should yield for one account" do
     CredentialSaver.stub!(:load_account_names).and_return(["one"])
     
-    accounts = []
-    StageManager.each_name do |name|
-      accounts << name
+    stage_names = []
+    scene_names = []
+    StageManager.each_stage do |stage_name, scene_name|
+      stage_names << stage_name
+      scene_names << scene_name
     end
-    accounts.should == ["one"]
+    stage_names.should == ["one"]
+    scene_names.should == ["list_tickets"]
   end
   
   it "should yield for two accounts" do
     CredentialSaver.stub!(:load_account_names).and_return(["one", "two"])
     
-    accounts = []
-    StageManager.each_name do |name|
-      accounts << name
+    stage_names = []
+    scene_names = []
+    StageManager.each_stage do |stage_name, scene_name|
+      stage_names << stage_name
+      scene_names << scene_name
     end
-    accounts.should == ["one", "two"]
+    stage_names.should == ["one", "two"]
+    scene_names.should == ["list_tickets", "list_tickets"]
   end
 end
 
@@ -50,6 +86,7 @@ end
 
 describe StageManager, "attempt_login" do
   before(:each) do
+    CredentialSaver.stub!(:load_saved).and_return([])
     @credential = mock("credential", :account => "account 1", :login => "username 1", :password => "password 1")
     Credential.stub!(:new).and_return(@credential)
     CredentialSaver.stub!(:save)
@@ -131,6 +168,7 @@ end
 
 describe StageManager, "notify_of_project_change" do
   before(:each) do
+    CredentialSaver.stub!(:load_saved).and_return([])
     @project = mock("project")
     @credential = mock("credential", :account => "account 1", :login => "username 1", :password => "password 1", :remember_me? => nil, :project_name= => nil)
     Credential.stub!(:new).and_return(@credential)

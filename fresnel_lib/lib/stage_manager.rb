@@ -5,11 +5,14 @@ class StageManager
   
   def initialize
     @stage_info_list = {}
+    CredentialSaver.load_saved.each do |credential|
+      @stage_info_list[credential.account] = StageInfo.new(:credential => credential)
+    end
   end
   
-  def self.each_name
-    account_names.each { |account_name| yield account_name }
-    yield "default" if account_names.empty?
+  def self.each_stage
+    account_names.each { |account_name| yield(account_name, "list_tickets") }
+    yield("default", "login") if account_names.empty?
   end
   
   def attempt_login(account, username, password, remember_me, stage_name)
