@@ -7,22 +7,25 @@ module ConfirmDeleteTicket
     show_spinner { confirm_delete }
   end
 
-  
   def confirm_delete
     scene.remove(delete_ticket_confirmation_main)
-    production.stage_manager[scene.stage.name].current_project.destroy_ticket(ticket_id)
-    production.current_ticket = nil if current_ticket?(ticket_id)
+    stage_info.current_project.destroy_ticket(ticket_id)
+    stage_info.current_ticket = nil if current_ticket?(ticket_id)
     ticket_lister.remove_ticket(ticket_id)
   end
   
   private ##############################
+  
+  def stage_info
+    return production.stage_manager[scene.stage.name]
+  end
   
   def current_ticket?(ticket_id)
     return current_ticket && current_ticket.id == ticket_id
   end
   
   def current_ticket
-    return production.current_ticket
+    return stage_info.current_ticket
   end
   
   def ticket_id

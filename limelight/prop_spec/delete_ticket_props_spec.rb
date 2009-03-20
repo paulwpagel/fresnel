@@ -6,7 +6,6 @@ describe "Delete Ticket Props" do
   before(:each) do
     mock_lighthouse
     @ticket = mock("ticket", :id => 12345, :null_object => true)
-    producer.production.current_ticket = @ticket
     @open_tickets = [@ticket]
     @project.stub!(:open_tickets).and_return(@open_tickets)
     @project.stub!(:ticket_title).and_return(nil)

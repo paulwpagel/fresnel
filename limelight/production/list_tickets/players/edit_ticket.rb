@@ -6,9 +6,9 @@ module EditTicket
   end
   
   def edit
-    production.current_ticket = stage_info.client.ticket(ticket_id, stage_info.current_project)
+    stage_info.current_ticket = current_ticket
     remove_all
-    build(:ticket => production.current_ticket, :project => stage_info.current_project) do
+    build(:ticket => current_ticket, :project => stage_info.current_project) do
       __install "list_tickets/edit_ticket_props.rb", :ticket => @ticket, :project => @project
     end
     hover_style.background_color = "5A9ECF"
@@ -18,6 +18,10 @@ module EditTicket
     
   def ticket_id
     return id.split("_")[1].to_i
+  end
+  
+  def current_ticket
+    return stage_info.client.ticket(ticket_id, stage_info.current_project)
   end
   
   def stage_info

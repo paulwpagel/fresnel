@@ -72,10 +72,10 @@ end
 describe TicketLister, "cancel_edit_ticket" do
   
   before(:each) do
-    @ticket = mock("ticket", :id => "ticket_123456", :null_object => true)
+    mock_stage_manager
     @ticket_lister, @scene, @production = create_player(TicketLister, 
                                                 :scene => {:load => nil, :find => nil}, 
-                                                :production => {:current_ticket => @ticket, :current_ticket= => nil})
+                                                :production => {:stage_manager => @stage_manager})
                                                 
     @ticket_prop = mock('ticket props')
     @scene.stub!(:find).and_return(@ticket_prop)
@@ -86,7 +86,7 @@ describe TicketLister, "cancel_edit_ticket" do
   end
   
   it "should get rid of the edit form" do    
-    @production.current_ticket.should_receive(:id).and_return("123456")
+    @stage_info.current_ticket.should_receive(:id).and_return("123456")
     @scene.should_receive(:find).with("ticket_123456").and_return(@ticket_prop)
     @ticket_prop.should_receive(:remove_all)
 
@@ -95,7 +95,7 @@ describe TicketLister, "cancel_edit_ticket" do
   
   it "should re-add the ticket to the list" do
     @new_prop.should_receive(:children).and_return(["one", "two"])
-    ConvertsTicketToProp.should_receive(:convert).with(@production.current_ticket).and_return(@new_prop)
+    ConvertsTicketToProp.should_receive(:convert).with(@current_ticket).and_return(@new_prop)
 
     @ticket_prop.should_receive(:add).with("one")
     @ticket_prop.should_receive(:add).with("two")
@@ -104,7 +104,7 @@ describe TicketLister, "cancel_edit_ticket" do
   end
   
   it "should clear the current_ticket" do
-    @production.should_receive(:current_ticket=).with(nil)
+    @stage_info.should_receive(:current_ticket=).with(nil)
 
     @ticket_lister.cancel_edit_ticket
   end

@@ -36,17 +36,21 @@ module TicketLister
   end
   
   def cancel_edit_ticket
-    ticket_prop = scene.find("ticket_#{production.current_ticket.id}")
+    ticket_prop = scene.find("ticket_#{stage_info.current_ticket.id}")
     ticket_prop.remove_all
 
-    new_ticket_prop = ConvertsTicketToProp.convert(production.current_ticket)
+    new_ticket_prop = ConvertsTicketToProp.convert(stage_info.current_ticket)
     new_ticket_prop.children.each do |child|
       ticket_prop.add(child)
     end
-    production.current_ticket = nil
+    stage_info.current_ticket = nil
   end
   
   private ##############################################
+  
+  def stage_info
+    return production.stage_manager['']
+  end
   
   def show_current_type_and_tag
     search_box.text = ""

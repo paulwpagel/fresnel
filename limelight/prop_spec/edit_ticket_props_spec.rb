@@ -20,7 +20,6 @@ describe EditTicket do
                              :description => "Some Description", :versions => versions, :milestone_id => 12345, :tag => "one two three")
     @lighthouse_client.stub!(:ticket).and_return(@ticket)
     @project.stub!(:open_tickets).and_return([@ticket])
-    producer.production.current_ticket = nil
   end
 
   uses_scene :list_tickets
@@ -40,12 +39,11 @@ describe EditTicket do
     scene.find("asdfasdf").should be_nil
   end
   
-  it "should set the current ticket on the production" do
-    @lighthouse_client.should_receive(:ticket).with(12345, @project).and_return(@ticket)
+  it "should set the current ticket on the stage_manager" do
+    @lighthouse_client.should_receive(:ticket).with(12345, @project).at_least(1).times.and_return(@ticket)
+    @stage_info.should_receive(:current_ticket=).with(@ticket)
     
     click_ticket
-    
-    producer.production.current_ticket.should == @ticket
   end
 
   it "should set the background color to 5A9ECF" do
@@ -54,7 +52,7 @@ describe EditTicket do
     ticket = scene.find("ticket_12345").hover_style.background_color.should == "#5a9ecfff"
   end
   
-  it "should make a prop on the scene for the current ticket title" do    
+  it "should make a prop on the scene for the current ticket title" do
     click_ticket
     
     prop = scene.find('ticket_title')
