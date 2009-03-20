@@ -31,7 +31,7 @@ module ListTickets
   end
   
   def starting_project_name
-    return all_project_names[0]
+    return stage_info.current_project.name
   end
   
   def stage_info

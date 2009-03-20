@@ -5,7 +5,7 @@ describe ListTickets do
 
   before(:each) do
     mock_stage_manager
-    @lighthouse_client.stub!(:project_names).and_return(["One", "Two"])
+    @lighthouse_client.stub!(:project_names).and_return(["One", "Two", "Current Project Name"])
     @style = mock('style', :background_image= => nil)
     @list_tickets, @scene, @production = create_player(ListTickets, 
                                                 :scene => {:load => nil, :find => nil, :stage => @stage}, 
@@ -44,14 +44,15 @@ describe ListTickets do
   end
   
   it "should set the value of the project choices to the retrieved project name" do
-    @list_tickets.project_selector.should_receive(:value=).with(anything())
+    @project.stub!(:name).and_return("Current Project Name")
+    @list_tickets.project_selector.should_receive(:value=).with("Current Project Name")
     
     @list_tickets.list
   end
   
   it "should have list of projects" do
     @stage_manager.should_receive(:[]).with("stage name").at_least(1).times.and_return(@stage_info)
-    @list_tickets.project_selector.should_receive(:choices=).with(["One", "Two"])
+    @list_tickets.project_selector.should_receive(:choices=).with(["One", "Two", "Current Project Name"])
     
     @list_tickets.list
   end
