@@ -15,11 +15,11 @@ describe "Select Project Integration" do
     scene.name.should == "list_tickets"
     
     scene.find('project_selector').value = "Project Two"
-    producer.production.current_project.name.should == "Project Two"
+    producer.production.stage_manager["default"].current_project.name.should == "Project Two"
     scene.ticket_lister.children.size.should == lighthouse_client.find_project("Project Two").open_tickets.size
   end
   
   def lighthouse_client
-    return producer.production.lighthouse_client
+    return producer.production.stage_manager["default"].client
   end
 end

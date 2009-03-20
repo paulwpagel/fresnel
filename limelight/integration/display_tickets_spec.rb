@@ -71,7 +71,7 @@ describe "Display Tickets Integration Test" do
   end
   
   def current_project
-    producer.production.current_project
+    producer.production.stage_manager["default"].current_project
   end
   
   def ticket_rows
