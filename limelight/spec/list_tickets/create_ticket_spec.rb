@@ -3,13 +3,19 @@ require "create_ticket"
 
 describe CreateTicket do
   before(:each) do
-    @project = mock('project', :milestone_titles => [], :user_names => [])
+    mock_stage_manager
     @create_ticket, @scene, @production = create_player(CreateTicket, 
-                                                :scene => {:load => nil, :find => nil}, 
-                                                :production => {:current_project => @project})
+                                                :scene => {:stage => @stage, :load => nil, :find => nil}, 
+                                                :production => {:stage_manager => @stage_manager})
     @create_ticket.add_ticket_group.stub!(:build)
     @create_ticket.add_ticket_milestone.stub!(:choices=)
     @create_ticket.add_ticket_responsible_person.stub!(:choices=)
+  end
+    
+  it "should use the stage name to get the appropriate client" do
+    @stage_manager.should_receive(:[]).with("stage name").at_least(1).times.and_return(@stage_info)
+
+    @create_ticket.create_ticket
   end
   
   it "should call build on the add_ticket_group" do

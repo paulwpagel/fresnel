@@ -9,10 +9,18 @@ describe Website do
     @project.stub!(:hyphenated_name).and_return("some-project")
     @lighthouse_client.stub!(:account).and_return("8thlight")
     @website, @scene, @production = create_player(Website, 
-                                                :scene => {}, 
-                                                :production => {:current_project => @project, :stage_manager => @stage_manager})
+                                                :scene => {:stage => @stage}, 
+                                                :production => {:stage_manager => @stage_manager})
   end
   
+    
+  it "should use the stage name to get the appropriate client" do
+    @stage_manager.should_receive(:[]).with("stage name").at_least(1).times.and_return(@stage_info)
+
+    @website.url
+  end
+  
+
   it "should show url" do
     @browser = mock('browser')
     @browser.should_receive(:showInBrowser).with(@website.url)

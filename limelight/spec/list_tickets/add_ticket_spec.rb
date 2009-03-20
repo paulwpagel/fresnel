@@ -13,14 +13,14 @@ describe AddTicket, "#add" do
     @scene = mock('scene', :ticket_lister => @ticket_lister, :text_for => '', :remove_children_of => nil, :stage => @stage)
     @add_ticket.stub!(:scene).and_return(@scene)
 
-    @production = mock('production', :current_project => @project, :stage_manager => @stage_manager)
+    @production = mock('production', :stage_manager => @stage_manager)
     @add_ticket.stub!(:production).and_return(@production)
   end
   
   context "adding ticket to lighthouse client" do
     
     it "should use the stage name to get the appropriate client" do
-      @stage_manager.should_receive(:[]).with("stage name").and_return(@stage_info)
+      @stage_manager.should_receive(:[]).with("stage name").at_least(1).times.and_return(@stage_info)
 
       @add_ticket.add
     end

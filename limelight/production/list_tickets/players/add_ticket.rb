@@ -13,9 +13,9 @@ module AddTicket
       ticket_options[:tags] = scene.text_for("add_ticket_tags")
       ticket_options[:milestone] = scene.text_for("add_ticket_milestone")
         
-      project = production.current_project
+      project = stage_info.current_project
 
-      production.stage_manager[scene.stage.name].client.add_ticket(ticket_options, project)
+      stage_info.client.add_ticket(ticket_options, project)
 
       scene.remove_children_of("add_ticket_group")
 
@@ -23,4 +23,9 @@ module AddTicket
       scene.ticket_lister.filter_by_type("Open Tickets")
   end
   
+  private ###########################
+  
+  def stage_info
+    return production.stage_manager[scene.stage.name]
+  end
 end

@@ -11,13 +11,13 @@ module SaveTicket
   def save_ticket
     current_ticket.title = ticket_title.text
     current_ticket.state = ticket_state.value
-    current_ticket.milestone_id = production.current_project.milestone_id(ticket_milestone.value)
+    current_ticket.milestone_id = current_project.milestone_id(ticket_milestone.value)
     current_ticket.tag = ticket_tag.text
     current_ticket.new_comment = ticket_comment.text
     current_ticket.assigned_user_id = current_project.user_id(ticket_assigned_user.value)
     current_ticket.save
     
-    production.current_ticket = production.stage_manager[scene.stage.name].client.ticket(current_ticket.id, current_project)
+    production.current_ticket = stage_info.client.ticket(current_ticket.id, current_project)
     ticket_lister.show_these_tickets(current_project.open_tickets)
   end
   
@@ -27,7 +27,11 @@ module SaveTicket
     return production.current_ticket
   end
   
+  def stage_info
+    return production.stage_manager[scene.stage.name]
+  end
+  
   def current_project
-    return production.current_project
+    return stage_info.current_project
   end
 end

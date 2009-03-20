@@ -5,7 +5,6 @@ describe "title bar props" do
   before(:each) do
     mock_lighthouse
     producer.production.current_project = @project
-    
   end
   
   uses_scene :list_tickets

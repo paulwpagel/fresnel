@@ -24,13 +24,9 @@ module ListTickets
   end
     
   private #######################
-    
-  def project
-    return production.current_project
-  end
   
   def all_project_names
-    client = production.stage_manager[stage_name].client
+    client = stage_info.client
     return client.project_names
   end
   
@@ -38,7 +34,8 @@ module ListTickets
     return all_project_names[0]
   end
   
-  def stage_name
-    return scene.stage.name
+  def stage_info
+    return production.stage_manager[scene.stage.name]
   end
+  
 end

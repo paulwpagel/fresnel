@@ -4,18 +4,24 @@ require "confirm_delete_ticket"
 describe ConfirmDeleteTicket do
   
   before(:each) do
-    @current_project = mock('project', :destroy_ticket => nil)
+    mock_stage_manager
     @current_ticket = mock('ticket', :id => 12345)
     @confirm_delete, @scene, @production = create_player(ConfirmDeleteTicket, 
-                                                :scene => {:load => nil, :find => nil, :remove => nil}, 
-                                                :production => {:current_project => @current_project, :current_ticket => @current_ticket, :current_ticket= => nil})
+                                                :scene => { :stage => @stage, :load => nil, :find => nil, :remove => nil },
+                                                :production => {:current_ticket => @current_ticket, :current_ticket= => nil, :stage_manager => @stage_manager})
                                                 
     @confirm_delete.id = "confirm_delete_ticket_12345"
     @confirm_delete.ticket_lister.stub!(:remove_ticket)                                                
   end
   
+  it "should use the stage manager to get the current_project" do
+    @stage_manager.should_receive(:[]).with("stage name").and_return(@stage_info)
+    
+    @confirm_delete.confirm_delete
+  end
+  
   it "should destroy the ticket on mouse_clicked" do
-    @current_project.should_receive(:destroy_ticket).with(12345)
+    @project.should_receive(:destroy_ticket).with(12345)
     
     @confirm_delete.confirm_delete
   end

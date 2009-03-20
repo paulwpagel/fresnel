@@ -8,7 +8,7 @@ describe EditTicket do
     @ticket = mock('ticket')
     @edit_ticket, @scene, @production = create_player(EditTicket, 
                                                 :scene => {:load => nil, :find => nil, :stage => @stage}, 
-                                                :production => {:stage_manager => @stage_manager, :current_project => @project, :current_ticket= => nil, :current_ticket => @ticket})
+                                                :production => {:stage_manager => @stage_manager, :current_ticket= => nil, :current_ticket => @ticket})
     @edit_ticket.id = "ticket_12345"     
     @edit_ticket.stub!(:remove_all)
     @edit_ticket.stub!(:build)    
@@ -16,7 +16,7 @@ describe EditTicket do
   end
 
   it "should use the stage name to get the appropriate client" do
-    @stage_manager.should_receive(:[]).with("stage name").and_return(@stage_info)
+    @stage_manager.should_receive(:[]).with("stage name").at_least(1).times.and_return(@stage_info)
     
     @edit_ticket.edit
   end

@@ -5,7 +5,7 @@ module DeleteTicket
   end
   
   def delete
-    scene.build(:ticket_id => ticket_id, :ticket_title => production.current_project.ticket_title(ticket_id)) do
+    scene.build(:ticket_id => ticket_id, :ticket_title => current_project.ticket_title(ticket_id)) do
       __install "list_tickets/delete_ticket_props.rb", :ticket_id => @ticket_id, :ticket_title => @ticket_title
     end
 
@@ -17,4 +17,7 @@ module DeleteTicket
     return id.sub("delete_ticket_", "").to_i
   end
   
+  def current_project
+    return production.stage_manager[scene.stage.name].current_project
+  end
 end

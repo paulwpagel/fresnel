@@ -10,7 +10,7 @@ module ConfirmDeleteTicket
   
   def confirm_delete
     scene.remove(delete_ticket_confirmation_main)
-    production.current_project.destroy_ticket(ticket_id)
+    production.stage_manager[scene.stage.name].current_project.destroy_ticket(ticket_id)
     production.current_ticket = nil if current_ticket?(ticket_id)
     ticket_lister.remove_ticket(ticket_id)
   end

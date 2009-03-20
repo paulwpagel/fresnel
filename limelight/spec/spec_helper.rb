@@ -32,7 +32,7 @@ def create_mock_project(name = "One")
 end
 
 def mock_client
-  return mock("lighthouse module", :authenticate => nil, :add_ticket => nil, :milestones => [], :milestone_title => "",
+  return mock("lighthouse module", :authenticate => nil, :add_ticket => nil, :milestones => [], :milestone_title => "", :destroy_ticket => nil,
                                                  :find_project => @project, :projects => [], :ticket => nil, :project_names => ["one"], :add_project => nil)
 end
 

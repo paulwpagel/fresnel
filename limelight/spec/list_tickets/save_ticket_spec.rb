@@ -8,7 +8,7 @@ describe SaveTicket do
     @ticket = mock('ticket', :null_object => true, :id => nil)
     @save_ticket, @scene, @production = create_player(SaveTicket, 
                                                 :scene => {:load => nil, :find => nil, :stage => @stage},
-                                                :production => {:stage_manager => @stage_manager, :current_ticket => @ticket, :current_ticket= => nil, :current_project => @project})
+                                                :production => {:stage_manager => @stage_manager, :current_ticket => @ticket, :current_ticket= => nil})
     @save_ticket.ticket_lister.stub!(:show_these_tickets)
   end
   
@@ -35,7 +35,7 @@ describe SaveTicket do
 
   it "should get the milestone id from its title" do
     @save_ticket.ticket_milestone.should_receive(:value).and_return("Some Milestone")
-    @production.current_project.should_receive(:milestone_id).with("Some Milestone").and_return(12345)
+    @project.should_receive(:milestone_id).with("Some Milestone").and_return(12345)
     @production.current_ticket.should_receive(:milestone_id=).with(12345)
     
     @save_ticket.save_ticket
@@ -63,7 +63,7 @@ describe SaveTicket do
   end
   
   it "should use the stage name to get the appropriate client" do
-    @stage_manager.should_receive(:[]).with("stage name").and_return(@stage_info)
+    @stage_manager.should_receive(:[]).at_least(1).times.with("stage name").and_return(@stage_info)
     
     @save_ticket.save_ticket
   end
