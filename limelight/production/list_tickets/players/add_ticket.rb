@@ -1,4 +1,5 @@
 module AddTicket
+  prop_reader :add_ticket_title, :ticket_lister, :add_ticket_group, :add_ticket_description, :add_ticket_responsible_person, :add_ticket_tags, :add_ticket_milestone
   
   def button_pressed(event)
     show_spinner {add}
@@ -7,20 +8,20 @@ module AddTicket
   def add
       ticket_options = {}
       
-      ticket_options[:title] = scene.text_for("add_ticket_title")
-      ticket_options[:description] = scene.text_for("add_ticket_description")
-      ticket_options[:assigned_user] = scene.text_for("add_ticket_responsible_person")
-      ticket_options[:tags] = scene.text_for("add_ticket_tags")
-      ticket_options[:milestone] = scene.text_for("add_ticket_milestone")
+      ticket_options[:title] = add_ticket_title.text
+      ticket_options[:description] = add_ticket_description.text
+      ticket_options[:assigned_user] = add_ticket_responsible_person.text
+      ticket_options[:tags] = add_ticket_tags.text
+      ticket_options[:milestone] = add_ticket_milestone.text
         
       project = stage_info.current_project
 
       stage_info.client.add_ticket(ticket_options, project)
 
-      scene.remove_children_of("add_ticket_group")
+      add_ticket_group.remove_all
 
       project.update_tickets
-      scene.ticket_lister.filter_by_type("Open Tickets")
+      ticket_lister.filter_by_type("Open Tickets")
   end
   
   private ###########################

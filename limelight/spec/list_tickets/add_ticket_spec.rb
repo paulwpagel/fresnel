@@ -4,17 +4,12 @@ require "add_ticket"
 describe AddTicket, "#add" do
 
   before do
-    @add_ticket = Object.new
-    @add_ticket.extend(AddTicket)
-
-    @ticket_lister = mock('ticket lister', :filter_by_type => nil)
-
     mock_stage_manager
-    @scene = mock('scene', :ticket_lister => @ticket_lister, :text_for => '', :remove_children_of => nil, :stage => @stage)
-    @add_ticket.stub!(:scene).and_return(@scene)
-
-    @production = mock('production', :stage_manager => @stage_manager)
-    @add_ticket.stub!(:production).and_return(@production)
+    @add_ticket, @scene, @production = create_player(AddTicket, 
+                                                :scene => {:load => nil, :find => nil, :stage => @stage}, 
+                                                :production => {:stage_manager => @stage_manager})
+    @add_ticket.ticket_lister.stub!(:filter_by_type)
+    @add_ticket.add_ticket_group.stub!(:remove_all)
   end
   
   context "adding ticket to lighthouse client" do
@@ -32,11 +27,11 @@ describe AddTicket, "#add" do
       tags = 'some tags'
       milestone = 'milestones'
 
-      @scene.stub!(:text_for).with("add_ticket_title").and_return(title)
-      @scene.stub!(:text_for).with("add_ticket_description").and_return(description)
-      @scene.stub!(:text_for).with("add_ticket_responsible_person").and_return(person)
-      @scene.stub!(:text_for).with("add_ticket_tags").and_return(tags)
-      @scene.stub!(:text_for).with("add_ticket_milestone").and_return(milestone)
+      @add_ticket.add_ticket_title.stub!(:text).and_return(title)
+      @add_ticket.add_ticket_description.stub!(:text).and_return(description)
+      @add_ticket.add_ticket_responsible_person.stub!(:text).and_return(person)
+      @add_ticket.add_ticket_tags.stub!(:text).and_return(tags)
+      @add_ticket.add_ticket_milestone.stub!(:text).and_return(milestone)
 
       ticket_options = {}
       ticket_options[:title] = title
@@ -60,7 +55,7 @@ describe AddTicket, "#add" do
   end
   
   it "should remove add_ticket_group's children when adding the ticket" do
-    @scene.should_receive(:remove_children_of).with("add_ticket_group")
+    @add_ticket.add_ticket_group.should_receive(:remove_all)
 
     @add_ticket.add
   end
@@ -72,7 +67,7 @@ describe AddTicket, "#add" do
   end
   
   it "list open tickets" do
-    @ticket_lister.should_receive(:filter_by_type).with("Open Tickets")
+    @add_ticket.ticket_lister.should_receive(:filter_by_type).with("Open Tickets")
     
     @add_ticket.add
   end
