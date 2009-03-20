@@ -5,7 +5,6 @@ describe "List Ticket Props" do
   before(:each) do
     mock_lighthouse
     @project.stub!(:tag_names).and_return(["Tag One", "Tag Two"])
-    producer.production.current_project = @project
   end
   
   uses_scene :list_tickets

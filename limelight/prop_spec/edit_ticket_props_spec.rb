@@ -20,7 +20,6 @@ describe EditTicket do
                              :description => "Some Description", :versions => versions, :milestone_id => 12345, :tag => "one two three")
     @lighthouse_client.stub!(:ticket).and_return(@ticket)
     @project.stub!(:open_tickets).and_return([@ticket])
-    producer.production.current_project = @project
     producer.production.current_ticket = nil
   end
 

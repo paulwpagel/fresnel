@@ -10,7 +10,6 @@ describe "Delete Ticket Props" do
     @open_tickets = [@ticket]
     @project.stub!(:open_tickets).and_return(@open_tickets)
     @project.stub!(:ticket_title).and_return(nil)
-    producer.production.current_project = @project
   end
   
   uses_scene :list_tickets

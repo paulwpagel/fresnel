@@ -4,7 +4,6 @@ require 'limelight/specs/spec_helper'
 describe "title bar props" do
   before(:each) do
     mock_lighthouse
-    producer.production.current_project = @project
   end
   
   uses_scene :list_tickets

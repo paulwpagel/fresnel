@@ -8,7 +8,6 @@ describe CreateTicket do
     mock_lighthouse
     @project.stub!(:milestone_titles).and_return(["Milestone One", "Milestone Two"])
     @project.stub!(:user_names).and_return(["Name"])
-    producer.production.current_project = @project
   end
 
   uses_scene :list_tickets
