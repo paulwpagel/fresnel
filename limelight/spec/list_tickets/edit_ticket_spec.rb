@@ -4,24 +4,29 @@ require "edit_ticket"
 describe EditTicket do
 
   before(:each) do
-    @lighthouse_client = mock('lighthouse', :ticket => nil)
-    @project = mock('project')
+    mock_stage_manager
     @ticket = mock('ticket')
     @edit_ticket, @scene, @production = create_player(EditTicket, 
-                                                :scene => {:load => nil, :find => nil}, 
-                                                :production => {:lighthouse_client => @lighthouse_client, :current_project => @project, :current_ticket= => nil, :current_ticket => @ticket})
+                                                :scene => {:load => nil, :find => nil, :stage => @stage}, 
+                                                :production => {:stage_manager => @stage_manager, :current_project => @project, :current_ticket= => nil, :current_ticket => @ticket})
     @edit_ticket.id = "ticket_12345"     
     @edit_ticket.stub!(:remove_all)
     @edit_ticket.stub!(:build)    
     @edit_ticket.stub!(:hover_style).and_return(mock('hover', :background_color= => nil))        
   end
-  
-  it "should set the current ticket" do
-    @lighthouse_client.should_receive(:ticket).with(12345, @project).and_return(@ticket)
-    @production.should_receive(:current_ticket=).with(@ticket)
+
+  it "should use the stage name to get the appropriate client" do
+    @stage_manager.should_receive(:[]).with("stage name").and_return(@stage_info)
     
     @edit_ticket.edit
   end
+  
+  # it "should set the current ticket" do
+  #   @lighthouse_client.should_receive(:ticket).with(12345, @project).and_return(@ticket)
+  #   @production.should_receive(:current_ticket=).with(@ticket)
+  #   
+  #   @edit_ticket.edit
+  # end
   
   it "should remove all children" do
     @edit_ticket.should_receive(:remove_all)
@@ -30,7 +35,6 @@ describe EditTicket do
   end
   
   it "should build the edit ticket screen" do
-    @production.should_receive(:current_ticket).and_return(@ticket)
     @edit_ticket.should_receive(:build).with(:ticket => @ticket, :project => @project)
     
     @edit_ticket.edit

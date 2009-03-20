@@ -4,11 +4,13 @@ class Browser
 end
 describe Website do
   before(:each) do
-    @project = mock("project", :id => 12345, :hyphenated_name => "some-project")
-    @lighthouse_client = mock("lighthouse_client", :account => "8thlight")
+    mock_stage_manager
+    @project.stub!(:id).and_return(12345)
+    @project.stub!(:hyphenated_name).and_return("some-project")
+    @lighthouse_client.stub!(:account).and_return("8thlight")
     @website, @scene, @production = create_player(Website, 
                                                 :scene => {}, 
-                                                :production => {:current_project => @project, :lighthouse_client => @lighthouse_client})
+                                                :production => {:current_project => @project, :stage_manager => @stage_manager})
   end
   
   it "should show url" do

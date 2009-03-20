@@ -24,8 +24,7 @@ else
 end
 
 require "lighthouse/adapter"
-require 'lighthouse/lighthouse_api/base'
+require 'lighthouse/lighthouse_api/base' # do i need this
 require "stage_manager"
 production.stage_manager = StageManager.new
-production.lighthouse_client = Lighthouse::LighthouseApi
 require "prop"

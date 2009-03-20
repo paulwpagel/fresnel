@@ -15,7 +15,7 @@ module AddTicket
         
       project = production.current_project
 
-      production.lighthouse_client.add_ticket(ticket_options, project)
+      production.stage_manager[scene.stage.name].client.add_ticket(ticket_options, project)
 
       scene.remove_children_of("add_ticket_group")
 

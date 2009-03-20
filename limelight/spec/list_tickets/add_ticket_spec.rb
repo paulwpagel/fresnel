@@ -9,16 +9,22 @@ describe AddTicket, "#add" do
 
     @ticket_lister = mock('ticket lister', :filter_by_type => nil)
 
-    @scene = mock('scene', :ticket_lister => @ticket_lister, :text_for => '', :remove_children_of => nil)
+    mock_stage_manager
+    @scene = mock('scene', :ticket_lister => @ticket_lister, :text_for => '', :remove_children_of => nil, :stage => @stage)
     @add_ticket.stub!(:scene).and_return(@scene)
 
-    @lighthouse_client = mock('lighthouse', :add_ticket => nil)
-    @current_project = mock('current_project', :update_tickets => nil)
-    @production = mock('production', :lighthouse_client => @lighthouse_client, :current_project => @current_project)
+    @production = mock('production', :current_project => @project, :stage_manager => @stage_manager)
     @add_ticket.stub!(:production).and_return(@production)
   end
   
   context "adding ticket to lighthouse client" do
+    
+    it "should use the stage name to get the appropriate client" do
+      @stage_manager.should_receive(:[]).with("stage name").and_return(@stage_info)
+
+      @add_ticket.add
+    end
+    
     it "sends correct ticket data" do
       title = 'a title'
       description = 'a description'
@@ -46,7 +52,7 @@ describe AddTicket, "#add" do
     end
 
     it "sends current project" do
-      @lighthouse_client.should_receive(:add_ticket).with(anything, @current_project)
+      @lighthouse_client.should_receive(:add_ticket).with(anything, @project)
       
       @add_ticket.add
     end
@@ -60,7 +66,7 @@ describe AddTicket, "#add" do
   end
   
   it "tells the project to update its tickets" do
-    @current_project.should_receive(:update_tickets)
+    @project.should_receive(:update_tickets)
     
     @add_ticket.add
   end

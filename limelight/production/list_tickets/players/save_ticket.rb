@@ -17,7 +17,7 @@ module SaveTicket
     current_ticket.assigned_user_id = current_project.user_id(ticket_assigned_user.value)
     current_ticket.save
     
-    production.current_ticket = production.lighthouse_client.ticket(current_ticket.id, current_project)
+    production.current_ticket = production.stage_manager[scene.stage.name].client.ticket(current_ticket.id, current_project)
     ticket_lister.show_these_tickets(current_project.open_tickets)
   end
   

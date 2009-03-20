@@ -4,12 +4,11 @@ require "save_ticket"
 describe SaveTicket do
   
   before(:each) do
-    @project = mock('project', :milestone_id => nil, :user_id => nil, :open_tickets => [])
-    @lighthouse_client = mock('lighthouse', :ticket => nil)
-    @ticket = mock('ticket', :title= => nil, :state= => nil, :tag= => nil, :save => nil, :milestone_id= => nil, :new_comment= => nil, :assigned_user_id= => nil, :id => 234)
+    mock_stage_manager
+    @ticket = mock('ticket', :null_object => true, :id => nil)
     @save_ticket, @scene, @production = create_player(SaveTicket, 
-                                                :scene => {:load => nil, :find => nil}, 
-                                                :production => {:lighthouse_client => @lighthouse_client, :current_ticket => @ticket, :current_ticket= => nil, :current_project => @project})
+                                                :scene => {:load => nil, :find => nil, :stage => @stage},
+                                                :production => {:stage_manager => @stage_manager, :current_ticket => @ticket, :current_ticket= => nil, :current_project => @project})
     @save_ticket.ticket_lister.stub!(:show_these_tickets)
   end
   
@@ -59,6 +58,12 @@ describe SaveTicket do
 
   it "should save the ticket" do
     @production.current_ticket.should_receive(:save)
+    
+    @save_ticket.save_ticket
+  end
+  
+  it "should use the stage name to get the appropriate client" do
+    @stage_manager.should_receive(:[]).with("stage name").and_return(@stage_info)
     
     @save_ticket.save_ticket
   end
