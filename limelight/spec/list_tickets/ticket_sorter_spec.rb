@@ -1,33 +1,52 @@
 # require File.expand_path(File.dirname(__FILE__) + "/../spec_helper")
-# require 'limelight/specs/spec_helper'
+# # require 'limelight/specs/spec_helper'
 # require "ticket_sorter"
 # 
 # describe TicketSorter do
 # 
 #   before(:each) do
-#     mock_lighthouse
-#     producer.production.current_project = @project
+#     mock_stage_manager
 #     @first = ticket(:title => "a")
 #     @second = ticket(:title => "b")
 #     @third = ticket(:title => "c")
 #     @tickets = [@second, @third, @first]
-#   end
-#   
-#   uses_scene :list_tickets
 # 
-#   before(:each) do
-#     scene.production.current_sort_order = nil
-#     scene.ticket_lister.stub!(:show_these_tickets)
-#     scene.ticket_lister.stub!(:last_tickets).and_return(@tickets)
-#     title_image.style.stub!(:background_image=)
-#     state_image.style.stub!(:background_image=)
-#     age_image.style.stub!(:background_image=)
-#     assigned_user_image.style.stub!(:background_image=)
+#     @ticket_sorter, @scene, @production = create_player(TicketSorter, 
+#                                                 :scene => {:load => nil, :find => nil, :stage => @stage}, 
+#                                                 :production => {:stage_manager => @stage_manager})
+#     @stage_info.stub!(:current_sort_order).and_return(nil)
+#     @ticket_sorter.ticket_lister.stub!(:show_these_tickets)
+#     @ticket_sorter.ticket_lister.stub!(:last_tickets).and_return(@tickets)
+# 
+#     @style = mock('style')
+#     @ticket_sorter.title_image.stub!(:style).and_return(@stlye)
+#     @ticket_sorter.state_image.stub!(:style).and_return(@stlye)
+#     @ticket_sorter.age_image.stub!(:style).and_return(@stlye)
+#     @ticket_sorter.assigned_user_image.stub!(:style).and_return(@stlye)
 #   end
+#   # before(:each) do
+#   #   mock_lighthouse
+#   #   @first = ticket(:title => "a")
+#   #   @second = ticket(:title => "b")
+#   #   @third = ticket(:title => "c")
+#   #   @tickets = [@second, @third, @first]
+#   # end
+#   # 
+#   # uses_scene :list_tickets
+#   # 
+#   # before(:each) do
+#   #   scene.production.current_sort_order = nil
+#   #   scene.ticket_lister.stub!(:show_these_tickets)
+#   #   scene.ticket_lister.stub!(:last_tickets).and_return(@tickets)
+#   #   title_image.style.stub!(:background_image=)
+#   #   state_image.style.stub!(:background_image=)
+#   #   age_image.style.stub!(:background_image=)
+#   #   assigned_user_image.style.stub!(:background_image=)
+#   # end
 #   
 #   describe "sort by title" do
 #     it "should get the appropriate tickets from the ticket lister" do
-#       scene.ticket_lister.should_receive(:last_tickets).and_return([])
+#       @ticket_sorter.ticket_lister.should_receive(:last_tickets).and_return([])
 #           
 #       sort_by_title
 #     end

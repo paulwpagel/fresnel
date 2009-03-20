@@ -1,15 +1,6 @@
-require 'lighthouse/lighthouse_api/base'
+require "stage_info"
 require "credential_saver"
 
-class StageInfo
-  attr_reader :client, :credential
-  attr_accessor :current_project
-  
-  def initialize(options={})
-    @credential = options[:credential]
-    @client = Lighthouse::LighthouseApi
-  end
-end
 class StageManager
   
   def initialize

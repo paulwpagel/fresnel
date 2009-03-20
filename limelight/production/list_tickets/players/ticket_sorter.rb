@@ -1,4 +1,10 @@
 module TicketSorter
+  prop_reader :ticket_lister
+  prop_reader :title_image
+  prop_reader :state_image
+  prop_reader :age_image
+  prop_reader :assigned_user_image
+  
   def mouse_clicked(event)
     show_spinner do
       scene.ticket_lister.show_these_tickets(sorted_tickets)
@@ -11,7 +17,7 @@ module TicketSorter
   private
   
   def sorted_tickets
-    tickets = scene.ticket_lister.last_tickets
+    tickets = ticket_lister.last_tickets
     ascending_tickets = []
     if self.id == "title_header"
       ascending_tickets = tickets.sort_by { |ticket| ticket.title.downcase }
@@ -22,27 +28,31 @@ module TicketSorter
     else
       ascending_tickets = tickets.sort_by { |ticket| ticket.age }
     end
-    return ascending_tickets.reverse if production.current_sort_order == "ascending"
+    return ascending_tickets.reverse if stage_info.current_sort_order == "ascending"
     return ascending_tickets
   end
   
   def toggle_sort_order
-    if production.current_sort_order == "ascending"
-      production.current_sort_order = "descending"
+    if stage_info.current_sort_order == "ascending"
+      stage_info.current_sort_order = "descending"
     else
-      production.current_sort_order = "ascending"
+      stage_info.current_sort_order = "ascending"
     end
   end
   
   def clear_sort_images
-    scene.find("title_image").style.background_image = ""
-    scene.find("state_image").style.background_image = ""
-    scene.find("age_image").style.background_image = ""
-    scene.find("assigned_user_image").style.background_image = ""
+    title_image.style.background_image = ""
+    state_image.style.background_image = ""
+    age_image.style.background_image = ""
+    assigned_user_image.style.background_image = ""
+  end
+  
+  def stage_info
+    return production.stage_manager[scene.stage.name]
   end
   
   def set_new_image
     image_name = self.id.sub(/header/, "image")
-    scene.find(image_name).style.background_image = "images/#{production.current_sort_order}.png"
+    scene.find(image_name).style.background_image = "images/#{stage_info.current_sort_order}.png"
   end
 end
