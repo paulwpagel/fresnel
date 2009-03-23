@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + "/../spec_helper")
 module LoginHelper
   
   def login_with_credentials(scene, options = {})
-    options[:account] ||= "fresnel"
+    options[:account] ||= "Account One"
     options[:username] ||= "Tommy James"
     options[:password] ||= "abracadabrah"
     options[:remember_me?] ||= true

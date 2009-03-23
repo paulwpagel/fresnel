@@ -20,7 +20,7 @@ describe "Login Integration Test" do
   
   it "should open a second stage to the login screen when adding another account" do
     scene = producer.open_scene("login", producer.theater.stages[0])
-
+  
     login_with_credentials(scene)
     
     press_button("extra_account", scene.stage.current_scene)
@@ -30,13 +30,15 @@ describe "Login Integration Test" do
     scene.name.should == "login"
   end
   
-  it "should have the two stages work independently from each other" do
+  it "should only show projects for the second account on the second account" do
     scene = producer.open_scene("login", producer.theater.stages[0])
 
     login_with_credentials(scene)
     press_button("extra_account", scene.stage.current_scene)
-    scene = producer.open_scene("login", producer.theater.stages[1])
-    login_with_credentials(scene, "")
     
+    scene = producer.open_scene("login", producer.theater.stages[1])
+    login_with_credentials(scene, :account => "Account Two")
+    scene = scene.stage.current_scene
+    scene.find("project_selector").choices.should == ["Project Three"]
   end
 end

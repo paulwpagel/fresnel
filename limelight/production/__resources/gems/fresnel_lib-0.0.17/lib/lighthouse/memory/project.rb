@@ -11,13 +11,14 @@ module Lighthouse
     end
   
     def self.find(param)
-      return @@projects
+      return @@projects.find_all { |project| project.account == Lighthouse.account}
     end
   
-    attr_reader :name, :id, :users
+    attr_reader :name, :id, :users, :account
   
     def initialize(options = {})
       @name = options[:name]
+      @account = options[:account]
       @id = nil
       @users = []
     end

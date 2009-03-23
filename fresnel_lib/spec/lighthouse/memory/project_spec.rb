@@ -6,7 +6,7 @@ require "lighthouse/lighthouse"
 describe Lighthouse::Project do
   before(:each) do
     Lighthouse::Project.destroy_all
-    @project = Lighthouse::Project.new(:name => "Some Name")
+    @project = Lighthouse::Project.new(:name => "Some Name", :account => "some account")
   end
   
   it "should have a name" do
@@ -26,10 +26,19 @@ describe Lighthouse::Project do
   end
   
   it "should find all projects" do
+    Lighthouse.account = "some account"
     Lighthouse::Project.find(:all).size.should == 0
     @project.save
     
     Lighthouse::Project.find(:all).should == [@project]
+  end
+  
+  it "should not find projects that do not match the account" do
+    Lighthouse.account = "some different account"
+    Lighthouse::Project.find(:all).size.should == 0
+    @project.save
+    
+    Lighthouse::Project.find(:all).should == []
   end
   
   it "should have no milestones" do
@@ -63,6 +72,10 @@ describe Lighthouse::Project do
     @project.users.size.should == 0
     @project.users << Lighthouse::User.new(:name => "Bob")
     @project.users.size.should == 1
+  end
+
+  it "should know what account it belongs to" do
+    @project.account.should == "some account"
   end
   
   describe "with tickets" do

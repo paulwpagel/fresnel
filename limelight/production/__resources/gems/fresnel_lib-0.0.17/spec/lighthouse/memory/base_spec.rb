@@ -5,6 +5,7 @@ require "lighthouse/lighthouse"
 describe Lighthouse, "base methods" do
   it "should have an account= method" do
     Lighthouse.account = "some value"
+    Lighthouse.account.should == "some value"
   end
   
   it "should authenticate" do

@@ -5,7 +5,7 @@ describe "Select Project Integration" do
   it "should be able to login" do
     scene = login_scene(producer)
      
-    scene.find("account").text = "fresnel"
+    scene.find("account").text = "Account One"
     scene.find("username").text = "Tommy James"
     scene.find("password").text = "abracadabrah"
 
