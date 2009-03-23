@@ -50,4 +50,32 @@ describe StageInfo do
   it "should have a method to return the current_project_name" do
     @stage_info.current_project_name.should == "some project"
   end
+  
+  describe "when resesting" do
+    it "should clear the credential" do
+      @stage_info.reset
+
+      @stage_info.credential.should be_nil
+    end
+    
+    it "should have no current_ticket" do
+      @stage_info.current_ticket = "some ticket"
+      @stage_info.reset
+      
+      @stage_info.current_ticket.should be_nil
+    end
+
+    it "should have no current_project_name" do
+      @stage_info.reset
+      
+      @stage_info.current_project_name.should be_nil
+    end
+    
+    it "should have no current_sort_order" do
+      @stage_info.current_sort_order = "ascending"
+      @stage_info.reset
+      
+      @stage_info.current_sort_order.should be_nil
+    end
+  end
 end

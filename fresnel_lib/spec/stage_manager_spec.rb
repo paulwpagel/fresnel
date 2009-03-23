@@ -204,3 +204,26 @@ describe StageManager, "notify_of_project_change" do
   end
   
 end
+
+describe StageManager, "notify_of_logout" do
+  before(:each) do
+    CredentialSaver.stub!(:save)
+    @client = mock("client", :login_to => nil)
+    @stage_info = mock("stage_info", :reset => nil, :client => @client, :credential => nil)
+    StageInfo.stub!(:new).and_return(@stage_info)
+    @stage_manager = StageManager.new
+    attempt_login
+  end
+  
+  it "should clear the stage info" do
+    @stage_info.should_receive(:reset)
+    
+    @stage_manager.notify_of_logout("stage name 1")
+  end
+  
+  it "should should save the credentials again" do
+    CredentialSaver.should_receive(:save).with([])
+    
+    @stage_manager.notify_of_logout("stage name 1")
+  end
+end

@@ -40,7 +40,12 @@ class StageManager
     stage_info.client.login_to(credential.account, credential.login, credential.password)
     return stage_info
   end
-
+  
+  def notify_of_logout(stage_name)
+    @stage_info_list[stage_name].reset
+    CredentialSaver.save(all_credentials)
+  end
+  
   private ##################
   
   def all_credentials
@@ -48,7 +53,7 @@ class StageManager
     @stage_info_list.each_pair do |stage_name, stage_info|
       list << stage_info.credential
     end
-    return list
+    return list.compact
   end
   
   def self.account_names

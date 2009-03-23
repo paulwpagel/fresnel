@@ -20,7 +20,13 @@ class StageInfo
   end
   
   def current_project_name
-    return @credential.project_name
+    return @credential.project_name if @credential
+    return nil
   end
   
+  def reset
+    @credential = nil
+    @current_ticket = nil
+    @current_sort_order = nil
+  end
 end
