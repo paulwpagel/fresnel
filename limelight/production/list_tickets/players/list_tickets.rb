@@ -14,8 +14,9 @@ module ListTickets
   end
   
   def list
+    cached_project_name = stage_info.current_project.name
     project_selector.choices = all_project_names
-    project_selector.value = starting_project_name
+    project_selector.value = cached_project_name
         
     age_image.style.background_image = "images/descending.png"
     
@@ -28,10 +29,6 @@ module ListTickets
   def all_project_names
     client = stage_info.client
     return client.project_names
-  end
-  
-  def starting_project_name
-    return stage_info.current_project.name
   end
   
   def stage_info

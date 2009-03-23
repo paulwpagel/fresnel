@@ -56,5 +56,5 @@ describe ListTickets do
     
     @list_tickets.list
   end
-  
+    
 end

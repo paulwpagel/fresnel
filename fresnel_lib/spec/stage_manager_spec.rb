@@ -40,7 +40,7 @@ describe StageManager, "each_stage" do
     end
   end
   
-  it "should return a scene even if there are no accounts for one account" do
+  it "should return a scene name even if there are no accounts for one account" do
     CredentialSaver.stub!(:load_account_names).and_return([])
     
     stage_names = []
