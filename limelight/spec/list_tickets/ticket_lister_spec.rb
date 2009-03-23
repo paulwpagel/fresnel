@@ -74,7 +74,7 @@ describe TicketLister, "cancel_edit_ticket" do
   before(:each) do
     mock_stage_manager
     @ticket_lister, @scene, @production = create_player(TicketLister, 
-                                                :scene => {:load => nil, :find => nil}, 
+                                                :scene => {:load => nil, :find => nil, :stage => @stage}, 
                                                 :production => {:stage_manager => @stage_manager})
                                                 
     @ticket_prop = mock('ticket props')
@@ -109,6 +109,11 @@ describe TicketLister, "cancel_edit_ticket" do
     @ticket_lister.cancel_edit_ticket
   end
   
+  it "should use the stage name to get the stage_info" do
+    @stage_manager.should_receive(:[]).at_least(1).times.with("stage name").and_return(@stage_info)
+    
+    @ticket_lister.cancel_edit_ticket
+  end
 end
 
 describe TicketLister, "search_on" do

@@ -33,7 +33,7 @@ def mock_lighthouse
   @project = create_mock_project
                                        
   @lighthouse_client = mock("lighthouse module", :authenticate => nil, :add_ticket => nil, :milestones => [], :milestone_title => "", :get_starting_project_name => "One",
-                                                 :find_project => @project, :projects => [], :ticket => nil, :project_names => ["one"], :add_project => nil)
+                                                 :find_project => @project, :projects => [@project], :ticket => nil, :project_names => ["one"], :add_project => nil)
   @ticket = mock("ticket", :null_object => true)
   @stage_info = mock("stage_info", :credential => nil, :client => @lighthouse_client, :current_project => @project,
                                    :current_ticket => @ticket, :current_ticket= => nil, :current_project_name => nil)

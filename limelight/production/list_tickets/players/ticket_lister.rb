@@ -49,7 +49,7 @@ module TicketLister
   private ##############################################
   
   def stage_info
-    return production.stage_manager['']
+    return production.stage_manager[scene.stage.name]
   end
   
   def show_current_type_and_tag
