@@ -7,6 +7,7 @@ describe "Login Integration Test" do
   
   it "should be able to login" do
     CredentialSaver.filename = File.expand_path("~/.integration_test_credentials")
+    CredentialSaver.clear_all
     scene = producer.open_scene("login", producer.theater["default"])
     
     login_with_credentials(scene)

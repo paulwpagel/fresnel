@@ -24,6 +24,10 @@ class CredentialSaver
     return load_saved.collect { |credential| credential.account }.uniq
   end
   
+  def self.clear_all
+    File.delete(@@filename) if File.exist?(@@filename)
+  end
+  
   private #############################################
   
   def self.load_credentials_from_file

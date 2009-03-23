@@ -138,3 +138,23 @@ describe CredentialSaver, "setting the filename" do
     CredentialSaver.filename.should == "some new file"
   end
 end
+
+describe CredentialSaver, "clearing saved credentials" do
+  before(:each) do
+    File.stub!(:delete)
+  end
+  
+  it "should delete the file" do
+    File.stub!(:exist?).and_return(true)
+    File.should_receive(:delete).with(anything())
+    
+    CredentialSaver.clear_all
+  end
+  
+  it "should check if the file exists before deleting it" do
+    File.stub!(:exist?).and_return(false)
+    File.should_not_receive(:delete).with(anything())
+    
+    CredentialSaver.clear_all
+  end
+end
