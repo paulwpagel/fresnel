@@ -46,4 +46,8 @@ describe StageInfo do
     @stage_info.client.should_receive(:find_project).with("some project").and_return(@project)
     @stage_info.current_project.should == @project
   end
+  
+  it "should have a method to return the current_project_name" do
+    @stage_info.current_project_name.should == "some project"
+  end
 end

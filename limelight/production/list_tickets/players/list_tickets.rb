@@ -14,9 +14,15 @@ module ListTickets
   end
   
   def list
-    cached_project_name = stage_info.current_project.name
+    cached_project_name = stage_info.current_project_name
+    cached_all_project_names = all_project_names
+    
     project_selector.choices = all_project_names
-    project_selector.value = cached_project_name
+    if cached_project_name
+      project_selector.value = cached_project_name
+    else
+      project_selector.value = cached_all_project_names[0]
+    end
         
     age_image.style.background_image = "images/descending.png"
     

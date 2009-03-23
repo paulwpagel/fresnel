@@ -15,7 +15,7 @@ end
   "production/add_project/players",
   "production",
   "production/lib",
-  "production/__resources/gems/fresnel_lib-0.0.16/lib"
+  "production/__resources/gems/fresnel_lib-0.0.17/lib"
 ].each {|path| add_to_search_path path}
 
 require 'rubygems'
@@ -41,7 +41,7 @@ def mock_stage_manager
   @current_ticket = mock("ticket", :null_object => true, :id => 12345)
   @lighthouse_client = mock_client
   @stage_info = mock("stage_info", :credential => nil, :client => @lighthouse_client, :current_project => @project,
-                                   :current_ticket => @current_ticket, :current_ticket= => nil)
+                                   :current_ticket => @current_ticket, :current_ticket= => nil, :current_project_name => "One")
   @stage_manager = mock("stage_manager", :[] => @stage_info, :notify_of_project_change => nil, :notify_of_logout => nil)
   @stage = mock("stage", :name => "stage name")
 end

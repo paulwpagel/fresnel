@@ -44,7 +44,7 @@ describe ListTickets do
   end
   
   it "should set the value of the project choices to the retrieved project name" do
-    @project.stub!(:name).and_return("Current Project Name")
+    @stage_info.stub!(:current_project_name).and_return("Current Project Name")
     @list_tickets.project_selector.should_receive(:value=).with("Current Project Name")
     
     @list_tickets.list
@@ -53,6 +53,13 @@ describe ListTickets do
   it "should have list of projects" do
     @stage_manager.should_receive(:[]).with("stage name").at_least(1).times.and_return(@stage_info)
     @list_tickets.project_selector.should_receive(:choices=).with(["One", "Two", "Current Project Name"])
+    
+    @list_tickets.list
+  end
+  
+  it "should use the first project name if the current_project_name is nil" do
+    @stage_info.stub!(:current_project_name).and_return(nil)
+    @list_tickets.project_selector.should_receive(:value=).with("One")
     
     @list_tickets.list
   end

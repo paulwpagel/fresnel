@@ -15,7 +15,12 @@ class StageInfo
   end
   
   def current_project
-    @current_project = @client.find_project(@credential.project_name) if @current_project.nil?
+    @current_project = @client.find_project(current_project_name) if @current_project.nil?
     return @current_project
   end
+  
+  def current_project_name
+    return @credential.project_name
+  end
+  
 end
