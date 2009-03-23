@@ -3,6 +3,7 @@ require "credential"
 class CredentialSaver
   @@filename = File.expand_path("~/.fresnel_credentials")
   
+  cattr_accessor :filename
   attr_reader :credentials
     
   def self.save(credentials)

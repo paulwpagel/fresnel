@@ -130,3 +130,11 @@ describe CredentialSaver, "load account names" do
     CredentialSaver.load_account_names.should == ["account one"]
   end
 end
+
+describe CredentialSaver, "setting the filename" do
+  it "should have a way to set the filename that we are writing to" do
+    CredentialSaver.filename = "some new file"
+    
+    CredentialSaver.filename.should == "some new file"
+  end
+end
