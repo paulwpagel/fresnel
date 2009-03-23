@@ -168,6 +168,7 @@ end
 
 describe StageManager, "notify_of_project_change" do
   before(:each) do
+    CredentialSaver.stub!(:save)
     CredentialSaver.stub!(:load_saved).and_return([])
     @project = mock("project")
     @credential = mock("credential", :account => "account 1", :login => "username 1", :password => "password 1", :remember_me? => nil, :project_name= => nil)
