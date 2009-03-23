@@ -31,7 +31,7 @@ def press_button(button_prop_name, scene)
 end
 
 def current_scene(producer)
-    return producer.production.theater['default'].current_scene
+  return producer.production.theater['default'].current_scene
 end
 
 def login_scene(producer)
