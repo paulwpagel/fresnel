@@ -67,6 +67,12 @@ describe SaveTicket do
     @save_ticket.save_ticket
   end
 
+  it "should use the stage name to get the lighthouse client" do
+    @stage_manager.should_receive(:client_for_stage).with("stage name").and_return(@lighthouse_client)
+    
+    @save_ticket.save_ticket
+  end
+  
   it "should re-find the ticket" do
     @current_ticket.should_receive(:id).and_return(12345)
     @lighthouse_client.should_receive(:ticket).with(12345, @project).and_return(@current_ticket)

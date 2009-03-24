@@ -17,7 +17,7 @@ module SaveTicket
     current_ticket.assigned_user_id = current_project.user_id(ticket_assigned_user.value)
     current_ticket.save
     
-    stage_info.current_ticket = stage_info.client.ticket(current_ticket.id, current_project)
+    stage_info.current_ticket = production.stage_manager.client_for_stage(stage_name).ticket(current_ticket.id, current_project)
     ticket_lister.show_these_tickets(current_project.open_tickets)
   end
   
@@ -28,7 +28,11 @@ module SaveTicket
   end
   
   def stage_info
-    return production.stage_manager[scene.stage.name]
+    return production.stage_manager[stage_name]
+  end
+  
+  def stage_name
+    return scene.stage.name
   end
   
   def current_project

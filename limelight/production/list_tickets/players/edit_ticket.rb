@@ -2,7 +2,7 @@ module EditTicket
   attr_accessor :id
   
   def mouse_clicked(event)
-    show_spinner { edit }
+    show_spinner { edit } unless scene.find("save_button")
   end
   
   def edit
