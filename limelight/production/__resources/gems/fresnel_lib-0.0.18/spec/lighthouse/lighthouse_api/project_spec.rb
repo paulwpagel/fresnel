@@ -3,7 +3,7 @@ require "lighthouse/lighthouse_api/project"
 
 describe Lighthouse::LighthouseApi::Project, "users" do
   before(:each) do
-    @lighthouse_project = mock("Lighthouse::Project", :id => 12345, :milestones => [])
+    @lighthouse_project = mock("Lighthouse::Project", :id => 12345, :milestones => [], :tags => [])
     @users = [mock("user", :name => "user one", :id => "id one"), mock("user", :name => "user two", :id => "id two")]
     Lighthouse::LighthouseApi::ProjectMembership.stub!(:all_users_for_project).and_return(@users)
     @fresnel_project = Lighthouse::LighthouseApi::Project.new(@lighthouse_project)
@@ -48,32 +48,40 @@ describe Lighthouse::LighthouseApi::Project, "tags" do
   before(:each) do
     Lighthouse::LighthouseApi::ProjectMembership.stub!(:all_users_for_project).and_return([])
     @lighthouse_project = mock("Lighthouse::Project", :milestones => [], :id => 12345)
-    @fresnel_project = Lighthouse::LighthouseApi::Project.new(@lighthouse_project)
   end
   
   it "should get zero tag names" do
     @lighthouse_project.stub!(:tags).and_return([])
+    @fresnel_project = Lighthouse::LighthouseApi::Project.new(@lighthouse_project)
     
     @fresnel_project.tag_names.should == []
   end
   
   it "should get one tag name" do
     @lighthouse_project.stub!(:tags).and_return([mock("tag", :name => "Tag One")])
+    @fresnel_project = Lighthouse::LighthouseApi::Project.new(@lighthouse_project)
     
     @fresnel_project.tag_names.should == ["Tag One"]
   end
   
   it "should get two tag names" do
     @lighthouse_project.stub!(:tags).and_return([mock("tag", :name => "Tag One"), mock("tag", :name => "Tag Two")])
+    @fresnel_project = Lighthouse::LighthouseApi::Project.new(@lighthouse_project)
     
     @fresnel_project.tag_names.should == ["Tag One", "Tag Two"]
+  end
+  
+  it "should cache the tags on init" do
+    @lighthouse_project.should_receive(:tags).and_return([])
+    
+    @fresnel_project = Lighthouse::LighthouseApi::Project.new(@lighthouse_project)
   end
 end
 
 describe Lighthouse::LighthouseApi::Project, "tickets" do
   before(:each) do
     Lighthouse::LighthouseApi::ProjectMembership.stub!(:all_users_for_project).and_return([])
-    @lighthouse_project = mock("Lighthouse::Project", :milestones => [], :id => 12345, :open_states_list => "new,open")
+    @lighthouse_project = mock("Lighthouse::Project", :milestones => [], :id => 12345, :open_states_list => "new,open", :tags => [])
   end
   
   it "should find all tickets on init" do
@@ -165,7 +173,7 @@ describe Lighthouse::LighthouseApi::Project, "milestones" do
     Lighthouse::LighthouseApi::ProjectMembership.stub!(:all_users_for_project).and_return([])
     milestone_one = mock("milestone", :title => "Goal One", :id => "id_one")
     @milestones = [milestone_one]
-    @lighthouse_project = mock("Lighthouse::Project", :id => nil, :milestones => @milestones)
+    @lighthouse_project = mock("Lighthouse::Project", :id => nil, :milestones => @milestones, :tags => [])
     @fresnel_project = Lighthouse::LighthouseApi::Project.new(@lighthouse_project)
   end
   
@@ -220,7 +228,7 @@ describe Lighthouse::LighthouseApi::Project, "states" do
   before(:each) do
     Lighthouse::LighthouseApi::ProjectMembership.stub!(:all_users_for_project).and_return([])
     @lighthouse_project = mock("Lighthouse::Project", :id => nil, :milestones => [], :open_states_list => "one,two,three",
-                                                      :closed_states_list => "closed_one,closed_two,closed_three")
+                                                      :closed_states_list => "closed_one,closed_two,closed_three", :tags => [])
     @fresnel_project = Lighthouse::LighthouseApi::Project.new(@lighthouse_project)
   end
   
@@ -239,7 +247,7 @@ end
 
 describe Lighthouse::LighthouseApi::Project, "hyphenated_name" do
   before(:each) do
-    @lighthouse_project = mock("Lighthouse::Project", :id => nil, :milestones => [])
+    @lighthouse_project = mock("Lighthouse::Project", :id => nil, :milestones => [], :tags => [])
     @fresnel_project = Lighthouse::LighthouseApi::Project.new(@lighthouse_project)
   end
   

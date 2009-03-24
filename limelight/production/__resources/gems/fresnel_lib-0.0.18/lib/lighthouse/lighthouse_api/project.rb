@@ -11,6 +11,7 @@ module Lighthouse
         @id = lighthouse_project.id
         @milestones = lighthouse_project.milestones
         @users = ProjectMembership.all_users_for_project(@id)
+        @tags = @lighthouse_project.tags
         load_tickets
       end
       
@@ -23,7 +24,7 @@ module Lighthouse
       end
       
       def tag_names
-        return @lighthouse_project.tags.collect { |tag| tag.name }
+        return @tags.collect { |tag| tag.name }
       end
       
       def user_id(user_name)

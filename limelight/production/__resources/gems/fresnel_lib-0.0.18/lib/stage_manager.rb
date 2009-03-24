@@ -30,8 +30,6 @@ class StageManager
   def notify_of_project_change(project_name, stage_name)
     project = client_for_stage(stage_name).find_project(project_name)
     @stage_info_list[stage_name].current_project = project
-    # @stage_info_list[stage_name].credential.project_name = project_name
-    # @stage_info_list[stage_name].current_project = self[stage_name].client.find_project(project_name)
     CredentialSaver.save(all_credentials)
   end
   
