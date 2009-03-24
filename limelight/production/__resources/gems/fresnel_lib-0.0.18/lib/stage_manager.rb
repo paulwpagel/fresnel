@@ -17,9 +17,9 @@ class StageManager
   
   def attempt_login(account, username, password, remember_me, stage_name)
     credential = Credential.new(account, username, password, nil, remember_me)
-    stage_info = StageInfo.new(:credential => credential)
+    stage_info = StageInfo.new(:credential => credential, :stage_manager => self, :name => stage_name)
     @stage_info_list[stage_name] = stage_info
-    if stage_info.client.login_to(account, username, password)
+    if Lighthouse::LighthouseApi.login_to(account, username, password)
       CredentialSaver.save(all_credentials)
       return true
     else
@@ -28,17 +28,15 @@ class StageManager
   end
   
   def notify_of_project_change(project_name, stage_name)
-    #TODO - EWM this should probably just delegate to the stageinfo object, but we want the current project to be cached.  do not find every time
-    @stage_info_list[stage_name].credential.project_name = project_name
-    @stage_info_list[stage_name].current_project = self[stage_name].client.find_project(project_name)
+    project = client_for_stage(stage_name).find_project(project_name)
+    @stage_info_list[stage_name].current_project = project
+    # @stage_info_list[stage_name].credential.project_name = project_name
+    # @stage_info_list[stage_name].current_project = self[stage_name].client.find_project(project_name)
     CredentialSaver.save(all_credentials)
   end
   
   def [](stage_name)
-    stage_info = @stage_info_list[stage_name]
-    credential = stage_info.credential
-    stage_info.client.login_to(credential.account, credential.login, credential.password)
-    return stage_info
+    return @stage_info_list[stage_name]
   end
   
   def notify_of_logout(stage_name)

@@ -3,24 +3,17 @@ require "stage_info"
 
 describe StageInfo do
   before(:each) do
-    @credential = mock('credential', :project_name => "some project")
-    @stage_info = StageInfo.new(:credential => @credential)
-  end
-
-  it "should have a client" do
-    @stage_info.client.should == Lighthouse::LighthouseApi
+    @credential = mock('credential', :project_name => "some project", :project_name= => nil)
+    @client = mock("client")
+    @stage_manager = mock("stage_manager")
+    @stage_info = StageInfo.new(:credential => @credential, :stage_manager => @stage_manager, :name => "stage name")
+    @project = mock("project", :name => "project name")
   end
   
   it "should have accept a credential on init" do
     @stage_info.credential.should == @credential
   end
-  
-  it "should have a current_project" do
-    current_project = mock('object')
-    @stage_info.current_project = current_project
-    @stage_info.current_project.should == current_project
-  end
-  
+
   it "should have a current_ticket" do
     current_ticket = mock('object')
     @stage_info.current_ticket = current_ticket
@@ -28,9 +21,14 @@ describe StageInfo do
   end
   
   it "should have a current_project" do
-    current_project = mock('object')
-    @stage_info.current_project = current_project
-    @stage_info.current_project.should == current_project
+    @stage_info.current_project = @project
+    @stage_info.current_project.should == @project
+  end
+  
+  it "should update the credential when changing the current_project" do
+    @credential.should_receive(:project_name=).with("project name")
+    
+    @stage_info.current_project = @project
   end
   
   it "should have a current_sort_order" do
@@ -39,11 +37,11 @@ describe StageInfo do
     @stage_info.current_sort_order.should == current_sort_order
   end
   
-  it "should find the current_project on the client if it is nil" do
-    @project = mock("project")
+  it "should find the current_project from the client if it is nil" do
     @stage_info.current_project = nil
     
-    @stage_info.client.should_receive(:find_project).with("some project").and_return(@project)
+    @stage_manager.should_receive(:client_for_stage).with("stage name").and_return(@client)
+    @client.should_receive(:find_project).with("some project").and_return(@project)
     @stage_info.current_project.should == @project
   end
   

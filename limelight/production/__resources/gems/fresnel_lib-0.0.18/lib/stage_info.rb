@@ -1,21 +1,23 @@
 require 'lighthouse/lighthouse_api/base'
 
 class StageInfo
-  attr_reader :client, :credential
+  attr_reader :credential
   attr_accessor :current_ticket, :current_sort_order
   
   def initialize(options={})
     @credential = options[:credential]
-    @client = Lighthouse::LighthouseApi
+    @stage_manager = options[:stage_manager]
+    @stage_name = options[:name]
     @current_project = nil
   end
   
   def current_project=(project)
+    @credential.project_name = project.name if project
     @current_project = project
   end
   
   def current_project
-    @current_project = @client.find_project(current_project_name) if @current_project.nil?
+    @current_project = @stage_manager.client_for_stage(@stage_name).find_project(current_project_name) if @current_project.nil?
     return @current_project
   end
   

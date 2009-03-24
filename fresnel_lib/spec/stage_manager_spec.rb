@@ -124,19 +124,6 @@ describe StageManager, "attempt_login" do
       attempt_login(2)
     end
     
-    it "should have a client" do
-      attempt_login
-      
-      @stage_manager["stage name 1"].client.should == Lighthouse::LighthouseApi
-    end
-    
-    it "should reset the credentials before returning the client" do
-      attempt_login
-      Lighthouse::LighthouseApi.should_receive(:login_to).with("account 1", "username 1", "password 1")
-      
-      @stage_manager["stage name 1"]
-    end
-    
     it "should attempt to log in" do
       Lighthouse::LighthouseApi.should_receive(:login_to).with("account 1", "username 1", "password 1")
       
@@ -170,22 +157,21 @@ describe StageManager, "notify_of_project_change" do
   before(:each) do
     CredentialSaver.stub!(:save)
     CredentialSaver.stub!(:load_saved).and_return([])
-    @project = mock("project")
-    @credential = mock("credential", :account => "account 1", :login => "username 1", :password => "password 1", :remember_me? => nil, :project_name= => nil)
+
+    @credential = mock("credential", :account => "account 1", :login => "username 1", :password => "password 1", :remember_me? => nil, :project_name= => nil, :project_name => nil)
     Credential.stub!(:new).and_return(@credential)
-    
+
+    Lighthouse.stub!(:account)
     Lighthouse::LighthouseApi.stub!(:login_to).and_return(true)
+
+    @project = mock("project")
     Lighthouse::LighthouseApi.stub!(:find_project).and_return(@project)
     @stage_manager = StageManager.new
-  end
-  
-  it "should set the credential's project to the given project name" do
-    attempt_login
     
-    @credential.should_receive(:project_name=).with("project_name")
-    @stage_manager.notify_of_project_change("project_name", "stage name 1")
+    @stage_info = mock("stage_info", :client => Lighthouse::LighthouseApi, :credential => @credential, :current_project= => nil)
+    StageInfo.stub!(:new).and_return(@stage_info)
   end
-  
+
   it "should save the credentials" do
     attempt_login
     
@@ -200,7 +186,13 @@ describe StageManager, "notify_of_project_change" do
       
       Lighthouse::LighthouseApi.should_receive(:find_project).with("project_name").and_return(@project)
       @stage_manager.notify_of_project_change("project_name", "stage name 1")
-      @stage_manager["stage name 1"].current_project.should == @project
+    end
+    
+    it "should update the stage info with the found project" do
+      attempt_login
+      @stage_info.should_receive(:current_project=).with(@project)
+      
+      @stage_manager.notify_of_project_change("project_name", "stage name 1")
     end
   end
   
