@@ -228,3 +228,30 @@ describe StageManager, "notify_of_logout" do
     @stage_manager.notify_of_logout("stage name 1")
   end
 end
+
+describe StageManager, "client" do
+  before(:each) do
+    @credential = mock("credential", :account => "account", :username => "username", :password => "password")
+    CredentialSaver.stub!(:load_saved).and_return([@credential])
+    @stage_manager = StageManager.new
+    Lighthouse::LighthouseApi.stub!(:login_to).and_return(true)
+    Lighthouse.stub!(:account).and_return("different account")
+  end
+  
+  it "should return the client set up for a particular stage" do
+    Lighthouse::LighthouseApi.should_receive(:login_to).with("account", "username", "password")
+    
+    @stage_manager.client_for_stage("account")
+  end
+  
+  it "should return the client" do
+    @stage_manager.client_for_stage("account").should == Lighthouse::LighthouseApi
+  end
+  
+  it "should not attempt to login if the credentials already match the current stage" do
+    Lighthouse.stub!(:account).and_return("account")
+    Lighthouse::LighthouseApi.should_not_receive(:login_to)
+    
+    @stage_manager.client_for_stage("account")
+  end
+end

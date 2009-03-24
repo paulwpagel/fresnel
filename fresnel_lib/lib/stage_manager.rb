@@ -46,7 +46,19 @@ class StageManager
     CredentialSaver.save(all_credentials)
   end
   
+  def client_for_stage(stage_name)
+    if stage_name != Lighthouse.account
+      credential = @stage_info_list[stage_name].credential
+      update_lighthouse_client(credential)
+    end
+    return Lighthouse::LighthouseApi
+  end
+  
   private ##################
+  
+  def update_lighthouse_client(credential)
+    Lighthouse::LighthouseApi.login_to(credential.account, credential.username, credential.password)
+  end
   
   def all_credentials
     list = []
