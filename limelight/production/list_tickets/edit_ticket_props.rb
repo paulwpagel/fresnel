@@ -56,20 +56,22 @@ main_ticket_group {
     button :text => "Cancel", :id => "cancel_edit_button", :players => "cancel_edit_ticket", :width => 200
   }
 }
-secondary_ticket_group {
-  @ticket.versions.each_with_index do |version, index|
-    version_spacer if index != 0
-    row {
-      version_created_by :text => version.created_by
-    }
-    row {
-      version_timestamp :text => version.timestamp
-    }
-    version.changed_attributes.each do |attribute|
-      version_changed_attribute :text => "#{attribute.name} changed from \"#{attribute.old_value}\" to \"#{attribute.new_value}\"\n"
+unless @ticket.versions.empty?
+  secondary_ticket_group {
+    @ticket.versions.each_with_index do |version, index|
+      version_spacer if index != 0
+      row {
+        version_created_by :text => version.created_by
+      }
+      row {
+        version_timestamp :text => version.timestamp
+      }
+      version.changed_attributes.each do |attribute|
+        version_changed_attribute :text => "#{attribute.name} changed from \"#{attribute.old_value}\" to \"#{attribute.new_value}\"\n"
+      end
+      row {
+        version_comment :text => version.comment
+      }
     end
-    row {
-      version_comment :text => version.comment
-    }
-  end
-}
+  }
+end

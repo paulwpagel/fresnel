@@ -105,6 +105,13 @@ describe EditTicket do
     scene.find_by_name("version_comment")[1].text.should == "Comment Two"
   end
   
+  it "should not include the wrapper for ticket versions if there are none" do
+    @ticket.stub!(:versions).and_return([])
+    click_ticket
+    
+    scene.find_by_name("secondary_ticket_group").should be_empty
+  end
+  
   it "should include the change message for a version" do
     click_ticket
     
