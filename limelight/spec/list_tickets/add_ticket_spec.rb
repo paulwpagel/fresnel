@@ -35,9 +35,9 @@ describe AddTicket, "#add" do
 
       @add_ticket.add_ticket_title.stub!(:text).and_return(title)
       @add_ticket.add_ticket_description.stub!(:text).and_return(description)
-      @add_ticket.add_ticket_responsible_person.stub!(:text).and_return(person)
+      @add_ticket.add_ticket_responsible_person.stub!(:value).and_return(person)
       @add_ticket.add_ticket_tags.stub!(:text).and_return(tags)
-      @add_ticket.add_ticket_milestone.stub!(:text).and_return(milestone)
+      @add_ticket.add_ticket_milestone.stub!(:value).and_return(milestone)
 
       ticket_options = {}
       ticket_options[:title] = title

@@ -43,7 +43,7 @@ def mock_stage_manager
   @stage_info = mock("stage_info", :credential => nil, :current_project => @project,
                                    :current_ticket => @current_ticket, :current_ticket= => nil, :current_project_name => "One")
   @stage_manager = mock("stage_manager", :[] => @stage_info, :notify_of_project_change => nil, :notify_of_logout => nil, :client_for_stage => @lighthouse_client)
-  @stage = mock("stage", :name => "stage name")
+  @stage = mock("stage", :name => "stage name", :title= => nil)
 end
 
 def mock_lighthouse

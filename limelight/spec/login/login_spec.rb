@@ -38,6 +38,13 @@ describe "Login" do
     @login.login
   end
 
+  it "should change the stage on a successful login" do
+    @stage_manager.stub!(:attempt_login).and_return(true)
+    @stage.should_receive(:title=).with(anything())
+    
+    @login.login
+  end
+
   it "errors when authentication fails " do
     @stage_manager.stub!(:attempt_login).and_return(false)
     @login.error_message.should_receive(:text=).with("Authentication Failed, please try again")

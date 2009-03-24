@@ -19,6 +19,7 @@ module Login
     remember_me = save_credentials.checked?
     
     if production.stage_manager.attempt_login(account_text, username_text, password_text, remember_me, stage_name)
+      scene.stage.title = "Fresnel - #{account_text}"
       scene.load('list_tickets')
     else
       set_error "Authentication Failed, please try again"

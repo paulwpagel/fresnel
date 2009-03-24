@@ -6,22 +6,22 @@ module AddTicket
   end
   
   def add
-      ticket_options = {}
+    ticket_options = {}
+    
+    ticket_options[:title] = add_ticket_title.text
+    ticket_options[:description] = add_ticket_description.text
+    ticket_options[:assigned_user] = add_ticket_responsible_person.value
+    ticket_options[:tags] = add_ticket_tags.text
+    ticket_options[:milestone] = add_ticket_milestone.value
       
-      ticket_options[:title] = add_ticket_title.text
-      ticket_options[:description] = add_ticket_description.text
-      ticket_options[:assigned_user] = add_ticket_responsible_person.text
-      ticket_options[:tags] = add_ticket_tags.text
-      ticket_options[:milestone] = add_ticket_milestone.text
-        
-      project = stage_info.current_project
+    project = stage_info.current_project
 
-      client.add_ticket(ticket_options, project)
+    client.add_ticket(ticket_options, project)
 
-      add_ticket_group.remove_all
+    add_ticket_group.remove_all
 
-      project.update_tickets
-      ticket_lister.filter_by_type("Open Tickets")
+    project.update_tickets
+    ticket_lister.filter_by_type("Open Tickets")
   end
   
   private ###########################
