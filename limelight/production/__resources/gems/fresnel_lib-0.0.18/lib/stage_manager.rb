@@ -19,7 +19,7 @@ class StageManager
     credential = Credential.new(account, username, password, nil, remember_me)
     stage_info = StageInfo.new(:credential => credential, :stage_manager => self, :name => stage_name)
     @stage_info_list[stage_name] = stage_info
-    if Lighthouse::LighthouseApi.login_to(account, username, password)
+    if Lighthouse::LighthouseApi.login_to(credential)
       CredentialSaver.save(all_credentials)
       return true
     else
@@ -51,7 +51,7 @@ class StageManager
   private ##################
   
   def update_lighthouse_client(credential)
-    Lighthouse::LighthouseApi.login_to(credential.account, credential.login, credential.password)
+    Lighthouse::LighthouseApi.login_to(credential)
   end
   
   def all_credentials

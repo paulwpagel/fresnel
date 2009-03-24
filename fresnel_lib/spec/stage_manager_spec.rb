@@ -125,7 +125,7 @@ describe StageManager, "attempt_login" do
     end
     
     it "should attempt to log in" do
-      Lighthouse::LighthouseApi.should_receive(:login_to).with("account 1", "username 1", "password 1")
+      Lighthouse::LighthouseApi.should_receive(:login_to).with(@credential)
       
       attempt_login
     end
@@ -223,7 +223,7 @@ end
 
 describe StageManager, "client" do
   before(:each) do
-    @credential = mock("credential", :account => "account", :login => "username", :password => "password")
+    @credential = mock("credential", :account => "account")
     Lighthouse::LighthouseApi.stub!(:login_to).and_return(true)
     Lighthouse.stub!(:account).and_return("different account")
 
@@ -232,7 +232,7 @@ describe StageManager, "client" do
   end
   
   it "should return the client set up for a particular stage" do
-    Lighthouse::LighthouseApi.should_receive(:login_to).with("account", "username", "password")
+    Lighthouse::LighthouseApi.should_receive(:login_to).with(@credential)
     
     @stage_manager.client_for_stage("account")
   end

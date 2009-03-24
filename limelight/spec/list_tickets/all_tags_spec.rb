@@ -3,11 +3,10 @@ require "all_tags"
 
 describe AllTags do
   before(:each) do
-    @lighthouse_client = mock('lighthouse', :login_to => true)
+    @lighthouse_client = mock('lighthouse')
     @all_tags, @scene, @production = create_player(AllTags, 
                                                 :scene => {:load => nil, :find => nil}, 
                                                 :production => {:lighthouse_client => @lighthouse_client})
-
   end
 
   it "should tell the ticket_lister to clear the tags" do

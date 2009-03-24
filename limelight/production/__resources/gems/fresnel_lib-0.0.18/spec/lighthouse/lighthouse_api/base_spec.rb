@@ -5,6 +5,7 @@ describe Lighthouse::LighthouseApi do
 
   before(:each) do
     @mock_project = mock("project")
+    @credential = mock("credential", :account => "AFlight", :login => "paul", :password => "nottelling")
     Lighthouse::LighthouseApi::Project.stub!(:new).and_return(@mock_project)
     project = mock(Lighthouse::Project, :name => "one", :id => nil)
     Lighthouse::Project.stub!(:find).and_return([project])
@@ -15,7 +16,7 @@ describe Lighthouse::LighthouseApi do
     Lighthouse.should_receive(:authenticate).with("paul", "nottelling")
     Lighthouse::Project.should_receive(:find).with(:all).and_return([])
     
-    Lighthouse::LighthouseApi::login_to("AFlight", "paul", "nottelling").should be(true)
+    Lighthouse::LighthouseApi::login_to(@credential).should be(true)
   end
   
   it "should not log in the user to the account" do
@@ -23,7 +24,7 @@ describe Lighthouse::LighthouseApi do
     Lighthouse.should_receive(:authenticate).with("paul", "nottelling")
     Lighthouse::Project.should_receive(:find).with(:all).and_raise(ActiveResource::UnauthorizedAccess.new(mock('unauthorized', :code => "401 Not Authorized")))
     
-    Lighthouse::LighthouseApi::login_to("AFlight", "paul", "nottelling").should be(false)
+    Lighthouse::LighthouseApi::login_to(@credential).should be(false)
   end
   
   it "should error if there is no account name" do
@@ -32,13 +33,14 @@ describe Lighthouse::LighthouseApi do
     
     Lighthouse::Project.should_receive(:find).with(:all).and_raise(ActiveResource::ResourceNotFound.new(mock('not found', :code => "Not Found")))
   
-    Lighthouse::LighthouseApi::login_to("AFlight", "paul", "nottelling").should be(false)  
+    Lighthouse::LighthouseApi::login_to(@credential).should be(false)  
   end
   
   it "should not log in the user if the account is empty" do
+    @credential.stub!(:account).and_return("")
     Lighthouse.should_receive(:account=).and_raise(URI::InvalidURIError)
     
-    Lighthouse::LighthouseApi::login_to("", "paul", "nottelling").should be(false)  
+    Lighthouse::LighthouseApi::login_to(@credential).should be(false)  
   end
   
   it "should return nil if there is no project" do    

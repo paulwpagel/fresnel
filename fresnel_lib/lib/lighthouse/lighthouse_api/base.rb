@@ -3,13 +3,13 @@ require "lighthouse/lighthouse_api/project"
 module Lighthouse
   module LighthouseApi
   
-    def self.login_to(account, user, password)
+    def self.login_to(credential)
       begin
-        Lighthouse.account = account
+        Lighthouse.account = credential.account
       rescue URI::InvalidURIError
         return false
       end
-      Lighthouse.authenticate(user, password)
+      Lighthouse.authenticate(credential.login, credential.password)
 
       begin
         Lighthouse::Project.find(:all)
