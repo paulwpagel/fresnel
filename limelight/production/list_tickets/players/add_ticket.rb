@@ -16,7 +16,7 @@ module AddTicket
         
       project = stage_info.current_project
 
-      stage_info.client.add_ticket(ticket_options, project)
+      client.add_ticket(ticket_options, project)
 
       add_ticket_group.remove_all
 
@@ -25,6 +25,10 @@ module AddTicket
   end
   
   private ###########################
+  
+  def client
+    return production.stage_manager.client_for_stage(scene.stage.name)
+  end
   
   def stage_info
     return production.stage_manager[scene.stage.name]

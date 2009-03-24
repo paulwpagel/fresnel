@@ -11,8 +11,8 @@ describe AddProject do
     @add_project.project_name.stub!(:text).and_return("test project")
   end
 
-  it "should use the stage name to get the appropriate client" do
-    @stage_manager.should_receive(:[]).with("stage name").and_return(@stage_info)
+  it "should use the stage name to get the lighthouse_client" do
+    @stage_manager.should_receive(:client_for_stage).with("stage name").and_return(@lighthouse_client)
     
     @add_project.add_project
   end

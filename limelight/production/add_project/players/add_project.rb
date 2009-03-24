@@ -16,7 +16,7 @@ module AddProject
         :name => project_name_text,
         :public => public.text
         }
-      production.stage_manager[scene.stage.name].client.add_project(add_project_options)
+      production.stage_manager.client_for_stage(scene.stage.name).add_project(add_project_options)
       scene.load("list_tickets")
     end
     
