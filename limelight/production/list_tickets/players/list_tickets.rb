@@ -17,7 +17,7 @@ module ListTickets
     cached_project_name = stage_info.current_project_name
     cached_all_project_names = all_project_names
     
-    project_selector.choices = all_project_names
+    project_selector.choices = cached_all_project_names
     if cached_project_name
       project_selector.value = cached_project_name
     else

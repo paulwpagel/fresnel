@@ -63,5 +63,11 @@ describe ListTickets do
     
     @list_tickets.list
   end
+  
+  it "should only ask the client for the project names once" do
+    @lighthouse_client.should_receive(:project_names).exactly(1).times
+    
+    @list_tickets.list
+  end
     
 end
