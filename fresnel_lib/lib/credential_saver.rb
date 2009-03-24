@@ -4,7 +4,7 @@ class CredentialSaver
   @@filename = File.expand_path("~/.fresnel_credentials")
   
   cattr_accessor :filename
-  attr_reader :credentials
+  # attr_reader :credentials
     
   def self.save(credentials)
     File.delete(@@filename) if File.exist?(@@filename)
@@ -21,11 +21,15 @@ class CredentialSaver
   end
   
   def self.load_account_names
-    return load_saved.collect { |credential| credential.account }.uniq
+    return load_valid_credentials.collect { |credential| credential.account }.uniq
   end
   
   def self.clear_all
     File.delete(@@filename) if File.exist?(@@filename)
+  end
+  
+  def self.load_valid_credentials
+    return load_saved.find_all { |credential| Lighthouse::LighthouseApi.login_to(credential) }
   end
   
   private #############################################

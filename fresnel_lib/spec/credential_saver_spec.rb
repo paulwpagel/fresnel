@@ -53,45 +53,46 @@ end
 
 describe CredentialSaver, "loading saved credentials" do
   before(:each) do
-    @credential = mock("account")
+    @credential = mock("valid credential")
     @file = StringIO.new(encrypted_account)
     File.stub!(:open).and_yield(@file)
     File.stub!(:exist?).and_return(true)
     Credential.stub!(:decrypt).and_return(@credential)
+    Lighthouse::LighthouseApi.stub!(:login_to).and_return(true)
   end
-      
+
   it "should load one saved credential" do
     @file = StringIO.new(encrypted_account)
     File.should_receive(:open).with(anything(), "r").and_yield(@file)
-    
+  
     Credential.should_receive(:decrypt).with(encrypted_account).and_return(@credential)
     CredentialSaver.load_saved
   end
-  
+
   it "should add the account to the list of credentials" do
     credentials = CredentialSaver.load_saved
-    
+  
     credentials.size.should == 1
     credentials[0].should == @credential
   end
-  
+
   it "should load two saved credentials" do
     @file = StringIO.new("#{encrypted_account(0)}\n#{encrypted_account(1)}")
     File.should_receive(:open).with(anything(), "r").and_yield(@file)
-    
+  
     Credential.should_receive(:decrypt).with(encrypted_account(0)).and_return(@credential)
     Credential.should_receive(:decrypt).with(encrypted_account(1)).and_return(@credential)
-    CredentialSaver.load_saved
+    CredentialSaver.load_saved.size.should == 2
   end
-  
+
   it "should have 0 credentials if the file does not exist" do
     File.should_receive(:exist?).and_return(false)
     File.should_not_receive(:open)
-    
+  
     credentials = CredentialSaver.load_saved
     credentials.should be_empty
   end
-  
+
   it "should not include credentials that could not be loaded" do
     @file = StringIO.new("#{encrypted_account(0)}\n#{encrypted_account(1)}")
     File.should_receive(:open).with(anything(), "r").and_yield(@file)
@@ -101,11 +102,25 @@ describe CredentialSaver, "loading saved credentials" do
     credentials = CredentialSaver.load_saved
     credentials.size.should == 1
   end
-  
+
+  describe "loading valid credentials" do
+    it "should not return invalid credentials" do
+      @invalid_credential = mock("invalid credential")
+      @file = StringIO.new("#{encrypted_account(0)}\n#{encrypted_account(1)}")
+      File.should_receive(:open).with(anything(), "r").and_yield(@file)
+      Credential.stub!(:decrypt).and_return(@credential, @invalid_credential)
+      Lighthouse::LighthouseApi.should_receive(:login_to).with(@invalid_credential).and_return(false)
+      Lighthouse::LighthouseApi.should_receive(:login_to).with(@credential).and_return(true)
+      
+      credentials = CredentialSaver.load_valid_credentials
+      credentials.should == [@credential]
+    end
+  end
 end
 
 describe CredentialSaver, "load account names" do
   before(:each) do
+    Lighthouse::LighthouseApi.stub!(:login_to).and_return(true)
     @credential_one = mock("credential", :account => "account one")
     @credential_two = mock("credential", :account => "account two")
     @file = StringIO.new("#{encrypted_account(0)}\n#{encrypted_account(1)}")
@@ -124,8 +139,14 @@ describe CredentialSaver, "load account names" do
     CredentialSaver.load_account_names.should == ["account one"]
   end
   
-  it "should not fail on nil credentials" do
+  it "should not return nil credentials" do
     Credential.stub!(:decrypt).and_return(@credential_one, nil)
+    
+    CredentialSaver.load_account_names.should == ["account one"]
+  end
+  
+  it "should not return account names that do not successfully log in" do
+    Lighthouse::LighthouseApi.should_receive(:login_to).with(@credential_two).and_return(false)
     
     CredentialSaver.load_account_names.should == ["account one"]
   end
