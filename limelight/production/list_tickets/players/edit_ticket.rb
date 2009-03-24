@@ -21,10 +21,18 @@ module EditTicket
   end
   
   def current_ticket
-    return stage_info.client.ticket(ticket_id, stage_info.current_project)
+    return client.ticket(ticket_id, stage_info.current_project)
+  end
+  
+  def client
+    return production.stage_manager.client_for_stage(stage_name)
   end
   
   def stage_info
-    return production.stage_manager[scene.stage.name]
+    return production.stage_manager[stage_name]
+  end
+  
+  def stage_name
+    return scene.stage.name
   end
 end

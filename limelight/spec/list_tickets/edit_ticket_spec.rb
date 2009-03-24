@@ -15,8 +15,14 @@ describe EditTicket do
     @edit_ticket.stub!(:hover_style).and_return(mock('hover', :background_color= => nil))        
   end
 
-  it "should use the stage name to get the appropriate client" do
+  it "should use the stage name to get the stage_info" do
     @stage_manager.should_receive(:[]).with("stage name").at_least(1).times.and_return(@stage_info)
+    
+    @edit_ticket.edit
+  end
+
+  it "should use the stage name to get the lighthouse_client" do
+    @stage_manager.should_receive(:client_for_stage).with("stage name").at_least(1).times.and_return(@lighthouse_client)
     
     @edit_ticket.edit
   end
