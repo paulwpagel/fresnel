@@ -231,11 +231,12 @@ end
 
 describe StageManager, "client" do
   before(:each) do
-    @credential = mock("credential", :account => "account", :username => "username", :password => "password")
-    CredentialSaver.stub!(:load_saved).and_return([@credential])
-    @stage_manager = StageManager.new
+    @credential = mock("credential", :account => "account", :login => "username", :password => "password")
     Lighthouse::LighthouseApi.stub!(:login_to).and_return(true)
     Lighthouse.stub!(:account).and_return("different account")
+
+    CredentialSaver.stub!(:load_saved).and_return([@credential])
+    @stage_manager = StageManager.new
   end
   
   it "should return the client set up for a particular stage" do

@@ -33,7 +33,7 @@ module ListTickets
   private #######################
   
   def all_project_names
-    client = stage_info.client
+    client = production.stage_manager.client_for_stage(scene.stage.name)
     return client.project_names
   end
   

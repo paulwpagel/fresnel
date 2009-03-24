@@ -69,5 +69,10 @@ describe ListTickets do
     
     @list_tickets.list
   end
+  
+  it "should use the stage name to get the appropriate lighthouse client" do
+    @stage_manager.should_receive(:client_for_stage).with("stage name").and_return(@lighthouse_client)
     
+    @list_tickets.list
+  end
 end
