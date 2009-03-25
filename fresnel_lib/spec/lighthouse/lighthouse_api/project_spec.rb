@@ -275,3 +275,29 @@ describe Lighthouse::LighthouseApi::Project, "hyphenated_name" do
     @fresnel_project.name.should == "Test Project"
   end
 end
+
+describe Lighthouse::LighthouseApi::Project, "create_milestone" do
+  before(:each) do
+    @new_milestone = mock(Lighthouse::Milestone)
+    Lighthouse::Milestone.stub!(:create).and_return(@new_milestone)
+    @lighthouse_project = mock("Lighthouse::Project", :id => 12345, :milestones => [], :tags => [])
+    @fresnel_project = Lighthouse::LighthouseApi::Project.new(@lighthouse_project)
+  end
+  
+  it "should it create a milestone with the given options" do
+    options = {:title => "some title", :goals => "my goals"}
+    Lighthouse::Milestone.should_receive(:create).with(hash_including(options))
+    
+    @fresnel_project.create_milestone(options)
+  end
+  
+  it "should include the project id with the options" do
+    Lighthouse::Milestone.should_receive(:create).with(hash_including(:project_id => 12345))
+    
+    @fresnel_project.create_milestone({})
+  end
+  
+  it "should return the created milestone" do
+    @fresnel_project.create_milestone({}).should == @new_milestone
+  end
+end

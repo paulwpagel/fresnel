@@ -71,6 +71,10 @@ module Lighthouse
         return nil
       end
       
+      def create_milestone(options)
+        return Lighthouse::Milestone.create(options.merge(:project_id => @id))
+      end
+      
       def open_states
         return @lighthouse_project.open_states_list.split(",")
       end
