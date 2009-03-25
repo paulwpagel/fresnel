@@ -1,12 +1,12 @@
 module CreateMilestone
-  prop_reader :new_milestone_title
+  prop_reader :new_milestone_title, :new_milestone_goals, :new_milestone_due_on
   
   def button_pressed(event)
     show_spinner { create }
   end
   
   def create
-    current_project.create_milestone(:title => new_milestone_title.text)
+    current_project.create_milestone(:title => new_milestone_title.text, :goals => new_milestone_goals.text, :due_on => new_milestone_due_on.text)
   end
   
   private ##################

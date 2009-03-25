@@ -21,4 +21,19 @@ describe CreateMilestone do
     
     @create_milestone.create
   end
+  
+  it "should create the milestone on the project with the given goals" do
+    @create_milestone.new_milestone_goals.stub!(:text).and_return("Some Goal")
+    @project.should_receive(:create_milestone).with(hash_including(:goals => "Some Goal"))
+    
+    @create_milestone.create
+  end
+  
+  it "should create the milestone on the project with the given due date" do
+    @create_milestone.new_milestone_due_on.stub!(:text).and_return("04-30-1986")
+    @project.should_receive(:create_milestone).with(hash_including(:due_on => "04-30-1986"))
+    
+    @create_milestone.create
+  end
+  
 end
