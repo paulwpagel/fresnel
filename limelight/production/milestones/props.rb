@@ -6,7 +6,7 @@ main {
       text_box :id => "new_milestone_title"
     }
     input_group {
-      label :text => "Due Date (MM-DD-YYYY)"
+      label :text => "Due Date (DD-MM-YYYY)"
       text_box :id => "new_milestone_due_on"
     }
     input_group {
