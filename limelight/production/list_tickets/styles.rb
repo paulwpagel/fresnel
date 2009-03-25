@@ -173,7 +173,7 @@ title_bar {
 }
 
 tag {
-  font_size 16
+  font_size 14
   padding 10
   rounded_corner_radius "10"
   border_width 4
@@ -223,11 +223,21 @@ left_title {
   width "30%"
 }
 
-heading {
+heading_wrapper {
+  top_padding 15
   width "100%"
   horizontal_alignment :center
+}
+heading {
   font_style :bold
-  font_size 24
+  font_size 18
+}
+
+configure_milestones {
+  background_image_fill_strategy "static"
+  background_image "images/configure.png"
+  height 16
+  width 16
 }
 
 delete_ticket_confirmation_main {
