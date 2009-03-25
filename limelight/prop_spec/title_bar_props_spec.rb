@@ -3,7 +3,7 @@ require 'limelight/specs/spec_helper'
 
 describe "title bar props" do
   before(:each) do
-    mock_lighthouse
+    setup_mocks
   end
   
   uses_scene :list_tickets

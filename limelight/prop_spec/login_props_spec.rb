@@ -5,7 +5,7 @@ require "login"
 describe Login do
   
   before(:each) do
-    mock_lighthouse
+    setup_mocks
     Credential.stub!(:load_saved).and_return(nil)
   end
   

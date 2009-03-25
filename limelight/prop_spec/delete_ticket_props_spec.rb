@@ -4,7 +4,7 @@ require 'limelight/specs/spec_helper'
 describe "Delete Ticket Props" do  
   
   before(:each) do
-    mock_lighthouse
+    setup_mocks
     @ticket = mock("ticket", :id => 12345, :null_object => true)
     @open_tickets = [@ticket]
     @project.stub!(:open_tickets).and_return(@open_tickets)

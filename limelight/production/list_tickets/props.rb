@@ -13,6 +13,7 @@ main {
   }
 
   side_column {
+    configure_milestones :id => "configure_milestones"
     heading :id => "tag_heading", :text => "Tags"
     all_tags :id => "all_tags", :text => "All Tags", :styles => "tag"
     tag_lister :id => "tag_lister"

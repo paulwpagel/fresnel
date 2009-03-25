@@ -3,7 +3,7 @@ require 'limelight/specs/spec_helper'
 
 describe "List Ticket Props" do
   before(:each) do
-    mock_lighthouse
+    setup_mocks
     @project.stub!(:tag_names).and_return(["Tag One", "Tag Two"])
   end
   
@@ -116,6 +116,12 @@ describe "List Ticket Props" do
     prop.should_not be_nil
     prop.name.should == "heading"
     prop.text.should == "Tags"
+  end
+  
+  it "should have a prop for milestone configuration" do
+    prop = scene.find("configure_milestones")
+    prop.should_not be_nil
+    prop.name.should == "configure_milestones"
   end
   
 end

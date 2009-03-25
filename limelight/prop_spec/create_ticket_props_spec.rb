@@ -5,7 +5,7 @@ require "create_ticket"
 describe CreateTicket do
 
   before(:each) do
-    mock_lighthouse
+    setup_mocks
     @project.stub!(:milestone_titles).and_return(["Milestone One", "Milestone Two"])
     @project.stub!(:user_names).and_return(["Name"])
   end

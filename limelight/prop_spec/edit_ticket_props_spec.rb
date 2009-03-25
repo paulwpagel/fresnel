@@ -5,7 +5,7 @@ require "edit_ticket"
 describe EditTicket do
 
   before(:each) do
-    mock_lighthouse
+    setup_mocks
     @project.stub!(:user_names).and_return(["Some User", "Roger", "Eric"])
     @project.stub!(:all_states).and_return(["new", "open", "resolved", "hold", "invalid"])
     @project.stub!(:milestone_titles).and_return(["Goal One", "Goal Two"])

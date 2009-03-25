@@ -19,6 +19,7 @@ end
 require 'rubygems'
 require 'spec'
 require 'lighthouse/adapter'
+require "credential_saver"
 
 $PRODUCTION_PATH = File.expand_path(File.dirname(__FILE__) + "/../production")
 
@@ -29,7 +30,8 @@ def create_mock_project(name = "One")
                                        
 end
 
-def mock_lighthouse
+def setup_mocks
+  CredentialSaver.stub!(:load_account_names).and_return([])
   @project = create_mock_project
                                        
   @lighthouse_client = mock("lighthouse module", :authenticate => nil, :add_ticket => nil, :milestones => [], :milestone_title => "", :get_starting_project_name => "One",
