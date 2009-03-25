@@ -26,9 +26,10 @@ require 'lighthouse/adapter'
 $PRODUCTION_PATH = File.expand_path(File.dirname(__FILE__) + "/../production")
 
 def create_mock_project(name = "One")
-  return mock(Lighthouse::Project, :open_tickets => [], :all_tickets => [], :milestone_titles => [""], :hyphenated_name => nil, :tag_names => [""], :destroy_ticket => nil,
-                                       :id => nil, :tickets_for_tag => [], :user_names => [""], :update_tickets => nil, :user_id => nil, :ticket_title => nil,
-                                       :milestone_id => nil, :name => name, :all_states => ["new", "open", "resolved", "hold", "invalid"], :milestone_title => nil)
+  return mock(Lighthouse::Project, :open_tickets => [], :all_tickets => [], :milestone_titles => [""], :hyphenated_name => nil, :tag_names => [""],
+                                   :destroy_ticket => nil, :id => nil, :tickets_for_tag => [], :user_names => [""], :update_tickets => nil,
+                                   :user_id => nil, :ticket_title => nil, :milestone_id => nil, :name => name, :create_milestone => nil,
+                                   :all_states => ["new", "open", "resolved", "hold", "invalid"], :milestone_title => nil)
                                        
 end
 
@@ -45,14 +46,6 @@ def mock_stage_manager
                                    :current_ticket => @current_ticket, :current_ticket= => nil, :current_project_name => "One")
   @stage_manager = mock("stage_manager", :[] => @stage_info, :notify_of_project_change => nil, :notify_of_logout => nil, :client_for_stage => @lighthouse_client)
   @stage = mock("stage", :name => "stage name", :title= => nil)
-end
-
-def mock_lighthouse
-  @project = create_mock_project
-                                       
-  @lighthouse_client = mock_client
-  producer.production.lighthouse_client = @lighthouse_client
-  mock_stage_manager
 end
 
 require 'spec/mocks/framework'
