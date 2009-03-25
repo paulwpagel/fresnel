@@ -20,6 +20,6 @@ describe "Select Project Integration" do
   end
   
   def lighthouse_client
-    return producer.production.stage_manager["default"].client
+    return producer.production.stage_manager.client_for_stage('default')
   end
 end
