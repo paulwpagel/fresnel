@@ -5,6 +5,7 @@
 # add the path to $: here.
 # $: << File.expand_path(File.dirname(__FILE__) + "/../lib")
 
+$: << File.expand_path(File.dirname(__FILE__) + "/milestones/players")
 $: << File.expand_path(File.dirname(__FILE__) + "/list_tickets/players")
 $: << File.expand_path(File.dirname(__FILE__) + "/list_tickets/stagehands")
 $: << File.expand_path(File.dirname(__FILE__) + "/lib")
