@@ -280,6 +280,7 @@ describe Lighthouse::LighthouseApi::Project, "create_milestone" do
   before(:each) do
     @new_milestone = mock(Lighthouse::Milestone)
     Lighthouse::Milestone.stub!(:create).and_return(@new_milestone)
+    Lighthouse::Milestone.stub!(:find).and_return([@new_milestone])
     @lighthouse_project = mock("Lighthouse::Project", :id => 12345, :milestones => [], :tags => [])
     @fresnel_project = Lighthouse::LighthouseApi::Project.new(@lighthouse_project)
   end
@@ -299,5 +300,13 @@ describe Lighthouse::LighthouseApi::Project, "create_milestone" do
   
   it "should return the created milestone" do
     @fresnel_project.create_milestone({}).should == @new_milestone
+  end
+  
+  it "should update the project's list of milestones" do
+    Lighthouse::Milestone.should_receive(:find).with(:all, :params => { :project_id => 12345 }).and_return([@new_milestone])
+    
+    @fresnel_project.create_milestone({})
+    
+    @fresnel_project.milestones.should == [@new_milestone]
   end
 end

@@ -72,7 +72,9 @@ module Lighthouse
       end
       
       def create_milestone(options)
-        return Lighthouse::Milestone.create(options.merge(:project_id => @id))
+        new_milestone = Lighthouse::Milestone.create(options.merge(:project_id => @id))
+        @milestones = Lighthouse::Milestone.find(:all, :params => { :project_id => @id })
+        return new_milestone
       end
       
       def open_states
