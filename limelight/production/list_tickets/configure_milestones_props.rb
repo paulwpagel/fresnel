@@ -1,4 +1,4 @@
-modal_base(:id => "configure_milestones_wrapper") {
+configure_milestones_wrapper(:id => "configure_milestones_wrapper") {
   create_milestone_form {
     button :id => "close_configure_milestones", :text => "Close", :players => "close_configure_milestones"
     input_group {

@@ -282,3 +282,18 @@ create_milestone_form {
   rounded_corner_radius "10"
   border_width 2
 }
+
+configure_milestones_wrapper {
+  float "on"
+  x 0
+  y 0
+  width "100%"
+  height "100%"
+  background_color "cfe2ee"
+  secondary_background_color "f7f7f7"
+  gradient :on
+  gradient_angle 270
+  gradient_penetration 100
+  horizontal_alignment "center"
+  vertical_alignment "center"
+}
