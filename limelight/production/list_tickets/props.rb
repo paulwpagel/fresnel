@@ -2,7 +2,7 @@ main {
   title_bar {
     left_title{
       combo_box :id => "project_selector", :players => "project_selector"
-      image :players => "load_add_project", :id => "add_project", :image => "images/add.png", :width => 20, :height => 20, :top_margin => 4, :left_margin => 4
+      image :players => "load_add_project", :id => "add_project", :image => "images/add.png", :width => 20, :height => 20, :top_margin => 4, :left_margin => 4, :styles => "icon"
     }
     right_title{
       button :text => "Add Ticket", :width => 150, :id => "add_ticket_button", :players => "create_ticket"

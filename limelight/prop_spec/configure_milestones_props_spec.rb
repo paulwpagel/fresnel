@@ -41,6 +41,6 @@ describe "Milestones Props" do
   
   it "should have everything inside a wrapper" do
     prop = scene.find("configure_milestones_wrapper")
-    prop.name.should == "modal_base"
+    prop.should_not be_nil
   end
 end

@@ -233,11 +233,16 @@ heading {
   font_size 18
 }
 
+icon {
+  hover {}
+}
+
 configure_milestones {
   background_image_fill_strategy "static"
   background_image "images/configure.png"
   height 16
   width 16
+  hover {}
 }
 
 delete_ticket_confirmation_message {
