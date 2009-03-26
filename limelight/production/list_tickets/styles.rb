@@ -172,7 +172,7 @@ title_bar {
   background_color "5A9ECF"
 }
 
-tag {
+filter_option {
   font_size 14
   padding 10
   rounded_corner_radius "10"
@@ -182,13 +182,8 @@ tag {
   font_style :bold
   horizontal_alignment :center
   width "100%"  
-  hover {
-    border_width 4
-    border_color "A63101"
-  }
 }
-
-active_tag {
+active_filter_option {
   font_size 16
   padding 10
   rounded_corner_radius "10"
@@ -198,6 +193,28 @@ active_tag {
   font_style :bold
   horizontal_alignment :center
   width "100%"  
+}
+
+tag {
+  extends :filter_option
+  hover {
+    border_width 4
+    border_color "A63101"
+  }  
+}
+milestone {
+  extends :filter_option
+  hover {
+    border_width 4
+    border_color "A63101"
+  }  
+}
+
+active_tag {
+  extends :active_filter_option
+}
+active_milestone {
+  extends :active_filter_option
 }
 
 ticket_comment {

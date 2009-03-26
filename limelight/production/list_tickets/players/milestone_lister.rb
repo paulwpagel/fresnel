@@ -12,7 +12,7 @@ module MilestoneLister
   
   def list_titles(active_milestone_text = nil)
     project.milestone_titles.each_with_index do |milestone_text, index|
-      name = "tag"
+      name = "milestone"
       name = "active_milestone" if active_milestone_text == milestone_text
       add(Limelight::Prop.new(:name => name, :text => milestone_text, :id => "milestone_#{index + 1}"))
     end

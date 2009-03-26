@@ -16,6 +16,7 @@ describe ListTickets do
     @list_tickets.project_selector.stub!(:value=)
     @list_tickets.tag_lister.stub!(:show_project_tags)
     @list_tickets.ticket_lister.stub!(:filter_by_type)
+    @list_tickets.milestone_lister.stub!(:show_project_milestones)
   end
   
   it "should find the age image" do
@@ -33,6 +34,12 @@ describe ListTickets do
 
   it "should show the tags for a project" do
     @list_tickets.tag_lister.should_receive(:show_project_tags)
+
+    @list_tickets.list
+  end
+
+  it "should show the milestones for a project" do
+    @list_tickets.milestone_lister.should_receive(:show_project_milestones)
 
     @list_tickets.list
   end

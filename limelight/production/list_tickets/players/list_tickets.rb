@@ -2,7 +2,7 @@ require 'ticket_lister'
 require 'ticket_master'
 
 module ListTickets
-  prop_reader :ticket_lister, :tag_lister, :age_image, :project_selector
+  prop_reader :ticket_lister, :tag_lister, :age_image, :project_selector, :milestone_lister
     
   def ticket_master
     @ticket_master = TicketMaster.new(self) unless @ticket_master
@@ -28,6 +28,7 @@ module ListTickets
     
     tag_lister.show_project_tags
     ticket_lister.filter_by_type("Open Tickets")
+    milestone_lister.show_project_milestones
   end
     
   private #######################

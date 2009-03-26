@@ -25,7 +25,7 @@ describe MilestoneLister do
   it "should make a prop for one milestone title" do
     prop = mock('prop')
     @project.should_receive(:milestone_titles).and_return(["Milestone One"])
-    Limelight::Prop.should_receive(:new).with(:name => "tag", :text => "Milestone One", :id => "milestone_1").and_return(prop)
+    Limelight::Prop.should_receive(:new).with(:name => "milestone", :text => "Milestone One", :id => "milestone_1").and_return(prop)
     @milestone_lister.should_receive(:add).with(prop)
     
     @milestone_lister.list_titles
@@ -35,8 +35,8 @@ describe MilestoneLister do
     prop = mock('prop')
     prop2 = mock('prop2')
     @project.should_receive(:milestone_titles).and_return(["Milestone One", "Milestone Two"])
-    Limelight::Prop.should_receive(:new).with(:name => "tag", :text => "Milestone One", :id => "milestone_1").and_return(prop)
-    Limelight::Prop.should_receive(:new).with(:name => "tag", :text => "Milestone Two", :id => "milestone_2").and_return(prop2)
+    Limelight::Prop.should_receive(:new).with(:name => "milestone", :text => "Milestone One", :id => "milestone_1").and_return(prop)
+    Limelight::Prop.should_receive(:new).with(:name => "milestone", :text => "Milestone Two", :id => "milestone_2").and_return(prop2)
     @milestone_lister.should_receive(:add).with(prop)
     @milestone_lister.should_receive(:add).with(prop2)
     
