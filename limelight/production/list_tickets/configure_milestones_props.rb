@@ -15,4 +15,13 @@ configure_milestones_wrapper(:id => "configure_milestones_wrapper") {
     }
     button :id => "create_milestone", :text => "Create Milestone", :players => "create_milestone", :width => 200
   }
+  
+  existing_milestones {
+    @milestones.each do |milestone|
+      row {
+        label :text => milestone.title
+        delete_milestone :id => "delete_milestone_#{milestone.id}"
+      }
+    end
+  }
 }

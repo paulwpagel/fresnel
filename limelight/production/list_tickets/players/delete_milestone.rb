@@ -1,4 +1,8 @@
 module DeleteMilestone
+  def mouse_clicked(event)
+    show_spinner { delete }
+  end
+  
   def delete
     current_project.delete_milestone(milestone_id)
   end

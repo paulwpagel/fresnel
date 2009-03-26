@@ -319,3 +319,10 @@ configure_milestones_wrapper {
   horizontal_alignment "center"
   vertical_alignment "center"
 }
+
+delete_milestone {
+  background_image_fill_strategy "static"
+  background_image "images/remove.png"
+  height 20
+  width 20
+}
