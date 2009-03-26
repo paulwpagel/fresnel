@@ -6,7 +6,7 @@ class StageManager
   def initialize
     @stage_info_list = {}
     CredentialSaver.load_saved.each do |credential|
-      @stage_info_list[credential.account] = StageInfo.new(:credential => credential, :stage_manager => self)
+      @stage_info_list[credential.account] = StageInfo.new(:credential => credential, :stage_manager => self, :name => credential.account)
     end
   end
   
