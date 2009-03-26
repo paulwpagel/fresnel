@@ -310,3 +310,29 @@ describe Lighthouse::LighthouseApi::Project, "create_milestone" do
     @fresnel_project.milestones.should == [@new_milestone]
   end
 end
+
+describe Lighthouse::LighthouseApi::Project, "delete_milestone" do
+  before(:each) do
+    Lighthouse::Milestone.stub!(:delete)
+    @new_milestone = mock(Lighthouse::Milestone)
+    Lighthouse::Milestone.stub!(:find).and_return([@new_milestone])
+    
+    @lighthouse_project = mock("Lighthouse::Project", :id => 12345, :milestones => [], :tags => [])
+    @fresnel_project = Lighthouse::LighthouseApi::Project.new(@lighthouse_project)
+  end
+  
+  it "should call the delete on milestone passing in the id and project id" do
+    Lighthouse::Milestone.should_receive(:delete).with("milestone_id", {:project_id => 12345})
+    
+    @fresnel_project.delete_milestone("milestone_id")
+  end
+  
+  it "should update the list of milestones on the project" do
+    Lighthouse::Milestone.should_receive(:find).with(:all, :params => { :project_id => 12345 }).and_return([@new_milestone])
+
+    @fresnel_project.delete_milestone({})
+
+    @fresnel_project.milestones.should == [@new_milestone]
+  end
+
+end

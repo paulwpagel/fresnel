@@ -15,7 +15,7 @@ end
   "production/add_project/players",
   "production",
   "production/lib",
-  "production/__resources/gems/fresnel_lib-0.0.19/lib",
+  "production/__resources/gems/fresnel_lib-0.0.20/lib",
   "production/milestones/players"
 ].each {|path| add_to_search_path path}
 
