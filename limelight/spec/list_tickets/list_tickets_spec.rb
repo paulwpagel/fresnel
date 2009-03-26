@@ -59,30 +59,31 @@ describe ListTickets do
   it "should set the value of the project choices to the retrieved project name" do
     @stage_info.stub!(:current_project_name).and_return("Current Project Name")
     @list_tickets.project_selector.should_receive(:value=).with("Current Project Name")
-    
+
+    @list_tickets.list
+  end
+
+  it "should use the first project name if the current_project_name is nil" do
+    @stage_info.stub!(:current_project_name).and_return(nil)
+    @list_tickets.project_selector.should_receive(:value=).with("One")
+
     @list_tickets.list
   end
   
+  it "should update to the first project if the current_project_name is nil" do
+    @stage_info.stub!(:current_project_name).and_return(nil)
+    @stage_manager.should_receive(:notify_of_project_change).with("One", "stage name")
+    
+    @list_tickets.list
+  end
+    
   it "should have list of projects" do
     @stage_manager.should_receive(:[]).with("stage name").at_least(1).times.and_return(@stage_info)
     @list_tickets.project_selector.should_receive(:choices=).with(["One", "Two", "Current Project Name"])
     
     @list_tickets.list
   end
-  
-  it "should use the first project name if the current_project_name is nil" do
-    @stage_info.stub!(:current_project_name).and_return(nil)
-    @list_tickets.project_selector.should_receive(:value=).with("One")
-    
-    @list_tickets.list
-  end
-  
-  it "should only ask the client for the project names once" do
-    @lighthouse_client.should_receive(:project_names).exactly(1).times
-    
-    @list_tickets.list
-  end
-  
+      
   it "should use the stage name to get the appropriate lighthouse client" do
     @stage_manager.should_receive(:client_for_stage).with("stage name").and_return(@lighthouse_client)
     

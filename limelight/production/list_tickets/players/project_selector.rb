@@ -4,7 +4,7 @@ module ProjectSelector
   prop_reader :ticket_lister, :tag_lister, :milestone_lister
   
   def value_changed(event)
-    show_spinner { select_project }
+    show_spinner { select_project } if !scene.loading?
   end
   
   def select_project

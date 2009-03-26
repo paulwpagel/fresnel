@@ -19,4 +19,32 @@ describe TypeSelector, "when changing desired type" do
     
     @player_under_test.notify_ticket_lister
   end
+  
+  it "should notify the ticket_lister if it exists and the scene is not loading" do
+    @mock_scene.stub!(:loading?).and_return(false)
+    @mock_scene.stub!(:ticket_lister).and_return(@mock_lister)
+    
+    @player_under_test.notify_ticket_lister?.should == true
+  end
+
+  it "should not notify the ticket_lister if it exists and the scene is still loading" do
+    @mock_scene.stub!(:loading?).and_return(true)
+    @mock_scene.stub!(:ticket_lister).and_return(@mock_lister)
+    
+    @player_under_test.notify_ticket_lister?.should == false
+  end
+
+  it "should not notify the ticket_lister if it does not exist and the scene is not loading" do
+    @mock_scene.stub!(:loading?).and_return(false)
+    @mock_scene.stub!(:ticket_lister).and_return(nil)
+    
+    @player_under_test.notify_ticket_lister?.should_not == true
+  end
+
+  it "should not notify the ticket_lister if it does not exist and the scene is still loading" do
+    @mock_scene.stub!(:loading?).and_return(true)
+    @mock_scene.stub!(:ticket_lister).and_return(nil)
+    
+    @player_under_test.notify_ticket_lister?.should_not == true
+  end
 end

@@ -13,17 +13,26 @@ module ListTickets
     show_spinner {list}
   end
   
+  def loading?
+    return @loading
+  end
+  
   def list
-    cached_project_name = stage_info.current_project_name
+    @loading = true
+    
     cached_all_project_names = all_project_names
     
+    cached_project_name = stage_info.current_project_name
     project_selector.choices = cached_all_project_names
+    
     if cached_project_name
       project_selector.value = cached_project_name
     else
+      production.stage_manager.notify_of_project_change(cached_all_project_names[0], scene.stage.name)
       project_selector.value = cached_all_project_names[0]
     end
-        
+    @loading = false
+
     age_image.style.background_image = "images/descending.png"
     
     tag_lister.show_project_tags
