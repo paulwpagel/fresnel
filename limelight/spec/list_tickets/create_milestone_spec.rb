@@ -7,7 +7,6 @@ describe CreateMilestone do
     @create_milestone, @scene, @production = create_player(CreateMilestone,
                                                 :scene => {:stage => @stage}, 
                                                 :production => {:stage_manager => @stage_manager})
-    @create_milestone.milestone_lister.stub!(:show_project_milestones)
   end
   
   it "should use the stage name to get the current project" do
