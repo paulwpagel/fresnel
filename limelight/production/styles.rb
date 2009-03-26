@@ -19,7 +19,7 @@ website {
   padding 7
 }
 
-spinner {
+modal_base {
   float "on"
   x 0
   y 0

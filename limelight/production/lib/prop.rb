@@ -1,7 +1,7 @@
 module Limelight
   class Prop
     def show_spinner(&block)
-      spinner = Limelight::Prop.new(:name => "spinner", :id => "spinner")
+      spinner = Limelight::Prop.new(:name => "modal_base", :id => "spinner")
       spinner.add(Limelight::Prop.new(:name => "spinner_message", :text => "Loading..."))
       scene.add(spinner) unless scene.find("spinner")
       yield

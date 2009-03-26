@@ -240,17 +240,6 @@ configure_milestones {
   width 16
 }
 
-delete_ticket_confirmation_main {
-  float "on"
-  x 0
-  y 0
-  width "100%"
-  height "100%"
-  background_color "black"
-  transparency "50"
-  horizontal_alignment "center"
-  vertical_alignment "center"
-}
 delete_ticket_confirmation_message {
   font_size 20
   width 500
