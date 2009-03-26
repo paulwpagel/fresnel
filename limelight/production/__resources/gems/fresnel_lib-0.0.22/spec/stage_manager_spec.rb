@@ -16,7 +16,7 @@ describe StageManager, "initialization" do
   end
   
   it "should create a stage info item for a loaded credential" do
-    StageInfo.should_receive(:new).with(:credential => @credential).and_return(@stage_info)
+    StageInfo.should_receive(:new).with(hash_including(:credential => @credential)).and_return(@stage_info)
 
     StageManager.new
   end
