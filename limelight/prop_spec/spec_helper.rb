@@ -13,7 +13,7 @@ end
   "production/add_project/players",
   "production",
   "production/lib",
-  "production/__resources/gems/fresnel_lib-0.0.20/lib"
+  "production/__resources/gems/fresnel_lib-0.0.21/lib"
 ].each {|path| add_to_search_path path}
 
 require 'rubygems'
@@ -25,7 +25,7 @@ $PRODUCTION_PATH = File.expand_path(File.dirname(__FILE__) + "/../production")
 
 def create_mock_project(name = "One")
   return mock(Lighthouse::Project, :open_tickets => [], :milestone_titles => [""], :hyphenated_name => nil, :tag_names => [], :destroy_ticket => nil, :create_milestone => nil,
-                                       :id => nil, :tickets_for_tag => [], :user_names => [""], :update_tickets => nil, :user_id => nil, :ticket_title => nil,
+                                       :id => nil, :tickets_for_tag => [], :user_names => [""], :update_tickets => nil, :user_id => nil, :ticket_title => nil, :register_milestone_observer => nil,
                                        :milestone_id => nil, :name => name, :all_states => ["new", "open", "resolved", "hold", "invalid"], :milestone_title => nil)
                                        
 end

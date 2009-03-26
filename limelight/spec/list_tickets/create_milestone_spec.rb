@@ -37,11 +37,4 @@ describe CreateMilestone do
     @create_milestone.create
   end
   
-  it "should update the list of milestones after creating the new milestone" do
-    @project.should_receive(:create_milestone).ordered
-    @create_milestone.milestone_lister.should_receive(:show_project_milestones).ordered
-    
-    @create_milestone.create
-  end
-  
 end

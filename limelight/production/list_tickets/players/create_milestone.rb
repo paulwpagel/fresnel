@@ -7,7 +7,6 @@ module CreateMilestone
   
   def create
     current_project.create_milestone(:title => new_milestone_title.text, :goals => new_milestone_goals.text, :due_on => new_milestone_due_on.text)
-    milestone_lister.show_project_milestones
   end
   
   private ##################

@@ -40,10 +40,16 @@ describe ListTickets do
 
   it "should show the milestones for a project" do
     @list_tickets.milestone_lister.should_receive(:show_project_milestones)
-
+  
     @list_tickets.list
   end
-
+  
+  it "should register the milestone_lister as an observer on the project" do
+    @project.should_receive(:register_milestone_observer).with(@list_tickets.milestone_lister)
+    
+    @list_tickets.list
+  end
+  
   it "should return the same ticket_master each time" do
     ticket_master = @list_tickets.ticket_master
     
@@ -82,4 +88,5 @@ describe ListTickets do
     
     @list_tickets.list
   end
+  
 end

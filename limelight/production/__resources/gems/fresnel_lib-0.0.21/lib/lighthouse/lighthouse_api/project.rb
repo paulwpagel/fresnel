@@ -13,6 +13,15 @@ module Lighthouse
         @users = ProjectMembership.all_users_for_project(@id)
         @tags = @lighthouse_project.tags
         load_tickets
+        @milestone_observers = []
+      end
+      
+      def register_milestone_observer(observer)
+        @milestone_observers << observer
+      end
+      
+      def observe_milestones
+        @milestone_observers.each { |observer| observer.observe }
       end
       
       def name
@@ -126,6 +135,7 @@ module Lighthouse
       
       def update_milestone_list
         @milestones = Lighthouse::Milestone.find(:all, :params => { :project_id => @id })
+        observe_milestones
       end
     end
   end

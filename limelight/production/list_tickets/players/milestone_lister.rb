@@ -1,4 +1,8 @@
 module MilestoneLister
+  def observe
+    show_project_milestones
+  end
+  
   def show_project_milestones
     remove_all
     list_titles

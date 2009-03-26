@@ -309,6 +309,15 @@ describe Lighthouse::LighthouseApi::Project, "create_milestone" do
     
     @fresnel_project.milestones.should == [@new_milestone]
   end
+  
+  it "should call call observe on the milestone_observers" do
+    @observer = mock("observer")
+    @fresnel_project.register_milestone_observer(@observer)
+    @observer.should_receive(:observe)
+    
+    @fresnel_project.create_milestone({})
+  end
+  
 end
 
 describe Lighthouse::LighthouseApi::Project, "delete_milestone" do
@@ -330,9 +339,37 @@ describe Lighthouse::LighthouseApi::Project, "delete_milestone" do
   it "should update the list of milestones on the project" do
     Lighthouse::Milestone.should_receive(:find).with(:all, :params => { :project_id => 12345 }).and_return([@new_milestone])
 
-    @fresnel_project.delete_milestone({})
+    @fresnel_project.delete_milestone("milestone_id")
 
     @fresnel_project.milestones.should == [@new_milestone]
   end
+  
+  it "should call call observe on the milestone_observers" do
+    @observer = mock("observer")
+    @fresnel_project.register_milestone_observer(@observer)
+    @observer.should_receive(:observe)
+    
+    @fresnel_project.delete_milestone("milestone_id")
+  end
 
+end
+
+describe Lighthouse::LighthouseApi::Project, "milestone observer" do
+  before(:each) do
+    @observer = mock("observer")
+    
+    @lighthouse_project = mock("Lighthouse::Project", :id => 12345, :milestones => [], :tags => [])
+    @fresnel_project = Lighthouse::LighthouseApi::Project.new(@lighthouse_project)
+  end
+    
+  it "should call observe on one registered observer" do
+    @fresnel_project.register_milestone_observer(@observer)
+    @observer.should_receive(:observe)
+
+    @fresnel_project.observe_milestones
+  end
+  
+  it "should not crash with no observers" do
+    lambda{@fresnel_project.observe_milestones}.should_not raise_error
+  end
 end

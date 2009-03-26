@@ -16,6 +16,12 @@ describe MilestoneLister do
     @milestone_lister.stub!(:remove_all)
   end
   
+  it "should wrap the show_project_milestones method in an observe method" do
+    @milestone_lister.should_receive(:show_project_milestones)
+    
+    @milestone_lister.observe
+  end
+  
   it "should get the current project from the stage_manager using the stage name" do
     @stage_manager.should_receive(:[]).with("stage name").and_return(@stage_info)
     
