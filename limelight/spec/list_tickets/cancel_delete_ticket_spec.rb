@@ -11,7 +11,6 @@ describe CancelDeleteTicket do
   end
   
   it "should get rid of the confirmation box" do
-    
     @scene.should_receive(:remove).with(@cancel_delete_ticket.delete_ticket_confirmation_main)
     
     @cancel_delete_ticket.cancel

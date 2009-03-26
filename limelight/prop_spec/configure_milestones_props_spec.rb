@@ -6,7 +6,11 @@ describe "Milestones Props" do
     setup_mocks
   end
   
-  uses_scene :milestones
+  uses_scene :list_tickets
+  
+  before(:each) do
+    scene.find("configure_milestones").mouse_clicked(nil)
+  end
   
   it "should have an input for the title" do
     prop = scene.find("new_milestone_title")
@@ -29,10 +33,14 @@ describe "Milestones Props" do
     prop.players.should == "create_milestone"
   end
   
-  it "should a link back to list_tickets" do
-    scene.should_receive(:load).with('list_tickets')
-    prop = scene.find("back_button")
-
-    prop.button_pressed(nil)
+  it "should a link to close the page" do
+    prop = scene.find("close_configure_milestones")
+    prop.name.should == "button"
+    prop.players.should == "close_configure_milestones"
+  end
+  
+  it "should have everything inside a wrapper" do
+    prop = scene.find("configure_milestones_wrapper")
+    prop.name.should == "modal_base"
   end
 end

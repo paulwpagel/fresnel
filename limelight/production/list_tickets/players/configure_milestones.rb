@@ -4,6 +4,8 @@ module ConfigureMilestones
   end
   
   def open_milestones
-    scene.load("milestones")
+    scene.build do
+      __install "list_tickets/configure_milestones_props.rb"
+    end
   end
 end

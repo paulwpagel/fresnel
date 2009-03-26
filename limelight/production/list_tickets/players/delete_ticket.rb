@@ -8,7 +8,6 @@ module DeleteTicket
     scene.build(:ticket_id => ticket_id, :ticket_title => current_project.ticket_title(ticket_id)) do
       __install "list_tickets/delete_ticket_props.rb", :ticket_id => @ticket_id, :ticket_title => @ticket_title
     end
-
   end
   
   private #################################

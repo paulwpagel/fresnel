@@ -1,6 +1,6 @@
-main {
-  button :id => "back_button", :text => "View Tickets", :on_button_pressed => "scene.load('list_tickets')"
+modal_base(:id => "configure_milestones_wrapper") {
   create_milestone_form {
+    button :id => "close_configure_milestones", :text => "Close", :players => "close_configure_milestones"
     input_group {
       label :text => "Title"
       text_box :id => "new_milestone_title"
