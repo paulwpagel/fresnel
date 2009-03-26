@@ -17,7 +17,6 @@ module TagLister
       name = "active_tag" if active_tag_text == tag_text
       add(Limelight::Prop.new(:name => name, :text => tag_text, :id => "tag_#{index + 1}"))
     end
-    
   end
   
   private ####################################

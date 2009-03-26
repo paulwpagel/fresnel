@@ -124,4 +124,9 @@ describe "List Ticket Props" do
     prop.name.should == "configure_milestones"
   end
   
+  it "should have a milestone_lister" do
+    tag_lister = scene.find("milestone_lister")
+    tag_lister.name.should == "milestone_lister"
+  end
+  
 end
