@@ -86,9 +86,15 @@ module Lighthouse
         return new_milestone
       end
       
-      def delete_milestone(milestone_id)
-        Lighthouse::Milestone.delete(milestone_id, { :project_id => @id })
+      def delete_milestone(id)
+        Lighthouse::Milestone.delete(id, { :project_id => @id })
         update_milestone_list
+      end
+      
+      def update_milestone(id, attributes)
+        attributes.each_pair do |attribute, new_value|
+          milestone_from_id(id).send(:attribute=, new_value) if milestone_from_id(id)
+        end
       end
       
       def open_states

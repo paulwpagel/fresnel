@@ -305,6 +305,10 @@ create_milestone_form {
   border_width 2
 }
 
+existing_milestones {
+  extends :create_milestone_form
+}
+
 configure_milestones_wrapper {
   float "on"
   x 0

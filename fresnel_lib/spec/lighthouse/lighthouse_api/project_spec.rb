@@ -276,82 +276,113 @@ describe Lighthouse::LighthouseApi::Project, "hyphenated_name" do
   end
 end
 
-describe Lighthouse::LighthouseApi::Project, "create_milestone" do
-  before(:each) do
-    @new_milestone = mock(Lighthouse::Milestone)
-    Lighthouse::Milestone.stub!(:create).and_return(@new_milestone)
-    Lighthouse::Milestone.stub!(:find).and_return([@new_milestone])
-    @lighthouse_project = mock("Lighthouse::Project", :id => 12345, :milestones => [], :tags => [])
-    @fresnel_project = Lighthouse::LighthouseApi::Project.new(@lighthouse_project)
-  end
-  
-  it "should it create a milestone with the given options" do
-    options = {:title => "some title", :goals => "my goals"}
-    Lighthouse::Milestone.should_receive(:create).with(hash_including(options))
-    
-    @fresnel_project.create_milestone(options)
-  end
-  
-  it "should include the project id with the options" do
-    Lighthouse::Milestone.should_receive(:create).with(hash_including(:project_id => 12345))
-    
-    @fresnel_project.create_milestone({})
-  end
-  
-  it "should return the created milestone" do
-    @fresnel_project.create_milestone({}).should == @new_milestone
-  end
-  
-  it "should update the project's list of milestones" do
-    Lighthouse::Milestone.should_receive(:find).with(:all, :params => { :project_id => 12345 }).and_return([@new_milestone])
-    
-    @fresnel_project.create_milestone({})
-    
-    @fresnel_project.milestones.should == [@new_milestone]
-  end
-  
-  it "should call call observe on the milestone_observers" do
-    @observer = mock("observer")
-    @fresnel_project.register_milestone_observer(@observer)
-    @observer.should_receive(:observe)
-    
-    @fresnel_project.create_milestone({})
-  end
-  
+def create_mock_milestones
+  @milestone_one = mock("milestone", :id => 123, :attribute= => nil)
+  @milestone_two = mock("milestone", :id => 456)
+  @milestone_three = mock("milestone", :id => 789)
+  @milestones = [@milestone_one, @milestone_two, @milestone_three]
 end
 
-describe Lighthouse::LighthouseApi::Project, "delete_milestone" do
+describe Lighthouse::LighthouseApi::Project, "milestone manipulation" do
   before(:each) do
-    Lighthouse::Milestone.stub!(:delete)
     @new_milestone = mock(Lighthouse::Milestone)
     Lighthouse::Milestone.stub!(:find).and_return([@new_milestone])
     
-    @lighthouse_project = mock("Lighthouse::Project", :id => 12345, :milestones => [], :tags => [])
+    create_mock_milestones
+    @lighthouse_project = mock("Lighthouse::Project", :id => 12345, :milestones => @milestones, :tags => [])
     @fresnel_project = Lighthouse::LighthouseApi::Project.new(@lighthouse_project)
   end
   
-  it "should call the delete on milestone passing in the id and project id" do
-    Lighthouse::Milestone.should_receive(:delete).with("milestone_id", {:project_id => 12345})
+  describe "create_milestone" do
+    before(:each) do
+      Lighthouse::Milestone.stub!(:create).and_return(@new_milestone)
+    end
+
+    it "should it create a milestone with the given options" do
+      options = {:title => "some title", :goals => "my goals"}
+      Lighthouse::Milestone.should_receive(:create).with(hash_including(options))
     
-    @fresnel_project.delete_milestone("milestone_id")
+      @fresnel_project.create_milestone(options)
+    end
+  
+    it "should include the project id with the options" do
+      Lighthouse::Milestone.should_receive(:create).with(hash_including(:project_id => 12345))
+    
+      @fresnel_project.create_milestone({})
+    end
+  
+    it "should return the created milestone" do
+      @fresnel_project.create_milestone({}).should == @new_milestone
+    end
+  
+    it "should update the project's list of milestones" do
+      Lighthouse::Milestone.should_receive(:find).with(:all, :params => { :project_id => 12345 }).and_return([@new_milestone])
+    
+      @fresnel_project.create_milestone({})
+    
+      @fresnel_project.milestones.should == [@new_milestone]
+    end
+  
+    it "should call call observe on the milestone_observers" do
+      @observer = mock("observer")
+      @fresnel_project.register_milestone_observer(@observer)
+      @observer.should_receive(:observe)
+    
+      @fresnel_project.create_milestone({})
+    end
   end
   
-  it "should update the list of milestones on the project" do
-    Lighthouse::Milestone.should_receive(:find).with(:all, :params => { :project_id => 12345 }).and_return([@new_milestone])
+  describe "delete_milestone" do
+    before(:each) do
+      Lighthouse::Milestone.stub!(:delete)
+    end
+    
+    it "should call the delete on milestone passing in the id and project id" do
+      Lighthouse::Milestone.should_receive(:delete).with("milestone_id", {:project_id => 12345})
+    
+      @fresnel_project.delete_milestone("milestone_id")
+    end
+  
+    it "should update the list of milestones on the project" do
+      Lighthouse::Milestone.should_receive(:find).with(:all, :params => { :project_id => 12345 }).and_return([@new_milestone])
 
-    @fresnel_project.delete_milestone("milestone_id")
+      @fresnel_project.delete_milestone("milestone_id")
 
-    @fresnel_project.milestones.should == [@new_milestone]
+      @fresnel_project.milestones.should == [@new_milestone]
+    end
+  
+    it "should call call observe on the milestone_observers" do
+      @observer = mock("observer")
+      @fresnel_project.register_milestone_observer(@observer)
+      @observer.should_receive(:observe)
+    
+      @fresnel_project.delete_milestone("milestone_id")
+    end
   end
   
-  it "should call call observe on the milestone_observers" do
-    @observer = mock("observer")
-    @fresnel_project.register_milestone_observer(@observer)
-    @observer.should_receive(:observe)
+  describe "update_milestone" do
+    it "should work with no attributes" do
+      @milestone_one.should_not_receive(:attribute=)
+      
+      @fresnel_project.update_milestone(123, {})
+    end
     
-    @fresnel_project.delete_milestone("milestone_id")
+    it "should update the milestone with the given attributes" do
+      @milestone_one.should_receive(:attribute=).with("new value")
+      
+      @fresnel_project.update_milestone(123, {:attribute => "new value"})
+    end
+    
+    it "should work for a different milestone id" do
+      @milestone_two.should_receive(:attribute=).with("new value")
+      
+      @fresnel_project.update_milestone(456, {:attribute => "new value"})
+    end
+    
+    it "should not crash if it cannot find the milestone from the id" do
+      lambda{@fresnel_project.update_milestone("bad_id", {:attribute => "new value"})}.should_not raise_error
+    end
   end
-
 end
 
 describe Lighthouse::LighthouseApi::Project, "milestone observer" do
