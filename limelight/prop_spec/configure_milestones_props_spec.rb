@@ -47,13 +47,13 @@ describe "Milestones Props" do
     prop.should_not be_nil
   end
   
-  it "should have a prop to delete one milestone" do
-    prop = scene.find("delete_milestone_123")
-    prop.name.should == "delete_milestone"
+  it "should have a prop to edit one milestone" do
+    prop = scene.find("edit_milestone_123")
+    prop.name.should == "edit_milestone"
   end
 
-  it "should have a prop to delete a second milestone" do
-    prop = scene.find("delete_milestone_456")
-    prop.name.should == "delete_milestone"
+  it "should have a prop to edit a second milestone" do
+    prop = scene.find("edit_milestone_456")
+    prop.name.should == "edit_milestone"
   end
 end
