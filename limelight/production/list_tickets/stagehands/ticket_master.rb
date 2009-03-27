@@ -5,9 +5,14 @@ class TicketMaster
   end
   
   def matching_tickets(attributes)
-    return project.tickets_for_type(attributes[:type]) if attributes[:tag].nil?
-    return project.tickets_for_tag(attributes[:tag]) if attributes[:type].nil?
-    return project.tickets_for_tag(attributes[:tag]) & project.tickets_for_type(attributes[:type])
+    found_tickets = project.all_tickets
+    attributes.each_pair do |attribute, value|
+      begin
+        found_tickets = found_tickets & project.send("tickets_for_#{attribute}", value) if value
+      rescue NoMethodError
+      end
+    end
+    return found_tickets
   end
   
   private ##############################

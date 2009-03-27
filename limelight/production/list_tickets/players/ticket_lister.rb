@@ -8,14 +8,19 @@ module TicketLister
     filter_by_tag(nil)
   end
   
+  def filter_by_milestone(milestone)
+    @current_milestone_filter = milestone
+    show_matching_tickets
+  end
+  
   def filter_by_type(type)
     @current_type_filter = type
-    show_current_type_and_tag
+    show_matching_tickets
   end
 
   def filter_by_tag(tag)
     @current_tag_filter = tag
-    show_current_type_and_tag
+    show_matching_tickets
   end
 
   def search_on(criteria)
@@ -52,8 +57,8 @@ module TicketLister
     return production.stage_manager[scene.stage.name]
   end
   
-  def show_current_type_and_tag
+  def show_matching_tickets
     search_box.text = ""
-    show_these_tickets scene.ticket_master.matching_tickets({:type => @current_type_filter, :tag => @current_tag_filter})
+    show_these_tickets scene.ticket_master.matching_tickets({:type => @current_type_filter, :tag => @current_tag_filter, :milestone => @current_milestone_filter})
   end
 end

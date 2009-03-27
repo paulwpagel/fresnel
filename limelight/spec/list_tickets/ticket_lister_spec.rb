@@ -164,7 +164,7 @@ describe TicketLister, "clear_tag_filter" do
     @ticket_lister.current_tag_filter = "A tag"
 
     
-    @ticket_master.should_receive(:matching_tickets).with({:type => "A type", :tag => nil}).and_return(['a'])
+    @ticket_master.should_receive(:matching_tickets).with(hash_including({:type => "A type", :tag => nil})).and_return(['a'])
     @ticket_lister.should_receive(:show_these_tickets).with(['a'])
 
     @ticket_lister.clear_tag_filter
@@ -205,7 +205,7 @@ describe TicketLister, "filter_by_type" do
     it "should keep track of the tag filter" do
       @ticket_lister.current_tag_filter = "A cool tag"
       
-      @ticket_master.should_receive(:matching_tickets).with({:type =>"Some Tickets", :tag => "A cool tag"}).and_return([])
+      @ticket_master.should_receive(:matching_tickets).with(hash_including({:type =>"Some Tickets", :tag => "A cool tag"})).and_return([])
       @ticket_lister.filter_by_type("Some Tickets")
     end
   end
@@ -239,7 +239,34 @@ describe TicketLister, "filter_by_tag" do
   it "should clear the search text box" do
     @ticket_lister.search_box.should_receive(:text=).with("")
     @ticket_lister.filter_by_tag("A cool tag")
-  
   end
   
+end
+
+describe TicketLister, "filter_by_milestone" do
+  before(:each) do
+    ConvertsTicketToProp.stub!(:convert)
+    @matching_tickets = [mock("ticket")]
+    @ticket_master = mock('ticket_master', :matching_tickets => @matching_tickets)
+    @ticket = mock("ticket", :id => "ticket_123456", :null_object => true)
+    @ticket_lister, @scene, @production = create_player(TicketLister, 
+                                                :scene => {:load => nil, :find => nil, :ticket_master => @ticket_master}, 
+                                                :production => {:current_ticket => @ticket, :current_ticket= => nil})
+    @ticket_lister.stub!(:remove_all)
+    @ticket_lister.stub!(:add)                                     
+  end
+  
+  it "should get the tickets from the ticket_master" do
+    @ticket_lister.should_receive(:show_these_tickets).with([])
+    @ticket_master.should_receive(:matching_tickets).with(hash_including(:milestone => "Some Milestone")).and_return([])
+    
+    @ticket_lister.filter_by_milestone("Some Milestone")
+  end
+  
+  it "should filter based on tag then milestone" do
+    @ticket_lister.filter_by_tag("A cool tag")
+    @ticket_master.should_receive(:matching_tickets).with(hash_including(:milestone => "Some Milestone", :tag => "A cool tag")).and_return([])
+    
+    @ticket_lister.filter_by_milestone("Some Milestone")
+  end
 end

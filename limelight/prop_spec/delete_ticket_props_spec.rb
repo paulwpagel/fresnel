@@ -7,6 +7,7 @@ describe "Delete Ticket Props" do
     setup_mocks
     @ticket = mock("ticket", :id => 12345, :null_object => true)
     @open_tickets = [@ticket]
+    @project.stub!(:all_tickets).and_return(@open_tickets)
     @project.stub!(:tickets_for_type).and_return(@open_tickets)
     @project.stub!(:ticket_title).and_return(nil)
   end

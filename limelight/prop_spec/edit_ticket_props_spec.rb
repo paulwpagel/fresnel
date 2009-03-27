@@ -20,6 +20,7 @@ describe EditTicket do
                              :description => "Some Description", :versions => versions, :milestone_id => 12345, :tag => "one two three")
     @lighthouse_client.stub!(:ticket).and_return(@ticket)
     @project.stub!(:tickets_for_type).and_return([@ticket])
+    @project.stub!(:all_tickets).and_return([@ticket])
   end
 
   uses_scene :list_tickets
