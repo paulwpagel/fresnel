@@ -162,6 +162,18 @@ describe Lighthouse::LighthouseApi::Project, "tickets" do
       @fresnel_project.ticket_title("bad id").should be_nil
     end
     
+    it "should find  open tickets" do
+      @fresnel_project.tickets_for_type("Open Tickets").should == [@ticket_one, @ticket_three, @ticket_four]
+    end
+    
+    it "should return all tickets" do
+      @fresnel_project.tickets_for_type("All Tickets").should == [@ticket_one, @ticket_two, @ticket_three, @ticket_four]
+    end
+    
+    it "should return all tickets if given a bad type" do
+      @fresnel_project.tickets_for_type(nil).should == [@ticket_one, @ticket_two, @ticket_three, @ticket_four]
+    end
+    
     def ticket(options)
       return mock("ticket", options)
     end

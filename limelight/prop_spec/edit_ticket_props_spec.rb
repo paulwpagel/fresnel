@@ -19,7 +19,7 @@ describe EditTicket do
     @ticket = mock("ticket", :id => 12345, :title => "Title", :null_object => true, :assigned_user_name => "Roger", :state => "open",
                              :description => "Some Description", :versions => versions, :milestone_id => 12345, :tag => "one two three")
     @lighthouse_client.stub!(:ticket).and_return(@ticket)
-    @project.stub!(:open_tickets).and_return([@ticket])
+    @project.stub!(:tickets_for_type).and_return([@ticket])
   end
 
   uses_scene :list_tickets

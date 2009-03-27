@@ -59,7 +59,15 @@ module Lighthouse
       def tickets_for_tag(tag)
         return @all_tickets.find_all { |ticket| ticket.tags.include?(tag) }
       end
-        
+      
+      def tickets_for_type(type)
+        if type == "Open Tickets"
+          return open_tickets
+        else
+          return all_tickets
+        end
+      end
+      
       def ticket_title(id)
         ticket = @all_tickets.find { |ticket| ticket.id == id.to_i }
         return ticket.title if ticket
