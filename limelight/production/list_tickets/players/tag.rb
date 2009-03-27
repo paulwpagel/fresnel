@@ -1,9 +1,7 @@
 module Tag  
   prop_reader :ticket_lister, :tag_lister
   def mouse_clicked(event)
-
     show_spinner { tag}
-
   end
   
   def tag
