@@ -4,10 +4,10 @@ class TicketMaster
     @scene = scene
   end
   
-  def tickets_for_type_and_tag(type, tag)
-    return project.tickets_for_type(type) if tag.nil?
-    return project.tickets_for_tag(tag) if type.nil?
-    return project.tickets_for_tag(tag) & project.tickets_for_type(type)
+  def matching_tickets(attributes)
+    return project.tickets_for_type(attributes[:type]) if attributes[:tag].nil?
+    return project.tickets_for_tag(attributes[:tag]) if attributes[:type].nil?
+    return project.tickets_for_tag(attributes[:tag]) & project.tickets_for_type(attributes[:type])
   end
   
   private ##############################

@@ -153,7 +153,7 @@ describe TicketLister, "clear_tag_filter" do
                                                 :scene => {:load => nil, :find => nil}, 
                                                 :production => {:current_ticket => @ticket, :current_ticket= => nil})
                                                 
-    @ticket_master = mock('ticket_master', :tickets_for_type_and_tag => [])
+    @ticket_master = mock('ticket_master', :matching_tickets => [])
     @scene.stub!(:ticket_master).and_return(@ticket_master)
     @ticket_lister.stub!(:remove_all)
   end
@@ -164,7 +164,7 @@ describe TicketLister, "clear_tag_filter" do
     @ticket_lister.current_tag_filter = "A tag"
 
     
-    @ticket_master.should_receive(:tickets_for_type_and_tag).with("A type", nil).and_return(['a'])
+    @ticket_master.should_receive(:matching_tickets).with({:type => "A type", :tag => nil}).and_return(['a'])
     @ticket_lister.should_receive(:show_these_tickets).with(['a'])
 
     @ticket_lister.clear_tag_filter
@@ -180,7 +180,7 @@ end
 describe TicketLister, "filter_by_type" do
   
   before(:each) do
-    @ticket_master = mock('ticket_master', :tickets_for_type_and_tag => [])
+    @ticket_master = mock('ticket_master', :matching_tickets => [])
     @ticket = mock("ticket", :id => "ticket_123456", :null_object => true)
     @ticket_lister, @scene, @production = create_player(TicketLister, 
                                                 :scene => {:load => nil, :find => nil, :ticket_master => @ticket_master}, 
@@ -190,13 +190,13 @@ describe TicketLister, "filter_by_type" do
 
   it "asks ticketmaster for the tickets for given type" do
     @ticket_lister.should_receive(:show_these_tickets).with([])
-    @ticket_master.should_receive(:tickets_for_type_and_tag).with("Some Tickets", anything()).and_return([])
+    @ticket_master.should_receive(:matching_tickets).with(hash_including(:type => "Some Tickets")).and_return([])
     
     @ticket_lister.filter_by_type("Some Tickets")
   end
   
   it "shows the tickets returned from ticketmaster" do
-    @ticket_master.should_receive(:tickets_for_type_and_tag).with("Some Tickets", anything()).and_return(["a", "b"])
+    @ticket_master.should_receive(:matching_tickets).with(hash_including(:type => "Some Tickets")).and_return(["a", "b"])
     @ticket_lister.should_receive(:show_these_tickets).with(["a", "b"])
     @ticket_lister.filter_by_type("Some Tickets")
   end
@@ -205,7 +205,7 @@ describe TicketLister, "filter_by_type" do
     it "should keep track of the tag filter" do
       @ticket_lister.current_tag_filter = "A cool tag"
       
-      @ticket_master.should_receive(:tickets_for_type_and_tag).with("Some Tickets", "A cool tag").and_return([])
+      @ticket_master.should_receive(:matching_tickets).with({:type =>"Some Tickets", :tag => "A cool tag"}).and_return([])
       @ticket_lister.filter_by_type("Some Tickets")
     end
   end
@@ -221,7 +221,7 @@ end
 describe TicketLister, "filter_by_tag" do
   
   before(:each) do
-    @ticket_master = mock('ticket_master', :tickets_for_type_and_tag => [])
+    @ticket_master = mock('ticket_master', :matching_tickets => [])
     @ticket = mock("ticket", :id => "ticket_123456", :null_object => true)
     @ticket_lister, @scene, @production = create_player(TicketLister, 
                                                 :scene => {:load => nil, :find => nil, :ticket_master => @ticket_master}, 
@@ -231,7 +231,7 @@ describe TicketLister, "filter_by_tag" do
 
   it "asks ticketmaster for the tickets for given type" do
     @ticket_lister.should_receive(:show_these_tickets).with([])
-    @ticket_master.should_receive(:tickets_for_type_and_tag).with(anything(), "Some Tickets").and_return([])
+    @ticket_master.should_receive(:matching_tickets).with(hash_including(:tag => "Some Tickets")).and_return([])
     
     @ticket_lister.filter_by_tag("Some Tickets")
   end

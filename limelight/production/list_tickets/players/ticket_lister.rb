@@ -54,6 +54,6 @@ module TicketLister
   
   def show_current_type_and_tag
     search_box.text = ""
-    show_these_tickets scene.ticket_master.tickets_for_type_and_tag(@current_type_filter, @current_tag_filter)
+    show_these_tickets scene.ticket_master.matching_tickets({:type => @current_type_filter, :tag => @current_tag_filter})
   end
 end

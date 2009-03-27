@@ -23,11 +23,11 @@ describe TicketMaster, "tickets_for_type_and_tag" do
   it "should get the project based on the stage" do
     @stage_manager.should_receive(:[]).with("stage name").and_return(@stage_info)
     
-    @ticket_master.tickets_for_type_and_tag(nil, nil)
+    @ticket_master.matching_tickets({})
   end
   
   it "should return all tickets if both values are nil" do    
-    @ticket_master.tickets_for_type_and_tag(nil, nil).should == @all_tickets
+    @ticket_master.matching_tickets({:type => nil, :tag => nil}).should == @all_tickets
   end
   
   context "type only" do
@@ -38,11 +38,11 @@ describe TicketMaster, "tickets_for_type_and_tag" do
     it "should query the project for the tickets based on type" do
       @project.should_receive(:tickets_for_type).with("Some Type")
       
-      @ticket_master.tickets_for_type_and_tag("Some Type", nil)
+      @ticket_master.matching_tickets({:type => "Some Type", :tag => nil})
     end
 
     it "should return those tickets" do
-      @ticket_master.tickets_for_type_and_tag("Some Type", nil).should == @tickets_for_type
+      @ticket_master.matching_tickets({:type => "Some Type", :tag => nil}).should == @tickets_for_type
     end
   end
   context "tag only" do
@@ -53,11 +53,11 @@ describe TicketMaster, "tickets_for_type_and_tag" do
     it "should use the tag to get the tickets from the project" do
       @project.should_receive(:tickets_for_tag).with("Some Tag").and_return(@tickets_for_tag)
       
-      @ticket_master.tickets_for_type_and_tag(nil, "Some Tag")
+      @ticket_master.matching_tickets({:type => nil, :tag => "Some Tag"})
     end
     
     it "should return the tickets returned by the project" do
-      @ticket_master.tickets_for_type_and_tag(nil, "Some Tag").should == @tickets_for_tag
+      @ticket_master.matching_tickets({:type => nil, :tag => "Some Tag"}).should == @tickets_for_tag
     end
   end
   
@@ -70,7 +70,7 @@ describe TicketMaster, "tickets_for_type_and_tag" do
       end
       
       it "returns tickets that match the tag" do
-        @ticket_master.tickets_for_type_and_tag("Open Tickets", "A tag to match").should == @tickets_for_type_and_tag
+        @ticket_master.matching_tickets({:type => "Open Tickets", :tag => "A tag to match"}).should == @tickets_for_type_and_tag
       end
     end
   end
