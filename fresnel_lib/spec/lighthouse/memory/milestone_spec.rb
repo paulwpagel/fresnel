@@ -30,6 +30,11 @@ describe Lighthouse::Milestone do
     @milestone.due_on.year.should == 2007
   end
   
+  it "should not crash on an invalid date" do
+    @milestone.due_on = ""
+    @milestone.due_on.should be_nil
+  end
+  
   it "should have a nil id before saving" do
     milestone = Lighthouse::Milestone.new
     milestone.id.should be_nil

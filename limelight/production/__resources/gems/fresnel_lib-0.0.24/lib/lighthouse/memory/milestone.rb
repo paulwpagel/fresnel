@@ -25,7 +25,7 @@ module Lighthouse
     end
     
     def due_on=(date)
-      @due_on = Date.parse(date)
+      @due_on = Date.parse(date) rescue nil
     end
     
     def save
