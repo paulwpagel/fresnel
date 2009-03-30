@@ -80,8 +80,11 @@ end
 
 describe Lighthouse::LighthouseApi::Project, "tickets" do
   before(:each) do
+    milestone_one = mock("milestone", :id => 123, :title => "Title One")
+    milestone_two = mock("milestone", :id => 456, :title => "Title Two")
+    milestone_three = mock("milestone", :id => 789, :title => "Title Three")
     Lighthouse::LighthouseApi::ProjectMembership.stub!(:all_users_for_project).and_return([])
-    @lighthouse_project = mock("Lighthouse::Project", :milestones => [], :id => 12345, :open_states_list => "new,open", :tags => [])
+    @lighthouse_project = mock("Lighthouse::Project", :milestones => [milestone_one, milestone_two, milestone_three], :id => 12345, :open_states_list => "new,open", :tags => [])
   end
   
   it "should find all tickets on init" do
@@ -92,10 +95,10 @@ describe Lighthouse::LighthouseApi::Project, "tickets" do
 
   describe Lighthouse::LighthouseApi::Project, "with tickets" do
     before(:each) do
-      @ticket_one = ticket(:state => "open", :tags => ["one"], :id => 1, :destroy => nil, :title => "Ticket One")
-      @ticket_two = ticket(:state => "resolved", :tags => ["one", "two"], :id => 2, :title => "Ticket Two")
-      @ticket_three = ticket(:state => "open", :tags => [], :id => 3, :title => "Ticket Three")
-      @ticket_four = ticket(:state => "new", :tags => ["two"], :id => 4, :title => "Ticket Four")
+      @ticket_one = ticket(:state => "open", :tags => ["one"], :id => 1, :destroy => nil, :title => "Ticket One", :milestone_id => 123)
+      @ticket_two = ticket(:state => "resolved", :tags => ["one", "two"], :id => 2, :title => "Ticket Two", :milestone_id => 123)
+      @ticket_three = ticket(:state => "open", :tags => [], :id => 3, :title => "Ticket Three", :milestone_id => 456)
+      @ticket_four = ticket(:state => "new", :tags => ["two"], :id => 4, :title => "Ticket Four", :milestone_id => 789)
       @tickets = [@ticket_one, @ticket_two, @ticket_three, @ticket_four]
       Lighthouse::Ticket.stub!(:find).and_return(@ticket_one)
       Lighthouse::LighthouseApi::Ticket.stub!(:find_tickets).and_return(@tickets)
@@ -174,12 +177,29 @@ describe Lighthouse::LighthouseApi::Project, "tickets" do
       @fresnel_project.tickets_for_type(nil).should == [@ticket_one, @ticket_two, @ticket_three, @ticket_four]
     end
     
+    describe "tickets_for_milestone" do
+      it "should return tickets for the first milestone" do
+        @fresnel_project.tickets_for_milestone("Title One").should == [@ticket_one, @ticket_two]
+      end
+      
+      it "should return tickets for the second milestone" do
+        @fresnel_project.tickets_for_milestone("Title Two").should == [@ticket_three]
+      end
+      
+      it "should return tickets for the third milestone" do
+        @fresnel_project.tickets_for_milestone("Title Three").should == [@ticket_four]
+      end
+      
+      it "should return all_tickets if the milestone does not exist" do
+        @fresnel_project.tickets_for_milestone("Bad Title").should == [@ticket_one, @ticket_two, @ticket_three, @ticket_four]
+      end
+    end
+    
     def ticket(options)
       return mock("ticket", options)
     end
   end
 end
-
 describe Lighthouse::LighthouseApi::Project, "milestones" do
   before(:each) do
     Lighthouse::LighthouseApi::ProjectMembership.stub!(:all_users_for_project).and_return([])

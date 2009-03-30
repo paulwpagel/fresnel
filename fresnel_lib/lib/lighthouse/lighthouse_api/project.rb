@@ -68,6 +68,11 @@ module Lighthouse
         end
       end
       
+      def tickets_for_milestone(title)
+        return @all_tickets if milestone_from_title(title).nil?
+        return @all_tickets.find_all { |ticket| milestone_id(title) == ticket.milestone_id}
+      end
+      
       def ticket_title(id)
         ticket = @all_tickets.find { |ticket| ticket.id == id.to_i }
         return ticket.title if ticket
