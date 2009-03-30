@@ -8,9 +8,24 @@ describe Lighthouse::Milestone do
     @milestone = create_milestone(:project_id => "project_id", :title => "Milestone One")
   end
 
-  it "should have basic information" do
+  it "should have a project_id information" do
     @milestone.project_id.should == "project_id"
+  end
+  
+  it "should have a title" do
     @milestone.title.should == "Milestone One"
+    @milestone.title = "New Title"
+    @milestone.title.should == "New Title"
+  end
+
+  it "should have goals" do
+    @milestone.goals = "New Goal"
+    @milestone.goals.should == "New Goal"
+  end
+
+  it "should have a due one" do
+    @milestone.due_on = "01-05-2007"
+    @milestone.due_on.should == "01-05-2007"
   end
   
   it "should have a nil id before saving" do

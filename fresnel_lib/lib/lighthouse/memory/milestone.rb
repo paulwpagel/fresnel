@@ -11,7 +11,8 @@ module Lighthouse
       return @@milestones.find_all { |milestone| milestone.project_id == project_id }
     end
     
-    attr_reader :project_id, :title, :id
+    attr_reader :project_id, :id
+    attr_accessor :title, :goals, :due_on
     
     def initialize(options = {})
       @project_id = options[:project_id]
