@@ -23,9 +23,11 @@ describe Lighthouse::Milestone do
     @milestone.goals.should == "New Goal"
   end
 
-  it "should have a due one" do
+  it "should have a due on" do
     @milestone.due_on = "01-05-2007"
-    @milestone.due_on.should == "01-05-2007"
+    @milestone.due_on.month.should == 5
+    @milestone.due_on.day.should == 1
+    @milestone.due_on.year.should == 2007
   end
   
   it "should have a nil id before saving" do

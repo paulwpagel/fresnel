@@ -11,13 +11,17 @@ module Lighthouse
       return @@milestones.find_all { |milestone| milestone.project_id == project_id }
     end
     
-    attr_reader :project_id, :id
-    attr_accessor :title, :goals, :due_on
+    attr_reader :project_id, :id, :due_on
+    attr_accessor :title, :goals
     
     def initialize(options = {})
       @project_id = options[:project_id]
       @title = options[:title]
       @id = nil
+    end
+    
+    def due_on=(date)
+      @due_on = Date.parse(date)
     end
     
     def save
