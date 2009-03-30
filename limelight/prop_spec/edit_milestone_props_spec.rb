@@ -7,6 +7,7 @@ describe "Milestones Props" do
     milestone_one = mock("milestone", :title => "Milestone 123", :id => 123)
     milestone_two = mock("milestone", :title => "Milestone 456", :id => 456)
     @project.stub!(:milestones).and_return([milestone_one, milestone_two])
+    @project.stub!(:milestone_from_id).and_return(milestone_one)
   end
   
   uses_scene :list_tickets
@@ -19,7 +20,7 @@ describe "Milestones Props" do
   it "should have an input field for the title" do
     prop = scene.find("milestone_title_123")
     prop.name.should == "text_box"
-    # prop.text.should == "Milestone 123"
+    prop.text.should == "Milestone 123"
   end
   
   it "should have a save_button" do

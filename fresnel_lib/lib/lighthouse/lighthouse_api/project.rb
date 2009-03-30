@@ -133,6 +133,10 @@ module Lighthouse
         load_tickets
       end
       
+      def milestone_from_id(id)
+        return @milestones.find { |milestone| milestone.id == id }
+      end
+      
       private ######################
       
       def load_tickets
@@ -150,11 +154,7 @@ module Lighthouse
       def milestone_from_title(title)
         return @milestones.find { |milestone| milestone.title == title }
       end
-      
-      def milestone_from_id(id)
-        return @milestones.find { |milestone| milestone.id == id }
-      end
-      
+            
       def update_milestone_list
         @milestones = Lighthouse::Milestone.find(:all, :params => { :project_id => @id })
         observe_milestones

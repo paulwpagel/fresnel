@@ -428,7 +428,24 @@ describe Lighthouse::LighthouseApi::Project, "milestone manipulation" do
     
       @fresnel_project.milestones.should == [@new_milestone]
     end
+  end
+  
+  describe "milestone_from_id" do
+    it "should get the first milestone" do
+      @fresnel_project.milestone_from_id(123).should == @milestone_one
+    end
     
+    it "should get the second milestone" do
+      @fresnel_project.milestone_from_id(456).should == @milestone_two
+    end
+    
+    it "should get the third milestone" do
+      @fresnel_project.milestone_from_id(789).should == @milestone_three
+    end
+    
+    it "should return nil for a bad id" do
+      @fresnel_project.milestone_from_id("bad id").should be_nil
+    end
   end
 end
 
