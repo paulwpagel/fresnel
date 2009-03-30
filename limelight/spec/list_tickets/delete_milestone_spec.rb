@@ -8,6 +8,7 @@ describe DeleteMilestone do
                                                 :scene => {:stage => @stage}, 
                                                 :production => {:stage_manager => @stage_manager})
     @delete_milestone.stub!(:id).and_return("delete_milestone_12345")
+    @delete_milestone.existing_milestones.stub!(:refresh)
   end
   
   it "should use the stage name to get the current project" do
@@ -18,6 +19,12 @@ describe DeleteMilestone do
   
   it "should delete the milestone from the project passing in the id" do
     @project.should_receive(:delete_milestone).with(12345)
+    
+    @delete_milestone.delete
+  end
+  
+  it "should refresh the list of milestones" do
+    @delete_milestone.existing_milestones.should_receive(:refresh)
     
     @delete_milestone.delete
   end

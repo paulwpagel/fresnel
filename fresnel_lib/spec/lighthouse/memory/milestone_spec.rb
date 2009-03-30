@@ -63,6 +63,20 @@ describe Lighthouse::Milestone do
     milestones.size.should == 1
   end
   
+  describe "create" do
+    it "should create a new milestone" do
+      milestone = Lighthouse::Milestone.create(:project_id => "project_id")
+      
+      milestone.project_id.should == "project_id"
+    end
+    
+    it "should save the milestone" do
+      milestone = Lighthouse::Milestone.create(:project_id => "project_id")
+      
+      milestone.id.should_not be_nil
+    end
+  end
+  
   describe "delete" do    
     it "should accept an id and projet_id" do
       Lighthouse::Milestone.delete(@milestone.id, {:project_id => "project_id"})

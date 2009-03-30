@@ -7,6 +7,7 @@ describe CreateMilestone do
     @create_milestone, @scene, @production = create_player(CreateMilestone,
                                                 :scene => {:stage => @stage}, 
                                                 :production => {:stage_manager => @stage_manager})
+    @create_milestone.existing_milestones.stub!(:refresh)
   end
   
   it "should use the stage name to get the current project" do
@@ -36,4 +37,9 @@ describe CreateMilestone do
     @create_milestone.create
   end
   
+  it "should refresh the list of milestones" do
+    @create_milestone.existing_milestones.should_receive(:refresh)
+    
+    @create_milestone.create
+  end
 end

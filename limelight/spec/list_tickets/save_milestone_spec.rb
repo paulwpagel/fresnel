@@ -8,8 +8,7 @@ describe SaveMilestone do
                                                 :scene => {:stage => @stage, :find => nil}, 
                                                 :production => {:stage_manager => @stage_manager})
     @save_milestone.stub!(:id).and_return("save_milestone_12345")
-    @save_milestone.existing_milestones.stub!(:build)
-    @save_milestone.existing_milestones.stub!(:remove_all)
+    @save_milestone.existing_milestones.stub!(:refresh)
   end
     
   it "should use the stage name to get the appropriate client" do
@@ -43,16 +42,7 @@ describe SaveMilestone do
   end
   
   it "should refresh the list of milestones" do
-    milestones = [mock("milestone")]
-    @project.stub!(:milestones).and_return(milestones)
-    @save_milestone.existing_milestones.should_receive(:build).with(:milestones => milestones)
-    
-    @save_milestone.save
-  end
-  
-  it "should remove all children before building" do
-    @save_milestone.existing_milestones.should_receive(:remove_all).ordered
-    @save_milestone.existing_milestones.should_receive(:build).ordered
+    @save_milestone.existing_milestones.should_receive(:refresh)
     
     @save_milestone.save
   end

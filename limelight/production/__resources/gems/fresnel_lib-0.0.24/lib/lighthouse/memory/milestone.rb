@@ -10,6 +10,12 @@ module Lighthouse
       @@milestones.delete_if { |milestone| milestone.id == id && milestone.project_id == params[:project_id] }
     end
     
+    def self.create(params)
+      milestone = Lighthouse::Milestone.new(params)
+      milestone.save
+      return milestone
+    end
+    
     def self.find(param1, param2)
       project_id = param2[:params][:project_id]
       return @@milestones.find_all { |milestone| milestone.project_id == project_id }

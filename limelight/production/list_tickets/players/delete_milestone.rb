@@ -1,10 +1,13 @@
 module DeleteMilestone
+  prop_reader :existing_milestones
+  
   def mouse_clicked(event)
     show_spinner { delete }
   end
   
   def delete
     current_project.delete_milestone(milestone_id)
+    existing_milestones.refresh
   end
   
   private #####################
