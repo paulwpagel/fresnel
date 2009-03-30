@@ -46,4 +46,9 @@ describe SaveMilestone do
     
     @save_milestone.save
   end
+  
+  it "should define the mouse clicked event" do
+    lambda{@save_milestone.mouse_clicked(nil)}.should_not raise_error
+  end
+  
 end

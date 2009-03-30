@@ -5,6 +5,9 @@ module SaveMilestone
     show_spinner { save }
   end
   
+  def mouse_clicked(event)
+  end
+  
   def save
     current_project.update_milestone(milestone_id, {:title => new_title, :goals => new_goals, :due_on => new_due_on})
     existing_milestones.refresh

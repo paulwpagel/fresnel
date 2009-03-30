@@ -5,6 +5,9 @@ module CancelEditMilestone
     cancel
   end
   
+  def mouse_clicked(event)
+  end
+  
   def cancel
     existing_milestones.refresh
   end

@@ -14,4 +14,8 @@ describe CancelEditMilestone do
     
     @cancel_edit_milestone.cancel
   end
+  
+  it "should define the mouse clicked event" do
+    lambda{@cancel_edit_milestone.mouse_clicked(nil)}.should_not raise_error
+  end
 end
