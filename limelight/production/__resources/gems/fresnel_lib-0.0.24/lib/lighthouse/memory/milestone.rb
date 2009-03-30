@@ -27,6 +27,7 @@ module Lighthouse
     def initialize(options = {})
       @project_id = options[:project_id]
       @title = options[:title]
+      @goals = options[:goals]
       @id = nil
     end
     

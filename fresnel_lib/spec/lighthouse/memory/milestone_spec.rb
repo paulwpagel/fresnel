@@ -5,11 +5,12 @@ require "lighthouse/lighthouse"
 describe Lighthouse::Milestone do
   before(:each) do
     Lighthouse::Milestone.destroy_all
-    @milestone = create_milestone(:project_id => "project_id", :title => "Milestone One")
+    @milestone = create_milestone(:project_id => "project_id", :title => "Milestone One", :goals => "Some Goal", :due_on => "03-07-2006")
   end
 
-  it "should have a project_id information" do
+  it "should have a basic information on init" do
     @milestone.project_id.should == "project_id"
+    @milestone.goals.should == "Some Goal"
   end
   
   it "should have a title" do

@@ -315,8 +315,8 @@ configure_milestones_wrapper {
   y 0
   width "100%"
   height "100%"
-  background_color "cfe2ee"
-  secondary_background_color "f7f7f7"
+  background_color "f7f7f7"
+  secondary_background_color "cfe2ee"
   gradient :on
   gradient_angle 270
   gradient_penetration 100
@@ -330,7 +330,19 @@ delete_milestone {
   height 20
   width 20
 }
-
+existing_milestone {
+  font_size 14
+  hover {
+    text_color "DDDDDD"
+  }
+}
+existing_milestones_header {
+  font_size 18
+  width "100%"
+  bottom_border_width 2
+  bottom_border_color "black"
+  bottom_margin 7
+}
 edit_milestone_wrapper {
  background_color "FFFFFF" 
  secondary_background_color "DDDDDD"
