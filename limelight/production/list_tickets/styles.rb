@@ -330,3 +330,15 @@ delete_milestone {
   height 20
   width 20
 }
+
+edit_milestone_wrapper {
+ background_color "FFFFFF" 
+ secondary_background_color "DDDDDD"
+ gradient :on
+ gradient_angle 270
+ gradient_penetration 100
+ border_color "006699"
+ rounded_corner_radius "10"
+ border_width 2
+ padding 7
+}

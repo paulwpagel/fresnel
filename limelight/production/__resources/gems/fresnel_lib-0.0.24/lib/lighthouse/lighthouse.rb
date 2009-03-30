@@ -20,6 +20,11 @@ project_three.save
 milestone = Lighthouse::Milestone.new(:project_id => project.id, :title => "First Milestone")
 milestone.save
 
+milestone_two = Lighthouse::Milestone.new(:project_id => project.id, :title => "Second Milestone")
+milestone_two.save
+
+milestone_three = Lighthouse::Milestone.new(:project_id => project.id, :title => "Third Milestone")
+milestone_three.save
 
 def create_ticket(options={})
   ticket = Lighthouse::Ticket.new(options)
