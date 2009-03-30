@@ -57,4 +57,20 @@ describe Lighthouse::Milestone do
     milestones = Lighthouse::Milestone.find(:all, :params => {:project_id => "project_id"})
     milestones.size.should == 1
   end
+  
+  describe "delete" do    
+    it "should accept an id and projet_id" do
+      Lighthouse::Milestone.delete(@milestone.id, {:project_id => "project_id"})
+      
+      milestones = Lighthouse::Milestone.find(:all, :params => {:project_id => "project_id"})
+      milestones.size.should == 0
+    end
+    
+    it "should not delete milestones for a different project" do
+      Lighthouse::Milestone.delete(@milestone.id, {:project_id => "different_project_id"})
+      
+      milestones = Lighthouse::Milestone.find(:all, :params => {:project_id => "project_id"})
+      milestones.size.should == 1
+    end
+  end
 end

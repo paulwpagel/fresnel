@@ -6,5 +6,7 @@ edit_milestone_wrapper {
   else
     text_box :id => "milestone_due_on_#{@milestone.id}", :text => ""
   end
+  delete_milestone :id => "delete_milestone_#{@milestone.id}"
   button :id => "save_milestone_#{@milestone.id}", :players => "save_milestone", :text => "Save"
+  button :id => "cancel_edit_milestone_#{@milestone.id}", :players => "cancel_edit_milestone", :text => "Cancel"
 }

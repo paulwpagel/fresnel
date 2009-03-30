@@ -50,4 +50,15 @@ describe "Milestones Props" do
     prop.name.should == "text_box"
     prop.text.should == ""
   end
+  
+  it "should have a way to delete the milestone" do
+    prop = scene.find("delete_milestone_123")
+    prop.name.should == "delete_milestone"
+  end
+  
+  it "should have a cancel button" do
+    prop = scene.find("cancel_edit_milestone_123")
+    prop.name.should == "button"
+    prop.players.should == "cancel_edit_milestone"
+  end
 end
