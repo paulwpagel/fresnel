@@ -4,7 +4,7 @@ module SaveMilestone
   end
   
   def save
-    current_project.update_milestone(milestone_id, :title => new_title)
+    current_project.update_milestone(milestone_id, {:title => new_title, :goals => new_goals, :due_on => new_due_on})
   end
   
   private ###########
@@ -12,6 +12,16 @@ module SaveMilestone
   def new_title
     title_prop = scene.find("milestone_title_#{milestone_id}")
     return title_prop.text if title_prop
+  end
+  
+  def new_goals
+    goal_prop = scene.find("milestone_goals_#{milestone_id}")
+    return goal_prop.text if goal_prop
+  end
+  
+  def new_due_on
+    date_prop = scene.find("milestone_due_on_#{milestone_id}")
+    return date_prop.text if date_prop
   end
   
   def milestone_id

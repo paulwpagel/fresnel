@@ -23,4 +23,21 @@ describe SaveMilestone do
     
     @save_milestone.save
   end
+  
+  it "should update the milestone's goals" do
+    goals_prop = mock("prop", :text => "New Goals")
+    @scene.should_receive(:find).with("milestone_goals_12345").and_return(goals_prop)
+    @project.should_receive(:update_milestone).with(12345, hash_including(:goals => "New Goals"))
+    
+    @save_milestone.save
+  end
+  
+  it "should update the milestone's due one" do
+    date_prop = mock("prop", :text => "New Date")
+    @scene.should_receive(:find).with("milestone_due_on_12345").and_return(date_prop)
+    @project.should_receive(:update_milestone).with(12345, hash_including(:due_on => "New Date"))
+    
+    @save_milestone.save
+  end
+  
 end
