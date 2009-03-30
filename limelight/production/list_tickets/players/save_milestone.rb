@@ -1,10 +1,16 @@
 module SaveMilestone
+  prop_reader :existing_milestones
+  
   def button_pressed(event)
     show_spinner { save }
   end
   
   def save
     current_project.update_milestone(milestone_id, {:title => new_title, :goals => new_goals, :due_on => new_due_on})
+    existing_milestones.remove_all
+    existing_milestones.build(:milestones => current_project.milestones) do
+      __install "list_tickets/existing_milestone_list.rb", :milestones => @milestones
+    end
   end
   
   private ###########

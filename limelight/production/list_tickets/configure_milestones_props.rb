@@ -15,7 +15,7 @@ configure_milestones_wrapper(:id => "configure_milestones_wrapper") {
     button :id => "create_milestone", :text => "Create Milestone", :players => "create_milestone", :width => 200
   }
   
-  existing_milestones {
+  existing_milestones(:id => "existing_milestones") {
     __install "list_tickets/existing_milestone_list.rb", :milestones => @milestones
   }
   

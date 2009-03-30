@@ -56,4 +56,9 @@ describe "Milestones Props" do
     prop = scene.find("edit_milestone_456")
     prop.name.should == "edit_milestone"
   end
+  
+  it "should wrap the existing milestones" do
+    prop = scene.find("existing_milestones")
+    prop.name.should == "existing_milestones"
+  end
 end
