@@ -309,9 +309,9 @@ describe Lighthouse::LighthouseApi::Project, "hyphenated_name" do
 end
 
 def create_mock_milestones
-  @milestone_one = mock("milestone", :id => 123, :attribute= => nil)
-  @milestone_two = mock("milestone", :id => 456)
-  @milestone_three = mock("milestone", :id => 789)
+  @milestone_one = mock("milestone", :id => 123, :attribute= => nil, :save => nil)
+  @milestone_two = mock("milestone", :id => 456, :save => nil)
+  @milestone_three = mock("milestone", :id => 789, :save => nil)
   @milestones = [@milestone_one, @milestone_two, @milestone_three]
 end
 
@@ -406,14 +406,29 @@ describe Lighthouse::LighthouseApi::Project, "milestone manipulation" do
     end
     
     it "should work for a different milestone id" do
-      @milestone_two.should_receive(:attribute=).with("new value")
+      @milestone_two.should_receive(:different_attribute=).with("new value")
       
-      @fresnel_project.update_milestone(456, {:attribute => "new value"})
+      @fresnel_project.update_milestone(456, {:different_attribute => "new value"})
     end
     
     it "should not crash if it cannot find the milestone from the id" do
       lambda{@fresnel_project.update_milestone("bad_id", {:attribute => "new value"})}.should_not raise_error
     end
+    
+    it "should save the milestone" do
+      @milestone_one.should_receive(:save)
+      
+      @fresnel_project.update_milestone(123, {})
+    end
+    
+    it "should update the entire list of milestones" do
+      Lighthouse::Milestone.should_receive(:find).with(:all, :params => { :project_id => 12345 }).and_return([@new_milestone])
+    
+      @fresnel_project.update_milestone(123, {})
+    
+      @fresnel_project.milestones.should == [@new_milestone]
+    end
+    
   end
 end
 

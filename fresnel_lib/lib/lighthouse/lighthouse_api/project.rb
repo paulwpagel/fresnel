@@ -105,9 +105,12 @@ module Lighthouse
       end
       
       def update_milestone(id, attributes)
-        attributes.each_pair do |attribute, new_value|
-          milestone_from_id(id).send(:attribute=, new_value) if milestone_from_id(id)
+        milestone = milestone_from_id(id)
+        if milestone
+          attributes.each_pair { |attribute, new_value| milestone.send("#{attribute}=", new_value) }
+          milestone.save
         end
+        update_milestone_list
       end
       
       def open_states
