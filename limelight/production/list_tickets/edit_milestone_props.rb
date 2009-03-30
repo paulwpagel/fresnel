@@ -5,7 +5,7 @@ edit_milestone_wrapper {
   }
   row {
     label :text => "Goals:", :width => 100
-    text_box :id => "milestone_goals_#{@milestone.id}", :text => @milestone.goals, :width => 250
+    text_area :id => "milestone_goals_#{@milestone.id}", :text => @milestone.goals, :width => 250
   }
   row {
     label :text => "Due Date:", :width => 100

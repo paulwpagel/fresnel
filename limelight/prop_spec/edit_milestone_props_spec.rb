@@ -26,7 +26,7 @@ describe "Milestones Props" do
 
   it "should have an input field for the goals" do
     prop = scene.find("milestone_goals_123")
-    prop.name.should == "text_box"
+    prop.name.should == "text_area"
     prop.text.should == "Some Goals"
   end
 
