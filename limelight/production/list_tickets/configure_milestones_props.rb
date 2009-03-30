@@ -18,7 +18,9 @@ configure_milestones_wrapper(:id => "configure_milestones_wrapper") {
   existing_milestones {
     @milestones.each do |milestone|
       row {
-        edit_milestone :text => milestone.title, :id => "edit_milestone_#{milestone.id}"
+        edit_milestone(:id => "edit_milestone_#{milestone.id}") {
+          label :text => milestone.title
+        }
       }
     end
   }
