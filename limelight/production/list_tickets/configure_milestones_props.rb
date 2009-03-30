@@ -16,13 +16,7 @@ configure_milestones_wrapper(:id => "configure_milestones_wrapper") {
   }
   
   existing_milestones {
-    @milestones.each do |milestone|
-      row {
-        edit_milestone(:id => "edit_milestone_#{milestone.id}") {
-          label :text => milestone.title
-        }
-      }
-    end
+    __install "list_tickets/existing_milestone_list.rb", :milestones => @milestones
   }
   
   button :id => "close_configure_milestones", :text => "Close", :players => "close_configure_milestones"
