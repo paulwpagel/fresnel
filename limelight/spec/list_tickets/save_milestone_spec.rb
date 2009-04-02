@@ -9,6 +9,7 @@ describe SaveMilestone do
                                                 :production => {:stage_manager => @stage_manager})
     @save_milestone.stub!(:id).and_return("save_milestone_12345")
     @save_milestone.existing_milestones.stub!(:refresh)
+    Date.stub!(:parse)
   end
     
   it "should use the stage name to get the appropriate client" do
@@ -35,7 +36,7 @@ describe SaveMilestone do
   
   it "should update the milestone's due one" do
     date_prop = mock("prop", :text => "New Date")
-    @scene.should_receive(:find).with("milestone_due_on_12345").and_return(date_prop)
+    @scene.should_receive(:find).with("milestone_due_on_12345").at_least(1).times.and_return(date_prop)
     @project.should_receive(:update_milestone).with(12345, hash_including(:due_on => "New Date"))
     
     @save_milestone.save
@@ -51,4 +52,18 @@ describe SaveMilestone do
     lambda{@save_milestone.mouse_clicked(nil)}.should_not raise_error
   end
   
+  describe "with an invalid date" do
+    before(:each) do
+      Date.stub!(:parse).and_raise(ArgumentError)
+    end
+    
+    it "should not update the milestone" do
+      date_prop = mock("prop", :text => "Bad Date")
+      @scene.should_receive(:find).with("milestone_due_on_12345").and_return(date_prop)
+      Date.should_receive(:parse).with("Bad Date").and_raise(ArgumentError)
+      @project.should_not_receive(:update_milestone)
+      
+      @save_milestone.save
+    end
+  end
 end
