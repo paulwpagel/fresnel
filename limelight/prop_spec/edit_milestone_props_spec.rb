@@ -33,7 +33,7 @@ describe "Milestones Props" do
   it "should have an input field for the due on date" do
     prop = scene.find("milestone_due_on_123")
     prop.name.should == "text_box"
-    prop.text.should == "#{@date.month}-#{@date.day}-#{@date.year}"
+    prop.text.should == "#{@date.day}-#{@date.month}-#{@date.year}"
   end
   
   it "should have a save_button" do
