@@ -6,8 +6,12 @@ module CreateMilestone
   end
   
   def create
-    current_project.create_milestone(:title => new_milestone_title.text, :goals => new_milestone_goals.text, :due_on => new_milestone_due_on.text)
-    existing_milestones.refresh
+    begin
+      Date.parse(new_milestone_due_on.text)
+      current_project.create_milestone(:title => new_milestone_title.text, :goals => new_milestone_goals.text, :due_on => new_milestone_due_on.text)
+      existing_milestones.refresh
+    rescue ArgumentError
+    end
   end
   
   private ##################

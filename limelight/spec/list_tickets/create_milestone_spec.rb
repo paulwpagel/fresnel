@@ -8,6 +8,7 @@ describe CreateMilestone do
                                                 :scene => {:stage => @stage}, 
                                                 :production => {:stage_manager => @stage_manager})
     @create_milestone.existing_milestones.stub!(:refresh)
+    Date.stub!(:parse)
   end
   
   it "should use the stage name to get the current project" do
@@ -42,4 +43,19 @@ describe CreateMilestone do
     
     @create_milestone.create
   end
+  
+  describe "with an invalid date" do
+    before(:each) do
+      Date.stub!(:parse).and_raise(ArgumentError)
+    end
+    
+    it "should not create the milestone" do
+      @create_milestone.new_milestone_due_on.stub!(:text).and_return("Bad Date")
+      Date.should_receive(:parse).with("Bad Date").and_raise(ArgumentError)
+      @project.should_not_receive(:create_milestone)
+      
+      @create_milestone.create
+    end
+  end
+  
 end
