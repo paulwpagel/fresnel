@@ -10,12 +10,12 @@ main_ticket_group {
 
   input_group{
     label :text => "Milestone:"
-    combo_box :id => 'add_ticket_milestone'
+    combo_box :id => 'add_ticket_milestone', :choices => @milestone_choices
   }
 
   input_group{
     label :text => "Who's Responsible:"
-    combo_box :id => 'add_ticket_responsible_person'
+    combo_box :id => 'add_ticket_responsible_person', :choices => @assigned_user_choices
   }
 
   input_group{
