@@ -38,7 +38,8 @@ module ListTickets
     tag_lister.show_project_tags
     ticket_lister.filter_by_type("Open Tickets")
     stage_info.current_project.register_milestone_observer(milestone_lister)
-    milestone_lister.show_project_milestones
+    
+    milestone_lister.list_titles
   end
     
   private #######################

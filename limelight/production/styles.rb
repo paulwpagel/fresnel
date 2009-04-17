@@ -1,6 +1,6 @@
 main {
-	width 1000
-	height 756
+	width "100%"
+	height "100%"
 	secondary_background_color "cfe2ee"
 	horizontal_alignment "center"
 	vertical_scrollbar "on"

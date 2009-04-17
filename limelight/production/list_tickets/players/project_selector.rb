@@ -11,7 +11,8 @@ module ProjectSelector
     production.stage_manager.notify_of_project_change(text, stage_name)
     ticket_lister.show_these_tickets(open_tickets(stage_name))
     tag_lister.show_project_tags
-    milestone_lister.show_project_milestones
+
+    milestone_lister.list_titles
   end
   
   private ###########################

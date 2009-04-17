@@ -1,20 +1,23 @@
 module MilestoneLister
+
   def observe
-    show_project_milestones
-  end
-  
-  def show_project_milestones
-    remove_all
     list_titles
   end
   
   def activate(id)
-    milestone = scene.find(id)
-    remove_all
-    list_titles milestone.text
+    if id
+      milestone = scene.find(id)
+      list_titles milestone.text
+    else
+      list_titles
+    end
   end
   
   def list_titles(active_milestone_text = nil)
+    remove_all
+    
+    add(Limelight::Prop.new(:name => "milestone", :text => "All Milestones"))
+    
     project.milestone_titles.each_with_index do |milestone_text, index|
       name = "milestone"
       name = "active_milestone" if active_milestone_text == milestone_text

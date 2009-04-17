@@ -172,6 +172,17 @@ title_bar {
   background_color "5A9ECF"
 }
 
+right_title{
+  horizontal_alignment :right
+  width "70%"
+}
+
+left_title {
+  horizontal_alignment :left
+  width "30%"
+}
+
+
 filter_option {
   font_size 14
   padding 10
@@ -228,16 +239,6 @@ version_cell {
   border_width 4
   border_color "006699"
   background_color "5A9ECF"
-}
-
-right_title{
-  horizontal_alignment :right
-  width "70%"
-}
-
-left_title {
-  horizontal_alignment :left
-  width "30%"
 }
 
 heading_wrapper {

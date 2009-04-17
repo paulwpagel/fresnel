@@ -8,16 +8,18 @@ end
 
 describe MilestoneLister do
   before(:each) do
+    Limelight::Prop.stub!(:new)
     mock_stage_manager
     @project.stub!(:milestone_titles).and_return([])
     @milestone_lister, @scene, @production = create_player(MilestoneLister, 
                                                 :scene => {:stage => @stage}, 
                                                 :production => {:stage_manager => @stage_manager})
     @milestone_lister.stub!(:remove_all)
+    @milestone_lister.stub!(:add)
   end
   
-  it "should wrap the show_project_milestones method in an observe method" do
-    @milestone_lister.should_receive(:show_project_milestones)
+  it "should wrap the list_titles method in an observe method" do
+    @milestone_lister.should_receive(:list_titles)
     
     @milestone_lister.observe
   end
@@ -26,6 +28,15 @@ describe MilestoneLister do
     @stage_manager.should_receive(:[]).with("stage name").and_return(@stage_info)
     
     @milestone_lister.list_titles
+  end
+  
+  it "should have a default all milestones prop" do
+    prop = mock('prop')
+    @project.stub!(:milestone_titles).and_return([])
+    Limelight::Prop.should_receive(:new).with(:name => "milestone", :text => "All Milestones").and_return(prop)
+    @milestone_lister.should_receive(:add).with(prop)
+    
+    @milestone_lister.list_titles    
   end
   
   it "should make a prop for one milestone title" do
@@ -60,18 +71,25 @@ describe MilestoneLister do
     @milestone_lister.activate("id")
   end
   
+  it "should reset the milestone list when activate recieves no id" do
+    prop = mock('prop')
+    @project.should_receive(:milestone_titles).and_return(["Milestone One"])
+
+    Limelight::Prop.should_receive(:new).with(:name => "milestone", :text => "Milestone One", :id => "milestone_1").and_return(prop)
+    @milestone_lister.should_receive(:add).with(prop)
+    @milestone_lister.activate(nil)
+  end
+  
   it "should remove_all before it lists" do
     @milestone_lister.should_receive(:remove_all)
-    @milestone_lister.stub!(:list_titles)
     
-    @milestone_lister.show_project_milestones
+    @milestone_lister.list_titles
   end
   
   it "should remove_all before it activates a milestone title" do
     milestone = mock("milestone", :text => nil)
     @scene.stub!(:find).and_return(milestone)
     @milestone_lister.should_receive(:remove_all)
-    @milestone_lister.stub!(:list_titles)
     
     @milestone_lister.activate("id")
   end

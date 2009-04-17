@@ -17,7 +17,9 @@ main {
       heading :text => "Milestones"
       configure_milestones :id => "configure_milestones"
     }
+    
     milestone_lister :id => "milestone_lister"
+    
     heading_wrapper {
       heading :id => "tag_heading", :text => "Tags"
     }
