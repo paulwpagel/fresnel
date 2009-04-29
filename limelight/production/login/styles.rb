@@ -6,13 +6,18 @@ header {
 }
 
 login_group {
-  padding 10
+  left_padding 60
+  right_padding 60
+  top_padding 30
   rounded_corner_radius "10"
-  border_width 4
-  border_color "006699"
-  background_color "5A9ECF"
-  width 500
-  height 230
+  border_width 1
+  background_color "f7f7ff"
+  secondary_background_color "BBBBBB"
+  gradient :on
+  gradient_angle 270
+  gradient_penetration 100
+  width 600
+  height 275
 }
 
 button_group {

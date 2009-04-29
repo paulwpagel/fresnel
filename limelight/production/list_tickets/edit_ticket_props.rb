@@ -14,7 +14,7 @@ main_ticket_group {
     }
   }
   row {
-    cell(:width => "30%") {
+    cell(:width => "20%") {
       edit_ticket_label :text => "Description:"
     }
     cell {
@@ -22,7 +22,7 @@ main_ticket_group {
     }
   }
   row {
-    cell(:width => "30%") {
+    cell(:width => "20%") {
       edit_ticket_label :text => "Assigned User:"
     }
     cell {
@@ -30,7 +30,7 @@ main_ticket_group {
     }
   }
   row {
-    cell(:width => "30%") {
+    cell(:width => "20%") {
       edit_ticket_label :text => "Milestone:"
     }
     cell {
@@ -38,7 +38,7 @@ main_ticket_group {
     }
   }
   row {
-    cell(:width => "30%") {
+    cell(:width => "20%") {
       edit_ticket_label :text => "Tags:"
     }
     cell {
@@ -46,7 +46,7 @@ main_ticket_group {
     }
   }
   row {
-    edit_ticket_label :text => "Add Comment:", :width => "30%"
+    edit_ticket_label :text => "Add Comment:", :width => "20%"
   }
   row {
     text_area :id => "ticket_comment", :width => "100%"

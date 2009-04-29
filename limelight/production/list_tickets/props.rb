@@ -1,14 +1,15 @@
 main {
   title_bar {
     left_title{
-      combo_box :id => "project_selector", :players => "project_selector"
+      title_bar_label :text => "Select Project:"
+      combo_box :id => "project_selector", :players => "project_selector", :width => 175
       image :players => "load_add_project", :id => "add_project", :image => "images/add.png", :width => 20, :height => 20, :top_margin => 4, :left_margin => 4, :styles => "icon"
     }
     right_title{
-      button :text => "Add Ticket", :width => 150, :id => "add_ticket_button", :players => "create_ticket"
-      button :text => "Add Account", :width => 150, :id => "extra_account", :players => "extra_account"
-      button :text => "Go to Website", :width => 150, :id => "website_link", :players => "website"
-      button :text => "Logout", :width => 150, :id => "logout", :players => "title_bar"
+      title_bar_link :text => "Add Ticket", :id => "add_ticket_button", :players => "create_ticket"
+      title_bar_link :text => "Add Account", :id => "extra_account", :players => "extra_account"
+      title_bar_link :text => "Go to Website", :id => "website_link", :players => "website"
+      title_bar_link :text => "Logout", :id => "logout", :players => "title_bar"
     }
   }
 
@@ -17,7 +18,7 @@ main {
       heading :text => "Milestones"
       configure_milestones :id => "configure_milestones"
     }
-    
+  
     milestone_lister :id => "milestone_lister"
     
     heading_wrapper {
@@ -29,10 +30,10 @@ main {
   
   ticket_content {
     search_bar {
-      combo_box :id => "ticket_type", :players => "type_selector", :choices => ["Open Tickets", "All Tickets"], :width => 350, :right_margin => 200
+      combo_box :id => "ticket_type", :players => "type_selector", :choices => ["Open Tickets", "All Tickets"], :width => 350, :right_margin => 100
    
-      label :text => "Search", :font_size => 14, :width => 70
-      search_box :players => "text_box", :name => "search_box",  :id => "search_box"
+      label :text => "Search:", :font_size => 14, :width => 60, :top_padding => 7
+      search_box :players => "text_box", :name => "search_box",  :id => "search_box", :width => 200
       button :players => "search", :id => "search_button", :text => "Search"
     }  
 

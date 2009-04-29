@@ -1,12 +1,12 @@
 main {
 	width "100%"
 	height "100%"
-	secondary_background_color "cfe2ee"
+	background_color "2060a0"
 	horizontal_alignment "center"
 	vertical_scrollbar "on"
-  background_color "f7f7f7"
+  secondary_background_color "74a3d0"
   gradient :on
-  gradient_angle 270
+  gradient_angle 90
   gradient_penetration 100
 }
 

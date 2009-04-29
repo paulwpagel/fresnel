@@ -12,7 +12,6 @@ describe EditTicket do
     @edit_ticket.id = "ticket_12345"     
     @edit_ticket.stub!(:remove_all)
     @edit_ticket.stub!(:build)    
-    @edit_ticket.stub!(:hover_style).and_return(mock('hover', :background_color= => nil))        
   end
 
   it "should use the stage name to get the stage_info" do
@@ -46,14 +45,5 @@ describe EditTicket do
     
     @edit_ticket.edit
   end
-  
-  it "should set the background color" do
-    hover_style = mock('hover style')
-    @edit_ticket.should_receive(:hover_style).and_return(hover_style)
-    hover_style.should_receive(:background_color=).with("5A9ECF")
-
-    @edit_ticket.edit
-  end
-  
 end
 

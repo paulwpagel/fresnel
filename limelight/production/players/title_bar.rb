@@ -1,7 +1,7 @@
 require "credential"
 module TitleBar
   
-  def button_pressed(event)
+  def mouse_clicked(event)
     show_spinner { title_bar }
   end
   

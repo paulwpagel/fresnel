@@ -5,7 +5,7 @@ module AddTicketHelper
   def add_ticket(producer)
     scene = current_scene(producer)
 
-    press_button "add_ticket_button", scene
+    scene.find("add_ticket_button").mouse_clicked(nil)
     
     scene = current_scene(producer)    
     scene.find("add_ticket_title").text = "Test Title One"

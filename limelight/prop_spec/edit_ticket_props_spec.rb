@@ -47,12 +47,6 @@ describe EditTicket do
     click_ticket
   end
 
-  it "should set the background color to 5A9ECF" do
-    click_ticket
-    
-    ticket = scene.find("ticket_12345").hover_style.background_color.should == "#5a9ecfff"
-  end
-  
   it "should make a prop on the scene for the current ticket title" do
     click_ticket
     

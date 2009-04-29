@@ -23,7 +23,7 @@ describe "Login Integration Test" do
   
     login_with_credentials(scene)
     
-    press_button("extra_account", scene.stage.current_scene)
+    scene.stage.current_scene.find("extra_account").mouse_clicked(nil)
     producer.theater.stages.size.should == 2
     
     scene = producer.open_scene("login", producer.theater.stages[1])
@@ -34,7 +34,7 @@ describe "Login Integration Test" do
     scene = producer.open_scene("login", producer.theater.stages[0])
 
     login_with_credentials(scene)
-    press_button("extra_account", scene.stage.current_scene)
+    scene.stage.current_scene.find("extra_account").mouse_clicked(nil)
     
     scene = producer.open_scene("login", producer.theater.stages[1])
     login_with_credentials(scene, :account => "Account Two")

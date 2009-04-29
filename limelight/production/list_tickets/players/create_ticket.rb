@@ -2,7 +2,7 @@ module CreateTicket
   
   prop_reader :add_ticket_group
   
-  def button_pressed(event)
+  def mouse_clicked(event)
     show_spinner { create_ticket }
   end
   

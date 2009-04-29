@@ -1,5 +1,5 @@
 module ExtraAccount
-  def button_pressed(event)
+  def mouse_clicked(event)
     open_extra_account
   end
   

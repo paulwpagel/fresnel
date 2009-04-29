@@ -13,21 +13,21 @@ describe CreateTicket do
   uses_scene :list_tickets
   
   it "should have an input for the ticket title" do
-    scene.find('add_ticket_button').button_pressed(nil)
+    scene.find('add_ticket_button').mouse_clicked(nil)
 
     title = scene.find("add_ticket_title")
     title.should_not be_nil
   end
   
   it "should have the description" do
-    scene.find('add_ticket_button').button_pressed(nil)
+    scene.find('add_ticket_button').mouse_clicked(nil)
 
     description = scene.find("add_ticket_description")
     description.should_not be_nil
   end
   
   it "should have a combo_box for milestones" do
-    scene.find('add_ticket_button').button_pressed(nil)
+    scene.find('add_ticket_button').mouse_clicked(nil)
 
     milestones = scene.find("add_ticket_milestone")
     milestones.should_not be_nil
@@ -36,7 +36,7 @@ describe CreateTicket do
   end
   
   it "should have a combo box for who is responsible" do
-    scene.find('add_ticket_button').button_pressed(nil)
+    scene.find('add_ticket_button').mouse_clicked(nil)
     
     responsible = scene.find("add_ticket_responsible_person")
     responsible.should_not be_nil
@@ -45,7 +45,7 @@ describe CreateTicket do
   end
   
   it "should have tags" do
-    scene.find('add_ticket_button').button_pressed(nil)
+    scene.find('add_ticket_button').mouse_clicked(nil)
     
     tags = scene.find("add_ticket_tags")
     tags.should_not be_nil
@@ -53,7 +53,7 @@ describe CreateTicket do
   end
   
   it "should have an add button" do
-    scene.find("add_ticket_button").button_pressed(nil)
+    scene.find("add_ticket_button").mouse_clicked(nil)
     
     button = scene.find("submit_add_ticket_button")
     button.should_not be_nil
@@ -62,7 +62,7 @@ describe CreateTicket do
   end
   
   it "should have a cancel button" do
-    scene.find("add_ticket_button").button_pressed(nil)
+    scene.find("add_ticket_button").mouse_clicked(nil)
     
     button = scene.find("cancel_add_ticket_button")
     button.should_not be_nil

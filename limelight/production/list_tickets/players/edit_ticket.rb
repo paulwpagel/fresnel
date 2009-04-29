@@ -11,7 +11,6 @@ module EditTicket
     build(:ticket => current_ticket, :project => stage_info.current_project) do
       __install "list_tickets/edit_ticket_props.rb", :ticket => @ticket, :project => @project
     end
-    hover_style.background_color = "5A9ECF"
   end
   
   private ###################
