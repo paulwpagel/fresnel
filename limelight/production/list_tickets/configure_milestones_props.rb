@@ -1,6 +1,6 @@
 configure_milestones_wrapper(:id => "configure_milestones_wrapper") {
   configure_milestones_header(:height => "10%", :vertical_alignment => :center) {
-    label :text => "Milestone Setup", :font_size => 36, :width => "100%", :horizontal_alignment => :center
+    heading :text => "Milestone Setup", :font_size => 36, :width => "100%", :horizontal_alignment => :center
   }
   configure_milestones_content(:height => "80%", :vertical_alignment => :center) {
     create_milestone_form {

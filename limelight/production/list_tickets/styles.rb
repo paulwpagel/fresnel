@@ -1,6 +1,5 @@
 @@main_ticket_bg_color = "2060a0"
 @@blue_border_color = "204060"
-@@header_row_bg_color = "#f0c040"
 @@secondary_bg_color = "f7f7ff"
 @@header_text_color = "F6C522"
 @@table_header_text_color = "2060a0"
@@ -97,10 +96,10 @@ ticket_table {
   padding 15
   border_width 1
   border_color "204060"
-  secondary_background_color @@secondary_bg_color
+
   background_color "e0e0f0"
+  secondary_background_color @@secondary_bg_color
   gradient :on
-  gradient_penetration 100
 }
 
 header_row {
@@ -209,6 +208,9 @@ title_bar {
   padding 3
 }
 
+filter_section {
+  bottom_margin 20
+}
 ticket_filter {
   font_size 12
   text_color "0A3A68"
@@ -288,10 +290,12 @@ left_title {
   width "35%"
 }
 
-heading {
-  width "100%"
-  text_color @@header_text_color
+heading_wrapper {
   horizontal_alignment :center
+  width "100%"
+}
+heading {
+  text_color @@header_text_color
   font_style :bold
   font_size 24
 }
@@ -364,4 +368,76 @@ title_bar_link {
     text_color "ccc"
     bottom_border_color "ccc"
   }
+}
+
+create_milestone_form {
+  padding 10
+  margin "5%"
+  width "50%"
+  rounded_corner_radius 10
+  padding 15
+  border_width 1
+  border_color "204060"
+
+  background_color "e0e0f0"
+  secondary_background_color @@secondary_bg_color
+  gradient :on
+}
+ 
+existing_milestones {
+  extends :create_milestone_form
+}
+
+configure_milestones {
+  background_image_fill_strategy "static"
+  background_image "images/configure.png"
+  height 16
+  width 16
+  hover {}
+}
+
+configure_milestones_wrapper {
+  float "on"
+  x 0
+  y 0
+  width "100%"
+  height "100%"
+
+  background_color "2060a0"
+  secondary_background_color "74a3d0"
+  gradient :on
+
+  horizontal_alignment "center"
+  vertical_alignment "center"
+}
+ 
+delete_milestone {
+  background_image_fill_strategy "static"
+  background_image "images/remove.png"
+  height 20
+  width 20
+}
+existing_milestone {
+  font_size 14
+  hover {
+    text_color "DDDDDD"
+  }
+}
+existing_milestones_header {
+  font_size 18
+  width "100%"
+  bottom_border_width 2
+  bottom_border_color "black"
+  bottom_margin 7
+}
+edit_milestone_wrapper {
+ background_color "FFFFFF"
+ secondary_background_color "DDDDDD"
+ gradient :on
+ gradient_angle 270
+ gradient_penetration 100
+ border_color "006699"
+ rounded_corner_radius "10"
+ border_width 2
+ padding 7
 }

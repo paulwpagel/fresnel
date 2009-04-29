@@ -1,7 +1,13 @@
 center {
   top_margin "30%"
-  border_width 3 
-  rounded_corner_radius "10"
+  rounded_corner_radius 10
+  padding 15
+  border_width 1
+  border_color "204060"
+
+  background_color "e0e0f0"
+  secondary_background_color "f7f7ff"
+  gradient :on
   width 500
   padding "10%"
 }
@@ -11,7 +17,9 @@ input_secction {
 }
 
 heading {
-  font_size 32
+  text_color "2060a0"
+  font_style :bold
+  font_size 24
   bottom_margin 50
 }
 

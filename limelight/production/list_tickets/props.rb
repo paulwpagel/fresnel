@@ -14,18 +14,21 @@ main {
   }
 
   side_column {
-    heading_wrapper {
-      heading :text => "Milestones"
-      configure_milestones :id => "configure_milestones"
+    filter_section {
+      heading_wrapper {
+        heading :text => "Milestones"
+        configure_milestones :id => "configure_milestones"
+      }  
+      milestone_lister :id => "milestone_lister"
     }
-  
-    milestone_lister :id => "milestone_lister"
     
-    heading_wrapper {
-      heading :id => "tag_heading", :text => "Tags"
+    filter_section {
+      heading_wrapper {
+        heading :id => "tag_heading", :text => "Tags"
+      }
+      all_tags :id => "all_tags", :text => "All Tags", :styles => "tag"
+      tag_lister :id => "tag_lister"
     }
-    all_tags :id => "all_tags", :text => "All Tags", :styles => "tag"
-    tag_lister :id => "tag_lister"
   }
   
   ticket_content {
