@@ -45,4 +45,11 @@ describe "Limelight::Prop" do
     @prop.show_spinner do
     end
   end
+  
+  it "should not crash if the stage is nil" do
+    @scene.stub!(:stage).and_return(nil)
+    
+    @prop.show_spinner do
+    end
+  end
 end

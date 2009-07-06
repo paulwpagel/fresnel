@@ -6,7 +6,7 @@ module Limelight
       scene.add(spinner) unless scene.find("spinner")
       yield
       spinner = scene.find("spinner")
-      scene.remove(spinner) if scene.stage.current_scene == scene
+      scene.remove(spinner) if scene.stage && scene.stage.current_scene == scene
     end
 
   end
