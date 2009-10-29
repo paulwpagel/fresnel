@@ -1,9 +1,55 @@
-# This file (production.rb) configures the production. It is the first file loaded when production is opened.
+module Production
+  attr_accessor :stage_manager
 
-# The name of the production.  If not present, the production's name will default to the name of the root directory.
-name "Fresnel"
+  # Define this method if you want the production name to be different from the default, directory name.
+  def name
+    return "Fresnel"
+  end
 
-# Attributes.  Defining attributes on the production will create getters/setters on the production object.
-# Create attributes for any model objects or resources that need to accessible to props or players within the production
+  # Hook #1.  Called when the production is newly created, before any loading has been done.
+  # This is a good place to require needed files and instantiate objects in the business layer.
+  def production_opening
+    $: << File.expand_path(File.dirname(__FILE__) + "/list_tickets/players")
+    $: << File.expand_path(File.dirname(__FILE__) + "/list_tickets/stagehands")
+    $: << File.expand_path(File.dirname(__FILE__) + "/lib")
+    $: << File.expand_path(File.dirname(__FILE__))
+    $: << File.expand_path(File.dirname(__FILE__) + "/__resources/jars")
+    require "OpenWebsite.jar"
+    import "Browser"
+    if ARGV[1] and ARGV[1].downcase == "memory"
+      $adapter = "memory"
+    else
+      $adapter = "net"
+    end
+  end
 
-attribute :stage_manager
+  # Hook #2.  Called after internal gems have been loaded and stages have been instantiated, yet before
+  # any scenes have been opened.
+  def production_loaded
+    require "lighthouse/adapter"
+    require 'lighthouse/lighthouse_api/base' # do i need this
+    require "stage_manager"
+    @stage_manager = StageManager.new
+    require "prop"
+  end
+
+  # Hook #3.  Called when the production, and all the scenes, have fully opened.
+  def production_opened
+  end
+
+  # The system will call this methods when it wishes to close the production, perhaps when the user quits the
+  # application.  By default the production will always return true. You may override this behavior by re-doing
+  # the methods here.
+  def allow_close?
+    return true
+  end
+
+  # Called when the production is about to be closed.
+  def production_closing
+  end
+
+  # Called when the production is fully closed.
+  def production_closed
+  end
+
+end

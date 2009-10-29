@@ -193,6 +193,10 @@ describe Lighthouse::LighthouseApi::Project, "tickets" do
       it "should return all_tickets if the milestone does not exist" do
         @fresnel_project.tickets_for_milestone("Bad Title").should == [@ticket_one, @ticket_two, @ticket_three, @ticket_four]
       end
+      
+      it "should return all_tickets if the milestone is nil" do
+        @fresnel_project.tickets_for_milestone(nil).should == [@ticket_one, @ticket_two, @ticket_three, @ticket_four]
+      end
     end
     
     def ticket(options)
