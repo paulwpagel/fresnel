@@ -9,6 +9,12 @@ module Production
   # Hook #1.  Called when the production is newly created, before any loading has been done.
   # This is a good place to require needed files and instantiate objects in the business layer.
   def production_opening
+    $PRODUCTION_PATH = File.expand_path(File.dirname(__FILE__))
+    Gem.use_paths(File.join($PRODUCTION_PATH , "__resources", "gems"), Gem.default_path)
+
+    Dir.glob(File.join("__resources", "gems", "gems", "**", "lib")).each do |dir|
+      $: << dir
+    end
     $: << File.expand_path(File.dirname(__FILE__) + "/list_tickets/players")
     $: << File.expand_path(File.dirname(__FILE__) + "/list_tickets/stagehands")
     $: << File.expand_path(File.dirname(__FILE__) + "/lib")
@@ -21,16 +27,16 @@ module Production
     else
       $adapter = "net"
     end
-  end
-
-  # Hook #2.  Called after internal gems have been loaded and stages have been instantiated, yet before
-  # any scenes have been opened.
-  def production_loaded
     require "lighthouse/adapter"
     require 'lighthouse/lighthouse_api/base' # do i need this
     require "stage_manager"
     @stage_manager = StageManager.new
     require "prop"
+  end
+
+  # Hook #2.  Called after internal gems have been loaded and stages have been instantiated, yet before
+  # any scenes have been opened.
+  def production_loaded
   end
 
   # Hook #3.  Called when the production, and all the scenes, have fully opened.
