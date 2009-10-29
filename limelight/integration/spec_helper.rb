@@ -32,7 +32,6 @@ require 'rubygems'
 require 'spec'
 require 'limelight/specs/spec_helper'
 require 'lighthouse/adapter'
-$PRODUCTION_PATH = File.expand_path(File.dirname(__FILE__) + "/../production")
 
 $visual = false
 

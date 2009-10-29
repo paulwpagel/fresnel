@@ -9,6 +9,7 @@ describe "Add Ticket Integration Test" do
   include AddTicketHelper
   
   it "should add a single ticket" do
+    producer.production.production_opening
     scene = login_scene(producer)
      
     login_with_credentials(scene)
