@@ -474,12 +474,6 @@ delete_milestone {
 }
 edit_milestone_row {
   width "100%"
-  hover {
-    background_color "2060a0"
-    secondary_background_color "74a3d0"
-    gradient :on
-    text_color @@secondary_bg_color
-  }
 }
 milestone_header_row {
   width "100%"
@@ -495,6 +489,9 @@ existing_milestone {
   left_padding 15
   right_padding 15
   hover {
+    background_color "2060a0"
+    secondary_background_color "74a3d0"
+    gradient :on
     text_color "DDDDDD"
   }
 }
@@ -515,7 +512,10 @@ edit_milestone_wrapper {
  rounded_corner_radius "10"
  border_width 1
  padding 7
- margin 5
+ left_margin 15
+ right_margin 15
+ top_margin 5
+ bottom_margin 5
 }
 milestone_input_group {
   width "100%"
