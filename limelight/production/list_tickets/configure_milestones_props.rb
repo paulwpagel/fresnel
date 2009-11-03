@@ -5,21 +5,26 @@ configure_milestones_wrapper(:id => "configure_milestones_wrapper") {
       title_bar_link :id => "close_configure_milestones", :text => "Back to Tickets", :players => "close_configure_milestones"
     }
   }
-  configure_milestones_content(:height => "80%", :vertical_alignment => :center) {
+  configure_milestones_content(:height => "100%") {
     create_milestone_form {
-      input_group {
-        label :text => "Title"
-        text_box :id => "new_milestone_title"
+      milestone_header_row {
+        heading :text => "Create a Milestone"
       }
-      input_group {
-        label :text => "Due Date (DD-MM-YYYY)"
-        text_box :id => "new_milestone_due_on"
+      milestone_input_group {
+        label :text => "Title:"
+        text_box :id => "new_milestone_title", :styles => "milestone_input"
       }
-      input_group {
-        label :text => "Goals"
-        text_area :id => "new_milestone_goals"
+      milestone_input_group {
+        label :text => "Due Date (DD-MM-YYYY):"
+        text_box :id => "new_milestone_due_on", :styles => "milestone_input"
       }
-      button :id => "create_milestone", :text => "Create Milestone", :players => "create_milestone", :width => 200
+      milestone_input_group {
+        label :text => "Goals:"
+        text_area :id => "new_milestone_goals", :styles => "milestone_input"
+      }
+      milestone_input_group(:horizontal_alignment => :right) {
+        button :id => "create_milestone", :text => "Create Milestone", :players => "create_milestone", :width => 200
+      }
     }
   
     existing_milestones(:id => "existing_milestones") {

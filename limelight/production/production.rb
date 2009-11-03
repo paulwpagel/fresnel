@@ -22,11 +22,11 @@ module Production
     $: << File.expand_path(File.dirname(__FILE__) + "/__resources/jars")
     require "OpenWebsite.jar"
     import "Browser"
-    if ARGV[1] and ARGV[1].downcase == "memory"
+    # if ARGV[1] and ARGV[1].downcase == "memory"
       $adapter = "memory"
-    else
-      $adapter = "net"
-    end
+    # else
+      # $adapter = "net"
+    # end
     require "lighthouse/adapter"
     require 'lighthouse/lighthouse_api/base' # do i need this
     require "stage_manager"

@@ -397,11 +397,10 @@ title_bar_link {
 }
 
 create_milestone_form {
-  padding 10
-  margin "5%"
-  width "50%"
+  top_margin 50
+  left_margin 10
+  width "45%"
   rounded_corner_radius 10
-  padding 15
   border_width 1
   border_color "204060"
 
@@ -412,6 +411,7 @@ create_milestone_form {
  
 existing_milestones {
   extends :create_milestone_form
+  bottom_padding 10
 }
 
 configure_milestones {
@@ -462,14 +462,38 @@ configure_milestones_header_text {
   left_padding 30
 }
 
+milestone_input {
+  width "50%"
+}
+
 delete_milestone {
   background_image_fill_strategy "static"
   background_image "images/remove.png"
   height 20
   width 20
 }
+edit_milestone_row {
+  width "100%"
+  hover {
+    background_color "2060a0"
+    secondary_background_color "74a3d0"
+    gradient :on
+    text_color @@secondary_bg_color
+  }
+}
+milestone_header_row {
+  width "100%"
+  left_padding 15
+  bottom_padding 5
+  top_padding 7
+}
 existing_milestone {
   font_size 14
+  width "100%"
+  top_padding 5
+  bottom_padding 5
+  left_padding 15
+  right_padding 15
   hover {
     text_color "DDDDDD"
   }
@@ -489,6 +513,13 @@ edit_milestone_wrapper {
  gradient_penetration 100
  border_color "006699"
  rounded_corner_radius "10"
- border_width 2
+ border_width 1
  padding 7
+ margin 5
+}
+milestone_input_group {
+  width "100%"
+  left_padding 17
+  right_padding 17
+  bottom_padding 15
 }
