@@ -43,6 +43,7 @@ module TicketLister
   def cancel_edit_ticket
     ticket_prop = scene.find("ticket_#{stage_info.current_ticket.id}")
     ticket_prop.remove_all
+    ticket_prop.hover_style = scene.styles["ticket_in_list.hover"]
 
     new_ticket_prop = ConvertsTicketToProp.convert(stage_info.current_ticket)
     new_ticket_prop.children.each do |child|

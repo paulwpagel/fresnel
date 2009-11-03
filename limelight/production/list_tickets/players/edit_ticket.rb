@@ -8,6 +8,7 @@ module EditTicket
   def edit
     stage_info.current_ticket = current_ticket
     remove_all
+    self.hover_style = nil
     build(:ticket => current_ticket, :project => stage_info.current_project) do
       __install "list_tickets/edit_ticket_props.rb", :ticket => @ticket, :project => @project
     end

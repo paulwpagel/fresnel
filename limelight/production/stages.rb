@@ -7,3 +7,14 @@ StageManager.each_stage do |stage_name, scene_name|
     size [1000, 800]
   end
 end
+
+
+
+stage "devtool" do
+  default_scene "devtool"
+  title "Dev Tool"
+  location [50, 25]
+  size [100, 100]
+  background_color "transparent"
+  framed false
+end

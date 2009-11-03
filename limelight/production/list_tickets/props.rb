@@ -12,56 +12,57 @@ main {
       title_bar_link :text => "Logout", :id => "logout", :players => "title_bar"
     }
   }
+  search_bar {
+    combo_box :id => "ticket_type", :players => "type_selector", :choices => ["Open Tickets", "All Tickets"], :width => 350, :right_margin => 100
 
-  side_column {
-    filter_section {
-      heading_wrapper {
-        heading :text => "Milestones"
-        configure_milestones :id => "configure_milestones"
-      }  
-      milestone_lister :id => "milestone_lister"
-    }
-    
-    filter_section {
-      heading_wrapper {
-        heading :id => "tag_heading", :text => "Tags"
-      }
-      all_tags :id => "all_tags", :text => "All Tags", :styles => "tag"
-      tag_lister :id => "tag_lister"
-    }
-  }
+    search_label :text => "Search:"
+    search_box :players => "text_box", :name => "search_box",  :id => "search_box", :width => 200
+    button :players => "search", :id => "search_button", :text => "Search"
+  }  
   
-  ticket_content {
-    search_bar {
-      combo_box :id => "ticket_type", :players => "type_selector", :choices => ["Open Tickets", "All Tickets"], :width => 350, :right_margin => 100
-   
-      label :text => "Search:", :font_size => 14, :width => 60, :top_padding => 7
-      search_box :players => "text_box", :name => "search_box",  :id => "search_box", :width => 200
-      button :players => "search", :id => "search_button", :text => "Search"
-    }  
-
-    ticket_table {
-      header_row {
-        icon_cell {}
-        header_cell {
-          label :id => "title_header", :text => "Title", :name => "title_header", :players => "ticket_sorter"
-          sort_image :id => "title_image"
-        }
-        header_cell {
-          label :id => "state_header", :text => "State", :name => "state_header", :players => "ticket_sorter"
-          sort_image :id => "state_image"
-        }
-        header_cell {
-          label :id => "age_header", :text => "Last Activity", :name => "age_header", :players => "ticket_sorter"
-          sort_image :id => "age_image"
-        }
-        header_cell {
-          label :id => "assigned_user_header", :text => "Assigned User", :name => "assigned_user_header", :players => "ticket_sorter"
-          sort_image :id => "assigned_user_image"
-        }
+  content_pane {
+    side_column {
+      filter_section {
+        heading_wrapper {
+          heading :text => "Milestones", :right_padding => 5
+          configure_milestones :id => "configure_milestones"
+        }  
+        milestone_lister :id => "milestone_lister"
       }
-      add_ticket_group :id => "add_ticket_group"
-      ticket_lister :id => "ticket_lister"
+    
+      filter_section {
+        heading_wrapper {
+          heading :id => "tag_heading", :text => "Tags"
+        }
+        all_tags :id => "all_tags", :text => "All Tags", :styles => "tag"
+        tag_lister :id => "tag_lister"
+      }
+    }
+  
+    ticket_content {
+      ticket_table {
+        header_row {
+          icon_cell {}
+          header_cell {
+            label :id => "title_header", :text => "Title", :name => "title_header", :players => "ticket_sorter"
+            sort_image :id => "title_image"
+          }
+          header_cell {
+            label :id => "state_header", :text => "State", :name => "state_header", :players => "ticket_sorter"
+            sort_image :id => "state_image"
+          }
+          header_cell {
+            label :id => "age_header", :text => "Last Activity", :name => "age_header", :players => "ticket_sorter"
+            sort_image :id => "age_image"
+          }
+          header_cell {
+            label :id => "assigned_user_header", :text => "Assigned User", :name => "assigned_user_header", :players => "ticket_sorter"
+            sort_image :id => "assigned_user_image"
+          }
+        }
+        add_ticket_group :id => "add_ticket_group"
+        ticket_lister :id => "ticket_lister"
+      }
     }
   }
 }

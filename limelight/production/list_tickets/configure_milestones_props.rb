@@ -1,6 +1,9 @@
 configure_milestones_wrapper(:id => "configure_milestones_wrapper") {
-  configure_milestones_header(:height => "10%", :vertical_alignment => :center) {
-    heading :text => "Milestone Setup", :font_size => 36, :width => "100%", :horizontal_alignment => :center
+  configure_milestones_header {
+    configure_milestones_header_text :text => "Milestones"
+    back_button(:width => "50%", :horizontal_alignment => :right, :padding => 15) {
+      button :id => "close_configure_milestones", :text => "Back to Tickets", :players => "close_configure_milestones", :width => 150
+    }
   }
   configure_milestones_content(:height => "80%", :vertical_alignment => :center) {
     create_milestone_form {
@@ -23,8 +26,5 @@ configure_milestones_wrapper(:id => "configure_milestones_wrapper") {
       __install "list_tickets/existing_milestone_list.rb", :milestones => @milestones
     }
   
-  }
-  back_button(:width => "100%", :horizontal_alignment => :right, :padding => 15, :height => "10%") {
-    button :id => "close_configure_milestones", :text => "Back to Tickets", :players => "close_configure_milestones", :width => 150
   }
 }

@@ -12,6 +12,7 @@ describe EditTicket do
     @edit_ticket.id = "ticket_12345"     
     @edit_ticket.stub!(:remove_all)
     @edit_ticket.stub!(:build)    
+    @edit_ticket.stub!(:hover_style=)
   end
 
   it "should use the stage name to get the stage_info" do

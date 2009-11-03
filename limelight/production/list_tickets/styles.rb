@@ -11,7 +11,7 @@ main_ticket_group {
   left_margin 12
   right_margin 12
   rounded_corner_radius 10
-  border_width 2
+  border_width 1
   border_color @@blue_border_color
 }
 
@@ -72,6 +72,9 @@ version_comment {
   font_size 14
 }
 
+content_pane{
+}
+
 ticket_content {
   width "85%"
 }
@@ -91,9 +94,11 @@ ticket_table {
   width "100%"
   right_margin 15
   bottom_margin 15
-  left_margin 15
   rounded_corner_radius 10
-  padding 15
+  left_padding 15
+  right_padding 15
+  top_padding 10
+  bottom_padding 10
   border_width 1
   border_color "204060"
 
@@ -105,7 +110,8 @@ ticket_table {
 header_row {
   width "100%"
   transparency 100
-  height 50
+  height 32
+  vertical_alignment :center
 }
 
 icon_cell {
@@ -115,12 +121,11 @@ icon_cell {
 
 header_cell {  
   width "24%"
-  top_padding 7
   height "100%"
 }
 
 title_header {
-  font_size 24
+  font_size 20
   text_color @@table_header_text_color
   font_style :bold
   hover {
@@ -176,13 +181,13 @@ delete_ticket {
 }
 
 add_ticket_group {
-  top_padding 12
-  bottom_padding 12
+  top_padding 8
+  bottom_padding 7
 }
 ticket_in_list {
   extends :add_ticket_group
   width "100%"
-  top_border_width 2
+  top_border_width 1
   border_color @@blue_border_color
   hover {
     # background_color "F66722"
@@ -193,15 +198,25 @@ ticket_in_list {
   }
 }
 
+search_label {
+  font_size 20
+  width 80
+  top_padding 4
+  font_style :bold
+  text_color @@table_header_text_color
+}
+
 search_bar {
-  padding 10
+  padding 7
 }
 
 title_bar {
   width "100%"
   left_margin 5
   right_margin 5
-  background_color @@main_ticket_bg_color
+	background_color "2060a0"
+  secondary_background_color "74a3d0"
+  gradient :on
   bottom_right_rounded_corner_radius 10
   bottom_left_rounded_corner_radius 10
   bottom_margin 7
@@ -210,27 +225,42 @@ title_bar {
 
 filter_section {
   bottom_margin 20
+  background_color "e0e0f0"
+  secondary_background_color @@secondary_bg_color
+  gradient :on
+  left_margin 10
+  bottom_margin 10
+  width "93%"
+  horizontal_alignment :center
+  top_padding 7
+  bottom_padding 7
+  rounded_corner_radius 10
+  border_width 1
+  border_color @@blue_border_color
 }
 ticket_filter {
   font_size 12
-  text_color "0A3A68"
-  padding 5
-  rounded_corner_radius "10"
-  border_width 1
-  border_color @@blue_border_color
-  secondary_background_color @@secondary_bg_color
-  background_color "DDDDDD"
-  gradient :on
-  font_style :"bold italic"
+  text_color "333"
+  padding 3
+  # rounded_corner_radius "10"
+  # border_width 1
+  # border_color @@blue_border_color
+  # secondary_background_color @@secondary_bg_color
+  # background_color "DDDDDD"
+  # gradient :on
+  font_style :bold
+  width "100%"
   horizontal_alignment :center
-  width "90%"
-  left_margin "10"
-  bottom_margin "3"
+  # left_margin "10"
+  # bottom_margin "3"
 }
 hover_ticket_filter {
-  border_width 1
-  border_color "F66722"
-  font_size 16
+	background_color "2060a0"
+  secondary_background_color "74a3d0"
+  gradient :on
+  text_color @@secondary_bg_color
+  # border_width 1
+  # border_color "F66722"
 }
 milestone {
   extends :ticket_filter
@@ -245,20 +275,12 @@ tag {
   }
 }
 active_ticket_filter {
-  font_size 16
-  padding 5
-  rounded_corner_radius "10"
-  border_width 1
-  border_color "black"
-  background_color "DDDDDD"
-  secondary_background_color "BBBBBB"
-  gradient :on
-  gradient_angle 270
-  font_style :"bold italic"
+  font_size 12
+  padding 3
+  font_style :bold
+  width "100%"
   horizontal_alignment :center
-  width "90%"
-  left_margin "10"
-  bottom_margin "3"
+  extends :hover_ticket_filter
 }
 active_tag {
   extends :active_ticket_filter
@@ -292,12 +314,14 @@ left_title {
 
 heading_wrapper {
   horizontal_alignment :center
+  vertical_alignment :center
   width "100%"
+  padding 3
 }
 heading {
-  text_color @@header_text_color
+  text_color @@table_header_text_color
   font_style :bold
-  font_size 24
+  font_size 18
 }
 
 delete_ticket_confirmation_main {
@@ -306,8 +330,6 @@ delete_ticket_confirmation_main {
   y 0
   width "100%"
   height "100%"
-  background_color "black"
-  transparency "50"
   horizontal_alignment "center"
   vertical_alignment "center"
 }
@@ -317,29 +339,33 @@ delete_ticket_confirmation_message {
   horizontal_alignment "center"
   vertical_alignment "center"
   padding 22
+  text_color "333"
 }
 delete_ticket_confirmation_box {
   padding 20
   border_width 1
-  border_color "204060"
+  border_color :black
   background_color @@secondary_bg_color
-  secondary_background_color "DDD"
-  gradient :on
+  # secondary_background_color "DDD"
+  # gradient :on
   gradient_angle 270
   gradient_penetration 100
-  rounded_corner_radius "10"
   horizontal_alignment "center"
   vertical_alignment "center"
   width 500
 }
 
 delete_ticket_button {
-  font_size 24
-  width "50%"
+  font_size 20
+  width "30%"
+  background_color "e0e0f0"
+  secondary_background_color @@secondary_bg_color
+  gradient :on
+  text_color "333"
   border_color @@blue_border_color
-  background_color @@secondary_bg_color
+  # background_color @@secondary_bg_color
   rounded_corner_radius "10"
-  border_width 2
+  border_width 1
   horizontal_alignment "center"
   vertical_alignment "center"
   margin 10
@@ -410,7 +436,32 @@ configure_milestones_wrapper {
   horizontal_alignment "center"
   vertical_alignment "center"
 }
- 
+
+configure_milestones_header {
+  height "35"
+  background_color "2060a0"
+  secondary_background_color "74a3d0"
+  gradient :on
+	text_color :white
+  width "100%"
+  horizontal_alignment :center
+  vertical_alignment :center
+  bottom_left_rounded_corner_radius 10
+  bottom_right_rounded_corner_radius 10
+  left_margin 5
+  right_margin 5
+  float :on
+  x 0
+  y 0
+  horizontal_alignment :center
+}
+configure_milestones_header_text {
+  font_size 24
+  text_color :white
+  width "50%"
+  left_padding 30
+}
+
 delete_milestone {
   background_image_fill_strategy "static"
   background_image "images/remove.png"

@@ -80,6 +80,8 @@ describe TicketLister, "cancel_edit_ticket" do
     @ticket_prop = mock('ticket props')
     @scene.stub!(:find).and_return(@ticket_prop)
     @ticket_prop.stub!(:remove_all)
+    @ticket_prop.stub!(:hover_style=)
+    @scene.stub!(:styles).and_return({})
     @new_prop = mock('new prop')
     @new_prop.stub!(:children).and_return([])
     ConvertsTicketToProp.stub!(:convert).and_return(@new_prop)

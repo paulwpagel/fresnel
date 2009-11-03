@@ -25,8 +25,8 @@ modal_base {
   y 0
   width "100%"
   height "100%"
-  background_color "black"
-  transparency "50"
+  background_color "2060a0"
+  transparency "50%"
   horizontal_alignment "center"
   vertical_alignment "center"
 }
