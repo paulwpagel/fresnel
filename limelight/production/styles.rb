@@ -38,7 +38,7 @@ spinner_message {
   width 200
   background_color "#CCCCCC"
   rounded_corner_radius "10"
-  border_width 2
+  border_width 1
   border_color "black"
   horizontal_alignment "center"
   vertical_alignment "center"
