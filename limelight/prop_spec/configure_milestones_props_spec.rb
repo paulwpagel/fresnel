@@ -38,7 +38,7 @@ describe "Milestones Props" do
   
   it "should a link to close the page" do
     prop = scene.find("close_configure_milestones")
-    prop.name.should == "button"
+    prop.name.should == "title_bar_link"
     prop.players.should == "close_configure_milestones"
   end
   

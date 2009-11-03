@@ -1,7 +1,7 @@
 module CloseConfigureMilestones
   prop_reader :configure_milestones_wrapper
   
-  def button_pressed(event)
+  def mouse_clicked(event)
     close
   end
   
